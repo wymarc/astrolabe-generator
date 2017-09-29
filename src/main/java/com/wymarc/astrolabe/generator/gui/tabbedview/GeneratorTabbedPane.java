@@ -25,6 +25,7 @@ public class GeneratorTabbedPane extends JTabbedPane {
     private FrontPanel frontPanel;
     private BackPanel backPanel;
     private RetePanel retePanel;
+    private AstrolabeVariationsPanel astrolabeVariationsPanel;
     private ExtrasPanel extrasPanel;
     private QuadrantPanel quadrantPanel;
 
@@ -33,6 +34,7 @@ public class GeneratorTabbedPane extends JTabbedPane {
         addTab("Front", null, getFrontPanel(), "Front options");
         addTab("Back", null, getBackPanel(), "Back options");
         addTab("Rete and Rules", null, getRetePanel(), "Rete and Rules options");
+        addTab("Astrolabe Variations", null, getAstrolabeVariationsPanel(), "Astrolabe Variations");
         addTab("Quadrants", null, getQuadrantPanel(), "Quadrants options");
         addTab("Extras", null, getExtrasPanel(), "Extras to add");
     }
@@ -56,6 +58,13 @@ public class GeneratorTabbedPane extends JTabbedPane {
             retePanel = new RetePanel();
         }
         return retePanel;
+    }
+
+    public AstrolabeVariationsPanel getAstrolabeVariationsPanel() {
+        if(null == astrolabeVariationsPanel){
+            astrolabeVariationsPanel = new AstrolabeVariationsPanel();
+        }
+        return astrolabeVariationsPanel;
     }
 
     public ExtrasPanel getExtrasPanel() {

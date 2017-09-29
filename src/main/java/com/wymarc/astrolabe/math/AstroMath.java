@@ -25,6 +25,7 @@ import com.wymarc.astrolabe.Location;
 import java.awt.geom.Point2D;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -48,20 +49,29 @@ public class AstroMath {
     }
 
     /**
+     * Returns the angle of the line of apsides
+     * @param t Julian Century
+     * @return angle of the line of apsides
+     */
+    public static double angleOfLineOfApsides(double t){
+        return 180 - (102.937348 + (1.7195269*t) + (0.00045962*(t*t)) + (0.000000499*(t*t*t)));
+    }
+
+    /**
      * Computes Julian century (T) from current date
      *
      * modified from Morrison
      *
      * @return Julian century
      */
-     public static double getT(){
-         Calendar calNow = Calendar.getInstance();
+    public static double getT(){
+        Calendar calNow = Calendar.getInstance();
 
-         Calendar calMidniteJan1 = new GregorianCalendar(calNow.get(Calendar.YEAR), 0, 1); // remember January is 0
-         Calendar calEpoch = new GregorianCalendar(2000, 0, 1);
+        Calendar calMidniteJan1 = new GregorianCalendar(calNow.get(Calendar.YEAR), 0, 1); // remember January is 0
+        Calendar calEpoch = new GregorianCalendar(2000, 0, 1);
 
-         double julianDay = 2451544.5 + ((calMidniteJan1.getTime().getTime()-calEpoch.getTime().getTime())/(1000.0*60.0*60.0*24.0));
-         return (julianDay-2451545.0)/36525.0;
+        double julianDay = 2451544.5 + ((calMidniteJan1.getTime().getTime()-calEpoch.getTime().getTime())/(1000.0*60.0*60.0*24.0));
+        return (julianDay-2451545.0)/36525.0;
     }
 
     /**
@@ -83,7 +93,6 @@ public class AstroMath {
         double dayJ;
 
         month++; // note: in java month is 0-11 we need 1-12
-
 
         if (month > 2){
             jMonth = month + 1;
@@ -419,16 +428,74 @@ public class AstroMath {
         return correction;
     }
 
-	public double eot(double T){
+    /**
+     * After Herbert O. Ramp, Equation of Time – Comparison of Approximating Formulae , Compendium of
+     * the North American Sundial Society, Vol. 18, No. 1, pp. 20‐22, March 2011.
+     *
+     * @param dayIn Day of the year (Jan 1 = 1 etc)
+     * @return Time correction for the day of the year in decimal minutes
+     */
+    public static double equationOfTime(int dayIn){
+        double temp = 22.0/7.0*(dayIn*360.0/365.2422-80.535132)/180.0;
+        double minuteCorrection = (
+                (-107.0605*Math.sin(temp))
+                -(428.6697*Math.cos(temp))
+                +(596.1009*Math.sin(2*temp))
+                -(2.0898*Math.cos(2*temp))
+                +(4.4173*Math.sin(3*temp))
+                +(19.2776*Math.cos(3*temp))
+                +(12.7338*Math.sin(4*temp)))/60.0;
+
+        return minuteCorrection; //EqT in minutes
+	}
+
+    public static double equationOfTime2(int dayIn){ //TODO: Needs careful testing and more work
         double obt;
         double rmLong;
         double rmAnom;
         double e;
-        double eqt1;
-		
-		return 0.0;	
-		
-	}
+        double eqtl;
+        double T = getT() + dayIn;
+        obt = Math.tan(Math.toRadians(obliquity(T) / 2.0));
+        obt = obt * obt;
+        rmLong = Math.toRadians(mlong(T)); // Solar Mean Longitude
+        rmAnom = Math.toRadians(manom(T)) ; //Mean Anomaly
+        e = ecc(T); //Eccentricity of Earth's Orbit
+
+        // Calculate EQT in RADIANS
+        eqtl = obt * Math.sin(2.0 * rmLong) - 2.0 * e * Math.sin(rmAnom) + 4.0 * e * obt * Math.sin(rmAnom) * Math.cos(2.0 * rmLong);
+        eqtl = eqtl - 0.5 * obt * obt * Math.sin(4.0 * rmLong) - 1.25 * e * e * Math.sin(2.0 * rmAnom);
+
+        return (4.0 * Math.toDegrees(eqtl)) ; //EqT in minutes
+    }
+
+    /**
+     * Returns an array with the points for a circular graph representing the Equation of time
+     *
+     * @param innerLimit Innermost limit of the graph from the center
+     * @param outerlimit Outermost limit of the graph from the center
+     * @return An ArrayList of Point2D
+     */
+    public static ArrayList<Point2D> equationOfTimePoints(double innerLimit, double outerlimit){
+        ArrayList<Point2D> points = new ArrayList<Point2D>();
+        double scaling = (outerlimit - innerLimit)/34.0; //-17 to 17
+
+        // First compute the angle of the first day of the year to use to align the EOT angle to the calendar ring
+        double t = getT();
+        double offsetAngle = angleOfLineOfApsides(t);
+
+        for (int i = 1; i < 366; i++){
+            //for each day of the current year, compute the eot adjustment in minutes
+            double minutes = equationOfTime(i);
+            double degrees = normal((i * (360.0/365.0))- offsetAngle);
+            double r = ((outerlimit+innerLimit)/2.0) - (minutes * scaling);
+            double x = r * Math.cos(Math.toRadians(degrees));
+            double y = r * Math.sin(Math.toRadians(degrees));
+            points.add(new Point2D.Double(x,y));
+        }
+
+        return points;
+    }
 
     /**
      * return integer part of number

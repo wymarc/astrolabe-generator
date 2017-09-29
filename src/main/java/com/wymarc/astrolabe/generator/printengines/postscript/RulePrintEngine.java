@@ -295,8 +295,54 @@ public class RulePrintEngine {
         out += "\n" + "0 -5 lineto stroke";
         out += "\n" + "";
 
+        // Equation of time scale
+        if(myAstrolabe.getShowEquationOfTime()){
+            Double outerlimit = myAstrolabe.getMaterRadius() - 80;
+            Double innerLimit = outerlimit/4.0;
+            int h = 0;
+            boolean label = false;
+            double scaling = (outerlimit - innerLimit)/34.0;
+            for(int i = -17; i < 17; i++){
+                if((i == 0)||((i%10) == 0)){
+                    h = 10;
+                    label = true;
+                }else if((i%5) == 0){
+                    h = 7;
+                    label = true;
+                }else{
+                    h = 5;
+                    label = false;
+                }
+                double r = ((outerlimit+innerLimit)/2.0) - (i * scaling);
+                if(counterChange)
+                {
+                    out += "\n" + "newpath";
+                    out += "\n" + r + " 0 moveto";
+                    out += "\n" + r + " " + h + " lineto stroke";
+
+                    if(label){ //todo, southern herishere?
+                        out += "\n" + "newpath";
+                        out += "\n" + "NormalFont6 setfont";
+                        out += "\n" + (r-5) + " 10  moveto";
+                        out += "\n" + "( " + i + ") show";
+                    }
+                }else{
+                    out += "\n" + "newpath";
+                    out += "\n" + r + " 0 moveto";
+                    out += "\n" + r + " " + -h + " lineto stroke";
+
+                    if(label){ //todo, southern herishere?
+                        out += "\n" + "newpath";
+                        out += "\n" + "NormalFont6 setfont";
+                        out += "\n" + (r-5) + " -10  moveto";
+                        out += "\n" + "( " + i + ") show";
+                    }
+                }
+            }
+        }
+
         if (showLabel){
-            // label rule
+            // label on the sheet
             out += "\n" + "newpath";
             out += "\n" + "NormalFont20 setfont";
             out += "\n" + 0 + " -55  moveto";
@@ -394,9 +440,6 @@ public class RulePrintEngine {
         for(int i = 1; i <= 10; i++)
         {
             out += "\n" + "gsave";
-            //fileIn += "\n" + "306 192 translate";
-            //fileIn += "\n" + "306 396 translate";
-            //fileIn += "\n" + "306 600 translate";
             out += "\n" + "306 " + i*72 + " translate";
             out += "\n" + "";
             out += buildAlidade(counterChange, false);

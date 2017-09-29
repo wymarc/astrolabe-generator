@@ -25,6 +25,7 @@ import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.Equa
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.BasicHoraryQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
+import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -132,6 +133,17 @@ public class EPSPrintEngine {
             dataString = myAstrolabeRule.createRule(GeneratorGui.MY_ASTROLABE, true);
             save(filePath + "/AstrolabeRules.eps",dataString);
 
+            //print universal astrolabe
+            if (GeneratorGui.MY_ASTROLABE.getPrintUniversalAstrolabe()){
+                UniversalPrintEngine myUniversalAstrolabe = new UniversalPrintEngine();
+                dataString = myUniversalAstrolabe.createPlate(GeneratorGui.MY_ASTROLABE);
+                save(filePath + "/UniversalPlate.eps",dataString);
+                dataString = myUniversalAstrolabe.createRete(GeneratorGui.MY_ASTROLABE);
+                save(filePath + "/UniversalPlateRete.eps",dataString);
+                dataString = myUniversalAstrolabe.createRegula(GeneratorGui.MY_ASTROLABE);
+                save(filePath + "/UniversalPlateRegula.eps",dataString);
+            }
+
             // create extras sheets
             if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
                 myAstrolabeRule = new RulePrintEngine();
@@ -143,7 +155,6 @@ public class EPSPrintEngine {
                 dataString = myAstrolabeRule.buildAlidadeSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged());
                 save(filePath + "/AstrolabeAlidadeSheet.eps",dataString);
             }
-
             // print climate plate sets, if any
 //            for (JCheckBox chk : GeneratorGui.MY_ASTROLABE.getClimateSetCheckboxes()){
 //                if (chk.isSelected()){

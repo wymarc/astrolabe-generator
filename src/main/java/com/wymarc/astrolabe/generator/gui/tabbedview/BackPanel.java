@@ -39,6 +39,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
     private JCheckBox lunarMansionCheck = null;
     private JCheckBox cotangentCheck = null;
     private JCheckBox timeCorrectionCheck = null;
+    private JCheckBox equationOfTimeCheck = null;
     private ThumbNail thumbNail = null;
 
     public BackPanel() {
@@ -92,6 +93,8 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         optionsPanel.add(getCotangentCheck(),c);
         c.gridy++;
         optionsPanel.add(getTimeCorrectionCheck(),c);
+        c.gridy++;
+        optionsPanel.add(getEquationOfTimeCheck(),c);
 
         leftPanel.add(optionsPanel,BorderLayout.NORTH);
         add(leftPanel,BorderLayout.WEST);
@@ -202,6 +205,18 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return timeCorrectionCheck;
     }
 
+    private JCheckBox getEquationOfTimeCheck(){
+        if (null == equationOfTimeCheck){
+            equationOfTimeCheck = new JCheckBox("Show Equation of Time");
+            equationOfTimeCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowTimeCorrection());
+            equationOfTimeCheck.setToolTipText("Show Equation of Time");
+            equationOfTimeCheck.setActionCommand("EquationOfTime");
+            equationOfTimeCheck.addActionListener(this);
+            equationOfTimeCheck.addMouseListener(this);
+        }
+        return equationOfTimeCheck;
+    }
+
     public void updateControls(){
         topLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopLeft());
         topRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopRight());
@@ -211,6 +226,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         lunarMansionCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowLunarMansions());
         cotangentCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowCotangentScale());
         timeCorrectionCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowTimeCorrection());
+        equationOfTimeCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowEquationOfTime());
         getThumbNail().updateUI();
     }
 
@@ -249,6 +265,16 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
         if (cmd.equals("Cotangent")) {
             GeneratorGui.MY_ASTROLABE.setShowCotangentScale(getCotangentCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("TimeCorrection")) {
+            GeneratorGui.MY_ASTROLABE.setShowTimeCorrection(getTimeCorrectionCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("EquationOfTime")) {
+            GeneratorGui.MY_ASTROLABE.setShowEquationOfTime(getEquationOfTimeCheck().isSelected());
             getThumbNail().updateUI();
         }
     }

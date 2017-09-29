@@ -88,6 +88,7 @@ public class Astrolabe {
     private int frontPrintOption;				// 0 print both, 1 print Mater only, 2 print Climate only
     private boolean showHorizonPlate;         	// show horizon plate
     private boolean showLunarMansions;        	// show lunar mansions
+    private boolean showEquationOfTime;         // show Equation of Time scale
 
     private boolean showRegistrationMarks;      // print registation marks for assembly
 
@@ -98,6 +99,7 @@ public class Astrolabe {
     private double cancerRadius;                // radius of the tropic of cancer in points
     private double materRadius;                 // radius of the tropic of cancer plus limb width in points
     private double innerLimbRadius;             // radius of the inner limb edge in points
+    private double universalLimbRadius;         // radius of the inner limb edge in points for the universal astrolabe
     private double plateGap;            		// width of the space on the edge of the plates in points
 
     private int topLeft;						// contents of back
@@ -105,6 +107,7 @@ public class Astrolabe {
     private int bottomLeft;
     private int bottomRight;
 
+    private boolean printUniversalAstrolabe;    // print Universal Astrolabe sheets
     private boolean printAlidadeSheet;     	    // print alidadeSheet page
     private boolean printRuleSheet;     		// print ruleSheet page
     private boolean counterChanged;             // print alidadeSheet and ruleSheet counterchanged
@@ -305,6 +308,14 @@ public class Astrolabe {
         this.showLunarMansions = showLunarMansions;
     }
 
+    public boolean getShowEquationOfTime() {
+        return showEquationOfTime;
+    }
+
+    public void setShowEquationOfTime(boolean showEquationOfTime) {
+        this.showEquationOfTime = showEquationOfTime;
+    }
+
     public boolean getShowRegistrationMarks() {
         return showRegistrationMarks;
     }
@@ -353,6 +364,10 @@ public class Astrolabe {
         this.materRadius = materRadius;
     }
 
+    public double getUniversalLimbRadius() {
+        return universalLimbRadius;
+    }
+
     public double getInnerLimbRadius() {
         return innerLimbRadius;
     }
@@ -399,6 +414,14 @@ public class Astrolabe {
 
     public void setBottomRight(int bottomRight) {
         this.bottomRight = bottomRight;
+    }
+
+    public boolean getPrintUniversalAstrolabe() {
+        return printUniversalAstrolabe;
+    }
+
+    public void setPrintUniversalAstrolabe(boolean printUniversalAstrolabe) {
+        this.printUniversalAstrolabe = printUniversalAstrolabe;
     }
 
     public boolean getPrintAlidadeSheet() {
@@ -519,6 +542,7 @@ public class Astrolabe {
         this.showTimeCorrection = true;
         this.showCotangentScale = true;
         this.showLunarMansions = false;
+        this.showEquationOfTime = false;
         this.frontPrintOption = 0; // default to printing both
         this.showHorizonPlate = false;
 
@@ -528,6 +552,7 @@ public class Astrolabe {
         this.topRight = 1; // Unequal hours
         this.bottomLeft = 1; // 7 Shadow Square
         this.bottomRight = 2; // 12 Shadow Square
+        this.printUniversalAstrolabe = false;
         this.printAlidadeSheet = false;
         this.printRuleSheet = false;
         this.counterChanged = true;
@@ -538,6 +563,7 @@ public class Astrolabe {
         this.cancerRadius = this.equatorRadius * (Math.tan(Math.toRadians((90 - 23.44) / 2.0)));
         this.materRadius = ((72 * this.plateDiameter) / 2.0) + (this.limbWidth * 72);
         this.innerLimbRadius = (72 * this.plateDiameter) / 2.0;
+        this.universalLimbRadius = (72 * (this.plateDiameter + 0.5)) / 2.0;
     }
 
 }

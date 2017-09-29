@@ -27,6 +27,7 @@ import com.wymarc.astrolabe.math.AstroMath;
 import com.wymarc.astrolabe.math.InterSect;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class BackPrintEngine {
 
@@ -52,7 +53,7 @@ public class BackPrintEngine {
         String out = "";
         out += "\n" + "%% ================ Draw Calendar Ring =================";
         t = AstroMath.getT();
-        lineOfApsides = 180 - (102.937348 + (1.7195269*t) + (0.00045962*(t*t)) + (0.000000499*(t*t*t)));
+        lineOfApsides = AstroMath.angleOfLineOfApsides(t);
         out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
         out += "\n" + "%% draw Line of Apsides";
         //out += "\n" + ".4 setlinewidth";
@@ -1071,21 +1072,20 @@ public class BackPrintEngine {
     }
 
     public String drawEOT(){
-        String EOT = "";
-        Double radius0 = myAstrolabe.getMaterRadius() - 67;
-        Double radius1 = radius0/4.0;
-        Double scale = (radius0/radius1)/34;
+        String out = "";
+        Double outerRadius = myAstrolabe.getMaterRadius() - 80;
+        Double innerRadius = outerRadius/4.0;
 
-        Double E = 0.0;
+        ArrayList<Point2D> points = AstroMath.equationOfTimePoints(innerRadius, outerRadius);
+        out += "\n" + "newpath";
+        out += "\n" + points.get(0).getX() + " " + points.get(0).getY() + " moveto";
+        for (Point2D point : points){
+            out += "\n" + point.getX() + " " + point.getY() + " lineto";
+        }
+        out += "\n" + "stroke";
 
 
-        E = 4 * E * Math.PI/180.0;
-        Double radius = radius0 - E * scale;
-        //Double x = radius * Math.cos(angle);
-        //Double y = radius * Math.sin(angle);
-
-
-        return EOT;
+        return out;
 
     }
 
@@ -1172,7 +1172,9 @@ public class BackPrintEngine {
         }
 
         // EOT
-        //out += "\n" + drawEOT();
+        if(myAstrolabe.getShowEquationOfTime()){
+            out += "\n" + drawEOT();
+        }
 
         // mark pivot point
         out += "\n" + "%% Mark pivot";

@@ -138,6 +138,18 @@ public class EPSToolKit {
         return "\n" + "(" + textString + ") dup stringwidth pop 2 div neg 0 rmoveto show";
     }
 
+
+    /**
+     * Right justifies given text string at the current point
+     *
+     * @param textString String to be printed
+     * @return Centered string EPS output
+     */
+    public static String rightJustifyText(String textString){
+        return "\n" + "(" + textString + ") dup stringwidth pop neg 0 rmoveto show";
+    }
+
+
     /**
      * Sets up fonts
      *
