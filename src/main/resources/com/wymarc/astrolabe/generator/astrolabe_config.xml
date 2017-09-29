@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<defaultLocation>
+		<name>Pennsic War</name>
+		<location>405835N 0800809W</location>	
+	</defaultLocation>	
+	<astrolabes>
+		<astrolabe>
+			<name>Default Astrolabe</name>
+			<showThrone>true</showThrone>
+			<shapeOption>0</shapeOption>					
+			<zodiacSymbols>false</zodiacSymbols>			
+			<showRegistration>true</showRegistration>
+			<printOption>0</printOption>
+			<showHorizonPlate>false</showHorizonPlate>
+			<printTimeCorrection>true</printTimeCorrection>
+			<hourMarkings>0</hourMarkings>
+			<almucantarInterval>2</almucantarInterval>
+			<showAzimuth>true</showAzimuth>
+			<showTwilight>true</showTwilight>
+			<degreeScaleType>0</degreeScaleType>
+			<showUnequalHours>false</showUnequalHours>
+			<showHouses>false</showHouses>
+			<showMansions>false</showMansions>
+			<backTopLeft>1</backTopLeft>
+			<backTopRight>1</backTopRight>
+			<backBottomLeft>1</backBottomLeft>
+			<backBottomRight>3</backBottomRight>
+			<reteType>0</reteType>
+			<showCotangent>true</showCotangent>
+		</astrolabe>
+		<astrolabe>
+			<name>Simplified Astrolabe</name>
+			<showThrone>true</showThrone>
+			<shapeOption>0</shapeOption>					
+			<zodiacSymbols>false</zodiacSymbols>			
+			<showRegistration>true</showRegistration>
+			<printOption>0</printOption>
+			<showHorizonPlate>false</showHorizonPlate>
+			<printTimeCorrection>true</printTimeCorrection>
+			<hourMarkings>0</hourMarkings>
+			<almucantarInterval>3</almucantarInterval>
+			<showAzimuth>false</showAzimuth>
+			<showTwilight>false</showTwilight>
+			<degreeScaleType>0</degreeScaleType>
+			<showUnequalHours>false</showUnequalHours>
+			<showHouses>false</showHouses>
+			<showMansions>false</showMansions>
+			<backTopLeft>0</backTopLeft>
+			<backTopRight>0</backTopRight>
+			<backBottomLeft>0</backBottomLeft>
+			<backBottomRight>0</backBottomRight>
+			<reteType>1</reteType>
+			<showCotangent>false</showCotangent>
+		</astrolabe>
+		<astrolabe>
+			<name>Astrolabe for Basic Class</name>
+			<showThrone>true</showThrone>
+			<shapeOption>0</shapeOption>					
+			<zodiacSymbols>false</zodiacSymbols>			
+			<showRegistration>true</showRegistration>
+			<printOption>0</printOption>
+			<showHorizonPlate>false</showHorizonPlate>
+			<printTimeCorrection>true</printTimeCorrection>
+			<hourMarkings>0</hourMarkings>
+			<almucantarInterval>2</almucantarInterval>
+			<showAzimuth>true</showAzimuth>
+			<showTwilight>true</showTwilight>
+			<degreeScaleType>0</degreeScaleType>
+			<showUnequalHours>false</showUnequalHours>
+			<showHouses>false</showHouses>
+			<showMansions>false</showMansions>
+			<backTopLeft>1</backTopLeft>
+			<backTopRight>1</backTopRight>
+			<backBottomLeft>1</backBottomLeft>
+			<backBottomRight>3</backBottomRight>
+			<reteType>0</reteType>
+			<showCotangent>true</showCotangent>
+		</astrolabe>
+		<astrolabe>
+			<name>Astrolabe for Advanced Class</name>
+			<showThrone>true</showThrone>
+			<shapeOption>1</shapeOption>
+			<zodiacSymbols>false</zodiacSymbols>
+			<showRegistration>true</showRegistration>
+			<printOption>0</printOption>
+			<showHorizonPlate>false</showHorizonPlate>
+			<printTimeCorrection>true</printTimeCorrection>
+			<hourMarkings>0</hourMarkings>
+			<almucantarInterval>2</almucantarInterval>
+			<showAzimuth>true</showAzimuth>
+			<showTwilight>true</showTwilight>
+			<degreeScaleType>0</degreeScaleType>
+			<showUnequalHours>true</showUnequalHours>
+			<showHouses>true</showHouses>
+			<showMansions>true</showMansions>
+			<backTopLeft>3</backTopLeft>
+			<backTopRight>2</backTopRight>
+			<backBottomLeft>1</backBottomLeft>
+			<backBottomRight>3</backBottomRight>
+			<reteType>0</reteType>
+			<showCotangent>true</showCotangent>
+		</astrolabe>
+		<astrolabe>
+			<name>Modern Astrolabe</name>
+			<showThrone>true</showThrone>
+			<shapeOption>0</shapeOption>
+			<zodiacSymbols>false</zodiacSymbols>
+			<showRegistration>true</showRegistration>
+			<printOption>0</printOption>
+			<showHorizonPlate>false</showHorizonPlate>
+			<printTimeCorrection>true</printTimeCorrection>
+			<hourMarkings>0</hourMarkings>
+			<almucantarInterval>2</almucantarInterval>
+			<showAzimuth>true</showAzimuth>
+			<showTwilight>true</showTwilight>
+			<degreeScaleType>0</degreeScaleType>
+			<showUnequalHours>false</showUnequalHours>
+			<showHouses>false</showHouses>
+			<showMansions>false</showMansions>
+			<backTopLeft>0</backTopLeft>
+			<backTopRight>0</backTopRight>
+			<backBottomLeft>0</backBottomLeft>
+			<backBottomRight>0</backBottomRight>
+			<reteType>2</reteType>
+			<showCotangent>false</showCotangent>
+		</astrolabe>
+	</astrolabes>
+
+	<climateSets>
+		<climateSet name ="North America">
+			<climate>
+				<name>Montreal</name>
+				<latitude>453000N</latitude>
+			</climate>
+			<climate>
+				<name>New York</name>
+				<latitude>404200N</latitude>
+			</climate>
+			<climate>
+				<name>Washington DC</name>
+				<latitude>385400N</latitude>
+			</climate>
+			<climate>
+				<name>Dallas</name>
+				<latitude>324700N</latitude>
+			</climate>
+			<climate>
+				<name>Mexico City</name>
+				<latitude>192600N</latitude>
+			</climate>
+		</climateSet>	
+	</climateSets>
+
+	
+</settings>
