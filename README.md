@@ -23,7 +23,4 @@ For more information visit:
 
 [The Astrolabe Project](http://www.astrolabeproject.com/) 
 
-
-
-[image](http://www.astrolabeproject.com/wp-content/uploads/2017/09/version3.png)
-
+![image](http://www.astrolabeproject.com/wp-content/uploads/2017/09/version3.png)
