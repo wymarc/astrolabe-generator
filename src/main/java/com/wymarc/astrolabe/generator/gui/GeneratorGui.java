@@ -90,6 +90,7 @@ public class GeneratorGui extends JFrame implements ActionListener {
             MY_ASTROLABE.setBottomRight(defaultAstrolabe.getBackBottomRight());
             MY_ASTROLABE.setReteType(defaultAstrolabe.getReteType());
             MY_ASTROLABE.setShowCotangentScale(defaultAstrolabe.isShowCotangent());
+            MY_ASTROLABE.setShowEquationOfTime(defaultAstrolabe.isShowEot());
         }
     }
 

@@ -436,6 +436,9 @@ public class RulePrintEngine {
         out += EPSToolKit.getHeader(myAstrolabe,"Alidade Sheet");
         out += "\n" + "%% setup";
         out += "\n" + ".1 setlinewidth";
+        if(myAstrolabe.getShowEquationOfTime()){
+            out += EPSToolKit.setUpFonts();
+        }
 
         for(int i = 1; i <= 10; i++)
         {

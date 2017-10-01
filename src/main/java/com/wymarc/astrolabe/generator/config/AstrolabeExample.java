@@ -42,6 +42,7 @@ public class AstrolabeExample {
     private int backBottomRight;
     private int reteType;
     private boolean showCotangent;
+    private boolean showEot;
 
     public String getName() {
         return name;
@@ -217,6 +218,14 @@ public class AstrolabeExample {
 
     public void setShowCotangent(boolean showCotangent) {
         this.showCotangent = showCotangent;
+    }
+
+    public boolean isShowEot() {
+        return showEot;
+    }
+
+    public void setShowEot(boolean showEot) {
+        this.showEot = showEot;
     }
 }
 

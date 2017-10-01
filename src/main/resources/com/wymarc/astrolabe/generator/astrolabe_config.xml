@@ -28,6 +28,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
 			<name>Simplified Astrolabe</name>
@@ -52,6 +53,7 @@
 			<backBottomRight>0</backBottomRight>
 			<reteType>1</reteType>
 			<showCotangent>false</showCotangent>
+			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
 			<name>Astrolabe for Basic Class</name>
@@ -76,6 +78,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
 			<name>Astrolabe for Advanced Class</name>
@@ -100,6 +103,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
 			<name>Modern Astrolabe</name>
@@ -124,6 +128,7 @@
 			<backBottomRight>0</backBottomRight>
 			<reteType>2</reteType>
 			<showCotangent>false</showCotangent>
+			<showEot>true</showEot>
 		</astrolabe>
 	</astrolabes>
 

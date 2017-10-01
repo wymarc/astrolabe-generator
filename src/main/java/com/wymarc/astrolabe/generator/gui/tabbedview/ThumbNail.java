@@ -60,6 +60,7 @@ public class ThumbNail extends JPanel{
     private JLabel nauticum = null;
     private JLabel twilightLine = null;
     private JLabel unequalHoursFront = null;
+    private JLabel eot = null;
     private JLabel arcsEqual = null;
     private JLabel arcsProjected = null;
     private JLabel shadowSquareLeft = null;
@@ -120,6 +121,7 @@ public class ThumbNail extends JPanel{
         unequalHoursFront = createLayer("gui/images/front/unequalfront.png");
 
         // create the layers for the back view
+        eot = createLayer("gui/images/back/eot.png");
         arcsEqual = createLayer("gui/images/back/arc_equal.png");
         arcsProjected = createLayer("gui/images/back/arc_proj.png");
         shadowSquareLeft = createLayer("gui/images/back/b_l_shadow.png");
@@ -305,6 +307,7 @@ public class ThumbNail extends JPanel{
             layeredPane.add(topLeftSineCosine, 0, 0);
             layeredPane.add(unequalTopLeft, 0, 0);
             layeredPane.add(unequalTopRight, 0, 0);
+            layeredPane.add(eot, 0, 0);
 
             backThumbnail.add(layeredPane);
         }
@@ -334,6 +337,7 @@ public class ThumbNail extends JPanel{
         topLeftSineCosine.setVisible(false);
         unequalTopLeft.setVisible(false);
         unequalTopRight.setVisible(false);
+        eot.setVisible(false);
     }
 
     public JPanel updateBackThumbNail() {
@@ -408,6 +412,10 @@ public class ThumbNail extends JPanel{
 
         if (GeneratorGui.MY_ASTROLABE.getShowLunarMansions()){
             lunarMansions.setVisible(true);
+        }
+
+        if (GeneratorGui.MY_ASTROLABE.getShowEquationOfTime()){
+            eot.setVisible(true);
         }
 
         return backThumbnail;
