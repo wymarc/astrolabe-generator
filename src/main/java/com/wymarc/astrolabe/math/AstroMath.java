@@ -307,7 +307,7 @@ public class AstroMath {
      * modified from Morrison
      *
      * @param T double Julian century 
-     * @return Obliquity of ecliptic angle in radians
+     * @return Obliquity of ecliptic angle in degrees
      */
     public static double obliquity(double T){
         return (((5.036111e-07 * T - 1.638889e-07) * T - .013004167) * T + 23.4392911);
@@ -428,45 +428,54 @@ public class AstroMath {
         return correction;
     }
 
+//    /**
+//     * After Herbert O. Ramp, Equation of Time – Comparison of Approximating Formulae , Compendium of
+//     * the North American Sundial Society, Vol. 18, No. 1, pp. 20‐22, March 2011.
+//     *
+//     * @param dayIn Day of the year (Jan 1 = 1 etc)
+//     * @return Time correction for the day of the year in decimal minutes
+//     */
+//    public static double equationOfTime(int dayIn){
+//        double temp = 22.0/7.0*(dayIn*360.0/365.2422-80.535132)/180.0;
+//        double minuteCorrection = (
+//                (-107.0605*Math.sin(temp))
+//                -(428.6697*Math.cos(temp))
+//                +(596.1009*Math.sin(2*temp))
+//                -(2.0898*Math.cos(2*temp))
+//                +(4.4173*Math.sin(3*temp))
+//                +(19.2776*Math.cos(3*temp))
+//                +(12.7338*Math.sin(4*temp)))/60.0;
+//
+//        return minuteCorrection; //EqT in minutes
+//	}
+
     /**
-     * After Herbert O. Ramp, Equation of Time – Comparison of Approximating Formulae , Compendium of
-     * the North American Sundial Society, Vol. 18, No. 1, pp. 20‐22, March 2011.
+     * Calculate the Equation of Time from 'day of year'
+     * Originally written by Del Smith, 2016-11-29
+     * Form "Equation of Time" Wikipedia entry
+     * https://en.wikipedia.org/wiki/Equation_of_time#Calculating_the_equation_of_time
+     * Downloaded 03 Oct 2017 and modified
      *
-     * @param dayIn Day of the year (Jan 1 = 1 etc)
-     * @return Time correction for the day of the year in decimal minutes
+     * @param day represents the day of the year with 0 being January 1
+     * @return value for the Equation of Time in decimal minutes
      */
-    public static double equationOfTime(int dayIn){
-        double temp = 22.0/7.0*(dayIn*360.0/365.2422-80.535132)/180.0;
-        double minuteCorrection = (
-                (-107.0605*Math.sin(temp))
-                -(428.6697*Math.cos(temp))
-                +(596.1009*Math.sin(2*temp))
-                -(2.0898*Math.cos(2*temp))
-                +(4.4173*Math.sin(3*temp))
-                +(19.2776*Math.cos(3*temp))
-                +(12.7338*Math.sin(4*temp)))/60.0;
-
-        return minuteCorrection; //EqT in minutes
-	}
-
-    public static double equationOfTime2(int dayIn){ //TODO: Needs careful testing and more work
-        double obt;
-        double rmLong;
-        double rmAnom;
-        double e;
-        double eqtl;
-        double T = getT() + dayIn;
-        obt = Math.tan(Math.toRadians(obliquity(T) / 2.0));
-        obt = obt * obt;
-        rmLong = Math.toRadians(mlong(T)); // Solar Mean Longitude
-        rmAnom = Math.toRadians(manom(T)) ; //Mean Anomaly
-        e = ecc(T); //Eccentricity of Earth's Orbit
-
-        // Calculate EQT in RADIANS
-        eqtl = obt * Math.sin(2.0 * rmLong) - 2.0 * e * Math.sin(rmAnom) + 4.0 * e * obt * Math.sin(rmAnom) * Math.cos(2.0 * rmLong);
-        eqtl = eqtl - 0.5 * obt * obt * Math.sin(4.0 * rmLong) - 1.25 * e * e * Math.sin(2.0 * rmAnom);
-
-        return (4.0 * Math.toDegrees(eqtl)) ; //EqT in minutes
+    public static double equationOfTime(int day) {
+        double meanVelocity = Math.toRadians(360.0/365.24);    // Mean angular orbital velocity of Earth in radians/day
+        double obliquity = Math.toRadians(obliquity(getT())); // Obliquity of the Earth in radians
+        double approxAngle = meanVelocity * (day + 10);
+        // Angle the Earth would move on its orbit at mean velocity from the December solstice until the day specified
+        // 10 comes from the approximate number of days from December solstice to January 1
+        double correctedAngle = approxAngle + Math.toRadians(1.914) * Math.sin(meanVelocity * (day - 2));
+        // Angle the Earth would move from solstice to specified day, with a correction for Earth's orbital eccentricity
+        // 2 is the number of days from January 1 to Earth's perihelion
+        // 1.914 deg is a first-order correction for the Earth's orbital eccentricity, 0.0167 (360/pi * 0.0167)
+        double angleDifference = Math.atan(Math.tan(correctedAngle) / Math.cos(obliquity));
+        // Difference between the angle moved at mean velocity and at the corrected velocity, projected onto equatorial plane
+        angleDifference = approxAngle - angleDifference; // Split into multiple lines for better readability
+        angleDifference = angleDifference / Math.PI; // Divided by pi to get the value in half-turns
+        return 720 * (angleDifference - Math.round(angleDifference)); // Return the Equation of Time in seconds
+        // Corrected for any excess integer count half turns
+        // 720 comes from the number of minutes it takes for Earth to complete a half turn (12h * 60m)
     }
 
     /**
@@ -484,7 +493,7 @@ public class AstroMath {
         double t = getT();
         double offsetAngle = angleOfLineOfApsides(t);
 
-        for (int i = 1; i < 366; i++){
+        for (int i = 0; i <= 365; i++){
             //for each day of the current year, compute the eot adjustment in minutes
             double minutes = equationOfTime(i);
             double degrees = normal((i * (360.0/365.0))- offsetAngle);
