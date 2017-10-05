@@ -33,6 +33,65 @@ public class BackPrintEngine {
 
     private Astrolabe myAstrolabe = new Astrolabe();
 
+    private String buildConcentricCalendarRing(){
+        double calendarRadius = myAstrolabe.getMaterRadius() - 32; //astrolabe radius - width of zodiac ring
+        int count;
+        int count2; // counters
+        double lineOfApsides; //angle of line of apsides
+        double eccentricityOfOrbit; //orbital eccentricity for this date
+        double t; //Time in Julian centuries from J2000.0
+
+        String out = "";
+        out += "\n" + "%% ================ Draw Calendar Ring =================";
+        t = AstroMath.getT();
+        lineOfApsides = AstroMath.angleOfLineOfApsides(t);
+        out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
+        out += "\n" + "%% draw Line of Apsides";
+        out += "\n" + "newpath";
+        out += "\n" + -(myAstrolabe.getMaterRadius() - 30) + " 0 moveto";
+        out += "\n" + (myAstrolabe.getMaterRadius() - 30) + " 0 lineto";
+        out += "\n" + "stroke";
+
+        //step 3 draw the ring outlines
+        out += "\n" + "1 setgray";
+        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc fill"; //use fill to remove hidden parts of line of apsides
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 5) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 10) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
+
+        //step 4 compute rotation to start with
+        double MeanAnomaly = AstroMath.normal(((-4.8e-07 * t - .0001559) * t + 35999.0503) * t + 357.5291);    // compute Mean Anomaly
+        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
+        //out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
+
+        //step 5 draw calendar markings and label
+        //double increment = 360.0/365.0; // 360/365 number of degrees for each day tick
+        for (count = 1; count <= 365; count++)
+        {// mark days
+            double rotation = AstroMath.geolong(t + count);
+            out += "\n" + rotation + " rotate";
+            out += "\n" + (calendarRadius - 5) + " 0 moveto";
+            out += "\n" + calendarRadius + " 0 lineto stroke";
+            out += "\n" + -rotation + " rotate";
+        }
+        int totalDays = 0;
+        for (count = 0; count <= 11; count++){// mark months
+            double rotation = AstroMath.geolong(t + totalDays);
+            out += "\n" + rotation + " rotate";
+            out += "\n" + (calendarRadius - 20) + " 0 moveto";
+            out += "\n" + calendarRadius + " 0 lineto stroke";
+            out += "\n" + -rotation + " rotate";
+            totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
+        }
+
+
+        out += "\n" + "%% ================ End Draw Calendar Ring =================";
+
+        return out;
+    }
+
     /**
      * Builds the calendar ring
      *
@@ -1137,7 +1196,10 @@ public class BackPrintEngine {
         out += "\n" + "grestore";
         out += "\n" + "";
         out += "\n" + "gsave";
+
+        //out += buildConcentricCalendarRing();
         out += buildCalendarRing();
+
         out += "\n" + "grestore";
         out += "\n" + "";
 

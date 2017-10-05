@@ -208,7 +208,7 @@ public class AstroMath {
      * modified from Morrison
      *
      * @param T double Julian century 
-     * @return Sun's geocentric longitude angle in radians
+     * @return Sun's geocentric longitude angle in degrees
      */
     public static double geolong(double T){
         return (normal(tanom(T) + mlong(T) - manom(T))) ;
@@ -491,9 +491,10 @@ public class AstroMath {
 
         // First compute the angle of the first day of the year to use to align the EOT angle to the calendar ring
         double t = getT();
-        double offsetAngle = angleOfLineOfApsides(t);
+        double meanVelocity = 360.0/365.24; // Mean angular orbital velocity of Earth in degrees/day
+        double offsetAngle = angleOfLineOfApsides(t) + meanVelocity * 2; //January 1 is two days from the perihelion
 
-        for (int i = 0; i <= 365; i++){
+        for (int i = 0; i < 366; i++){
             //for each day of the current year, compute the eot adjustment in minutes
             double minutes = equationOfTime(i);
             double degrees = normal((i * (360.0/365.0))- offsetAngle);
