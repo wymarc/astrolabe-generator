@@ -154,7 +154,7 @@ public class AstroMath {
      * modified from Morrison
      *
      * @param T double Julian century 
-     * @return Sun's True anomaly angle in radians
+     * @return Sun's True anomaly angle in degrees
      */
     public static double tanom(double T){
         double ea;
@@ -182,7 +182,7 @@ public class AstroMath {
      * modified from Morrison
      *
      * @param T double Julian century 
-     * @return Sun's mean anomaly angle in radians
+     * @return Sun's mean anomaly angle in degrees
      */
     public static double manom(double T){
         return (normal(((-4.8e-07 * T - .0001559) * T + 35999.0503) * T + 357.5291));
@@ -195,7 +195,7 @@ public class AstroMath {
      * modified from Morrison
      *
      * @param T double Julian century 
-     * @return Sun's mean longitude angle in radians
+     * @return Sun's mean longitude angle in degrees
      */
     public static double mlong (double T){
         return (normal(((.000000021 * T) + .00030368 * T + 36000.7698231) * T + 280.466449)) ;

@@ -62,14 +62,12 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
 
         //step 4 compute rotation to start with
-        double MeanAnomaly = AstroMath.normal(((-4.8e-07 * t - .0001559) * t + 35999.0503) * t + 357.5291);    // compute Mean Anomaly
-        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
+        //double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
+        //double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
         //out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
 
         //step 5 draw calendar markings and label
-        //double increment = 360.0/365.0; // 360/365 number of degrees for each day tick
-        for (count = 1; count <= 365; count++)
-        {// mark days
+        for (count = 1; count <= 365; count++){// mark days
             double rotation = AstroMath.geolong(t + count);
             out += "\n" + rotation + " rotate";
             out += "\n" + (calendarRadius - 5) + " 0 moveto";
@@ -84,6 +82,45 @@ public class BackPrintEngine {
             out += "\n" + calendarRadius + " 0 lineto stroke";
             out += "\n" + -rotation + " rotate";
             totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
+        }
+
+        totalDays = 0;
+        for (count = 0; count <= 11; count++){// mark fifth and tenth days
+            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
+                double rotation = AstroMath.geolong(t + totalDays + count2);
+                out += "\n" + rotation + " rotate";
+                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
+                    out += "\n" + (calendarRadius - 10) + " 0 moveto";
+                    out += "\n" + calendarRadius + " 0 lineto stroke";
+                }
+                if((count2 == 5)||(count2 == 15)||(count2 == 25)){
+                    out += "\n" + (calendarRadius - 8) + " 0 moveto";
+                    out += "\n" + calendarRadius + " 0 lineto stroke";
+                }
+                out += "\n" + -rotation + " rotate";
+            }
+            totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
+        }
+        out += "\n" + "NormalFont10 setfont"; // label months
+        totalDays = 0;
+
+        for (count = 0; count <= 11; count++){
+            double rotation = AstroMath.geolong(t + totalDays + (Astrolabe.MONTHSDAYS[count] / 2));
+            out += EPSToolKit.drawOutsideCircularText(Astrolabe.MONTHS[count], 10,
+                    rotation, (calendarRadius - 18));
+            totalDays += Astrolabe.MONTHSDAYS[count];
+        }
+        out += "\n" + "NormalFont5 setfont";  // label tens of days
+        totalDays = 0;
+        for (count = 0; count <= 11; count++){
+            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
+                double rotation = AstroMath.geolong(t + totalDays + count2);
+                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
+                    out += EPSToolKit.drawOutsideCircularText("" + count2, 5,
+                            rotation, (calendarRadius - 9));
+                }
+            }
+            totalDays += Astrolabe.MONTHSDAYS[count];
         }
 
 
@@ -138,7 +175,8 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
 
         //step 4 compute rotation to start with
-        double MeanAnomaly = AstroMath.normal(((-4.8e-07 * t - .0001559) * t + 35999.0503) * t + 357.5291);    // compute Mean Anomaly
+        double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
+        //double MeanAnomaly = AstroMath.normal(((-4.8e-07 * t - .0001559) * t + 35999.0503) * t + 357.5291);    // compute Mean Anomaly
         double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
         out += "\n" + calRotation + " rotate"; // line up calendar to proper orientation
 
