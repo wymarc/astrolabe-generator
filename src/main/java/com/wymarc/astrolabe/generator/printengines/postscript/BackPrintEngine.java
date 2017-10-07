@@ -33,7 +33,7 @@ public class BackPrintEngine {
     private Astrolabe myAstrolabe = new Astrolabe();
 
     /**
-     * Builds the calendar ring
+     * Builds the default offset calendar ring
      *
      * @return  returns the ps code for drawing the Calendar ring
      *
@@ -85,22 +85,18 @@ public class BackPrintEngine {
 
         //step 5 draw calendar markings and label
         double increment = 360.0/365.0; // 360/365 number of degrees for each day tick
-        for (count = 1; count <= 365; count++)
-        {// mark days
+        for (count = 1; count <= 365; count++){// mark days
             out += "\n" + (calendarRadius - 5) + " 0 moveto";
             out += "\n" + calendarRadius + " 0 lineto stroke";
             out += "\n" + increment + " rotate";
         }
-        for (count = 0; count <= 11; count++)
-        {// mark months
+        for (count = 0; count <= 11; count++){// mark months
             out += "\n" + (calendarRadius - 20) + " 0 moveto";
             out += "\n" + calendarRadius + " 0 lineto stroke";
             out += "\n" + (increment * Astrolabe.MONTHSDAYS[count]) + " rotate";
         }
-        for (count = 0; count <= 11; count++)
-        {// mark fifth and tenth days
-            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++)
-            {
+        for (count = 0; count <= 11; count++){// mark fifth and tenth days
+            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
                     out += "\n" + (calendarRadius - 10) + " 0 moveto";
                     out += "\n" + calendarRadius + " 0 lineto stroke";
@@ -115,20 +111,16 @@ public class BackPrintEngine {
         out += "\n" + "NormalFont10 setfont"; // label months
         totalDays = 0;
 
-        for (count = 0; count <= 11; count++)
-        {
+        for (count = 0; count <= 11; count++){
             out += EPSToolKit.drawOutsideCircularText(Astrolabe.MONTHS[count], 10,
                     (((totalDays + (Astrolabe.MONTHSDAYS[count] / 2)) * increment)), (calendarRadius - 18));
             totalDays += Astrolabe.MONTHSDAYS[count];
         }
         out += "\n" + "NormalFont5 setfont";  // label tens of days
         totalDays = 0;
-        for (count = 0; count <= 11; count++)
-        {
-            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++)
-            {
-                if((count2 == 10)||(count2 == 20)||(count2 == 30))
-                {
+        for (count = 0; count <= 11; count++){
+            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
+                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
                     out += EPSToolKit.drawOutsideCircularText("" + count2, 5,
                             ((totalDays * increment) + (count2 * increment) - 1), (calendarRadius - 9));
                 }
@@ -144,6 +136,109 @@ public class BackPrintEngine {
 
         return out;
     }
+
+    /**
+     * Builds the concentric calendar ring
+     *
+     * @return  returns the ps code for drawing the Calendar ring
+     *
+     */
+    private String buildConcentricCalendarRing(){
+        double calendarRadius = myAstrolabe.getMaterRadius() - 32; //astrolabe radius - width of zodiac ring
+        int count;
+        int count2; // counters
+        double lineOfApsides; //angle of line of apsides
+        double eccentricityOfOrbit; //orbital eccentricity for this date
+        double t; //Time in Julian centuries from J2000.0
+
+        String out = "";
+        out += "\n" + "%% ================ Draw Calendar Ring =================";
+        t = AstroMath.getT();
+        lineOfApsides = AstroMath.angleOfLineOfApsides(t);
+        out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
+        out += "\n" + "%% draw Line of Apsides";
+        out += "\n" + "newpath";
+        out += "\n" + -(myAstrolabe.getMaterRadius() - 30) + " 0 moveto";
+        out += "\n" + (myAstrolabe.getMaterRadius() - 30) + " 0 lineto";
+        out += "\n" + "stroke";
+
+        //step 3 draw the ring outlines
+        out += "\n" + "1 setgray";
+        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc fill"; //use fill to remove hidden parts of line of apsides
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 5) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 10) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
+
+        //step 4 compute rotation to start with
+        //double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
+        //double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
+        //out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
+
+        //step 5 draw calendar markings and label
+        for (count = 1; count <= 365; count++){// mark days
+            double rotation = AstroMath.geolong(t + count);
+            out += "\n" + rotation + " rotate";
+            out += "\n" + (calendarRadius - 5) + " 0 moveto";
+            out += "\n" + calendarRadius + " 0 lineto stroke";
+            out += "\n" + -rotation + " rotate";
+        }
+        int totalDays = 0;
+        for (count = 0; count <= 11; count++){// mark months
+            double rotation = AstroMath.geolong(t + totalDays);
+            out += "\n" + rotation + " rotate";
+            out += "\n" + (calendarRadius - 20) + " 0 moveto";
+            out += "\n" + calendarRadius + " 0 lineto stroke";
+            out += "\n" + -rotation + " rotate";
+            totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
+        }
+
+        totalDays = 0;
+        for (count = 0; count <= 11; count++){// mark fifth and tenth days
+            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
+                double rotation = AstroMath.geolong(t + totalDays + count2);
+                out += "\n" + rotation + " rotate";
+                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
+                    out += "\n" + (calendarRadius - 10) + " 0 moveto";
+                    out += "\n" + calendarRadius + " 0 lineto stroke";
+                }
+                if((count2 == 5)||(count2 == 15)||(count2 == 25)){
+                    out += "\n" + (calendarRadius - 8) + " 0 moveto";
+                    out += "\n" + calendarRadius + " 0 lineto stroke";
+                }
+                out += "\n" + -rotation + " rotate";
+            }
+            totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
+        }
+        out += "\n" + "NormalFont10 setfont"; // label months
+        totalDays = 0;
+
+        for (count = 0; count <= 11; count++){
+            double rotation = AstroMath.geolong(t + totalDays + (Astrolabe.MONTHSDAYS[count] / 2));
+            out += EPSToolKit.drawOutsideCircularText(Astrolabe.MONTHS[count], 10,
+                    rotation, (calendarRadius - 18));
+            totalDays += Astrolabe.MONTHSDAYS[count];
+        }
+        out += "\n" + "NormalFont5 setfont";  // label tens of days
+        totalDays = 0;
+        for (count = 0; count <= 11; count++){
+            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
+                double rotation = AstroMath.geolong(t + totalDays + count2);
+                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
+                    out += EPSToolKit.drawOutsideCircularText("" + count2, 5,
+                            rotation, (calendarRadius - 9));
+                }
+            }
+            totalDays += Astrolabe.MONTHSDAYS[count];
+        }
+
+
+        out += "\n" + "%% ================ End Draw Calendar Ring =================";
+
+        return out;
+    }
+
 
     /**
      * computes and draws the Sin/Cos scale on the first quarter (top left)
@@ -175,8 +270,7 @@ public class BackPrintEngine {
         step = radius/50.0; // mark off 50 tics
 
         //Print vertical (Sine) scale
-        for (i = 0; i <= 50; i++)
-        {
+        for (i = 0; i <= 50; i++){
             myY = step*i;
             myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
             out += "\n" + "newpath";
@@ -186,8 +280,7 @@ public class BackPrintEngine {
         }
 
         //Print vertical ticks
-        for (i = 5; i <= 50; i=i+5)
-        {
+        for (i = 5; i <= 50; i=i+5){
             myY = step*i;
             myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
             out += "\n" + "newpath";
@@ -196,11 +289,9 @@ public class BackPrintEngine {
             out += "\n" + -myX + " " + myY + " lineto stroke";
         }
 
-        if (myAstrolabe.getTopLeft() == 3)
-        {
+        if (myAstrolabe.getTopLeft() == 3){
             //Print horizontal (Cosine) scale
-            for (i = 0; i <= 50; i++)
-            {
+            for (i = 0; i <= 50; i++){
                 myX = step*i;
                 myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
                 out += "\n" + "newpath";
@@ -210,8 +301,7 @@ public class BackPrintEngine {
             }
 
             //Print horizontal ticks
-            for (i = 5; i <= 50; i=i+5)
-            {
+            for (i = 5; i <= 50; i=i+5){
                 myX = step*i;
                 myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
                 out += "\n" + "newpath";
@@ -255,8 +345,7 @@ public class BackPrintEngine {
         step = radius/50.0; // mark off 50 tics
 
         //Print vertical (Sine) scale
-        for (i = 1; i <= 50; i++)
-        {
+        for (i = 1; i <= 50; i++){
             myY = step*i;
             myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
             out += "\n" + "newpath";
@@ -265,8 +354,7 @@ public class BackPrintEngine {
         }
 
         //Print vertical ticks
-        for (i = 5; i <= 50; i=i+5)
-        {
+        for (i = 5; i <= 50; i=i+5){
             myY = step*i;
             myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
             out += "\n" + "newpath";
@@ -274,11 +362,9 @@ public class BackPrintEngine {
             out += "\n" + -myX + " " + myY + " lineto stroke";
         }
 
-        if (myAstrolabe.getTopLeft() == 3)
-        {
+        if (myAstrolabe.getTopLeft() == 3){
             //Print horizontal (Cosine) scale
-            for (i = 1; i <= 50; i++)
-            {
+            for (i = 1; i <= 50; i++){
                 myX = step*i;
                 myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
                 out += "\n" + "newpath";
@@ -287,8 +373,7 @@ public class BackPrintEngine {
             }
 
             //Print horizontal ticks
-            for (i = 5; i <= 50; i=i+5)
-            {
+            for (i = 5; i <= 50; i=i+5){
                 myX = step*i;
                 myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
                 out += "\n" + "newpath";
@@ -319,22 +404,20 @@ public class BackPrintEngine {
 
         out += "\n" + "%% ================ Draw Unequal Hours =================";
 
-        if (myAstrolabe.getTopLeft() == 1 && myAstrolabe.getTopRight() == 1)
-        { //both first and second quadrants unequal hours
+        if (myAstrolabe.getTopLeft() == 1 && myAstrolabe.getTopRight() == 1){
+            //both first and second quadrants unequal hours
             out += "\n" + "newpath";
             out += "\n" + -unequalRadius + " 0 moveto";
             out += "\n" + unequalRadius + " 0 lineto";
             out += "\n" + "0 0 " + unequalRadius + " 0 180 arc stroke";
-        } else if (myAstrolabe.getTopLeft() == 1)
-        {
+        } else if (myAstrolabe.getTopLeft() == 1){
             out += "\n" + "newpath";
             out += "\n" + "0 0 moveto";
             out += "\n" + "0 " + unequalRadius + " lineto";
             out += "\n" + "0 0 " + unequalRadius + " 90 180 arc";
             out += "\n" + "0 0 lineto stroke";
 
-        }else if (myAstrolabe.getTopRight() == 1)
-        {
+        }else if (myAstrolabe.getTopRight() == 1){
             out += "\n" + "newpath";
             out += "\n" + "0 0 moveto";
             out += "\n" + unequalRadius + " 0 lineto";
@@ -342,57 +425,44 @@ public class BackPrintEngine {
             out += "\n" + "0 0 lineto stroke";
         }
 
-        if (myAstrolabe.getTopLeft() == 1)
-        {
+        if (myAstrolabe.getTopLeft() == 1){
             // draw unequal hour lines
-            for (i = 1; i <= 6; i++)
-            {
+            for (i = 1; i <= 6; i++){
                 Ri = (unequalRadius/(2*(Math.sin(Math.toRadians(15*i)))));
                 myInterSect = new InterSect(0, Ri, Ri, 0, 0, unequalRadius);
-                if ((i==3)||(i==4)||(i==5))
-                {
+                if ((i==3)||(i==4)||(i==5)){
                     out += "\n" + "0 " + Ri + " " + Ri + " " + myInterSect.getAngle2() + " 270 arc stroke";
-                }else
-                {
+                }else{
                     out += "\n" + "0 " + Ri + " " + Ri + " " + myInterSect.getAngle1() + " 270 arc stroke";
                 }
             }
         }
 
-        if (myAstrolabe.getTopRight() == 1)
-        {
+        if (myAstrolabe.getTopRight() == 1){
             // draw unequal hour lines
-            for (i = 1; i <= 6; i++)
-            {
+            for (i = 1; i <= 6; i++){
                 Ri = (unequalRadius/(2*(Math.sin(Math.toRadians(15*i)))));
                 myInterSect = new InterSect(0, Ri, Ri, 0, 0, unequalRadius);
-                if ((i==3)||(i==4)||(i==5))
-                {
+                if ((i==3)||(i==4)||(i==5)){
                     out += "\n" + "0 " + Ri + " " + Ri +" 270 " + myInterSect.getAngle1() + " arc stroke";
-                }else
-                {
+                }else{
                     out += "\n" + "0 " + Ri + " " + Ri +" 270 " + myInterSect.getAngle2() + " arc stroke";
                 }
             }
         }
 
-        if (myAstrolabe.getTopLeft() == 1 && myAstrolabe.getTopRight() == 1)
-        { //both first and second quadrants unequal hours
+        if (myAstrolabe.getTopLeft() == 1 && myAstrolabe.getTopRight() == 1){
+            //both first and second quadrants unequal hours
             out += "\n" + "NormalFont5 setfont";
-            for (i = 1; i <= 11; i++)
-            {
+            for (i = 1; i <= 11; i++){
                 out += EPSToolKit.drawOutsideCircularText(Integer.toString(i), 5, (180 - (i*15)), unequalRadius +2);
             }
-        }else if(myAstrolabe.getTopLeft() == 1)
-        {
+        }else if(myAstrolabe.getTopLeft() == 1){
             out += "\n" + "NormalFont5 setfont";
-            for (i = 1; i <= 6; i++)
-            {
+            for (i = 1; i <= 6; i++){
                 out += EPSToolKit.drawOutsideCircularText(Integer.toString(7-i), 5, (90+((i-1)*15)), unequalRadius +2);
             }
-        }else if(myAstrolabe.getTopRight() == 1)
-        {
-
+        }else if(myAstrolabe.getTopRight() == 1){
             out += "\n" + "NormalFont5 setfont";
             for (i = 1; i <= 6; i++)
             {
@@ -428,8 +498,7 @@ public class BackPrintEngine {
         double angle;
         int i;
 
-        for(i=1; i<=21;i++)
-        {
+        for(i=1; i<=21;i++){
             angle = Math.toDegrees(Math.atan((double)i/7));
             out += "\n" + -angle + " rotate";
             out += "\n" + "newpath";
@@ -438,23 +507,20 @@ public class BackPrintEngine {
             //out += "\n" + "0 0 moveto";
             //out += "\n" + "NormalFont5 setfont";
             //out = drawInsideCircularText(out, i.toString(), 5, 0, (cotangentRadius + 10));
-            if(i <= 12 || i == 14 || i == 16 || i == 18 || i == 21)
-            {
+            if(i <= 12 || i == 14 || i == 16 || i == 18 || i == 21){
                 out += "\n" + "NormalFont5 setfont";
                 out += EPSToolKit.drawInsideCircularText(Integer.toString(i), 5, 0, (cotangentRadius + 10));
             }
             out += "\n" + angle + " rotate";
         }
 
-        for(i=1; i<=32;i++)
-        {
+        for(i=1; i<=32;i++){
             angle = Math.toDegrees(Math.atan((double)i/12));
             out += "\n" + angle + " rotate";
             out += "\n" + "newpath";
             out += "\n" + cotangentRadius + " 0 moveto";
             out += "\n" + (cotangentRadius + 7) + " 0 lineto stroke";
-            if(i <= 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 24 || i == 28 || i == 32)
-            {
+            if(i <= 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 24 || i == 28 || i == 32){
                 out += "\n" + "NormalFont5 setfont";
                 out += EPSToolKit.drawInsideCircularText(Integer.toString(i), 5, 0, (cotangentRadius + 10));
             }
@@ -493,8 +559,7 @@ public class BackPrintEngine {
         double div = 0.0;
         String out = "";
 
-        if((myAstrolabe.getBottomRight() == 1)||(myAstrolabe.getBottomRight() == 2)||(myAstrolabe.getBottomRight() == 3))
-        {
+        if((myAstrolabe.getBottomRight() == 1)||(myAstrolabe.getBottomRight() == 2)||(myAstrolabe.getBottomRight() == 3)){
             //Draw bottom right	
             out += "\n" + "% =============== Create Right Shadow Square =================";
             out += "\n" + "newpath";
@@ -506,26 +571,22 @@ public class BackPrintEngine {
             out += "\n" + "0 0 moveto";
 
             //How many divisons? 7 10 12
-            if(myAstrolabe.getBottomRight() == 1)
-            {
+            if(myAstrolabe.getBottomRight() == 1){
                 div = 7.0;
-            }
-            else if(myAstrolabe.getBottomRight() == 2)
-            {
+            }else if(myAstrolabe.getBottomRight() == 2){
                 div = 10.0;
-            }
-            else if(myAstrolabe.getBottomRight() == 3)
-            {
+            }else if(myAstrolabe.getBottomRight() == 3){
                 div = 12.0;
             }
 
-            for (count = 1; count < div; count++)// print division lines 
-            {
+            for (count = 1; count < div; count++){
+                // print division lines
                 out += "\n" + "0 0 moveto";
                 out += "\n" + shadowSide + " "+ (-((shadowSide/div)*count)) + " lineto stroke";
                 out += "\n" + "0 0 moveto";
                 out += "\n" + ((shadowSide/div)*count) + " "+ (-shadowSide) + " lineto stroke";
             }
+
             out += "\n" + "newpath";
             out += "\n" + "1 setgray";
             out += "\n" + "0 0 moveto";
@@ -540,8 +601,9 @@ public class BackPrintEngine {
             out += "\n" + (shadowSide-6) + " "+ (-(shadowSide-6)) + " lineto";
             out += "\n" + "0 "+ (-(shadowSide-6)) + " lineto";
             out += "\n" + "0 0 lineto stroke";
-            if(div == 10 || div == 12)// if side is divided into ten or 12 sections
-            {
+
+            if(div == 10 || div == 12){
+                // if side is divided into ten or 12 sections
                 //draw 1/2 way mark
                 out += "\n" + "0 0 moveto";
                 out += "\n" + shadowSide + " "+ (-shadowSide/2.0) + " lineto stroke";
@@ -557,16 +619,12 @@ public class BackPrintEngine {
                 out += "\n" + "0 setgray";
                 out += "\n" + ((shadowSide/2.0)-8) + " "+ (-(shadowSide-7)) + " moveto";
                 out += "\n" + "NormalFont5 setfont";
-                if(div == 10)
-                {
+                if(div == 10){
                     // mark 5 line
-
                     out += "\n" + "(5) show";
                     out += "\n" + ((shadowSide-10)) + " "+ (-(shadowSide/2.0)) + " moveto";
                     out += "\n" + "(5) show";
-                }
-                if(div == 12)
-                {
+                }if(div == 12){
                     // mark 6 line
                     out += "\n" + "(6) show";
                     out += "\n" + ((shadowSide-10)) + " "+ (-(shadowSide/2.0)) + " moveto";
@@ -584,7 +642,7 @@ public class BackPrintEngine {
             out += "\n" + shadowSide + " "+ (-shadowSide) + " lineto stroke"; // 45 line                   
             out += "\n" + (shadowSide-16) + " "+ (-(shadowSide-7)) + " moveto";
             out += "\n" + "NormalFont5 setfont";
-            out += "\n" + "("+ div +") show";
+            out += "\n" + "("+ Math.round(div) +") show"; // round to get rid of decimal
 
             // Label
             out += "\n" + shadowSide/2.0 + " "+ (-(shadowSide-15)) + " moveto";
@@ -599,8 +657,7 @@ public class BackPrintEngine {
             out += "\n" + "% =============== End Right Shadow Square =================";
         }
 
-        if((myAstrolabe.getBottomLeft() == 1)||(myAstrolabe.getBottomLeft() == 2)||(myAstrolabe.getBottomLeft() == 3))
-        {
+        if((myAstrolabe.getBottomLeft() == 1)||(myAstrolabe.getBottomLeft() == 2)||(myAstrolabe.getBottomLeft() == 3)){
             //Draw bottomleft
             out += "\n" + "% =============== Create Left Shadow Square =================";
             out += "\n" + "newpath";
@@ -613,25 +670,22 @@ public class BackPrintEngine {
             out += "\n" + "0 0 moveto";
 
             //How many divisons? 7 10 12
-            if(myAstrolabe.getBottomLeft() == 1)
-            {
+            if(myAstrolabe.getBottomLeft() == 1){
                 div = 7.0;
-            }
-            else if(myAstrolabe.getBottomLeft() == 2)
-            {
+            }else if(myAstrolabe.getBottomLeft() == 2){
                 div = 10.0;
-            }
-            else if(myAstrolabe.getBottomLeft() == 3)
-            {
+            }else if(myAstrolabe.getBottomLeft() == 3){
                 div = 12.0;
             }
-            for (count = 1; count < div; count++)// print divison lines 
-            {
+
+            for (count = 1; count < div; count++){
+                // print divison lines
                 out += "\n" + "0 0 moveto";
                 out += "\n" + (-shadowSide) + " "+ (-((shadowSide/div)*count)) + " lineto stroke";
                 out += "\n" + "0 0 moveto";
                 out += "\n" + (-((shadowSide/div)*count)) + " "+ (-shadowSide) + " lineto stroke";
             }
+
             out += "\n" + "newpath";
             out += "\n" + "1 setgray";
             out += "\n" + "0 0 moveto";
@@ -647,8 +701,8 @@ public class BackPrintEngine {
             out += "\n" + "0 "+ (-(shadowSide-6)) + " lineto";
             out += "\n" + "0 0 lineto stroke";
 
-            if(div == 10 || div == 12)// if side is divided into ten or 12 sections, add a mark at five
-            {
+            if(div == 10 || div == 12){
+                // if side is divided into ten or 12 sections, add a mark at five
                 out += "\n" + "0 0 moveto";
                 out += "\n" + (-shadowSide) + " "+ (-shadowSide/2.0) + " lineto stroke";
                 out += "\n" + "0 0 moveto";
@@ -664,14 +718,11 @@ public class BackPrintEngine {
                 // mark mid line 
                 out += "\n" + -((shadowSide/2.0)-6) + " "+ (-(shadowSide-7)) + " moveto";
                 out += "\n" + "NormalFont5 setfont";
-                if(div == 10)
-                {
+                if(div == 10){
                     out += "\n" + "(5) show";
                     out += "\n" + (-(shadowSide-8)) + " "+ (-(shadowSide/2.0)) + " moveto";
                     out += "\n" + "(5) show";
-                }
-                if(div == 12)
-                {
+                }if(div == 12){
                     out += "\n" + "(6) show";
                     out += "\n" + (-(shadowSide-8)) + " "+ (-(shadowSide/2.0)) + " moveto";
                     out += "\n" + "(6) show";
@@ -689,7 +740,7 @@ public class BackPrintEngine {
             // mark 45 line        
             out += "\n" + -(shadowSide-9) + " "+ (-(shadowSide-7)) + " moveto";
             out += "\n" + "NormalFont5 setfont";
-            out += "\n" + "("+ div +") show";
+            out += "\n" + "("+ Math.round(div) +") show";
 
             // Label
             out += "\n" + -(shadowSide/2.0) + " "+ (-(shadowSide-15)) + " moveto";
@@ -704,8 +755,7 @@ public class BackPrintEngine {
             out += "\n" + "% =============== End Left Shadow Square =================";
         }
 
-        if(myAstrolabe.getBottomLeft() == 4)
-        {
+        if(myAstrolabe.getBottomLeft() == 4){
             //Draw bottomleft horz shadow scale
             out += "\n" + "% =============== Create Left Horz Shadow scale =================";
             // draw box
@@ -720,22 +770,20 @@ public class BackPrintEngine {
             out += "\n" + "0 -23 moveto";
             out += "\n" + "-182 -23 lineto stroke";
 
-            for (count = 0; count < 7; count++)
-            {
+            for (count = 0; count < 7; count++){
                 out += "\n" + "newpath";
                 out += "\n" + (-count * 28) + " 0 moveto";
                 out += "\n" + (-count * 28) + " -28 lineto stroke";
             }
 
-            for (count = 0; count < 26; count++)
-            {
+            for (count = 0; count < 26; count++){
                 out += "\n" + "newpath";
                 out += "\n" + (-count * 7) + " -23 moveto";
                 out += "\n" + (-count * 7) + " -28 lineto stroke";
             }
 
-            for (count = 1; count < 7; count++)// label
-            {
+            for (count = 1; count < 7; count++){
+                // label
                 out += "\n" + (-((count * 28) + 4)) + " -19 moveto";
                 out += "\n" + "NormalFont5 setfont";
                 out += EPSToolKit.centerText(Integer.toString(count));
@@ -744,8 +792,7 @@ public class BackPrintEngine {
             out += "\n" + "% =============== End Left Horz Shadow scale =================";
         }
 
-        if(myAstrolabe.getBottomRight() == 4)
-        {
+        if(myAstrolabe.getBottomRight() == 4){
             //Draw bottom right horz shadow scale
             out += "\n" + "% =============== Create Right Horz Shadow scale =================";
             // draw box
@@ -784,8 +831,7 @@ public class BackPrintEngine {
             out += "\n" + "% =============== End Right Horz Shadow scale =================";
         }
 
-        if (myAstrolabe.getShowCotangentScale())
-        {
+        if (myAstrolabe.getShowCotangentScale()){
             out += "\n" + "gsave";
             out += buildCotangentScale(myAstrolabe);
             out += "\n" + "grestore";
@@ -804,8 +850,7 @@ public class BackPrintEngine {
         //Needed even if no shadow Squares are to be printed 
         int count;
         double shadowRadius = myAstrolabe.getMaterRadius() - 67;
-        if(myAstrolabe.getShowCotangentScale())
-        {
+        if(myAstrolabe.getShowCotangentScale()){
             //if we want to show the cotangent scale make room
             shadowRadius = shadowRadius - 13;
         }
@@ -840,8 +885,7 @@ public class BackPrintEngine {
 
         out += "\n" + "% Draw zodiac divisons";
         out += "\n" + "0 setgray";
-        for (count = 1; count < 12; count++)
-        {
+        for (count = 1; count < 12; count++){
             out += "\n" + "15 rotate";
             out += "\n" + "newpath";
             out += "\n" + (-mansionRadius) + " 0 moveto";
@@ -852,8 +896,7 @@ public class BackPrintEngine {
 
         out += "\n" + "% Draw Lunar House divisons 6.43 degrees each";
         out += "\n" + "0 setgray";
-        for (count = 1; count < 28; count++)
-        {
+        for (count = 1; count < 28; count++){
             out += "\n" + "6.43 rotate";
             out += "\n" + "newpath";
             out += "\n" + (-(mansionRadius - 20)) + " 0 moveto";
@@ -867,8 +910,7 @@ public class BackPrintEngine {
         out += "\n" + "gsave";
         out += "\n" + "-97.5 rotate";
         out += "\n" + "NormalFont5 setfont";
-        for (count = 0; count <= 11; count++)
-        {
+        for (count = 0; count <= 11; count++){
             out += "\n" + "15 rotate";
             out += ZodiacSigns.placeSignNumAt(count + 1, new Point2D.Double(0, (-(mansionRadius - 8))), .35, .35);
             //out += EPSToolKit.drawInsideCircularText( myAstrolabe.ZODIAC[count], 5, ((count*15)+187.5), (mansionRadius - 5));
@@ -878,8 +920,7 @@ public class BackPrintEngine {
         //Mark Mansions Labels
         //out += "\n" + "3.215 rotate";
         out += "\n" + "NormalFont5 setfont";
-        for (count = 0; count < 28; count++)
-        {
+        for (count = 0; count < 28; count++){
             out += "\n" + (- (mansionRadius -25 )) + " -5 moveto";
             out += "\n" + "(" + Astrolabe.LUNARHOUSESNAMES[count] + ") show";
             out += "\n" + "6.43 rotate";
@@ -916,16 +957,14 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (outerRadius - 30) + " 0 360 arc stroke";
 
         // create 30 degree marks
-        for (count = 1; count <= 12; count++)
-        {
+        for (count = 1; count <= 12; count++){
             out += "\n" + (outerRadius - 30) + " 0 moveto";
             out += "\n" + outerRadius + " 0 lineto stroke";
             out += "\n" + "30 rotate";
         }
 
         // create 10 degree marks
-        for (count = 1; count <= 36; count++)
-        {
+        for (count = 1; count <= 36; count++){
             out += "\n" + (outerRadius - 15) + " 0 moveto";
             out += "\n" + outerRadius + " 0 lineto stroke";
             out += "\n" + "10 rotate";
@@ -933,8 +972,7 @@ public class BackPrintEngine {
 
         // create 5 degree marks
         out += "\n" + "5 rotate"; //we make the 5 deg marks by rotating the 10 deg marks 5 deg
-        for (count = 1; count <= 36; count++)
-        {
+        for (count = 1; count <= 36; count++){
             out += "\n" + (outerRadius - 13) + " 0 moveto";
             out += "\n" + (outerRadius - 2) + " 0 lineto stroke";
             out += "\n" + "10 rotate";
@@ -942,15 +980,13 @@ public class BackPrintEngine {
         out += "\n" + "-5 rotate"; //rotate back
 
         // create degree marks
-        for (count = 1; count <= 360; count++)
-        {
+        for (count = 1; count <= 360; count++){
             out += "\n" + (outerRadius - 10) + " 0 moveto";
             out += "\n" + (outerRadius -5) + " 0 lineto stroke";
             out += "\n" + "1 rotate";
         }
 
-        if (myAstrolabe.getShowZodiacSymbols())
-        {
+        if (myAstrolabe.getShowZodiacSymbols()){
             //Mark Zodiac symbols
             out += "\n" + "gsave";
             out += "\n" + "-75 rotate";
@@ -960,20 +996,17 @@ public class BackPrintEngine {
                 out += "\n" + "30 rotate";
             }
             out += "\n" + "grestore";
-        }else
-        {
+        }else{
             //Mark Zodiac Labels
             out += "\n" + "NormalFont10 setfont";
-            for (count = 0; count <= 11; count++)
-            {
+            for (count = 0; count <= 11; count++){
                 out += EPSToolKit.drawOutsideCircularText(Astrolabe.ZODIAC[count], 10, ((count*30)+15), (outerRadius - 25));//
             }
         }
 
         //Mark Zodiac Degrees
         out += "\n" + "NormalFont5 setfont";
-        for (count = 0; count <= 11; count++)
-        {
+        for (count = 0; count <= 11; count++){
             for (count1 = 1; count1 <= 3; count1++){
                 out += EPSToolKit.drawOutsideCircularText(Integer.toString(count1*10), 5, ((count*30)+(count1*10)-1), (outerRadius - 14));
             }
@@ -981,12 +1014,10 @@ public class BackPrintEngine {
 
         //Mark degrees 
         out += "\n" + "NormalFont5 setfont";
-        for (count = 1; count <= 9; count++)
-        {
+        for (count = 1; count <= 9; count++){
             out += EPSToolKit.drawOutsideCircularText(Integer.toString(count*10), 5, ((count*10)-1), (outerRadius - 4));
         }
-        for (count = 1; count <= 9; count++)
-        {
+        for (count = 1; count <= 9; count++){
             out += EPSToolKit.drawOutsideCircularText(Integer.toString(count*10), 5, (180-(count*10)+1), (outerRadius - 4));
         }
 
@@ -1026,15 +1057,14 @@ public class BackPrintEngine {
         double localPos;
         String out = "";
 
-        if(myAstrolabe.getShowCotangentScale()) // make room
-        {
+        if(myAstrolabe.getShowCotangentScale()){
+            // make room
             fecitPos = myAstrolabe.getMaterRadius() - 37;
             ownerPos = myAstrolabe.getMaterRadius() - 91;
             correctionPos = myAstrolabe.getMaterRadius() - 101;
             lonLabelPos = myAstrolabe.getMaterRadius() - 111;
             localPos = myAstrolabe.getMaterRadius() - 121;
-        }else
-        {
+        }else{
             fecitPos = myAstrolabe.getMaterRadius() - 37;
             ownerPos = myAstrolabe.getMaterRadius() - 78;
             correctionPos = myAstrolabe.getMaterRadius() - 88;
@@ -1046,14 +1076,12 @@ public class BackPrintEngine {
 
         out += "\n" + "NormalFont7 setfont";
 
-        if((owner.length() > 0)&&(!owner.equals("Your Name")))
-        {
+        if((owner.length() > 0)&&(!owner.equals("Your Name"))){
             out += "\n" + "0 " + -ownerPos + " moveto";
             out += EPSToolKit.centerText(owner);
         }
 
-        if(myAstrolabe.getShowTimeCorrection())
-        {
+        if(myAstrolabe.getShowTimeCorrection()){
             out += "\n" + "0 " + -correctionPos + " moveto";
             out += EPSToolKit.centerText(AstroMath.getTimeCorrection(myAstrolabe.getLocation().getLonDeg(),myAstrolabe.getLocation().getLonMin(),
                     myAstrolabe.getLocation().getLonSec(), myAstrolabe.getLocation().getLonDir()));
@@ -1062,8 +1090,7 @@ public class BackPrintEngine {
         out += "\n" + "0 " + -lonLabelPos + " moveto";
         out += EPSToolKit.centerText(longitudeLabel);
 
-        if(local.length() > 0)
-        {
+        if(local.length() > 0){
             out += "\n" + "0 " + -localPos + " moveto";
             out += EPSToolKit.centerText(local);
         }
@@ -1083,10 +1110,7 @@ public class BackPrintEngine {
             out += "\n" + point.getX() + " " + point.getY() + " lineto";
         }
         out += "\n" + "stroke";
-
-
         return out;
-
     }
 
     /**
@@ -1106,8 +1130,7 @@ public class BackPrintEngine {
         out += EPSToolKit.getHeader(myAstrolabe,"Astrolabe Back");
         out += "\n" + "%% setup";
 
-        if (myAstrolabe.getShowRegistrationMarks())
-        {
+        if (myAstrolabe.getShowRegistrationMarks()){
             out += EPSToolKit.registrationMarks();
         }
 
@@ -1139,22 +1162,23 @@ public class BackPrintEngine {
         out += "\n" + "gsave";
 
         out += buildCalendarRing();
+        //out += buildConcentricCalendarRing();
 
         out += "\n" + "grestore";
         out += "\n" + "";
 
         //print first and second quadrant
         out += "\n" + "gsave";
-        if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3))//Sin cos
-        {
+        if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3)){
+            //Sin cos
             out += sinCosScale2();
         }
         out += "\n" + "grestore";
         out += "\n" + "gsave";
         out += buildUnequalHoursBack();
         out += "\n" + "grestore";
-        if ((myAstrolabe.getTopRight() == 2)||(myAstrolabe.getTopRight() == 3))//Arcs
-        {
+        if ((myAstrolabe.getTopRight() == 2)||(myAstrolabe.getTopRight() == 3)){
+            //Arcs
             out += "\n" + "gsave";
             ArcsOfTheSigns arcsTool = new ArcsOfTheSigns(myAstrolabe);
             out += arcsTool.buildArcsOfSignsEqual();
@@ -1166,8 +1190,8 @@ public class BackPrintEngine {
         out += "\n" + "grestore";
 
         out += labelBack(myAstrolabe);
-        if (myAstrolabe.getShowLunarMansions())//Arcs
-        {
+        if (myAstrolabe.getShowLunarMansions()){
+            //Arcs
             out += "\n" + "gsave";
             out += buildLunarMansions();
             out += "\n" + "grestore";
