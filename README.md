@@ -24,3 +24,18 @@ For more information visit:
 [The Astrolabe Project](http://www.astrolabeproject.com/) 
 
 ![image](http://www.astrolabeproject.com/wp-content/uploads/2017/09/version3.png)
+
+## Release History:
+
+3.0:
+
+- Ported project back to Java
+- Moved source code to GITHUB
+
+3.1:
+
+- Added Universal Astrolabe with optional rete
+- Added an optional Equation of Time scale to the back
+- Under the hood:
+  - Added routine for right-justifying text
+  - Fixed bug in Time Correction display

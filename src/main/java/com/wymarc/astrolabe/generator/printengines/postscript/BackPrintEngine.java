@@ -1,9 +1,9 @@
 /**
- * $Id: AstrolabeGenerator.java,v 3.0
+ * $Id: AstrolabeGenerator.java,v 3.1
  * <p/>
  * The Astrolabe Generator is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2 of
+ * as published by the Free Software Foundation; either version 3 of
  * the License, or(at your option) any later version.
  * <p/>
  * The Astrolabe Generator is distributed in the hope that it will be
@@ -15,9 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * <p/>
- * Copyright (c) 2014, 2015 Timothy J. Mitchell
+ * Copyright (c) 2017 Timothy J. Mitchell
  */
-
 package com.wymarc.astrolabe.generator.printengines.postscript;
 
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
@@ -32,102 +31,6 @@ import java.util.ArrayList;
 public class BackPrintEngine {
 
     private Astrolabe myAstrolabe = new Astrolabe();
-
-    private String buildConcentricCalendarRing(){
-        double calendarRadius = myAstrolabe.getMaterRadius() - 32; //astrolabe radius - width of zodiac ring
-        int count;
-        int count2; // counters
-        double lineOfApsides; //angle of line of apsides
-        double eccentricityOfOrbit; //orbital eccentricity for this date
-        double t; //Time in Julian centuries from J2000.0
-
-        String out = "";
-        out += "\n" + "%% ================ Draw Calendar Ring =================";
-        t = AstroMath.getT();
-        lineOfApsides = AstroMath.angleOfLineOfApsides(t);
-        out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
-        out += "\n" + "%% draw Line of Apsides";
-        out += "\n" + "newpath";
-        out += "\n" + -(myAstrolabe.getMaterRadius() - 30) + " 0 moveto";
-        out += "\n" + (myAstrolabe.getMaterRadius() - 30) + " 0 lineto";
-        out += "\n" + "stroke";
-
-        //step 3 draw the ring outlines
-        out += "\n" + "1 setgray";
-        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc fill"; //use fill to remove hidden parts of line of apsides
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (calendarRadius - 5) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (calendarRadius - 10) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
-
-        //step 4 compute rotation to start with
-        //double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
-        //double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
-        //out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
-
-        //step 5 draw calendar markings and label
-        for (count = 1; count <= 365; count++){// mark days
-            double rotation = AstroMath.geolong(t + count);
-            out += "\n" + rotation + " rotate";
-            out += "\n" + (calendarRadius - 5) + " 0 moveto";
-            out += "\n" + calendarRadius + " 0 lineto stroke";
-            out += "\n" + -rotation + " rotate";
-        }
-        int totalDays = 0;
-        for (count = 0; count <= 11; count++){// mark months
-            double rotation = AstroMath.geolong(t + totalDays);
-            out += "\n" + rotation + " rotate";
-            out += "\n" + (calendarRadius - 20) + " 0 moveto";
-            out += "\n" + calendarRadius + " 0 lineto stroke";
-            out += "\n" + -rotation + " rotate";
-            totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
-        }
-
-        totalDays = 0;
-        for (count = 0; count <= 11; count++){// mark fifth and tenth days
-            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
-                double rotation = AstroMath.geolong(t + totalDays + count2);
-                out += "\n" + rotation + " rotate";
-                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
-                    out += "\n" + (calendarRadius - 10) + " 0 moveto";
-                    out += "\n" + calendarRadius + " 0 lineto stroke";
-                }
-                if((count2 == 5)||(count2 == 15)||(count2 == 25)){
-                    out += "\n" + (calendarRadius - 8) + " 0 moveto";
-                    out += "\n" + calendarRadius + " 0 lineto stroke";
-                }
-                out += "\n" + -rotation + " rotate";
-            }
-            totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
-        }
-        out += "\n" + "NormalFont10 setfont"; // label months
-        totalDays = 0;
-
-        for (count = 0; count <= 11; count++){
-            double rotation = AstroMath.geolong(t + totalDays + (Astrolabe.MONTHSDAYS[count] / 2));
-            out += EPSToolKit.drawOutsideCircularText(Astrolabe.MONTHS[count], 10,
-                    rotation, (calendarRadius - 18));
-            totalDays += Astrolabe.MONTHSDAYS[count];
-        }
-        out += "\n" + "NormalFont5 setfont";  // label tens of days
-        totalDays = 0;
-        for (count = 0; count <= 11; count++){
-            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
-                double rotation = AstroMath.geolong(t + totalDays + count2);
-                if((count2 == 10)||(count2 == 20)||(count2 == 30)){
-                    out += EPSToolKit.drawOutsideCircularText("" + count2, 5,
-                            rotation, (calendarRadius - 9));
-                }
-            }
-            totalDays += Astrolabe.MONTHSDAYS[count];
-        }
-
-
-        out += "\n" + "%% ================ End Draw Calendar Ring =================";
-
-        return out;
-    }
 
     /**
      * Builds the calendar ring
@@ -1235,7 +1138,6 @@ public class BackPrintEngine {
         out += "\n" + "";
         out += "\n" + "gsave";
 
-        //out += buildConcentricCalendarRing();
         out += buildCalendarRing();
 
         out += "\n" + "grestore";
