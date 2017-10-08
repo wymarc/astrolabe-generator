@@ -57,6 +57,7 @@ public class ThumbNail extends JPanel{
     private JLabel housesOfHeaven = null;
     private JLabel nauticum = null;
     private JLabel twilightLine = null;
+    private JLabel allTwilightLine = null;
     private JLabel unequalHoursFront = null;
     private JLabel eot = null;
     private JLabel arcsEqual = null;
@@ -116,6 +117,7 @@ public class ThumbNail extends JPanel{
         housesOfHeaven = createLayer("gui/images/front/houses.png");
         nauticum = createLayer("gui/images/front/nauticum.png");
         twilightLine = createLayer("gui/images/front/twilight.png");
+        allTwilightLine = createLayer("gui/images/front/alltwilight.png");
         unequalHoursFront = createLayer("gui/images/front/unequalfront.png");
 
         // create the layers for the back view
@@ -174,6 +176,7 @@ public class ThumbNail extends JPanel{
             layeredPane.add(housesOfHeaven, 0, 0);
             layeredPane.add(nauticum, 0, 0);
             layeredPane.add(twilightLine, 0, 0);
+            layeredPane.add(allTwilightLine, 0, 0);
             layeredPane.add(unequalHoursFront, 0, 0);
 
             frontThumbnail.add(layeredPane);
@@ -199,6 +202,7 @@ public class ThumbNail extends JPanel{
         azimuthLines.setVisible(false);
         housesOfHeaven.setVisible(false);
         twilightLine.setVisible(false);
+        allTwilightLine.setVisible(false);
         unequalHoursFront.setVisible(false);
         horizons.setVisible(false);
         nauticum.setVisible(false);
@@ -262,6 +266,10 @@ public class ThumbNail extends JPanel{
 
                 if(GeneratorGui.MY_ASTROLABE.getShowTwilightLines()){
                     twilightLine.setVisible(true);
+                }
+
+                if(GeneratorGui.MY_ASTROLABE.getShowAllTwilightLines()){
+                    allTwilightLine.setVisible(true);
                 }
 
                 if(GeneratorGui.MY_ASTROLABE.getShowUnequalHoursLines()){

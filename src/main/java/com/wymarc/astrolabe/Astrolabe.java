@@ -76,6 +76,7 @@ public class Astrolabe {
     private int degreeScaleType;                // show/hide Front degree scale
     private boolean showAzimuthLines;           // show/hide azimuth lines
     private boolean showTwilightLines;          // show/hide twilight lines
+    private boolean showAllTwilightLines;       // show all three twilight lines
     private boolean showUnequalHoursLines;      // show/hide unequal hour lines on plate
     private boolean showHousesofHeavenLines;    // show/hide houses lines on plate
     private boolean showThrone;          		// print the mater throne
@@ -217,6 +218,14 @@ public class Astrolabe {
 
     public void setShowTwilightLines(boolean showTwilightLines) {
         this.showTwilightLines = showTwilightLines;
+    }
+
+    public boolean getShowAllTwilightLines() {
+        return showAllTwilightLines;
+    }
+
+    public void setShowAllTwilightLines(boolean showAllTwilightLines) {
+        this.showAllTwilightLines = showAllTwilightLines;
     }
 
     public boolean getShowUnequalHoursLines() {
@@ -530,7 +539,8 @@ public class Astrolabe {
         this.degreeScaleType = 0;
         this.showAzimuthLines = true;
         this.showTwilightLines = true;
-        this.showHousesofHeavenLines = true;       // todo
+        this.showAllTwilightLines = false;
+        this.showHousesofHeavenLines = true;
         this.showUnequalHoursLines = false;
         this.showThrone = true;
         this.shapeOption = 1;

@@ -171,50 +171,46 @@ public class FrontPrintEngine {
         }
 
         // Twilight line
-        if (myAstrolabe.getShowTwilightLines()){
+        if (myAstrolabe.getShowTwilightLines()){//todo: consolidate this to simplify
             out += "\n" + "[4 4] 0 setdash"; // set dashed line
 
-//		The following section draws all three twilight lines -- removed for simplicity
-//
-//            int count = 1;
-//            while (count <= 3)
-//            {
-//                altitude = -6 * count;
-//                //Compute center
-//                center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(myAstrolabe.getLatitude())) / (Math.sin(Math.toRadians(myAstrolabe.getLatitude())) + Math.sin(Math.toRadians(altitude))));
-//                //compute radius
-//                radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(myAstrolabe.getLatitude())) + Math.sin(Math.toRadians(altitude))));
-//                //compute clipping
-//                InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
-//                //test for intersection Note sometimes the twilight lines do not intersect the cancer circle
-//                //if (!Double.isNaN(myInterSect.getAngle1()) && !Double.isNaN(myInterSect.getAngle2()))
-//                if (myInterSect.getIntersection())
-//                {
-//                    out += "\n" + "0 " + center + " " + radius + " "+myInterSect.getAngle2()+" "+myInterSect.getAngle1()+" arc stroke";
-//                }else
-//                {
-//                    out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
-//                }
-//
-//                count++;
-//            }
+            if (myAstrolabe.getShowAllTwilightLines()){
+                int count = 1;
+                while (count <= 3)
+                {
+                    altitude = -6 * count;
+                    //Compute center
+                    center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(myAstrolabe.getLocation().getLatitude())) / (Math.sin(Math.toRadians(myAstrolabe.getLocation().getLatitude())) + Math.sin(Math.toRadians(altitude))));
+                    //compute radius
+                    radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(myAstrolabe.getLocation().getLatitude())) + Math.sin(Math.toRadians(altitude))));
+                    //compute clipping
+                    InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
+                    if (myInterSect.getIntersection())
+                    {
+                        out += "\n" + "0 " + center + " " + radius + " "+myInterSect.getAngle2()+" "+myInterSect.getAngle1()+" arc stroke";
+                    }else
+                    {
+                        out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
+                    }
 
-            // compute and draw 18 degree twilight line
-            altitude = -18;
-            //Compute center
-            center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
-            //compute radius
-            radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
-            //compute clipping
-            InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
-            //test for intersection Note sometimes the twilight lines do not intersect the cancer circle
-            //if (!Double.isNaN(myInterSect.getAngle1()) && !Double.isNaN(myInterSect.getAngle2()))
-            if (myInterSect.getIntersection())
-            {
-                out += "\n" + "0 " + center + " " + radius + " "+myInterSect.getAngle2()+" "+myInterSect.getAngle1()+" arc stroke";
-            }else
-            {
-                out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
+                    count++;
+                }
+            }else{
+                // compute and draw just the 18 degree twilight line
+                altitude = -18;
+                //Compute center
+                center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
+                //compute radius
+                radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
+                //compute clipping
+                InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
+                if (myInterSect.getIntersection())
+                {
+                    out += "\n" + "0 " + center + " " + radius + " "+myInterSect.getAngle2()+" "+myInterSect.getAngle1()+" arc stroke";
+                }else
+                {
+                    out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
+                }
             }
 
             out += "\n" + "[] 0 setdash"; // set solid line
