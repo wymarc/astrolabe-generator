@@ -32,6 +32,7 @@ public class AstrolabeExample {
     private int almucantarInterval;
     private boolean showAzimuth;
     private boolean showTwilight;
+    private boolean showAllTwilight;
     private int degreeScaleType;
     private boolean showUnequalHours;
     private boolean showHouses;
@@ -138,6 +139,14 @@ public class AstrolabeExample {
 
     public void setShowTwilight(boolean showTwilight) {
         this.showTwilight = showTwilight;
+    }
+
+    public boolean isShowAllTwilight() {
+        return showAllTwilight;
+    }
+
+    public void setShowAllTwilight(boolean showAllTwilight) {
+        this.showAllTwilight = showAllTwilight;
     }
 
     public int getDegreeScaleType() {

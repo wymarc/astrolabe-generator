@@ -71,6 +71,7 @@ public class Config {
                     tempAstrolabe.setAlmucantarInterval(Integer.parseInt(eElement.getElementsByTagName("almucantarInterval").item(0).getTextContent()));
                     tempAstrolabe.setShowAzimuth(eElement.getElementsByTagName("showAzimuth").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowTwilight(eElement.getElementsByTagName("showTwilight").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowAllTwilight(eElement.getElementsByTagName("showAllTwilight").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setDegreeScaleType(Integer.parseInt(eElement.getElementsByTagName("degreeScaleType").item(0).getTextContent()));
                     tempAstrolabe.setShowUnequalHours(eElement.getElementsByTagName("showUnequalHours").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowHouses(eElement.getElementsByTagName("showHouses").item(0).getTextContent().equals("true"));

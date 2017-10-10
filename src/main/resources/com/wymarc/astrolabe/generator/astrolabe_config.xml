@@ -18,6 +18,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -43,6 +44,7 @@
 			<almucantarInterval>3</almucantarInterval>
 			<showAzimuth>false</showAzimuth>
 			<showTwilight>false</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -68,6 +70,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -93,6 +96,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>true</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>true</showUnequalHours>
 			<showHouses>true</showHouses>
@@ -118,6 +122,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>

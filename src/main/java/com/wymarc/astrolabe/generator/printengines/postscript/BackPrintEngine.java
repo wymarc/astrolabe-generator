@@ -172,9 +172,9 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
 
         //step 4 compute rotation to start with
-        //double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
-        //double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
-        //out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
+        double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
+        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
+        out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
 
         //step 5 draw calendar markings and label
         for (count = 1; count <= 365; count++){// mark days
