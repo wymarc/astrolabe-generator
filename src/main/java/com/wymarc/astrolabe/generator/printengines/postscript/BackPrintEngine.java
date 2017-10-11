@@ -80,7 +80,7 @@ public class BackPrintEngine {
         //step 4 compute rotation to start with
         double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
         //double MeanAnomaly = AstroMath.normal(((-4.8e-07 * t - .0001559) * t + 35999.0503) * t + 357.5291);    // compute Mean Anomaly
-        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
+        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0); //todo test for 0 long
         out += "\n" + calRotation + " rotate"; // line up calendar to proper orientation
 
         //step 5 draw calendar markings and label
@@ -172,13 +172,17 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
 
         //step 4 compute rotation to start with
-        double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
-        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
-        out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
+        // todo: line up the first point of aries with the equinox
+//        double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
+//        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
+//        //double calRotation = 75.0;
+//        out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
+
+        double jDay = 0.0000273785078700184; // todo, add computation to astromath
 
         //step 5 draw calendar markings and label
         for (count = 1; count <= 365; count++){// mark days
-            double rotation = AstroMath.geolong(t + count);
+            double rotation = AstroMath.geolong(t + (count * jDay));
             out += "\n" + rotation + " rotate";
             out += "\n" + (calendarRadius - 5) + " 0 moveto";
             out += "\n" + calendarRadius + " 0 lineto stroke";
@@ -186,7 +190,7 @@ public class BackPrintEngine {
         }
         int totalDays = 0;
         for (count = 0; count <= 11; count++){// mark months
-            double rotation = AstroMath.geolong(t + totalDays);
+            double rotation = AstroMath.geolong(t + (totalDays * jDay));
             out += "\n" + rotation + " rotate";
             out += "\n" + (calendarRadius - 20) + " 0 moveto";
             out += "\n" + calendarRadius + " 0 lineto stroke";
@@ -197,7 +201,7 @@ public class BackPrintEngine {
         totalDays = 0;
         for (count = 0; count <= 11; count++){// mark fifth and tenth days
             for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
-                double rotation = AstroMath.geolong(t + totalDays + count2);
+                double rotation = AstroMath.geolong(t + ((totalDays + count2) * jDay));
                 out += "\n" + rotation + " rotate";
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
                     out += "\n" + (calendarRadius - 10) + " 0 moveto";
@@ -215,7 +219,7 @@ public class BackPrintEngine {
         totalDays = 0;
 
         for (count = 0; count <= 11; count++){
-            double rotation = AstroMath.geolong(t + totalDays + (Astrolabe.MONTHSDAYS[count] / 2));
+            double rotation = AstroMath.geolong(t + ((totalDays + (Astrolabe.MONTHSDAYS[count] / 2)) * jDay));
             out += EPSToolKit.drawOutsideCircularText(Astrolabe.MONTHS[count], 10,
                     rotation, (calendarRadius - 18));
             totalDays += Astrolabe.MONTHSDAYS[count];
@@ -224,7 +228,7 @@ public class BackPrintEngine {
         totalDays = 0;
         for (count = 0; count <= 11; count++){
             for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
-                double rotation = AstroMath.geolong(t + totalDays + count2);
+                double rotation = AstroMath.geolong(t + (totalDays + count2) * jDay);
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
                     out += EPSToolKit.drawOutsideCircularText("" + count2, 5,
                             rotation, (calendarRadius - 9));
@@ -1161,8 +1165,8 @@ public class BackPrintEngine {
         out += "\n" + "";
         out += "\n" + "gsave";
 
-        out += buildCalendarRing();
-        //out += buildConcentricCalendarRing();
+        //out += buildCalendarRing();
+        out += buildConcentricCalendarRing();
 
         out += "\n" + "grestore";
         out += "\n" + "";
