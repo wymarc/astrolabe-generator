@@ -179,7 +179,7 @@ public class BackPrintEngine {
 //        //double calRotation = 75.0;
 //        out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
 
-        double jDay = 0.0000273785078700184; // todo, add computation to astromath
+        double jDay = 1.0/36525.0; // change in T per day
 
         //step 5 draw calendar markings and label
         for (count = 1; count <= 365; count++){// mark days
