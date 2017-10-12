@@ -161,6 +161,7 @@ public class BackPrintEngine {
         out += "\n" + -(myAstrolabe.getMaterRadius() - 30) + " 0 moveto";
         out += "\n" + (myAstrolabe.getMaterRadius() - 30) + " 0 lineto";
         out += "\n" + "stroke";
+        out += "\n" + lineOfApsides + " rotate";// rotate back
 
         //step 3 draw the ring outlines
         out += "\n" + "1 setgray";
