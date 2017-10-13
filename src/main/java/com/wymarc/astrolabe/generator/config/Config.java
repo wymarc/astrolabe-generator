@@ -82,6 +82,7 @@ public class Config {
                     tempAstrolabe.setBackBottomRight(Integer.parseInt(eElement.getElementsByTagName("backBottomRight").item(0).getTextContent()));
                     tempAstrolabe.setReteType(Integer.parseInt(eElement.getElementsByTagName("reteType").item(0).getTextContent()));
                     tempAstrolabe.setShowCotangent(eElement.getElementsByTagName("showCotangent").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowConcentricCalendar(eElement.getElementsByTagName("concentricCalendar").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowEot(eElement.getElementsByTagName("showEot").item(0).getTextContent().equals("true"));
 
                     astrolabeExamples.add(tempAstrolabe);

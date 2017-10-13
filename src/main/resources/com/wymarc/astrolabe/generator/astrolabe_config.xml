@@ -29,6 +29,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -55,6 +56,7 @@
 			<backBottomRight>0</backBottomRight>
 			<reteType>1</reteType>
 			<showCotangent>false</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -81,6 +83,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -107,6 +110,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -133,6 +137,7 @@
 			<backBottomRight>0</backBottomRight>
 			<reteType>2</reteType>
 			<showCotangent>false</showCotangent>
+			<concentricCalendar>true</concentricCalendar>
 			<showEot>true</showEot>
 		</astrolabe>
 	</astrolabes>

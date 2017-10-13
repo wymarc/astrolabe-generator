@@ -144,7 +144,7 @@ public class BackPrintEngine {
      *
      */
     private String buildConcentricCalendarRing(){
-        double calendarRadius = myAstrolabe.getMaterRadius() - 32; //astrolabe radius - width of zodiac ring
+        double calendarRadius = myAstrolabe.getMaterRadius() - 37; //astrolabe radius - width of zodiac ring
         int count;
         int count2; // counters
         double lineOfApsides; //angle of line of apsides
@@ -1062,15 +1062,18 @@ public class BackPrintEngine {
         double localPos;
         String out = "";
 
+        if(myAstrolabe.getShowConcentricCalendar()){
+            fecitPos = myAstrolabe.getMaterRadius() - 60;
+        }else{
+            fecitPos = myAstrolabe.getMaterRadius() - 37;
+        }
         if(myAstrolabe.getShowCotangentScale()){
             // make room
-            fecitPos = myAstrolabe.getMaterRadius() - 37;
             ownerPos = myAstrolabe.getMaterRadius() - 91;
             correctionPos = myAstrolabe.getMaterRadius() - 101;
             lonLabelPos = myAstrolabe.getMaterRadius() - 111;
             localPos = myAstrolabe.getMaterRadius() - 121;
         }else{
-            fecitPos = myAstrolabe.getMaterRadius() - 37;
             ownerPos = myAstrolabe.getMaterRadius() - 78;
             correctionPos = myAstrolabe.getMaterRadius() - 88;
             lonLabelPos = myAstrolabe.getMaterRadius() - 98;
@@ -1166,8 +1169,11 @@ public class BackPrintEngine {
         out += "\n" + "";
         out += "\n" + "gsave";
 
-        //out += buildCalendarRing();
-        out += buildConcentricCalendarRing();
+        if(myAstrolabe.getShowConcentricCalendar()){
+            out += buildConcentricCalendarRing();
+        }else{
+            out += buildCalendarRing();
+        }
 
         out += "\n" + "grestore";
         out += "\n" + "";

@@ -43,6 +43,7 @@ public class AstrolabeExample {
     private int backBottomRight;
     private int reteType;
     private boolean showCotangent;
+    private boolean concentricCalendar;
     private boolean showEot;
 
     public String getName() {
@@ -227,6 +228,14 @@ public class AstrolabeExample {
 
     public void setShowCotangent(boolean showCotangent) {
         this.showCotangent = showCotangent;
+    }
+
+    public boolean isShowConcentricCalendar() {
+        return concentricCalendar;
+    }
+
+    public void setShowConcentricCalendar(boolean concentricCalendar) {
+        this.concentricCalendar = concentricCalendar;
     }
 
     public boolean isShowEot() {
