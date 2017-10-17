@@ -50,7 +50,7 @@ public class BackPrintEngine {
 
         int totalDays; //counter
         String out = "";
-        out += "\n" + "%% ================ Draw Calendar Ring =================";
+        out += "\n" + "%% ================ Draw Offset Calendar Ring =================";
         t = AstroMath.getT();
         lineOfApsides = AstroMath.angleOfLineOfApsides(t);
         out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
@@ -132,7 +132,7 @@ public class BackPrintEngine {
         //out += "\n" + -calRotation + " rotate";
         out += "\n" + delta + " 0 translate";
         out += "\n" + lineOfApsides + " rotate";
-        out += "\n" + "%% ================ End Draw Calendar Ring =================";
+        out += "\n" + "%% ================ End Draw Offset Calendar Ring =================";
 
         return out;
     }
@@ -148,11 +148,10 @@ public class BackPrintEngine {
         int count;
         int count2; // counters
         double lineOfApsides; //angle of line of apsides
-        double eccentricityOfOrbit; //orbital eccentricity for this date
         double t; //Time in Julian centuries from J2000.0
 
         String out = "";
-        out += "\n" + "%% ================ Draw Calendar Ring =================";
+        out += "\n" + "%% ================ Draw Concentric Calendar Ring =================";
         t = AstroMath.getT();
         lineOfApsides = AstroMath.angleOfLineOfApsides(t);
         out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
@@ -163,7 +162,7 @@ public class BackPrintEngine {
         out += "\n" + "stroke";
         out += "\n" + lineOfApsides + " rotate";// rotate back
 
-        //step 3 draw the ring outlines
+        // draw the ring outlines
         out += "\n" + "1 setgray";
         out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc fill"; //use fill to remove hidden parts of line of apsides
         out += "\n" + "0 setgray";
@@ -172,17 +171,10 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (calendarRadius - 10) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
 
-        //step 4 compute rotation to start with
-        // todo: line up the first point of aries with the equinox
-//        double MeanAnomaly = AstroMath.manom(t);// compute Mean Anomaly
-//        double calRotation = MeanAnomaly + (myAstrolabe.getLocation().getLongitude()/365.0);
-//        //double calRotation = 75.0;
-//        out += "\n" + calRotation + " rotate"; // line up calendar to proper starting orientation
-
         double jDay = 1.0/36525.0; // change in T per day
 
-        //step 5 draw calendar markings and label
-        for (count = 1; count <= 365; count++){// mark days
+        // draw calendar markings and label
+        for (count = 0; count < 365; count++){// mark days
             double rotation = AstroMath.geolong(t + (count * jDay));
             out += "\n" + rotation + " rotate";
             out += "\n" + (calendarRadius - 5) + " 0 moveto";
@@ -237,9 +229,7 @@ public class BackPrintEngine {
             }
             totalDays += Astrolabe.MONTHSDAYS[count];
         }
-
-
-        out += "\n" + "%% ================ End Draw Calendar Ring =================";
+        out += "\n" + "%% ================ End Draw Concentric Calendar Ring =================";
 
         return out;
     }
@@ -251,8 +241,9 @@ public class BackPrintEngine {
      * @return  returns the ps code for drawing the SinCos Scale
      *
      */
-    private String sinCosScale2(){
+    private String sinCosScale(){
 
+        int divisions;  // either 50 for base 100 or 60 for base 60
         double step;	// interval between lines
         double myX;
         double myY;		// X/Y Coordinates
@@ -272,20 +263,22 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + radius + " 90 180 arc";
         out += "\n" + "0 0 lineto stroke";
 
-        step = radius/50.0; // mark off 50 tics
+//        step = radius/50.0; // mark off 50 tics
+        step = radius/60.0; // mark off 50 tics
+        divisions = 60;
 
         //Print vertical (Sine) scale
-        for (i = 0; i <= 50; i++){
+        for (i = 0; i <= divisions; i++){
             myY = step*i;
             myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
             out += "\n" + "newpath";
             out += "\n" + "[1 1] 0 setdash";
-            out += "\n" + -step + " "+ myY +" moveto";
+            out += "\n" + "0 "+ myY +" moveto";
             out += "\n" + -myX + " " + myY + " lineto stroke";
         }
 
         //Print vertical ticks
-        for (i = 5; i <= 50; i=i+5){
+        for (i = 5; i <= divisions; i=i+5){
             myY = step*i;
             myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
             out += "\n" + "newpath";
@@ -296,92 +289,21 @@ public class BackPrintEngine {
 
         if (myAstrolabe.getTopLeft() == 3){
             //Print horizontal (Cosine) scale
-            for (i = 0; i <= 50; i++){
+            for (i = 0; i <= divisions; i++){
                 myX = step*i;
                 myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
                 out += "\n" + "newpath";
                 out += "\n" + "[1 1] 0 setdash";
-                out += "\n" + -myX + " "+ step +" moveto";
+                out += "\n" + -myX + " 0 moveto";
                 out += "\n" + -myX + " " + myY + " lineto stroke";
             }
 
             //Print horizontal ticks
-            for (i = 5; i <= 50; i=i+5){
+           for (i = 5; i <= divisions; i=i+5){
                 myX = step*i;
                 myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
                 out += "\n" + "newpath";
                 out += "\n" + "[] 0 setdash";
-                out += "\n" + -myX + " 0 moveto";
-                out += "\n" + -myX + " " + myY + " lineto stroke";
-            }
-        }
-        out += "\n" + "%% ================ End Sin/Cos Scale =================";
-
-        return out;
-    }
-
-    /**
-     * computes and draws the Sin/Cos scale on the first quarter (top left)
-     *
-     * @return  returns the ps code for drawing the SinCos Scale
-     *
-     */
-    private String sinCosScale(){
-
-        double step;	// interval between lines
-        double myX;
-        double myY;		// X/Y Coordinates
-        int i;
-        String out = "";
-
-        //compute size of arc that contains the scale and draw it
-        // note eventually this will be done by looking at what rings are drawn and figuring
-        // the remaining radius
-        double radius = myAstrolabe.getMaterRadius() - 67;
-        //Print outline of scale
-
-        out += "\n" + "%% ================ Draw Sin/Cos Scale =================";
-        out += "\n" + "newpath";
-        out += "\n" + "0 0 moveto";
-        out += "\n" + "0 " + radius + " lineto";
-        out += "\n" + "0 0 " + radius + " 90 180 arc";
-        out += "\n" + "0 0 lineto stroke";
-
-        step = radius/50.0; // mark off 50 tics
-
-        //Print vertical (Sine) scale
-        for (i = 1; i <= 50; i++){
-            myY = step*i;
-            myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
-            out += "\n" + "newpath";
-            out += "\n" + -step + " "+ myY +" moveto";
-            out += "\n" + -myX + " " + myY + " lineto stroke";
-        }
-
-        //Print vertical ticks
-        for (i = 5; i <= 50; i=i+5){
-            myY = step*i;
-            myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
-            out += "\n" + "newpath";
-            out += "\n" + "0 "+ myY +" moveto";
-            out += "\n" + -myX + " " + myY + " lineto stroke";
-        }
-
-        if (myAstrolabe.getTopLeft() == 3){
-            //Print horizontal (Cosine) scale
-            for (i = 1; i <= 50; i++){
-                myX = step*i;
-                myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
-                out += "\n" + "newpath";
-                out += "\n" + -myX + " "+ step +" moveto";
-                out += "\n" + -myX + " " + myY + " lineto stroke";
-            }
-
-            //Print horizontal ticks
-            for (i = 5; i <= 50; i=i+5){
-                myX = step*i;
-                myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
-                out += "\n" + "newpath";
                 out += "\n" + -myX + " 0 moveto";
                 out += "\n" + -myX + " " + myY + " lineto stroke";
             }
@@ -1182,7 +1104,7 @@ public class BackPrintEngine {
         out += "\n" + "gsave";
         if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3)){
             //Sin cos
-            out += sinCosScale2();
+            out += sinCosScale();
         }
         out += "\n" + "grestore";
         out += "\n" + "gsave";
