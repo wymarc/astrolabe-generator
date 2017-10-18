@@ -238,10 +238,10 @@ public class BackPrintEngine {
     /**
      * computes and draws the Sin/Cos scale on the first quarter (top left)
      *
+     * @param option: 2: Sine 60, 3: Sine 100, 4: SineCos 60, 5: SineCos 100
      * @return  returns the ps code for drawing the SinCos Scale
-     *
      */
-    private String sinCosScale(){
+    private String sinCosScale(int option){
 
         int divisions;  // either 50 for base 100 or 60 for base 60
         double step;	// interval between lines
@@ -254,6 +254,15 @@ public class BackPrintEngine {
         // note eventually this will be done by looking at what rings are drawn and figuring
         // the remaining radius
         double radius = myAstrolabe.getMaterRadius() - 67;
+
+        if (option == 2 || option == 4){
+            step = radius/60.0; // mark off 60 tics
+            divisions = 60;
+        } else{
+            step = radius/50.0; // mark off 50 tics (100, every second tic)
+            divisions = 50;
+        }
+
         //Print outline of scale
 
         out += "\n" + "%% ================ Draw Sin/Cos Scale =================";
@@ -262,10 +271,6 @@ public class BackPrintEngine {
         out += "\n" + "0 " + radius + " lineto";
         out += "\n" + "0 0 " + radius + " 90 180 arc";
         out += "\n" + "0 0 lineto stroke";
-
-//        step = radius/50.0; // mark off 50 tics
-        step = radius/60.0; // mark off 50 tics
-        divisions = 60;
 
         //Print vertical (Sine) scale
         for (i = 0; i <= divisions; i++){
@@ -287,7 +292,7 @@ public class BackPrintEngine {
             out += "\n" + -myX + " " + myY + " lineto stroke";
         }
 
-        if (myAstrolabe.getTopLeft() == 3){
+        if (option == 4 || option == 5){
             //Print horizontal (Cosine) scale
             for (i = 0; i <= divisions; i++){
                 myX = step*i;
@@ -1102,9 +1107,9 @@ public class BackPrintEngine {
 
         //print first and second quadrant
         out += "\n" + "gsave";
-        if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3)){
+        if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3)||(myAstrolabe.getTopLeft() == 4)||(myAstrolabe.getTopLeft() == 5)){
             //Sin cos
-            out += sinCosScale();
+            out += sinCosScale(myAstrolabe.getTopLeft());
         }
         out += "\n" + "grestore";
         out += "\n" + "gsave";
