@@ -126,8 +126,8 @@ public class ThumbNail extends JPanel{
         unequalHoursFront = createLayer("gui/images/front/unequalfront.png");
 
         // create the layers for the back view
-//        offsetCalendar = createLayer("gui/images/back/offset.png");
-//        concentricCalendar = createLayer("gui/images/back/concentric.png");
+        offsetCalendar = createLayer("gui/images/back/offset.png");
+        concentricCalendar = createLayer("gui/images/back/concentric.png");
         eot = createLayer("gui/images/back/eot.png");
         arcsEqual = createLayer("gui/images/back/arc_equal.png");
         arcsProjected = createLayer("gui/images/back/arc_proj.png");
@@ -307,8 +307,8 @@ public class ThumbNail extends JPanel{
             layeredPane.add(throne2, 0, 0);
             layeredPane.add(backLimb, 0, 0);
             layeredPane.add(backLimbZodiac, 0, 0);
-//            layeredPane.add(offsetCalendar, 0, 0);
-//            layeredPane.add(concentricCalendar, 0, 0);
+            layeredPane.add(offsetCalendar, 0, 0);
+            layeredPane.add(concentricCalendar, 0, 0);
             layeredPane.add(arcsEqual, 0, 0);
             layeredPane.add(arcsProjected, 0, 0);
             layeredPane.add(shadowSquareLeft, 0, 0);
@@ -340,8 +340,8 @@ public class ThumbNail extends JPanel{
         octagon.setVisible(false);
         backLimb.setVisible(false);
         backLimbZodiac.setVisible(false);
-//        offsetCalendar.setVisible(false);
-//        concentricCalendar.setVisible(false);
+        offsetCalendar.setVisible(false);
+        concentricCalendar.setVisible(false);
         arcsEqual.setVisible(false);
         arcsProjected.setVisible(false);
         shadowSquareLeft.setVisible(false);
@@ -388,11 +388,11 @@ public class ThumbNail extends JPanel{
             backLimbZodiac.setVisible(true);
         }
 
-//        if (GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar()){
-//            concentricCalendar.setVisible(true);
-//        }else{
-//            offsetCalendar.setVisible(true);
-//        }
+        if (GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar()){
+            concentricCalendar.setVisible(true);
+        }else{
+            offsetCalendar.setVisible(true);
+        }
 
         if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 1 && GeneratorGui.MY_ASTROLABE.getTopRight() == 1) {
             unequalHoursBoth.setVisible(true);
