@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config {
+    public static String version = "";
+
     private String defaultLocationName = "";
     private String defaultLocation = "";
     private List<ClimateSet> climateSets;
@@ -44,6 +46,11 @@ public class Config {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
             doc.getDocumentElement().normalize();
+
+            // get version
+            NodeList projectSettings = doc.getElementsByTagName("project");
+            Element projectSetting = (Element)projectSettings.item(0);
+            version = projectSetting.getElementsByTagName("version").item(0).getTextContent();
 
             // get default location
             NodeList defaultSettings = doc.getElementsByTagName("defaultLocation");

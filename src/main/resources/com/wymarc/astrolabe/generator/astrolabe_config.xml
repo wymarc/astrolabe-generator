@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
+  <project>
+    <version>${project.version}</version>
+  </project>  
 	<defaultLocation>
 		<name>Pennsic War</name>
 		<location>405835N 0800809W</location>	
