@@ -27,10 +27,12 @@ For more information visit:
 
 ## Release History:
 
-3.0:
+3.2:
 
-- Ported project back to Java
-- Moved source code to GITHUB
+- Fixed bug in the formatting of shadow square numbers
+- Added in an option to display all three twilight lines
+- Added the option of using a concentric calendar ring instead of the more common offset
+- Added the option to choose between a base 60 and the less used base 10 grid for the sine scale on the back
 
 3.1:
 
@@ -39,3 +41,9 @@ For more information visit:
 - Under the hood:
   - Added routine for right-justifying text
   - Fixed bug in Time Correction display
+
+3.0:
+
+- Ported project back to Java
+- Moved source code to GITHUB
+

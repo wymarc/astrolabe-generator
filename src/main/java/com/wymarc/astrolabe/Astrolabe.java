@@ -32,7 +32,7 @@ public class Astrolabe {
     public static final String[] HOUROPTIONS = { "Roman", "Arabic", "Alphabet"};
     public static final String[] DEGREESCALEOPTIONS = { "None", "0-90", "0-360"};
     public static final String[] ALTITUDEINTERVALOPTIONS = { "1", "2", "5", "10"};
-    public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale", "Sine/cosine scale"};
+    public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale (60)", "Sine scale (100)", "Sine/cosine scale (60)", "Sine/cosine scale (100)"};
     public static final String[] TOPRIGHTOPTIONS = { "Blank", "Unequal hours", "Arcs of the signs (equal)", "Arcs of the signs (projected)"};
     public static final String[] BOTTOMLEFTOPTIONS = { "Blank", "7 Shadow square", "10 Shadow square", "12 Shadow square", "Horizontal shadow scale"};
     public static final String[] BOTTOMRIGHTOPTIONS = { "Blank", "7 shadow square", "10 shadow square", "12 shadow square", "Horizontal shadow scale"};
@@ -76,6 +76,7 @@ public class Astrolabe {
     private int degreeScaleType;                // show/hide Front degree scale
     private boolean showAzimuthLines;           // show/hide azimuth lines
     private boolean showTwilightLines;          // show/hide twilight lines
+    private boolean showAllTwilightLines;       // show all three twilight lines
     private boolean showUnequalHoursLines;      // show/hide unequal hour lines on plate
     private boolean showHousesofHeavenLines;    // show/hide houses lines on plate
     private boolean showThrone;          		// print the mater throne
@@ -84,6 +85,7 @@ public class Astrolabe {
     private int hourMarkings;               	// use roman numerals/arabic/alphabet
     private boolean showTimeCorrection;		    // Print time correction on back
     private boolean showCotangentScale;		    // Print cotangent scale on back
+    private boolean concentricCalendar;         // use the concentric calendar
     private int frontPrintOption;				// 0 print both, 1 print Mater only, 2 print Climate only
     private boolean showHorizonPlate;         	// show horizon plate
     private boolean showLunarMansions;        	// show lunar mansions
@@ -219,6 +221,14 @@ public class Astrolabe {
         this.showTwilightLines = showTwilightLines;
     }
 
+    public boolean getShowAllTwilightLines() {
+        return showAllTwilightLines;
+    }
+
+    public void setShowAllTwilightLines(boolean showAllTwilightLines) {
+        this.showAllTwilightLines = showAllTwilightLines;
+    }
+
     public boolean getShowUnequalHoursLines() {
         return showUnequalHoursLines;
     }
@@ -281,6 +291,14 @@ public class Astrolabe {
 
     public void setShowCotangentScale(boolean showCotangentScale) {
         this.showCotangentScale = showCotangentScale;
+    }
+
+    public boolean getShowConcentricCalendar() {
+        return concentricCalendar;
+    }
+
+    public void setShowConcentricCalendar(boolean concentricCalendar) {
+        this.concentricCalendar = concentricCalendar;
     }
 
     public int getFrontPrintOption() {
@@ -530,7 +548,8 @@ public class Astrolabe {
         this.degreeScaleType = 0;
         this.showAzimuthLines = true;
         this.showTwilightLines = true;
-        this.showHousesofHeavenLines = true;       // todo
+        this.showAllTwilightLines = false;
+        this.showHousesofHeavenLines = true;
         this.showUnequalHoursLines = false;
         this.showThrone = true;
         this.shapeOption = 1;
@@ -540,6 +559,7 @@ public class Astrolabe {
         this.showRegistrationMarks = true;
         this.showTimeCorrection = true;
         this.showCotangentScale = true;
+        this.concentricCalendar = false;
         this.showLunarMansions = false;
         this.showEquationOfTime = false;
         this.frontPrintOption = 0; // default to printing both

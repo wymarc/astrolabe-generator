@@ -41,6 +41,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
     private JCheckBox azimuthLinesCheck = null;
     private JCheckBox unequalHoursCheck = null;
     private JCheckBox twilightLinesCheck = null;
+    private JCheckBox allTwilightLinesCheck = null;
     private JCheckBox horizonPlateCheck = null;
     private JCheckBox housesOfHeavenCheck = null;
     private ThumbNail thumbNail = null;
@@ -109,6 +110,8 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         optionsPanel.add(getUnequalHoursCheck(),c);
         c.gridy++;
         optionsPanel.add(getTwilightLinesCheck(),c);
+        c.gridy++;
+        optionsPanel.add(getAllTwilightLinesCheck(),c);
         c.gridy++;
         optionsPanel.add(getHousesOfHeavenCheck(),c);
         c.gridy++;
@@ -249,6 +252,18 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         return twilightLinesCheck;
     }
 
+    private JCheckBox getAllTwilightLinesCheck(){
+        if (null == allTwilightLinesCheck){
+            allTwilightLinesCheck = new JCheckBox("Show all three twilight lines");
+            allTwilightLinesCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowAllTwilightLines());
+            allTwilightLinesCheck.setToolTipText("Show all three twilight lines");
+            allTwilightLinesCheck.setActionCommand("Show_All_Twilight");
+            allTwilightLinesCheck.addActionListener(this);
+            allTwilightLinesCheck.addMouseListener(this);
+        }
+        return allTwilightLinesCheck;
+    }
+
     private JCheckBox getHorizonPlateCheck(){
         if (null == horizonPlateCheck){
             horizonPlateCheck = new JCheckBox("Show horizons climate plate");
@@ -274,18 +289,19 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
     }
 
     public void updateControls(){
-        showOptionsCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getFrontPrintOption());
-        shapeCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getShapeOption());
-        hourCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getHourMarkings());
-        degreeScaleCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getDegreeScaleType());
-        altitudeIntervalCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getAlmucanterInterval());
-        throneCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowThrone());
-        registrationCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowRegistrationMarks());
-        azimuthLinesCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowAzimuthLines());
-        unequalHoursCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowUnequalHoursLines());
-        twilightLinesCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowTwilightLines());
-        horizonPlateCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowHorizonPlate());
-        housesOfHeavenCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowHousesofHeavenLines());
+        getShowOptionsCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getFrontPrintOption());
+        getShapeCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getShapeOption());
+        getHourCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getHourMarkings());
+        getDegreeScaleCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getDegreeScaleType());
+        getAltitudeIntervalCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getAlmucanterInterval());
+        getThroneCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowThrone());
+        getRegistrationCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowRegistrationMarks());
+        getAzimuthLinesCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowAzimuthLines());
+        getUnequalHoursCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowUnequalHoursLines());
+        getTwilightLinesCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowTwilightLines());
+        getAllTwilightLinesCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowAllTwilightLines());
+        getHorizonPlateCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowHorizonPlate());
+        getHousesOfHeavenCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowHousesofHeavenLines());
         getThumbNail().updateUI();
     }
 
@@ -309,6 +325,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
                 getAzimuthLinesCheck().setEnabled(false);
                 getUnequalHoursCheck().setEnabled(false);
                 getTwilightLinesCheck().setEnabled(false);
+                getAllTwilightLinesCheck().setEnabled(false);
                 getHousesOfHeavenCheck().setEnabled(false);
                 getHorizonPlateCheck().setEnabled(false);
             }else{
@@ -317,6 +334,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
                     getAzimuthLinesCheck().setEnabled(true);
                     getUnequalHoursCheck().setEnabled(true);
                     getTwilightLinesCheck().setEnabled(true);
+                    allTwilightLinesCheck.setEnabled(getTwilightLinesCheck().isSelected());
                     getHousesOfHeavenCheck().setEnabled(true);
                 }
                 getHorizonPlateCheck().setEnabled(true);
@@ -366,6 +384,12 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
 
         if (cmd.equals("Show_Twilight")) {
             GeneratorGui.MY_ASTROLABE.setShowTwilightLines(getTwilightLinesCheck().isSelected());
+            allTwilightLinesCheck.setEnabled(getTwilightLinesCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("Show_All_Twilight")) {
+            GeneratorGui.MY_ASTROLABE.setShowAllTwilightLines(getAllTwilightLinesCheck().isSelected());
             getThumbNail().updateUI();
         }
 
@@ -376,12 +400,14 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
                 getAzimuthLinesCheck().setEnabled(false);
                 getUnequalHoursCheck().setEnabled(false);
                 getTwilightLinesCheck().setEnabled(false);
+                getAllTwilightLinesCheck().setEnabled(false);
                 getHousesOfHeavenCheck().setEnabled(false);
             }else{
                 getAltitudeIntervalCombo().setEnabled(true);
                 getAzimuthLinesCheck().setEnabled(true);
                 getUnequalHoursCheck().setEnabled(true);
                 getTwilightLinesCheck().setEnabled(true);
+                getAllTwilightLinesCheck().setEnabled(true);
                 getHousesOfHeavenCheck().setEnabled(true);
             }
             getThumbNail().updateUI();

@@ -80,6 +80,7 @@ public class GeneratorGui extends JFrame implements ActionListener {
             MY_ASTROLABE.setAlmucanterInterval(defaultAstrolabe.getAlmucantarInterval());
             MY_ASTROLABE.setShowAzimuthLines(defaultAstrolabe.isShowAzimuth());
             MY_ASTROLABE.setShowTwilightLines(defaultAstrolabe.isShowTwilight());
+            MY_ASTROLABE.setShowAllTwilightLines(defaultAstrolabe.isShowAllTwilight());
             MY_ASTROLABE.setDegreeScaleType(defaultAstrolabe.getDegreeScaleType());
             MY_ASTROLABE.setShowUnequalHoursLines(defaultAstrolabe.isShowUnequalHours());
             MY_ASTROLABE.setShowHousesofHeavenLines(defaultAstrolabe.isShowHouses());
@@ -90,6 +91,7 @@ public class GeneratorGui extends JFrame implements ActionListener {
             MY_ASTROLABE.setBottomRight(defaultAstrolabe.getBackBottomRight());
             MY_ASTROLABE.setReteType(defaultAstrolabe.getReteType());
             MY_ASTROLABE.setShowCotangentScale(defaultAstrolabe.isShowCotangent());
+            MY_ASTROLABE.setShowConcentricCalendar(defaultAstrolabe.isShowConcentricCalendar());
             MY_ASTROLABE.setShowEquationOfTime(defaultAstrolabe.isShowEot());
         }
     }

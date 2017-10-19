@@ -71,6 +71,7 @@ public class Config {
                     tempAstrolabe.setAlmucantarInterval(Integer.parseInt(eElement.getElementsByTagName("almucantarInterval").item(0).getTextContent()));
                     tempAstrolabe.setShowAzimuth(eElement.getElementsByTagName("showAzimuth").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowTwilight(eElement.getElementsByTagName("showTwilight").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowAllTwilight(eElement.getElementsByTagName("showAllTwilight").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setDegreeScaleType(Integer.parseInt(eElement.getElementsByTagName("degreeScaleType").item(0).getTextContent()));
                     tempAstrolabe.setShowUnequalHours(eElement.getElementsByTagName("showUnequalHours").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowHouses(eElement.getElementsByTagName("showHouses").item(0).getTextContent().equals("true"));
@@ -81,6 +82,7 @@ public class Config {
                     tempAstrolabe.setBackBottomRight(Integer.parseInt(eElement.getElementsByTagName("backBottomRight").item(0).getTextContent()));
                     tempAstrolabe.setReteType(Integer.parseInt(eElement.getElementsByTagName("reteType").item(0).getTextContent()));
                     tempAstrolabe.setShowCotangent(eElement.getElementsByTagName("showCotangent").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowConcentricCalendar(eElement.getElementsByTagName("concentricCalendar").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowEot(eElement.getElementsByTagName("showEot").item(0).getTextContent().equals("true"));
 
                     astrolabeExamples.add(tempAstrolabe);

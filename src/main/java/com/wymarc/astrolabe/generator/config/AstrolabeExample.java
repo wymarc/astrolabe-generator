@@ -32,6 +32,7 @@ public class AstrolabeExample {
     private int almucantarInterval;
     private boolean showAzimuth;
     private boolean showTwilight;
+    private boolean showAllTwilight;
     private int degreeScaleType;
     private boolean showUnequalHours;
     private boolean showHouses;
@@ -42,6 +43,7 @@ public class AstrolabeExample {
     private int backBottomRight;
     private int reteType;
     private boolean showCotangent;
+    private boolean concentricCalendar;
     private boolean showEot;
 
     public String getName() {
@@ -140,6 +142,14 @@ public class AstrolabeExample {
         this.showTwilight = showTwilight;
     }
 
+    public boolean isShowAllTwilight() {
+        return showAllTwilight;
+    }
+
+    public void setShowAllTwilight(boolean showAllTwilight) {
+        this.showAllTwilight = showAllTwilight;
+    }
+
     public int getDegreeScaleType() {
         return degreeScaleType;
     }
@@ -218,6 +228,14 @@ public class AstrolabeExample {
 
     public void setShowCotangent(boolean showCotangent) {
         this.showCotangent = showCotangent;
+    }
+
+    public boolean isShowConcentricCalendar() {
+        return concentricCalendar;
+    }
+
+    public void setShowConcentricCalendar(boolean concentricCalendar) {
+        this.concentricCalendar = concentricCalendar;
     }
 
     public boolean isShowEot() {

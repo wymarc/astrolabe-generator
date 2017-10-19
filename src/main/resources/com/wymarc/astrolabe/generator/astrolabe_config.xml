@@ -18,6 +18,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -28,6 +29,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -43,6 +45,7 @@
 			<almucantarInterval>3</almucantarInterval>
 			<showAzimuth>false</showAzimuth>
 			<showTwilight>false</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -53,6 +56,7 @@
 			<backBottomRight>0</backBottomRight>
 			<reteType>1</reteType>
 			<showCotangent>false</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -68,6 +72,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -78,6 +83,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -93,6 +99,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>true</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>true</showUnequalHours>
 			<showHouses>true</showHouses>
@@ -103,6 +110,7 @@
 			<backBottomRight>3</backBottomRight>
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -118,6 +126,7 @@
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
 			<degreeScaleType>0</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
@@ -128,6 +137,7 @@
 			<backBottomRight>0</backBottomRight>
 			<reteType>2</reteType>
 			<showCotangent>false</showCotangent>
+			<concentricCalendar>true</concentricCalendar>
 			<showEot>true</showEot>
 		</astrolabe>
 	</astrolabes>

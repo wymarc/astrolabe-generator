@@ -57,7 +57,11 @@ public class ThumbNail extends JPanel{
     private JLabel housesOfHeaven = null;
     private JLabel nauticum = null;
     private JLabel twilightLine = null;
+    private JLabel allTwilightLine = null;
     private JLabel unequalHoursFront = null;
+
+    private JLabel offsetCalendar = null;
+    private JLabel concentricCalendar = null;
     private JLabel eot = null;
     private JLabel arcsEqual = null;
     private JLabel arcsProjected = null;
@@ -72,8 +76,10 @@ public class ThumbNail extends JPanel{
     private JLabel unequalHoursBoth = null;
     private JLabel coTangentScale = null;
     private JLabel lunarMansions = null;
-    private JLabel topLeftSine = null;
-    private JLabel topLeftSineCosine = null;
+    private JLabel topLeftSine60 = null;
+    private JLabel topLeftSine100 = null;
+    private JLabel topLeftSineCosine60 = null;
+    private JLabel topLeftSineCosine100 = null;
     private JLabel unequalTopLeft = null;
     private JLabel unequalTopRight = null;
 
@@ -87,7 +93,7 @@ public class ThumbNail extends JPanel{
     public ThumbNail(){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        // create the misc layers for all front views
+        // create the misc layers for all views
         regMarks = createLayer("gui/images/misc/reg.png");
         reteClassic = createLayer("gui/images/misc/rete_classic.png");
         reteClassicZodiac = createLayer("gui/images/misc/rete_classicZ.png");
@@ -116,9 +122,12 @@ public class ThumbNail extends JPanel{
         housesOfHeaven = createLayer("gui/images/front/houses.png");
         nauticum = createLayer("gui/images/front/nauticum.png");
         twilightLine = createLayer("gui/images/front/twilight.png");
+        allTwilightLine = createLayer("gui/images/front/alltwilight.png");
         unequalHoursFront = createLayer("gui/images/front/unequalfront.png");
 
         // create the layers for the back view
+        offsetCalendar = createLayer("gui/images/back/offset.png");
+        concentricCalendar = createLayer("gui/images/back/concentric.png");
         eot = createLayer("gui/images/back/eot.png");
         arcsEqual = createLayer("gui/images/back/arc_equal.png");
         arcsProjected = createLayer("gui/images/back/arc_proj.png");
@@ -133,8 +142,10 @@ public class ThumbNail extends JPanel{
         unequalHoursBoth = createLayer("gui/images/back/both_unequal.png");
         coTangentScale = createLayer("gui/images/back/cotan.png");
         lunarMansions = createLayer("gui/images/back/lunar_mansions.png");
-        topLeftSine = createLayer("gui/images/back/t_l_sine.png");
-        topLeftSineCosine = createLayer("gui/images/back/t_l_sinecos.png");
+        topLeftSine60 = createLayer("gui/images/back/t_l_sine60.png");
+        topLeftSine100 = createLayer("gui/images/back/t_l_sine100.png");
+        topLeftSineCosine60 = createLayer("gui/images/back/t_l_sinecos60.png");
+        topLeftSineCosine100 = createLayer("gui/images/back/t_l_sinecos100.png");
         unequalTopLeft = createLayer("gui/images/back/t_l_unequal.png");
         unequalTopRight = createLayer("gui/images/back/t_r_unequal.png");
 
@@ -174,6 +185,7 @@ public class ThumbNail extends JPanel{
             layeredPane.add(housesOfHeaven, 0, 0);
             layeredPane.add(nauticum, 0, 0);
             layeredPane.add(twilightLine, 0, 0);
+            layeredPane.add(allTwilightLine, 0, 0);
             layeredPane.add(unequalHoursFront, 0, 0);
 
             frontThumbnail.add(layeredPane);
@@ -199,6 +211,7 @@ public class ThumbNail extends JPanel{
         azimuthLines.setVisible(false);
         housesOfHeaven.setVisible(false);
         twilightLine.setVisible(false);
+        allTwilightLine.setVisible(false);
         unequalHoursFront.setVisible(false);
         horizons.setVisible(false);
         nauticum.setVisible(false);
@@ -264,6 +277,10 @@ public class ThumbNail extends JPanel{
                     twilightLine.setVisible(true);
                 }
 
+                if(GeneratorGui.MY_ASTROLABE.getShowAllTwilightLines()){
+                    allTwilightLine.setVisible(true);
+                }
+
                 if(GeneratorGui.MY_ASTROLABE.getShowUnequalHoursLines()){
                     unequalHoursFront.setVisible(true);
                 }
@@ -290,6 +307,8 @@ public class ThumbNail extends JPanel{
             layeredPane.add(throne2, 0, 0);
             layeredPane.add(backLimb, 0, 0);
             layeredPane.add(backLimbZodiac, 0, 0);
+            layeredPane.add(offsetCalendar, 0, 0);
+            layeredPane.add(concentricCalendar, 0, 0);
             layeredPane.add(arcsEqual, 0, 0);
             layeredPane.add(arcsProjected, 0, 0);
             layeredPane.add(shadowSquareLeft, 0, 0);
@@ -301,8 +320,10 @@ public class ThumbNail extends JPanel{
             layeredPane.add(unequalHoursBoth, 0, 0);
             layeredPane.add(coTangentScale, 0, 0);
             layeredPane.add(lunarMansions, 0, 0);
-            layeredPane.add(topLeftSine, 0, 0);
-            layeredPane.add(topLeftSineCosine, 0, 0);
+            layeredPane.add(topLeftSine60, 0, 0);
+            layeredPane.add(topLeftSine100, 0, 0);
+            layeredPane.add(topLeftSineCosine60, 0, 0);
+            layeredPane.add(topLeftSineCosine100, 0, 0);
             layeredPane.add(unequalTopLeft, 0, 0);
             layeredPane.add(unequalTopRight, 0, 0);
             layeredPane.add(eot, 0, 0);
@@ -319,6 +340,8 @@ public class ThumbNail extends JPanel{
         octagon.setVisible(false);
         backLimb.setVisible(false);
         backLimbZodiac.setVisible(false);
+        offsetCalendar.setVisible(false);
+        concentricCalendar.setVisible(false);
         arcsEqual.setVisible(false);
         arcsProjected.setVisible(false);
         shadowSquareLeft.setVisible(false);
@@ -331,8 +354,10 @@ public class ThumbNail extends JPanel{
         coTangentScale.setVisible(false);
         lunarMansions.setVisible(false);
         unequalHoursFront.setVisible(false);
-        topLeftSine.setVisible(false);
-        topLeftSineCosine.setVisible(false);
+        topLeftSine60.setVisible(false);
+        topLeftSine100.setVisible(false);
+        topLeftSineCosine60.setVisible(false);
+        topLeftSineCosine100.setVisible(false);
         unequalTopLeft.setVisible(false);
         unequalTopRight.setVisible(false);
         eot.setVisible(false);
@@ -363,6 +388,11 @@ public class ThumbNail extends JPanel{
             backLimbZodiac.setVisible(true);
         }
 
+        if (GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar()){
+            concentricCalendar.setVisible(true);
+        }else{
+            offsetCalendar.setVisible(true);
+        }
 
         if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 1 && GeneratorGui.MY_ASTROLABE.getTopRight() == 1) {
             unequalHoursBoth.setVisible(true);
@@ -370,9 +400,13 @@ public class ThumbNail extends JPanel{
             if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 1) {
                 unequalTopLeft.setVisible(true);
             } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 2) {
-                topLeftSine.setVisible(true);
+                topLeftSine60.setVisible(true);
             } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 3) {
-                topLeftSineCosine.setVisible(true);
+                topLeftSine100.setVisible(true);
+            } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 4) {
+                topLeftSineCosine60.setVisible(true);
+            } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 5) {
+                topLeftSineCosine100.setVisible(true);
             }
 
             if (GeneratorGui.MY_ASTROLABE.getTopRight() == 1) {
