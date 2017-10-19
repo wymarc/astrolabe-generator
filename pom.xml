@@ -4,7 +4,7 @@
 	<groupId>com.wymarc.astrolabe.generator</groupId>
 	<artifactId>AstrolabeGenerator</artifactId>
 	<packaging>jar</packaging>
-	<version>3.1</version>
+	<version>3.3</version>
 	<name>AstrolabeGenerator</name>
 	<url>http://maven.apache.org</url>
 	<properties>
