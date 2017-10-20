@@ -182,7 +182,7 @@ public class GeneratorGui extends JFrame implements ActionListener {
             //JLabel statusLabel = new JLabel("tooltip");
             statusPanel.add(statusLabel, BorderLayout.WEST);
 
-            JLabel versionLabel = new JLabel("v3.0 astrolabeproject.com");
+            JLabel versionLabel = new JLabel("v" + Config.version + " astrolabeproject.com");
             statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             statusPanel.add(versionLabel, BorderLayout.EAST);
         }
