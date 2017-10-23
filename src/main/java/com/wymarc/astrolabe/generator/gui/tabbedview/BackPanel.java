@@ -33,6 +33,12 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
     private JComboBox topRightCombo = null;
     private JComboBox bottomLeftCombo = null;
     private JComboBox bottomRightCombo = null;
+    private JCheckBox cosineCheck = null;
+    private JCheckBox use100Check = null;
+    private JCheckBox gridPerDegreeCheck = null;
+    private JCheckBox showRadialsCheck = null;
+    private JCheckBox showArcsCheck = null;
+    private JCheckBox showObliqityCheck = null;
     private JCheckBox zodiacCheck = null;
     private JCheckBox lunarMansionCheck = null;
     private JCheckBox cotangentCheck = null;
@@ -40,6 +46,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
     private JCheckBox timeCorrectionCheck = null;
     private JCheckBox equationOfTimeCheck = null;
     private ThumbNail thumbNail = null;
+    private JLabel sineOptionsLabel = null;
     private JPanel sineOptionsPanel = null;
 
     public BackPanel() {
@@ -65,23 +72,37 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         // Add "popup" section if Sine quadrant is selected
         sineOptionsPanel = new JPanel();
         sineOptionsPanel.setLayout(new GridBagLayout());
-        JLabel sineOptionsLabel = new JLabel("Sine Options:");
+        sineOptionsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        sineOptionsLabel = new JLabel("Sine Options:");
+        sineOptionsLabel.setVisible(false);
+
         GridBagConstraints cO = new GridBagConstraints();
         cO.fill = GridBagConstraints.HORIZONTAL;
         cO.insets = new Insets(5,10,5,5);
         cO.gridx = 0;
-        cO.gridy = 0;
-        sineOptionsPanel.add(sineOptionsLabel, cO);
-        JLabel showSineLabel = new JLabel("Show Sine");
-        cO.gridx = 0;
         cO.gridy = 1;
-        sineOptionsPanel.add(showSineLabel, cO);
-        JLabel showSineLabel2 = new JLabel("Show Sinesss");
+        sineOptionsPanel.add(getCosineCheck(), cO);
+        cO.gridx = 0;
+        cO.gridy = 2;
+        sineOptionsPanel.add(getUse100Check(), cO);
+        cO.gridx = 0;
+        cO.gridy = 3;
+        sineOptionsPanel.add(getGridPerDegreeCheck(), cO);
         cO.gridx = 1;
         cO.gridy = 1;
-        sineOptionsPanel.add(showSineLabel2, cO);
+        sineOptionsPanel.add(getShowRadialsCheck(), cO);
+        cO.gridx = 1;
+        cO.gridy = 2;
+        sineOptionsPanel.add(getShowArcsCheck(), cO);
+        cO.gridx = 1;
+        cO.gridy = 3;
+        sineOptionsPanel.add(getShowObliqityCheck(), cO);
 
 
+        c.gridx = 0;
+        c.gridy = 1;
+        optionsPanel.add(sineOptionsLabel, c);
         c.gridx = 1;
         c.gridy = 1;
         sineOptionsPanel.setVisible(false);
@@ -184,6 +205,78 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return bottomRightCombo;
     }
 
+    private JCheckBox getCosineCheck(){
+        if (null == cosineCheck){
+            cosineCheck = new JCheckBox("Show cosine");
+            cosineCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowCosine());
+            cosineCheck.setToolTipText("Show cosine scale as well");
+            cosineCheck.setActionCommand("Show_Cosine");
+            cosineCheck.addActionListener(this);
+            cosineCheck.addMouseListener(this);
+        }
+        return cosineCheck;
+    }
+
+    private JCheckBox getUse100Check(){
+        if (null == use100Check){
+            use100Check = new JCheckBox("100 scale instead of 60");
+            use100Check.setSelected(GeneratorGui.MY_ASTROLABE.getUse100());
+            use100Check.setToolTipText("Show 100 scale instead of 60");
+            use100Check.setActionCommand("Show_100");
+            use100Check.addActionListener(this);
+            use100Check.addMouseListener(this);
+        }
+        return use100Check;
+    }
+
+    private JCheckBox getGridPerDegreeCheck(){
+        if (null == gridPerDegreeCheck){
+            gridPerDegreeCheck = new JCheckBox("Draw grid per degree");
+            gridPerDegreeCheck.setSelected(GeneratorGui.MY_ASTROLABE.getGridPerDegree());
+            gridPerDegreeCheck.setToolTipText("Draw grid per degree");
+            gridPerDegreeCheck.setActionCommand("Grid_Per_Degree");
+            gridPerDegreeCheck.addActionListener(this);
+            gridPerDegreeCheck.addMouseListener(this);
+        }
+        return gridPerDegreeCheck;
+    }
+
+    private JCheckBox getShowRadialsCheck(){
+        if (null == showRadialsCheck){
+            showRadialsCheck = new JCheckBox("Show radials");
+            showRadialsCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowRadials());
+            showRadialsCheck.setToolTipText("Show radials");
+            showRadialsCheck.setActionCommand("Show_Radials");
+            showRadialsCheck.addActionListener(this);
+            showRadialsCheck.addMouseListener(this);
+        }
+        return showRadialsCheck;
+    }
+
+    private JCheckBox getShowArcsCheck(){
+        if (null == showArcsCheck){
+            showArcsCheck = new JCheckBox("Show arcs");
+            showArcsCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowArcs());
+            showArcsCheck.setToolTipText("Show arcs");
+            showArcsCheck.setActionCommand("Show_Arcs");
+            showArcsCheck.addActionListener(this);
+            showArcsCheck.addMouseListener(this);
+        }
+        return showArcsCheck;
+    }
+
+    private JCheckBox getShowObliqityCheck(){
+        if (null == showObliqityCheck){
+            showObliqityCheck = new JCheckBox("Show obliqity arc");
+            showObliqityCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowObliqityArc());
+            showObliqityCheck.setToolTipText("Show the obliqity arc");
+            showObliqityCheck.setActionCommand("Show_Obliqity");
+            showObliqityCheck.addActionListener(this);
+            showObliqityCheck.addMouseListener(this);
+        }
+        return showObliqityCheck;
+    }
+
     private JCheckBox getZodiacCheck(){
         if (null == zodiacCheck){
             zodiacCheck = new JCheckBox("Use zodiac symbols");
@@ -275,11 +368,13 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
         if (cmd.equals("Show_Top_Left")) {
             GeneratorGui.MY_ASTROLABE.setTopLeft(getTopLeftCombo().getSelectedIndex());
-//            if (getTopLeftCombo().getSelectedIndex() == 2){ //todo
-//                sineOptionsPanel.setVisible(true);
-//            }else{
-//                sineOptionsPanel.setVisible(false);
-//            }
+            if (getTopLeftCombo().getSelectedIndex() == 2){ //todo
+                sineOptionsPanel.setVisible(true);
+                sineOptionsLabel.setVisible(true);
+            }else{
+                sineOptionsPanel.setVisible(false);
+                sineOptionsLabel.setVisible(false);
+            }
             getThumbNail().updateUI();
         }
 

@@ -32,7 +32,7 @@ public class Astrolabe {
     public static final String[] HOUROPTIONS = { "Roman", "Arabic", "Alphabet"};
     public static final String[] DEGREESCALEOPTIONS = { "None", "0-90", "0-360"};
     public static final String[] ALTITUDEINTERVALOPTIONS = { "1", "2", "5", "10"};
-    public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale (60)", "Sine scale (100)", "Sine/cosine scale (60)", "Sine/cosine scale (100)"};
+    public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale"};
     public static final String[] TOPRIGHTOPTIONS = { "Blank", "Unequal hours", "Arcs of the signs (equal)", "Arcs of the signs (projected)"};
     public static final String[] BOTTOMLEFTOPTIONS = { "Blank", "7 Shadow square", "10 Shadow square", "12 Shadow square", "Horizontal shadow scale"};
     public static final String[] BOTTOMRIGHTOPTIONS = { "Blank", "7 shadow square", "10 shadow square", "12 shadow square", "Horizontal shadow scale"};
@@ -83,6 +83,12 @@ public class Astrolabe {
     private int shapeOption;					// selects shape of mater and throne
     private boolean zodiacSymbols;				// Use zodiac symbols on ecliptic instead of labels
     private int hourMarkings;               	// use roman numerals/arabic/alphabet
+    private boolean showCosine;                 // show the cosine scale on the sine quadrant scale
+    private boolean use100;                     // show the 100 scale as opposed to the 60 scale
+    private boolean gridPerDegree;              // show the grid lines for every degree
+    private boolean showRadials;                // show the 15 degree radial lines
+    private boolean showArcs;                   // show 20 degree arcs
+    private boolean showObliqityArc;            // show the obliqity arc
     private boolean showTimeCorrection;		    // Print time correction on back
     private boolean showCotangentScale;		    // Print cotangent scale on back
     private boolean concentricCalendar;         // use the concentric calendar
@@ -275,6 +281,54 @@ public class Astrolabe {
 
     public void setHourMarkings(int hourMarkings) {
         this.hourMarkings = hourMarkings;
+    }
+
+    public boolean getShowCosine() {
+        return showCosine;
+    }
+
+    public void setShowCosine(boolean showCosine) {
+        this.showCosine = showCosine;
+    }
+
+    public boolean getUse100() {
+        return use100;
+    }
+
+    public void setUse100(boolean use100) {
+        this.use100 = use100;
+    }
+
+    public boolean getGridPerDegree() {
+        return gridPerDegree;
+    }
+
+    public void setGridPerDegree(boolean gridPerDegree) {
+        this.gridPerDegree = gridPerDegree;
+    }
+
+    public boolean getShowRadials() {
+        return showRadials;
+    }
+
+    public void setShowRadials(boolean showRadials) {
+        this.showRadials = showRadials;
+    }
+
+    public boolean getShowArcs() {
+        return showArcs;
+    }
+
+    public void setShowArcs(boolean showArcs) {
+        this.showArcs = showArcs;
+    }
+
+    public boolean getShowObliqityArc() {
+        return showObliqityArc;
+    }
+
+    public void setShowObliqityArc(boolean showObliqityArc) {
+        this.showObliqityArc = showObliqityArc;
     }
 
     public boolean getShowTimeCorrection() {
