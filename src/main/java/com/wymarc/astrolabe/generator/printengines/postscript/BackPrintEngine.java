@@ -271,7 +271,7 @@ public class BackPrintEngine {
         out += "\n" + "0 " + radius + " lineto";
         out += "\n" + "0 0 " + radius + " 90 180 arc";
         out += "\n" + "0 0 lineto stroke";
-
+/**
         //Print vertical (Sine) scale
         for (i = 0; i <= divisions; i++){
             myY = step*i;
@@ -313,6 +313,60 @@ public class BackPrintEngine {
                 out += "\n" + -myX + " " + myY + " lineto stroke";
             }
         }
+*/
+        boolean test = true;
+        if (test){
+
+            // draw by degree
+//            for (int j = 1; j < 16; j++){
+//                double angleR = Math.toRadians(j*2);
+//                double x = Math.sin(angleR)*radius;
+//                double y = Math.cos(angleR)*radius;
+//                out += "\n" + "newpath";
+//                out += "\n" + "0 " + y + " moveto";
+//                out += "\n" + -x + " " + y + " lineto stroke";
+//            }
+//            for (int j = 31; j < 90; j++){
+            for (int j = 1; j < 90; j++){
+                double angleR = Math.toRadians(j);
+                double x = Math.sin(angleR)*radius;
+                double y = Math.cos(angleR)*radius;
+                out += "\n" + "newpath";
+                out += "\n" + "0 " + y + " moveto";
+                out += "\n" + -x + " " + y + " lineto stroke";
+            }
+
+
+
+            // draw radials
+            for (int j = 1; j < 6; j++){
+                double angleR = Math.toRadians(j * 15.0);
+                double x = Math.sin(angleR)*radius;
+                double y = Math.cos(angleR)*radius;
+                out += "\n" + "newpath";
+                out += "\n" + "0 0 moveto";
+                out += "\n" + -x + " " + y + " lineto stroke";
+            }
+
+            // draw arcs
+            for (int j = 1; j < 9; j++){
+                double angleR = Math.toRadians(j * 10.0);
+                double r = Math.sin(angleR)*radius;
+                out += "\n" + "newpath";
+                out += "\n" + "0 0 moveto";
+                out += "\n" + "0 0 " + r + " 90 180 arc stroke";
+            }
+            // Draw obliqity arc
+            double obl = AstroMath.obliquity(AstroMath.getT());
+            double angleR = Math.toRadians(obl);
+            double r = Math.sin(angleR)*radius;
+            out += "\n" + "newpath";
+            out += "\n" + "[3 3] 0 setdash";
+            out += "\n" + "0 0 moveto";
+            out += "\n" + "0 0 " + r + " 90 180 arc stroke";
+            out += "\n" + "[] 0 setdash";
+        }
+
         out += "\n" + "%% ================ End Sin/Cos Scale =================";
 
         return out;

@@ -40,6 +40,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
     private JCheckBox timeCorrectionCheck = null;
     private JCheckBox equationOfTimeCheck = null;
     private ThumbNail thumbNail = null;
+    private JPanel sineOptionsPanel = null;
 
     public BackPanel() {
         setLayout(new BorderLayout());
@@ -61,28 +62,53 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         c.gridy = 0;
         optionsPanel.add(getTopLeftCombo(),c);
 
-        label = new JLabel("Top right:");
-        c.gridx = 0;
-        c.gridy = 1;
-        optionsPanel.add(label,c);
+        // Add "popup" section if Sine quadrant is selected
+        sineOptionsPanel = new JPanel();
+        sineOptionsPanel.setLayout(new GridBagLayout());
+        JLabel sineOptionsLabel = new JLabel("Sine Options:");
+        GridBagConstraints cO = new GridBagConstraints();
+        cO.fill = GridBagConstraints.HORIZONTAL;
+        cO.insets = new Insets(5,10,5,5);
+        cO.gridx = 0;
+        cO.gridy = 0;
+        sineOptionsPanel.add(sineOptionsLabel, cO);
+        JLabel showSineLabel = new JLabel("Show Sine");
+        cO.gridx = 0;
+        cO.gridy = 1;
+        sineOptionsPanel.add(showSineLabel, cO);
+        JLabel showSineLabel2 = new JLabel("Show Sinesss");
+        cO.gridx = 1;
+        cO.gridy = 1;
+        sineOptionsPanel.add(showSineLabel2, cO);
+
+
         c.gridx = 1;
         c.gridy = 1;
+        sineOptionsPanel.setVisible(false);
+        optionsPanel.add(sineOptionsPanel,c);
+
+        label = new JLabel("Top right:");
+        c.gridx = 0;
+        c.gridy = 2;
+        optionsPanel.add(label,c);
+        c.gridx = 1;
+        c.gridy = 2;
         optionsPanel.add(getTopRightCombo(),c);
 
         JLabel hourLabel = new JLabel("Bottom left:");
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         optionsPanel.add(hourLabel,c);
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 3;
         optionsPanel.add(getBottomLeftCombo(),c);
 
         JLabel degreeScaleLabel = new JLabel("Bottom right:");
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         optionsPanel.add(degreeScaleLabel,c);
         c.gridx = 1;
-        c.gridy = 3;
+        c.gridy = 4;
         optionsPanel.add(getBottomRightCombo(),c);
         c.gridy++;
         optionsPanel.add(getZodiacCheck(),c);
@@ -249,6 +275,11 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
         if (cmd.equals("Show_Top_Left")) {
             GeneratorGui.MY_ASTROLABE.setTopLeft(getTopLeftCombo().getSelectedIndex());
+//            if (getTopLeftCombo().getSelectedIndex() == 2){ //todo
+//                sineOptionsPanel.setVisible(true);
+//            }else{
+//                sineOptionsPanel.setVisible(false);
+//            }
             getThumbNail().updateUI();
         }
 
