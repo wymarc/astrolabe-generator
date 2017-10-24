@@ -83,12 +83,14 @@ public class Astrolabe {
     private int shapeOption;					// selects shape of mater and throne
     private boolean zodiacSymbols;				// Use zodiac symbols on ecliptic instead of labels
     private int hourMarkings;               	// use roman numerals/arabic/alphabet
+
     private boolean showCosine;                 // show the cosine scale on the sine quadrant scale
     private boolean use100;                     // show the 100 scale as opposed to the 60 scale
     private boolean gridPerDegree;              // show the grid lines for every degree
     private boolean showRadials;                // show the 15 degree radial lines
     private boolean showArcs;                   // show 20 degree arcs
     private boolean showObliqityArc;            // show the obliqity arc
+
     private boolean showTimeCorrection;		    // Print time correction on back
     private boolean showCotangentScale;		    // Print cotangent scale on back
     private boolean concentricCalendar;         // use the concentric calendar

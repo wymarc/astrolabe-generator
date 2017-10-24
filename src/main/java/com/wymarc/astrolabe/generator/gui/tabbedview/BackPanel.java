@@ -422,6 +422,36 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
             GeneratorGui.MY_ASTROLABE.setShowEquationOfTime(getEquationOfTimeCheck().isSelected());
             getThumbNail().updateUI();
         }
+
+        if (cmd.equals("Show_Cosine")) {
+            GeneratorGui.MY_ASTROLABE.setShowCosine(getCosineCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("Show_100")) {
+            GeneratorGui.MY_ASTROLABE.setUse100(getUse100Check().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("Grid_Per_Degree")) {
+            GeneratorGui.MY_ASTROLABE.setGridPerDegree(getGridPerDegreeCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("Show_Radials")) {
+            GeneratorGui.MY_ASTROLABE.setShowRadials(getShowRadialsCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("Show_Arcs")) {
+            GeneratorGui.MY_ASTROLABE.setShowArcs(getShowArcsCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("Show_Obliqity")) {
+            GeneratorGui.MY_ASTROLABE.setShowObliqityArc(getShowObliqityCheck().isSelected());
+            getThumbNail().updateUI();
+        }
     }
 
     public void mouseClicked(MouseEvent e) {
