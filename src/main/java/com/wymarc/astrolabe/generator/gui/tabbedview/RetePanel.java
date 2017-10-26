@@ -80,7 +80,7 @@ public class RetePanel extends JPanel implements ActionListener,MouseListener {
     }
 
     public void updateControls(){
-        reteOptionsCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getReteType());
+        getReteOptionsCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getReteType());
         getThumbNail().updateUI();
     }
 

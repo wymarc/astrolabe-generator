@@ -40,10 +40,6 @@ import java.util.zip.ZipOutputStream;
 
 public class EPSPrintEngine {	
 
-    /**
-     * creates an Astrolabe object and sets its properties then
-     * creates and runs the appropriate print engines
-     */
     private Boolean setFilePath(String filePathIn) {
         // first check to see if the path exists if not create it
         File path = new File(filePathIn);
@@ -85,7 +81,7 @@ public class EPSPrintEngine {
 
         JFileChooser chooser = new JFileChooser();
         if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
-            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
+            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.dir")));
         }else{
             chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
         }
@@ -272,7 +268,7 @@ public class EPSPrintEngine {
 
         JFileChooser chooser = new JFileChooser();
         if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
-            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
+            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.dir")));
         }else{
             chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
         }

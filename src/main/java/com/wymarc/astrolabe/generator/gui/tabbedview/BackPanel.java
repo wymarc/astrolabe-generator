@@ -350,16 +350,22 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
     }
 
     public void updateControls(){
-        topLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopLeft());
-        topRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopRight());
-        bottomLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomLeft());
-        bottomRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomRight());
-        zodiacCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowZodiacSymbols());
-        lunarMansionCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowLunarMansions());
-        cotangentCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowCotangentScale());
-        concentricCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar());
-        timeCorrectionCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowTimeCorrection());
-        equationOfTimeCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowEquationOfTime());
+        getTopLeftCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopLeft());
+        getTopRightCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopRight());
+        getBottomLeftCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomLeft());
+        getBottomRightCombo().setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomRight());
+        getZodiacCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowZodiacSymbols());
+        getLunarMansionCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowLunarMansions());
+        getCotangentCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowCotangentScale());
+        getConcentricCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar());
+        getTimeCorrectionCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowTimeCorrection());
+        getEquationOfTimeCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowEquationOfTime());
+        getCosineCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowCosine());
+        getUse100Check().setSelected(GeneratorGui.MY_ASTROLABE.getUse100());
+        getGridPerDegreeCheck().setSelected(GeneratorGui.MY_ASTROLABE.getGridPerDegree());
+        getShowRadialsCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowRadials());
+        getShowArcsCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowArcs());
+        getShowObliqityCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowObliqityArc());
         getThumbNail().updateUI();
     }
 

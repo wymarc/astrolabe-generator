@@ -85,6 +85,12 @@ public class GeneratorGui extends JFrame implements ActionListener {
             MY_ASTROLABE.setShowUnequalHoursLines(defaultAstrolabe.isShowUnequalHours());
             MY_ASTROLABE.setShowHousesofHeavenLines(defaultAstrolabe.isShowHouses());
             MY_ASTROLABE.setShowLunarMansions(defaultAstrolabe.isShowMansions());
+            MY_ASTROLABE.setShowCosine(defaultAstrolabe.isShowCosine());
+            MY_ASTROLABE.setUse100(defaultAstrolabe.isUse100());
+            MY_ASTROLABE.setGridPerDegree(defaultAstrolabe.isGridPerDegree());
+            MY_ASTROLABE.setShowRadials(defaultAstrolabe.isShowRadials());
+            MY_ASTROLABE.setShowArcs(defaultAstrolabe.isShowArcs());
+            MY_ASTROLABE.setShowObliqityArc(defaultAstrolabe.isShowObliqityArc());
             MY_ASTROLABE.setTopLeft(defaultAstrolabe.getBackTopLeft());
             MY_ASTROLABE.setTopRight(defaultAstrolabe.getBackTopRight());
             MY_ASTROLABE.setBottomLeft(defaultAstrolabe.getBackBottomLeft());

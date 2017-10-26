@@ -26,6 +26,12 @@
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
 			<showMansions>false</showMansions>
+			<showCosine>false</showCosine>
+			<use100>false</use100>
+			<gridPerDegree>false</gridPerDegree>
+			<showRadials>false</showRadials>
+			<showArcs>false</showArcs>
+			<showObliqityArc>false</showObliqityArc>
 			<backTopLeft>1</backTopLeft>
 			<backTopRight>1</backTopRight>
 			<backBottomLeft>1</backBottomLeft>
@@ -53,6 +59,12 @@
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
 			<showMansions>false</showMansions>
+			<showCosine>false</showCosine>
+			<use100>false</use100>
+			<gridPerDegree>false</gridPerDegree>
+			<showRadials>false</showRadials>
+			<showArcs>false</showArcs>
+			<showObliqityArc>false</showObliqityArc>
 			<backTopLeft>0</backTopLeft>
 			<backTopRight>0</backTopRight>
 			<backBottomLeft>0</backBottomLeft>
@@ -80,6 +92,12 @@
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
 			<showMansions>false</showMansions>
+			<showCosine>false</showCosine>
+			<use100>false</use100>
+			<gridPerDegree>false</gridPerDegree>
+			<showRadials>false</showRadials>
+			<showArcs>false</showArcs>
+			<showObliqityArc>false</showObliqityArc>
 			<backTopLeft>1</backTopLeft>
 			<backTopRight>1</backTopRight>
 			<backBottomLeft>1</backBottomLeft>
@@ -107,7 +125,13 @@
 			<showUnequalHours>true</showUnequalHours>
 			<showHouses>true</showHouses>
 			<showMansions>true</showMansions>
-			<backTopLeft>3</backTopLeft>
+			<showCosine>true</showCosine>
+			<use100>false</use100>
+			<gridPerDegree>false</gridPerDegree>
+			<showRadials>true</showRadials>
+			<showArcs>true</showArcs>
+			<showObliqityArc>false</showObliqityArc>
+			<backTopLeft>2</backTopLeft>
 			<backTopRight>2</backTopRight>
 			<backBottomLeft>1</backBottomLeft>
 			<backBottomRight>3</backBottomRight>
@@ -134,6 +158,12 @@
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
 			<showMansions>false</showMansions>
+			<showCosine>false</showCosine>
+			<use100>false</use100>
+			<gridPerDegree>false</gridPerDegree>
+			<showRadials>false</showRadials>
+			<showArcs>false</showArcs>
+			<showObliqityArc>false</showObliqityArc>
 			<backTopLeft>0</backTopLeft>
 			<backTopRight>0</backTopRight>
 			<backBottomLeft>0</backBottomLeft>

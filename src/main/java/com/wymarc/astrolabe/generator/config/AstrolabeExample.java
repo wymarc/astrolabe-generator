@@ -124,7 +124,7 @@ public class AstrolabeExample {
         this.hourMarkings = hourMarkings;
     }
 
-    public boolean getShowCosine() {
+    public boolean isShowCosine() {
         return showCosine;
     }
 
@@ -132,7 +132,7 @@ public class AstrolabeExample {
         this.showCosine = showCosine;
     }
 
-    public boolean getUse100() {
+    public boolean isUse100() {
         return use100;
     }
 
@@ -140,7 +140,7 @@ public class AstrolabeExample {
         this.use100 = use100;
     }
 
-    public boolean getGridPerDegree() {
+    public boolean isGridPerDegree() {
         return gridPerDegree;
     }
 
@@ -148,7 +148,7 @@ public class AstrolabeExample {
         this.gridPerDegree = gridPerDegree;
     }
 
-    public boolean getShowRadials() {
+    public boolean isShowRadials() {
         return showRadials;
     }
 
@@ -156,7 +156,7 @@ public class AstrolabeExample {
         this.showRadials = showRadials;
     }
 
-    public boolean getShowArcs() {
+    public boolean isShowArcs() {
         return showArcs;
     }
 
@@ -164,7 +164,7 @@ public class AstrolabeExample {
         this.showArcs = showArcs;
     }
 
-    public boolean getShowObliqityArc() {
+    public boolean isShowObliqityArc() {
         return showObliqityArc;
     }
 

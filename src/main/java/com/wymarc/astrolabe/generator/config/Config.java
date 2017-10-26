@@ -83,6 +83,12 @@ public class Config {
                     tempAstrolabe.setShowUnequalHours(eElement.getElementsByTagName("showUnequalHours").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowHouses(eElement.getElementsByTagName("showHouses").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowMansions(eElement.getElementsByTagName("showMansions").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowCosine(eElement.getElementsByTagName("showCosine").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setUse100(eElement.getElementsByTagName("use100").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setGridPerDegree(eElement.getElementsByTagName("gridPerDegree").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowRadials(eElement.getElementsByTagName("showRadials").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowArcs(eElement.getElementsByTagName("showArcs").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowObliqityArc(eElement.getElementsByTagName("showObliqityArc").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setBackTopLeft(Integer.parseInt(eElement.getElementsByTagName("backTopLeft").item(0).getTextContent()));
                     tempAstrolabe.setBackTopRight(Integer.parseInt(eElement.getElementsByTagName("backTopRight").item(0).getTextContent()));
                     tempAstrolabe.setBackBottomLeft(Integer.parseInt(eElement.getElementsByTagName("backBottomLeft").item(0).getTextContent()));
