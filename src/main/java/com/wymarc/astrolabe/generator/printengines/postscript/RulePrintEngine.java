@@ -341,6 +341,75 @@ public class RulePrintEngine {
             }
         }
 
+        // reference scale for Sine Quadrant and unequal hours
+        if(myAstrolabe.getTopLeft() != 0){
+            // mark the left arm with an arbitrary scale for reference
+            double radius = myAstrolabe.getMaterRadius() - 67;
+            double pivotRadius = 25;
+            double scaleLength = radius - pivotRadius;
+            double step = scaleLength/60.0; // 60 divisions
+
+            int h = 5;
+            boolean label = false;
+
+            for (int i = 0; i < 60; i++){
+                if((i == 0)||((i%5) == 0)){
+                    h = 7;
+                    label = true;
+                }else{
+                    h = 5;
+                    label = false;
+                }
+                double r = pivotRadius + (step * i);
+                out += "\n" + "newpath";
+                out += "\n" + -r + " 0 moveto";
+                out += "\n" + -r + " " + -h + " lineto stroke";
+            }
+
+
+
+//            int h = 0;
+//            boolean label = false;
+//            double scaling = (outerlimit - innerLimit)/34.0;
+//            for(int i = -17; i < 17; i++){
+//                if((i == 0)||((i%10) == 0)){
+//                    h = 10;
+//                    label = true;
+//                }else if((i%5) == 0){
+//                    h = 7;
+//                    label = true;
+//                }else{
+//                    h = 5;
+//                    label = false;
+//                }
+//                double r = ((outerlimit+innerLimit)/2.0) - (i * scaling);
+//                if(counterChange)
+//                {
+//                    out += "\n" + "newpath";
+//                    out += "\n" + r + " 0 moveto";
+//                    out += "\n" + r + " " + h + " lineto stroke";
+//
+//                    if(label){ //todo, southern herishere?
+//                        out += "\n" + "newpath";
+//                        out += "\n" + "NormalFont6 setfont";
+//                        out += "\n" + (r-5) + " 10  moveto";
+//                        out += "\n" + "( " + i + ") show";
+//                    }
+//                }else{
+//                    out += "\n" + "newpath";
+//                    out += "\n" + r + " 0 moveto";
+//                    out += "\n" + r + " " + -h + " lineto stroke";
+//
+//                    if(label){ //todo, southern herishere?
+//                        out += "\n" + "newpath";
+//                        out += "\n" + "NormalFont6 setfont";
+//                        out += "\n" + (r-5) + " -10  moveto";
+//                        out += "\n" + "( " + i + ") show";
+//                    }
+//                }
+//            }
+        }
+
         if (showLabel){
             // label on the sheet
             out += "\n" + "newpath";

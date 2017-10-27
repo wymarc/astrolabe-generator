@@ -374,7 +374,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
         if (cmd.equals("Show_Top_Left")) {
             GeneratorGui.MY_ASTROLABE.setTopLeft(getTopLeftCombo().getSelectedIndex());
-            if (getTopLeftCombo().getSelectedIndex() == 2){ //todo
+            if (getTopLeftCombo().getSelectedIndex() == 2 || getTopLeftCombo().getSelectedIndex() == 3){
                 sineOptionsPanel.setVisible(true);
                 sineOptionsLabel.setVisible(true);
             }else{

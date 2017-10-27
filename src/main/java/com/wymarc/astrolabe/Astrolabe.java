@@ -32,7 +32,7 @@ public class Astrolabe {
     public static final String[] HOUROPTIONS = { "Roman", "Arabic", "Alphabet"};
     public static final String[] DEGREESCALEOPTIONS = { "None", "0-90", "0-360"};
     public static final String[] ALTITUDEINTERVALOPTIONS = { "1", "2", "5", "10"};
-    public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale"};
+    public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale", "Both"};
     public static final String[] TOPRIGHTOPTIONS = { "Blank", "Unequal hours", "Arcs of the signs (equal)", "Arcs of the signs (projected)"};
     public static final String[] BOTTOMLEFTOPTIONS = { "Blank", "7 Shadow square", "10 Shadow square", "12 Shadow square", "Horizontal shadow scale"};
     public static final String[] BOTTOMRIGHTOPTIONS = { "Blank", "7 shadow square", "10 shadow square", "12 shadow square", "Horizontal shadow scale"};
