@@ -359,6 +359,7 @@ public class BackPrintEngine {
                 }
             }
         }
+        out += "\n" + "[] 0 setdash";
 
         out += "\n" + "%% ================ Draw Radials =================";
         if (myAstrolabe.getShowRadials()) {
@@ -378,7 +379,6 @@ public class BackPrintEngine {
                 double angleR = Math.toRadians(j * 10.0);
                 double r = Math.sin(angleR)*radius;
                 out += "\n" + "newpath";
-                out += "\n" + "0 0 moveto";
                 out += "\n" + "0 0 " + r + " 90 180 arc stroke";
             }
         }
@@ -390,7 +390,6 @@ public class BackPrintEngine {
             double r = Math.sin(angleR)*radius;
             out += "\n" + "newpath";
             out += "\n" + "[3 3] 0 setdash";
-            out += "\n" + "0 0 moveto";
             out += "\n" + "0 0 " + r + " 90 180 arc stroke";
             out += "\n" + "[] 0 setdash";
         }

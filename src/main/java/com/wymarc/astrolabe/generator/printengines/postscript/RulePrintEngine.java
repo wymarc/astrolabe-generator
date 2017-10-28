@@ -352,9 +352,9 @@ public class RulePrintEngine {
             int h = 5;
             boolean label = false;
 
-            for (int i = 0; i < 60; i++){
+            for (int i = 0; i < 61; i++){
                 if((i == 0)||((i%5) == 0)){
-                    h = 7;
+                    h = 10;
                     label = true;
                 }else{
                     h = 5;
@@ -364,50 +364,14 @@ public class RulePrintEngine {
                 out += "\n" + "newpath";
                 out += "\n" + -r + " 0 moveto";
                 out += "\n" + -r + " " + -h + " lineto stroke";
+
+                if(label){
+                    out += "\n" + "newpath";
+                    out += "\n" + "NormalFont6 setfont";
+                    out += "\n" + -(r+5) + " -15  moveto";
+                    out += "\n" + "( " + i + ") show";
+                }
             }
-
-
-
-//            int h = 0;
-//            boolean label = false;
-//            double scaling = (outerlimit - innerLimit)/34.0;
-//            for(int i = -17; i < 17; i++){
-//                if((i == 0)||((i%10) == 0)){
-//                    h = 10;
-//                    label = true;
-//                }else if((i%5) == 0){
-//                    h = 7;
-//                    label = true;
-//                }else{
-//                    h = 5;
-//                    label = false;
-//                }
-//                double r = ((outerlimit+innerLimit)/2.0) - (i * scaling);
-//                if(counterChange)
-//                {
-//                    out += "\n" + "newpath";
-//                    out += "\n" + r + " 0 moveto";
-//                    out += "\n" + r + " " + h + " lineto stroke";
-//
-//                    if(label){ //todo, southern herishere?
-//                        out += "\n" + "newpath";
-//                        out += "\n" + "NormalFont6 setfont";
-//                        out += "\n" + (r-5) + " 10  moveto";
-//                        out += "\n" + "( " + i + ") show";
-//                    }
-//                }else{
-//                    out += "\n" + "newpath";
-//                    out += "\n" + r + " 0 moveto";
-//                    out += "\n" + r + " " + -h + " lineto stroke";
-//
-//                    if(label){ //todo, southern herishere?
-//                        out += "\n" + "newpath";
-//                        out += "\n" + "NormalFont6 setfont";
-//                        out += "\n" + (r-5) + " -10  moveto";
-//                        out += "\n" + "( " + i + ") show";
-//                    }
-//                }
-//            }
         }
 
         if (showLabel){
@@ -433,7 +397,7 @@ public class RulePrintEngine {
      * @return  returns the ps code for drawing the rules and pointers
      *
      */
-    public String createRule(Astrolabe myAstrolabeIn, boolean showLabel){
+    public String createCombinedSheet(Astrolabe myAstrolabeIn, boolean showLabel){
 
         myAstrolabe = myAstrolabeIn;
 
@@ -505,9 +469,7 @@ public class RulePrintEngine {
         out += EPSToolKit.getHeader(myAstrolabe,"Alidade Sheet");
         out += "\n" + "%% setup";
         out += "\n" + ".1 setlinewidth";
-        if(myAstrolabe.getShowEquationOfTime()){
-            out += EPSToolKit.setUpFonts();
-        }
+        out += EPSToolKit.setUpFonts();
 
         for(int i = 1; i <= 10; i++)
         {

@@ -76,10 +76,17 @@ public class ThumbNail extends JPanel{
     private JLabel unequalHoursBoth = null;
     private JLabel coTangentScale = null;
     private JLabel lunarMansions = null;
+
     private JLabel topLeftSine60 = null;
     private JLabel topLeftSine100 = null;
-    private JLabel topLeftSineCosine60 = null;
-    private JLabel topLeftSineCosine100 = null;
+    private JLabel topLeftSineDeg = null;
+    private JLabel topLeftCosine60 = null;
+    private JLabel topLeftCosine100 = null;
+    private JLabel topLeftCosineDeg = null;
+    private JLabel topLeftRadials = null;
+    private JLabel topLeftArcs = null;
+    private JLabel topLeftObliqity = null;
+
     private JLabel unequalTopLeft = null;
     private JLabel unequalTopRight = null;
 
@@ -142,10 +149,17 @@ public class ThumbNail extends JPanel{
         unequalHoursBoth = createLayer("gui/images/back/both_unequal.png");
         coTangentScale = createLayer("gui/images/back/cotan.png");
         lunarMansions = createLayer("gui/images/back/lunar_mansions.png");
-        topLeftSine60 = createLayer("gui/images/back/t_l_sine60.png");
+
+        topLeftSine60 = createLayer("gui/images/back/t_l_sine.png");
         topLeftSine100 = createLayer("gui/images/back/t_l_sine100.png");
-        topLeftSineCosine60 = createLayer("gui/images/back/t_l_sinecos60.png");
-        topLeftSineCosine100 = createLayer("gui/images/back/t_l_sinecos100.png");
+        topLeftSineDeg = createLayer("gui/images/back/t_l_sinedegree.png");
+        topLeftCosine60 = createLayer("gui/images/back/t_l_cosine.png");
+        topLeftCosine100 = createLayer("gui/images/back/t_l_cos100.png");
+        topLeftCosineDeg = createLayer("gui/images/back/t_l_cosdegree.png");
+        topLeftRadials = createLayer("gui/images/back/t_l_radials.png");
+        topLeftArcs = createLayer("gui/images/back/t_l_arcs.png");
+        topLeftObliqity = createLayer("gui/images/back/t_l_obliqity.png");
+
         unequalTopLeft = createLayer("gui/images/back/t_l_unequal.png");
         unequalTopRight = createLayer("gui/images/back/t_r_unequal.png");
 
@@ -320,10 +334,17 @@ public class ThumbNail extends JPanel{
             layeredPane.add(unequalHoursBoth, 0, 0);
             layeredPane.add(coTangentScale, 0, 0);
             layeredPane.add(lunarMansions, 0, 0);
+
             layeredPane.add(topLeftSine60, 0, 0);
             layeredPane.add(topLeftSine100, 0, 0);
-            layeredPane.add(topLeftSineCosine60, 0, 0);
-            layeredPane.add(topLeftSineCosine100, 0, 0);
+            layeredPane.add(topLeftSineDeg, 0, 0);
+            layeredPane.add(topLeftCosine60, 0, 0);
+            layeredPane.add(topLeftCosine100, 0, 0);
+            layeredPane.add(topLeftCosineDeg, 0, 0);
+            layeredPane.add(topLeftRadials, 0, 0);
+            layeredPane.add(topLeftArcs, 0, 0);
+            layeredPane.add(topLeftObliqity, 0, 0);
+
             layeredPane.add(unequalTopLeft, 0, 0);
             layeredPane.add(unequalTopRight, 0, 0);
             layeredPane.add(eot, 0, 0);
@@ -354,10 +375,17 @@ public class ThumbNail extends JPanel{
         coTangentScale.setVisible(false);
         lunarMansions.setVisible(false);
         unequalHoursFront.setVisible(false);
+
         topLeftSine60.setVisible(false);
         topLeftSine100.setVisible(false);
-        topLeftSineCosine60.setVisible(false);
-        topLeftSineCosine100.setVisible(false);
+        topLeftSineDeg.setVisible(false);
+        topLeftCosine60.setVisible(false);
+        topLeftCosine100.setVisible(false);
+        topLeftCosineDeg.setVisible(false);
+        topLeftRadials.setVisible(false);
+        topLeftArcs.setVisible(false);
+        topLeftObliqity.setVisible(false);
+
         unequalTopLeft.setVisible(false);
         unequalTopRight.setVisible(false);
         eot.setVisible(false);
@@ -394,29 +422,53 @@ public class ThumbNail extends JPanel{
             offsetCalendar.setVisible(true);
         }
 
+
         if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 1 && GeneratorGui.MY_ASTROLABE.getTopRight() == 1) {
             unequalHoursBoth.setVisible(true);
-        }else {
-            if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 1) {
-                unequalTopLeft.setVisible(true);
-            } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 2) {
-                topLeftSine60.setVisible(true);
-            } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 3) {
-                topLeftSine100.setVisible(true);
-            } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 4) {
-                topLeftSineCosine60.setVisible(true);
-            } else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 5) {
-                topLeftSineCosine100.setVisible(true);
-            }
+        }else if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 1 || GeneratorGui.MY_ASTROLABE.getTopLeft() == 3) {
+            unequalTopLeft.setVisible(true);
+        }
 
-            if (GeneratorGui.MY_ASTROLABE.getTopRight() == 1) {
-                unequalTopRight.setVisible(true);
-            } else if (GeneratorGui.MY_ASTROLABE.getTopRight() == 2) {
-                arcsEqual.setVisible(true);
-            } else if (GeneratorGui.MY_ASTROLABE.getTopRight() == 3) {
-                arcsProjected.setVisible(true);
+        if (GeneratorGui.MY_ASTROLABE.getTopLeft() == 2 || GeneratorGui.MY_ASTROLABE.getTopLeft() == 3 ){
+            // We are showing the sine grid now get the options
+            // Sine scale
+            if (GeneratorGui.MY_ASTROLABE.getUse100()){
+                topLeftSine100.setVisible(true);
+            }else if (GeneratorGui.MY_ASTROLABE.getGridPerDegree()){
+                topLeftSineDeg.setVisible(true);
+            }else{
+                topLeftSine60.setVisible(true);
+            }
+            // Cosine scale
+            if (GeneratorGui.MY_ASTROLABE.getShowCosine()) {
+                if (GeneratorGui.MY_ASTROLABE.getUse100()) {
+                    topLeftCosine100.setVisible(true);
+                } else if (GeneratorGui.MY_ASTROLABE.getGridPerDegree()) {
+                    topLeftCosineDeg.setVisible(true);
+                } else {
+                    topLeftCosine60.setVisible(true);
+                }
+            }
+            // Misc
+            if (GeneratorGui.MY_ASTROLABE.getShowRadials()){
+                topLeftRadials.setVisible(true);
+            }
+            if (GeneratorGui.MY_ASTROLABE.getShowArcs()){
+                topLeftArcs.setVisible(true);
+            }
+            if (GeneratorGui.MY_ASTROLABE.getShowObliqityArc()){
+                topLeftObliqity.setVisible(true);
             }
         }
+
+        if (GeneratorGui.MY_ASTROLABE.getTopRight() == 1 && (GeneratorGui.MY_ASTROLABE.getTopLeft() == 2 || GeneratorGui.MY_ASTROLABE.getTopLeft() == 3)) {
+            unequalTopRight.setVisible(true);
+        } else if (GeneratorGui.MY_ASTROLABE.getTopRight() == 2) {
+            arcsEqual.setVisible(true);
+        } else if (GeneratorGui.MY_ASTROLABE.getTopRight() == 3) {
+            arcsProjected.setVisible(true);
+        }
+
 
         if (GeneratorGui.MY_ASTROLABE.getBottomLeft() == 1 || GeneratorGui.MY_ASTROLABE.getBottomLeft() == 2 || GeneratorGui.MY_ASTROLABE.getBottomLeft() == 3) {
             if (GeneratorGui.MY_ASTROLABE.getShowCotangentScale()){

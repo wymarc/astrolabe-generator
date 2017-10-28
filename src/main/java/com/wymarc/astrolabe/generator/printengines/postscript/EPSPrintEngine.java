@@ -126,7 +126,7 @@ public class EPSPrintEngine {
 
 	        // create accessory sheet
             RulePrintEngine myAstrolabeRule = new RulePrintEngine();
-            dataString = myAstrolabeRule.createRule(GeneratorGui.MY_ASTROLABE, true);
+            dataString = myAstrolabeRule.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true);
             save(filePath + "/AstrolabeRules.eps",dataString);
 
             //print universal astrolabe
@@ -313,7 +313,7 @@ public class EPSPrintEngine {
 
             //rule
             RulePrintEngine myAstrolabeRule = new RulePrintEngine();
-            dataString = myAstrolabeRule.createRule(GeneratorGui.MY_ASTROLABE, true);
+            dataString = myAstrolabeRule.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true);
             updateZip("AstrolabeRule.eps", zos, dataString);
 
             //extras
@@ -452,7 +452,7 @@ public class EPSPrintEngine {
             postScriptStrings.add(myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE));
             // create rules
             RulePrintEngine myAstrolabeRules = new RulePrintEngine();
-            postScriptStrings.add(myAstrolabeRules.createRule(GeneratorGui.MY_ASTROLABE, true));
+            postScriptStrings.add(myAstrolabeRules.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true));
         }else if (GeneratorGui.tabSelected.equals("Quadrants")){
             //Quadrants
             if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
@@ -514,7 +514,7 @@ public class EPSPrintEngine {
 
         // create rules
         RulePrintEngine myAstrolabeRules = new RulePrintEngine();
-        postScriptStrings.add(myAstrolabeRules.createRule(GeneratorGui.MY_ASTROLABE, true));
+        postScriptStrings.add(myAstrolabeRules.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true));
 
         //extras
         if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
