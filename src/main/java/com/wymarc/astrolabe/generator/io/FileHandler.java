@@ -115,4 +115,71 @@ public class FileHandler {
         }
         return success;
     }
+
+    public static String getSavePath(){
+        JFileChooser chooser = new JFileChooser();
+        if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
+            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.dir")));
+        }else{
+            chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
+        }
+        chooser.setDialogTitle("Select location to save files to");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        // disable the "All files" option.
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setApproveButtonText("Select");
+        // Set the mnemonic
+        chooser.setApproveButtonMnemonic('s');
+        // Set the tool tip
+        chooser.setApproveButtonToolTipText("Save here");
+
+
+        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
+            return null;
+        }
+
+        String filePath = chooser.getSelectedFile().getPath();
+        Boolean noProblems = setFilePath(filePath);
+
+        if (noProblems){
+            GeneratorGui.MY_ASTROLABE.setFilePath(filePath);
+            return filePath;
+        }
+
+        return null;
+    }
+
+    private static Boolean setFilePath(String filePathIn) {
+        // first check to see if the path exists if not create it
+        File path = new File(filePathIn);
+        boolean exists = path.exists();
+        if (!exists) {
+            try{
+                return path.mkdir();
+            } catch(Exception e){
+                e.printStackTrace();
+                System.out.println("Error -- Folder path does not exist and cannot be created");
+                exists = false;
+            }
+        }
+
+        return exists;
+    }
+
+    public static Boolean saveFile(String target, String fileData){
+
+        try {
+            FileWriter outFile = new FileWriter(target);
+            PrintWriter out = new PrintWriter(outFile);
+            out.print(fileData);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
 }
