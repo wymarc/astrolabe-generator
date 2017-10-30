@@ -254,174 +254,27 @@ public class EPSPrintEngine {
     public void saveZip(){
     	//saving to zip: http://www.javaworld.com/community/node/8362
 
-        JFileChooser chooser = new JFileChooser();
-        if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
-            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.dir")));
-        }else{
-            chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
-        }
-        chooser.setDialogTitle("Select location to save zip file to");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        String filePath = FileHandler.getSavePath();
 
-        // disable the "All files" option.
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setApproveButtonText("Select");
-        // Set the mnemonic
-        chooser.setApproveButtonMnemonic('s');
-        // Set the tool tip
-        chooser.setApproveButtonToolTipText("Save here");
-
-
-        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
-            return;
-        }
-
-        ZipOutputStream zos;
-        String filePath = "";
-        try {
-            filePath = chooser.getSelectedFile().getPath() + "/astrolabe.zip";
-            GeneratorGui.MY_ASTROLABE.setFilePath(chooser.getSelectedFile().getPath());
-
-            zos = new ZipOutputStream(new FileOutputStream(filePath));
-
-            //front
-            FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
-            String dataString = myAstrolabeFront.createFront(GeneratorGui.MY_ASTROLABE);
-            updateZip("AstrolabeFront.eps", zos, dataString);
-
-            //back
-            BackPrintEngine myAstrolabeBack = new BackPrintEngine();
-            dataString = myAstrolabeBack.createBack(GeneratorGui.MY_ASTROLABE);
-            updateZip("AstrolabeBack.eps", zos, dataString);
-
-            //rete
-            RetePrintEngine myAstrolabeRete = new RetePrintEngine();
-            dataString = myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE);
-            updateZip("AstrolabeRete.eps", zos, dataString);
-
-            //rule
-            RulePrintEngine myAstrolabeRule = new RulePrintEngine();
-            dataString = myAstrolabeRule.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true);
-            updateZip("AstrolabeRule.eps", zos, dataString);
-
-            //extras
-            if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
-                dataString = myAstrolabeRule.buildRulesSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged());
-                updateZip("AstrolabeRules.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintAlidadeSheet()){
-                dataString = myAstrolabeRule.buildAlidadeSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged());
-                updateZip("AstrolabeAlidades.eps", zos, dataString);
-            }
-
-            // for each climate set create a folder with the set name and print the climates to it
-//            for (JCheckBox chk : GeneratorGui.MY_ASTROLABE.getClimateSetCheckboxes()){
-//                if (chk.isSelected()){
-//                    FrontPrintEngine climateEngine = new FrontPrintEngine();
-//                    // make a local copy of the current settings
-//                    Astrolabe workingAstrolabe = GeneratorGui.MY_ASTROLABE;
-//                    //set it to hide the mater
-//                    workingAstrolabe.setFrontPrintOption(1);
-//                    workingAstrolabe.setShowHorizonPlate(false);
-//                    // get the climate list
-//                    List<ClimateSet> climateSets = GeneratorGui.MY_CONFIG.getClimateSets();
-//                    for (ClimateSet set : climateSets){
-//                        if (set.getName().equals(chk.getText())){
-//                            String folder = set.getName();
-//                            updateZip(folder + "/", zos, null);
-//                            for(ClimatePlate plate :set.getClimates()){
-//                                workingAstrolabe.getLocation().setLocation(plate.getLocation() + " 0000000E");
-//                                String plateName = plate.getName();
-//                                dataString = climateEngine.createFront(workingAstrolabe);
-//                                updateZip(folder + "/" + plateName + ".eps", zos, dataString);
-//                            }
-//                            // Add horizons plate
-//                            workingAstrolabe.setShowHorizonPlate(true);
-//                            dataString = climateEngine.createFront(workingAstrolabe);
-//                            updateZip(folder + "/horizons.eps", zos, dataString);
-//                            workingAstrolabe.setShowHorizonPlate(false);
-//                        }
-//                    }
-//                }
-//            }
-
-            // quadrants
-            if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
-                BasicHoraryQuadrant basicHoraryQuad = new BasicHoraryQuadrant();
-                dataString = basicHoraryQuad.printQuadrant();
-                updateZip("basicHoraryQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
-                AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
-                dataString = advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE);
-                updateZip("AdvancedHoraryQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintSineQuadrant()){
-                SineQuadrant sineQuadrant = new SineQuadrant();
-                dataString = sineQuadrant.printQuadrant(false);
-                updateZip("SineQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintColorSineQuadrant()){
-                SineQuadrant sineQuadrant = new SineQuadrant();
-                dataString = sineQuadrant.printQuadrant(true);
-                updateZip("ColorSineQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
-                VernierSineQuadrant vernierSineQuadrant = new VernierSineQuadrant();
-                dataString = vernierSineQuadrant.printQuadrant();
-                updateZip("VernierSineQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintEqualHoursHoraryQuadrant()){
-                EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,false);  //todo new quadrant
-                dataString = equalhoursQuadrantBack.createQuadrantBack();
-                updateZip("EqualHoursQuadrantBack.eps", zos, dataString);
-
-                EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,false);  //todo new quadrant
-                dataString = equalhoursQuadrantFront.createQuadrantFront();
-                updateZip("EqualHoursQuadrantFront.eps", zos, dataString);
-
-            }
-
-
-            // todo add other extras
-            zos.close();
-        }catch(Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"There was a problem saving the ZIP archive","Save Error",JOptionPane.ERROR_MESSAGE);
-        }
-
-        JOptionPane.showMessageDialog(null,"ZIP archive saved to: \n" + filePath);
-    }
-
-    private void updateZip(String fileName, ZipOutputStream zos, String dataString){
-        try {
-            if (null == dataString && fileName.endsWith("/")){ //this is a folder
-                ZipEntry ze1 = new ZipEntry(fileName);
-                zos.putNextEntry(ze1);
-                zos.closeEntry();
-                zos.flush();
+        // verify the filepath and the Astrolabe Object
+        Boolean noProblems = filePath != null && GeneratorGui.MY_ASTROLABE != null ;
+        if (noProblems){
+            filePath = filePath + "/astrolabe.zip";
+            List<List<String>> components = getComponents();
+            try {
+                ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(filePath));
+                for (List<String> component : components){
+                    FileHandler.updateZip(component.get(0), zos, component.get(1));
+                }
+                zos.close();
+            }catch(Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null,"There was a problem saving the ZIP archive","Save Error",JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            byte[] buf = new byte[1024];
-            ZipEntry ze1 = new ZipEntry(fileName);
-            zos.putNextEntry(ze1);
-            InputStream is = new ByteArrayInputStream(dataString.getBytes(Charset.defaultCharset()));
-            int len;
-            while ((len = is.read(buf)) > 0) {
-                zos.write(buf, 0, len);
-            }
-            zos.closeEntry();
-            zos.flush();
-        }catch(Exception e){
-            e.printStackTrace();
         }
+        JOptionPane.showMessageDialog(null,"ZIP archive saved to: \n" + filePath);
     }
 
     public void printCurrent(){

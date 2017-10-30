@@ -24,6 +24,9 @@ import com.wymarc.astrolabe.generator.gui.GeneratorGui;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class FileHandler {
 
@@ -69,32 +72,14 @@ public class FileHandler {
         return success;
     }
 
+    /**
+     * Saves the Astrolabe_assembly.pdf to the local machine
+     * @return success or failure
+     */
     public static boolean saveInstructable(){
-        boolean success = false;
+        boolean success;
 
-        JFileChooser chooser = new JFileChooser();
-
-        if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
-            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
-        }else{
-            chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
-        }
-        chooser.setDialogTitle("Select location to save file to");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        // disable the "All files" option.
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setApproveButtonText("Select");
-        // Set the mnemonic
-        chooser.setApproveButtonMnemonic('s');
-        // Set the tool tip
-        chooser.setApproveButtonToolTipText("Save here");
-
-        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
-            return success;
-        }
-
-        String filePath = chooser.getSelectedFile().getPath();
+        String filePath = getSavePath();
         GeneratorGui.MY_ASTROLABE.setFilePath(filePath);
 
         try{
@@ -116,6 +101,10 @@ public class FileHandler {
         return success;
     }
 
+    /**
+     * Pops up a dialog to allow the user to choose where to save files
+     * @return The path to the desired folder
+     */
     public static String getSavePath(){
         JFileChooser chooser = new JFileChooser();
         if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
@@ -123,7 +112,7 @@ public class FileHandler {
         }else{
             chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
         }
-        chooser.setDialogTitle("Select location to save files to");
+        chooser.setDialogTitle("Select location to save to");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         // disable the "All files" option.
@@ -150,6 +139,11 @@ public class FileHandler {
         return null;
     }
 
+    /**
+     * Tests for the existance of the traget folder, attempts to create it if it does not exist
+     * @param filePathIn The path to the desired folder
+     * @return True if a legal path, false otherwise
+     */
     private static Boolean setFilePath(String filePathIn) {
         // first check to see if the path exists if not create it
         File path = new File(filePathIn);
@@ -167,6 +161,12 @@ public class FileHandler {
         return exists;
     }
 
+    /**
+     * Save an individual datastring to a given file location
+     * @param target Path and file name
+     * @param fileData Data to be saved
+     * @return Success or failure
+     */
     public static Boolean saveFile(String target, String fileData){
 
         try {
@@ -180,6 +180,38 @@ public class FileHandler {
         }
 
         return true;
+    }
+
+
+    /**
+     * Updates an existing zipfile stream object with a new entry
+     * @param fileName Name of the file to be added
+     * @param zos ZipOutputStream to be updated
+     * @param dataString Data to be saved in the file
+     */
+    public static void updateZip(String fileName, ZipOutputStream zos, String dataString){
+        try {
+            if (null == dataString && fileName.endsWith("/")){ //this is a folder
+                ZipEntry ze1 = new ZipEntry(fileName);
+                zos.putNextEntry(ze1);
+                zos.closeEntry();
+                zos.flush();
+                return;
+            }
+
+            byte[] buf = new byte[1024];
+            ZipEntry ze1 = new ZipEntry(fileName);
+            zos.putNextEntry(ze1);
+            InputStream is = new ByteArrayInputStream(dataString.getBytes(Charset.defaultCharset()));
+            int len;
+            while ((len = is.read(buf)) > 0) {
+                zos.write(buf, 0, len);
+            }
+            zos.closeEntry();
+            zos.flush();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
