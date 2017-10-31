@@ -591,7 +591,6 @@ public class Astrolabe {
 
 
     public Astrolabe(){
-
         // initialize settings
         this.userName = "Your Name";
         this.location = new Location("Pennsic War",40,58,35,"N",80,8,9,"W");

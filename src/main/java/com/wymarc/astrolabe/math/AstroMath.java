@@ -427,27 +427,6 @@ public class AstroMath {
         return correction;
     }
 
-//    /**
-//     * After Herbert O. Ramp, Equation of Time – Comparison of Approximating Formulae , Compendium of
-//     * the North American Sundial Society, Vol. 18, No. 1, pp. 20‐22, March 2011.
-//     *
-//     * @param dayIn Day of the year (Jan 1 = 1 etc)
-//     * @return Time correction for the day of the year in decimal minutes
-//     */
-//    public static double equationOfTime(int dayIn){
-//        double temp = 22.0/7.0*(dayIn*360.0/365.2422-80.535132)/180.0;
-//        double minuteCorrection = (
-//                (-107.0605*Math.sin(temp))
-//                -(428.6697*Math.cos(temp))
-//                +(596.1009*Math.sin(2*temp))
-//                -(2.0898*Math.cos(2*temp))
-//                +(4.4173*Math.sin(3*temp))
-//                +(19.2776*Math.cos(3*temp))
-//                +(12.7338*Math.sin(4*temp)))/60.0;
-//
-//        return minuteCorrection; //EqT in minutes
-//	}
-
     /**
      * Calculate the Equation of Time from 'day of year'
      * Originally written by Del Smith, 2016-11-29

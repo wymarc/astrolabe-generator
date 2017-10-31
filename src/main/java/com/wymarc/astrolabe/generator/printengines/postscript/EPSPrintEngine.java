@@ -42,6 +42,17 @@ import java.util.zip.ZipOutputStream;
 
 public class EPSPrintEngine {
 
+    /**
+     * Assemble a List of the selected components for output
+     *
+     * Data is returned in the form of a nested list:
+     * 1. 1. Name of component 1
+     *    2. EPS data for 1
+     * 2. 1. Name of component 2
+     *    2. EPS data for 2
+     *
+     * @return List<List<String>>
+     */
     private List<List<String>> getComponents(){
         List<List<String>> selectedComponents = new ArrayList<List<String>>();
         List<String> component;
@@ -277,8 +288,10 @@ public class EPSPrintEngine {
         JOptionPane.showMessageDialog(null,"ZIP archive saved to: \n" + filePath);
     }
 
+    /**
+     * Print the component(s) on the currently selected tab
+     */
     public void printCurrent(){
-       //todo  locate current selected tab and print that
         ArrayList<String> postScriptStrings = new ArrayList<String>();
 
         if (GeneratorGui.tabSelected.equals("Front")){
@@ -338,6 +351,9 @@ public class EPSPrintEngine {
         printPage(postScriptStrings);
     }
 
+    /**
+     * Print all selected components
+     */
     public void printAll(){
         ArrayList<String> postScriptStrings = new ArrayList<String>();
 
@@ -371,6 +387,11 @@ public class EPSPrintEngine {
         printPage(postScriptStrings);
     }
 
+    /**
+     * This will attempt to locate PostScript compatable printers on the machine and
+     * allow the user to print files directly.
+     * @param postScriptStrings ArrayList<String> containing the PostScript data for the components
+     */
     private void printPage( ArrayList<String> postScriptStrings){
         if (null == postScriptStrings || postScriptStrings.isEmpty()){
             return;

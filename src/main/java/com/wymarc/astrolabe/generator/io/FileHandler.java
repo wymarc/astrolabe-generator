@@ -30,13 +30,13 @@ import java.util.zip.ZipOutputStream;
 
 public class FileHandler {
 
-    public static Astrolabe openAstrolabeFile(){
+    public static Astrolabe openAstrolabeFile(){ //todo save and open not implemented yet
         Astrolabe savedAstrolabe = new Astrolabe();
 
         return savedAstrolabe;
     }
 
-    public static boolean saveAstrolabe(Astrolabe myAstrolabe){
+    public static boolean saveAstrolabe(Astrolabe myAstrolabe){ //todo save and open not implemented yet
         boolean success = true;
 
         // get settings
@@ -123,7 +123,6 @@ public class FileHandler {
         // Set the tool tip
         chooser.setApproveButtonToolTipText("Save here");
 
-
         if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
             return null;
         }
@@ -157,7 +156,6 @@ public class FileHandler {
                 exists = false;
             }
         }
-
         return exists;
     }
 
@@ -168,7 +166,6 @@ public class FileHandler {
      * @return Success or failure
      */
     public static Boolean saveFile(String target, String fileData){
-
         try {
             FileWriter outFile = new FileWriter(target);
             PrintWriter out = new PrintWriter(outFile);
@@ -178,10 +175,8 @@ public class FileHandler {
             e.printStackTrace();
             return false;
         }
-
         return true;
     }
-
 
     /**
      * Updates an existing zipfile stream object with a new entry

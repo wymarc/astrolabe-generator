@@ -67,43 +67,8 @@ public class RulePrintEngine {
 
         if (scale)
         {
-            // mark rule
-            double r;
-            int h;
-            Boolean label;
-            int labelNum;
-
-            for(int i = -22; i <= 50; i++)
-            {
-                r = myAstrolabe.getEquatorRadius()*(Math.tan(Math.toRadians((90-i)/2.0)));
-                if((i == 0)||((i%10) == 0))
-                {
-                    h = 10;
-                    label = true;
-                }
-                else
-                {
-                    h = 5;
-                    label = false;
-                }
-                out += "\n" + "newpath";
-                out += "\n" + r + " 0 moveto";
-                out += "\n" + r + " " + h + " lineto stroke";
-                if(label)
-                {
-                    out += "\n" + "newpath";
-                    out += "\n" + "NormalFont6 setfont";
-                    out += "\n" + (r-5) + " 10  moveto";                    
-				    if (myAstrolabe.getLocation().getLatDir().equals("S"))
-				    {
-				    	labelNum = -i; //invert scale if southern Hemisphere
-				    }else
-				    {
-				    	labelNum = i;
-				    }
-                    out += "\n" + "( " + labelNum + ") show";
-                }
-            }
+            // Mark rule
+            out += markRule();
         }
 
         if (showLabel){
@@ -174,43 +139,7 @@ public class RulePrintEngine {
         if (scale)
         {
             // mark rule
-            double r;
-            int h;
-            Boolean label;
-            int labelNum;
-
-            for(int i = -22; i <= 50; i++)
-            {
-                r = myAstrolabe.getEquatorRadius()*(Math.tan(Math.toRadians((90-i)/2.0)));
-                if((i == 0)||((i%10) == 0))
-                {
-                    h = 10;
-                    label = true;
-                }
-                else
-                {
-                    h = 5;
-                    label = false;
-                }
-                out += "\n" + "newpath";
-                out += "\n" + r + " 0 moveto";
-                out += "\n" + r + " " + h + " lineto stroke";
-                if(label)
-                {
-                    out += "\n" + "newpath";
-                    out += "\n" + "NormalFont6 setfont";
-                    out += "\n" + (r-5) + " 10  moveto";
-				    if (myAstrolabe.getLocation().getLatDir().equals("S"))
-				    {
-				    	labelNum = -i; //invert scale if southern Hemisphere
-				    }else
-				    {
-				    	labelNum = i;
-				    }
-                    out += "\n" + "( " + labelNum + ") show";
-                }
-
-            }
+            out += markRule();
         }
 
         if (showLabel){
@@ -225,6 +154,50 @@ public class RulePrintEngine {
         out += "\n" + "";
 
         return out;
+    }
+
+    private String markRule(){
+        String markings = "";
+
+        // mark rule
+        double r;
+        int h;
+        Boolean label;
+        int labelNum;
+
+        for(int i = -22; i <= 50; i++)
+        {
+            r = myAstrolabe.getEquatorRadius()*(Math.tan(Math.toRadians((90-i)/2.0)));
+            if((i == 0)||((i%10) == 0))
+            {
+                h = 10;
+                label = true;
+            }
+            else
+            {
+                h = 5;
+                label = false;
+            }
+            markings += "\n" + "newpath";
+            markings += "\n" + r + " 0 moveto";
+            markings += "\n" + r + " " + h + " lineto stroke";
+            if(label)
+            {
+                markings += "\n" + "newpath";
+                markings += "\n" + "NormalFont6 setfont";
+                markings += "\n" + (r-5) + " 10  moveto";
+                if (myAstrolabe.getLocation().getLatDir().equals("S"))
+                {
+                    labelNum = -i; //invert scale if southern Hemisphere
+                }else
+                {
+                    labelNum = i;
+                }
+                markings += "\n" + "( " + labelNum + ") show";
+            }
+
+        }
+        return markings;
     }
 
     /**
