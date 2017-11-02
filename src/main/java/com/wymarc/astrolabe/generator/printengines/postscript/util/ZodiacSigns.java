@@ -25,7 +25,7 @@ import java.awt.geom.Point2D;
  * This file contains tools for working with EPS
  * (Encapsulated PostScript)
  *
- * author    Timothy J. Mitchell <wymarc@gmail.com>
+ * author    Timothy J. Mitchell (wymarc@gmail.com)
  *
  * Usage:
  * -- rotate the document to the desired angle
@@ -366,8 +366,9 @@ public class ZodiacSigns {
     }
 
     /**
-     * returns the requested glyph by number
-     *
+	 * returns the requested glyph by number
+	 * @param sign sign number
+	 * @return sign number
      */
     public static String getSignNum(int sign){
         String signData = "";
@@ -417,8 +418,13 @@ public class ZodiacSigns {
     }
 
     /**
-     * Retrieves the requested glyph by number and passes the data to the print function
-     *
+	 * Retrieves the requested glyph by number and passes the data to the print function
+	 * @param sign sign number
+	 * @param x x location
+	 * @param y y location
+	 * @param scaleX Size scaling for X
+	 * @param scaleY Size scaling for Y
+     * @return PS code
      */
     public static String placeSignNumAt(int sign, Double x, Double y, Double scaleX, Double scaleY){
 
@@ -427,8 +433,12 @@ public class ZodiacSigns {
     }
 
     /**
-     * Retrieves the requested glyph by number and passes the data to the print function
-     *
+	 * Retrieves the requested glyph by number and passes the data to the print function
+	 * @param sign Sign number
+	 * @param location Location to print sign
+	 * @param scaleX Size scaling for X
+	 * @param scaleY Size scaling for Y
+     * @return PS code
      */
     public static String placeSignNumAt(int sign, Point2D.Double location, Double scaleX, Double scaleY){
 
@@ -436,9 +446,13 @@ public class ZodiacSigns {
         return place(signData, location, scaleX, scaleY);
     }
 
-    /**
-     * Retrieves the requested glyph by name and passes the data to the print function
-     *
+   /**
+	 * Retrieves the requested glyph by name and passes the data to the print function
+	 * @param sign Name of sign
+	 * @param location Location to print sign
+	 * @param scaleX Size scaling for X
+	 * @param scaleY Size scaling for Y
+     * @return PS code
      */
     public static String placeSignAt(String sign, Point2D.Double location, Double scaleX, Double scaleY){
 

@@ -134,7 +134,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getShowOptionsCombo(){
         if (null == showOptionsCombo){
-            showOptionsCombo = new JComboBox(Astrolabe.SHOWOPTIONS);
+            showOptionsCombo = new JComboBox<>(Astrolabe.SHOWOPTIONS);
             showOptionsCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getFrontPrintOption());
             showOptionsCombo.setToolTipText("Select what parts to print");
             showOptionsCombo.setActionCommand("Show_Mater");
@@ -146,7 +146,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getShapeCombo(){
         if (null == shapeCombo){
-            shapeCombo = new JComboBox(Astrolabe.SHAPEOPTIONS);
+            shapeCombo = new JComboBox<>(Astrolabe.SHAPEOPTIONS);
             shapeCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getShapeOption());
             shapeCombo.setToolTipText("Select shape of astrolabe");
             shapeCombo.setActionCommand("Shape");
@@ -158,7 +158,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getHourCombo(){
         if (null == hourCombo){
-            hourCombo = new JComboBox(Astrolabe.HOUROPTIONS);
+            hourCombo = new JComboBox<>(Astrolabe.HOUROPTIONS);
             hourCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getHourMarkings());
             hourCombo.setToolTipText("Select hour markings");
             hourCombo.setActionCommand("Hours");
@@ -170,7 +170,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getDegreeScaleCombo(){
         if (null == degreeScaleCombo){
-            degreeScaleCombo = new JComboBox(Astrolabe.DEGREESCALEOPTIONS);
+            degreeScaleCombo = new JComboBox<>(Astrolabe.DEGREESCALEOPTIONS);
             degreeScaleCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getDegreeScaleType());
             degreeScaleCombo.setToolTipText("Show degree scale");
             degreeScaleCombo.setActionCommand("Degrees");
@@ -182,7 +182,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getAltitudeIntervalCombo(){
         if (null == altitudeIntervalCombo){
-            altitudeIntervalCombo = new JComboBox(Astrolabe.ALTITUDEINTERVALOPTIONS);
+            altitudeIntervalCombo = new JComboBox<>(Astrolabe.ALTITUDEINTERVALOPTIONS);
             altitudeIntervalCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getDegreeInterval());
             altitudeIntervalCombo.setToolTipText("Set altitude angle interval");
             altitudeIntervalCombo.setActionCommand("Almucantars");

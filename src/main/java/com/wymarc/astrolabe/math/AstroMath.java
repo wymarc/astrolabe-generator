@@ -33,7 +33,7 @@ public class AstroMath {
 
     /**
      * normalizes angle to 0 - 360
-     * ex: 405 => 45
+     * ex: 405 becomes 45
      * 
      * modified from Morrison
      *
@@ -487,7 +487,7 @@ public class AstroMath {
 
     /**
      * return integer part of number
-     * 25.3345 => 25.0
+     * 25.3345 becomes 25.0
      *	
      * modified from Morrison
      *
@@ -506,7 +506,7 @@ public class AstroMath {
      * Asr begins when the length of any vertical gnomon's shadow equals the length
      * of the gnomon itself plus the length of that gnomon's shadow at noon.
      *
-     * @param interval
+     * @param interval double
      *
      * @param  multiplier 1 gives the start of Asr (+ the gnomon length), 2 gives the end (+ twice the gnomon length)
      *

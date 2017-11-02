@@ -44,7 +44,8 @@ public class Star {
      *	    base2 (Point2D.Double) position for the other rete base point
      *	    labelPos (Point2D.Double) position for the label
      *      labelOrient (double) label orientation  
-     * 
+     *
+     * @param hemiSphere N or S
      * @return Filled array of Star objects
      */
     public static Star[] getStarsList(String hemiSphere){

@@ -323,10 +323,9 @@ public class SineQuadrant {
 
     /**
      * The original is 6 3/8" across one limb, this translates to 459 points
-     *
+     * @param useColor boolean
      * @return eps code to print out sine quadrant
      */
-
     public String printQuadrant(boolean useColor){
 	    this.color = useColor;
 

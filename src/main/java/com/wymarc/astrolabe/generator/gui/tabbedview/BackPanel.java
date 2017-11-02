@@ -11,21 +11,21 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 /**
  * $Id: AstrolabeGenerator.java,v 3.1
- * <p/>
+ *
  * The Astrolabe Generator is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 3 of
  * the License, or(at your option) any later version.
- * <p/>
+ *
  * The Astrolabe Generator is distributed in the hope that it will be
  * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * <p/>
+ *
  * Copyright (c) 2017 Timothy J. Mitchell
  */
 public class BackPanel extends JPanel implements ActionListener,MouseListener {
@@ -159,7 +159,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getTopLeftCombo(){
         if (null == topLeftCombo){
-            topLeftCombo = new JComboBox(Astrolabe.TOPLEFTOPTIONS);
+            topLeftCombo = new JComboBox<>(Astrolabe.TOPLEFTOPTIONS);
             topLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopLeft());
             topLeftCombo.setToolTipText("Select option for top left");
             topLeftCombo.setActionCommand("Show_Top_Left");
@@ -171,7 +171,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getTopRightCombo(){
         if (null == topRightCombo){
-            topRightCombo = new JComboBox(Astrolabe.TOPRIGHTOPTIONS);
+            topRightCombo = new JComboBox<>(Astrolabe.TOPRIGHTOPTIONS);
             topRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopRight());
             topRightCombo.setToolTipText("Select option for top right");
             topRightCombo.setActionCommand("Show_Top_Right");
@@ -183,7 +183,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getBottomLeftCombo(){
         if (null == bottomLeftCombo){
-            bottomLeftCombo = new JComboBox(Astrolabe.BOTTOMLEFTOPTIONS);
+            bottomLeftCombo = new JComboBox<>(Astrolabe.BOTTOMLEFTOPTIONS);
             bottomLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomLeft());
             bottomLeftCombo.setToolTipText("Select option for bottom left");
             bottomLeftCombo.setActionCommand("Show_Bottom_Left");
@@ -195,7 +195,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getBottomRightCombo(){
         if (null == bottomRightCombo){
-            bottomRightCombo = new JComboBox(Astrolabe.BOTTOMRIGHTOPTIONS);
+            bottomRightCombo = new JComboBox<>(Astrolabe.BOTTOMRIGHTOPTIONS);
             bottomRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomRight());
             bottomRightCombo.setToolTipText("Select option for bottom right");
             bottomRightCombo.setActionCommand("Show_Bottom_Right");

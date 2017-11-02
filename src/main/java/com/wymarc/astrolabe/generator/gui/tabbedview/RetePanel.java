@@ -69,7 +69,7 @@ public class RetePanel extends JPanel implements ActionListener,MouseListener {
 
     private JComboBox getReteOptionsCombo(){
         if (null == reteOptionsCombo){
-            reteOptionsCombo = new JComboBox(Astrolabe.RETEOPTIONS);
+            reteOptionsCombo = new JComboBox<>(Astrolabe.RETEOPTIONS);
             reteOptionsCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getReteType());
             reteOptionsCombo.setToolTipText("Select type of rete");
             reteOptionsCombo.setActionCommand("Rete");

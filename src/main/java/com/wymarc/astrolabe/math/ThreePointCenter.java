@@ -26,7 +26,9 @@ import java.awt.geom.Point2D;
  * of the circle than is defined by those points
  *
  * Date:      1 October 2011
- * Author    Timothy J. Mitchell <wymarc@gmail.com> (Modified from other sources-see below)
+ * Author    Timothy J. Mitchell (wymarc@gmail.com)
+ *
+ * (Modified from other sources-see below)
  *
  * This is modification based loosely on the C example code circle3 routine by
  * James Morrison published in The Astrolabe

@@ -23,7 +23,7 @@ package com.wymarc.astrolabe.math;
  * Given two circles defined by center and radius, this class will return the intersection
  * points and intersection angles
  *
- * @author    Timothy J. Mitchell <wymarc@hotmail.com> (Modified from other sources-see below)
+ * @author    Timothy J. Mitchell (wymarc@hotmail.com) (Modified from other sources-see below)
  *
  * link      http://astrolabeproject.com
  * link      http://www.astrolabes.org
@@ -88,15 +88,13 @@ public class InterSect {
     /**
      * Computes Intersection of two circles
      *
-     * since   0.1
+     * @param x0 drawing circle center X
+     * @param y0 drawing circle center Y
+     * @param r0 drawing circle radius
      *
-     * param x0 drawing circle center X
-     * param y0 drawing circle center Y
-     * param r0 drawing circle radius
-     *
-     * param x1 clipping circle center X
-     * param y1 clipping circle center Y
-     * param r1 clipping circle radius
+     * @param x1 clipping circle center X
+     * @param y1 clipping circle center Y
+     * @param r1 clipping circle radius
      *
      */
     public InterSect(double x0, double y0, double r0, double x1, double y1, double r1)
