@@ -27,6 +27,7 @@ import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.Basi
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
+import com.wymarc.astrolabe.generator.printengines.postscript.extras.volvelles.Lunar;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -209,6 +210,23 @@ public class EPSPrintEngine {
 //                }
 //            }
 
+
+//        // Volvelle project, to be removed at some point
+//        Lunar lunarVolvelle = new Lunar();
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleBase.eps");
+//        component.add(lunarVolvelle.createVolvelleBase(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleSun.eps");
+//        component.add(lunarVolvelle.createVolvelleSun(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleMoon.eps");
+//        component.add(lunarVolvelle.createVolvelleMoon(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
 
         // todo
         // quadrants, tools, instructions etc
