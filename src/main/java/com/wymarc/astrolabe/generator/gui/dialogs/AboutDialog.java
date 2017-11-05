@@ -28,8 +28,8 @@ import java.awt.*;
 
 
 public class AboutDialog extends JDialog {
-    public AboutDialog(JFrame frame, boolean modal) {
-        super(frame, modal);
+    public AboutDialog(JFrame frame) {
+        super(frame, true);
         init();
         pack();
         setLocationRelativeTo(frame);

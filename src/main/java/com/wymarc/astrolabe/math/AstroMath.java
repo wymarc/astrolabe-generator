@@ -344,7 +344,7 @@ public class AstroMath {
         double precessedRA = normal(Math.toDegrees(z + Math.atan2(a, b)))/15.0 ;
         double precessedDec = Math.toDegrees(Math.asin(c)) ;
 
-        HashMap<String,Double> precessedLocation = new HashMap<String, Double>();
+        HashMap<String,Double> precessedLocation = new HashMap<>();
         precessedLocation.put("precessedRA",precessedRA);
         precessedLocation.put("precessedDec",precessedDec);
 
@@ -464,7 +464,7 @@ public class AstroMath {
      * @return An ArrayList of Point2D
      */
     public static ArrayList<Point2D> equationOfTimePoints(double innerLimit, double outerlimit){
-        ArrayList<Point2D> points = new ArrayList<Point2D>();
+        ArrayList<Point2D> points = new ArrayList<>();
         double scaling = (outerlimit - innerLimit)/34.0; //-17 to 17
 
         // First compute the angle of the first day of the year to use to align the EOT angle to the calendar ring

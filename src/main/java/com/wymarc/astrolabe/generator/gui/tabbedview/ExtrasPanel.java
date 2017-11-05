@@ -20,7 +20,6 @@
 package com.wymarc.astrolabe.generator.gui.tabbedview;
 
 import com.wymarc.astrolabe.generator.AstrolabeGenerator;
-import com.wymarc.astrolabe.generator.config.ClimateSet;
 import com.wymarc.astrolabe.generator.gui.GeneratorGui;
 
 import javax.swing.*;
@@ -30,8 +29,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExtrasPanel extends JPanel implements ActionListener,MouseListener {
     private JCheckBox tenAlidadeCheck = null;

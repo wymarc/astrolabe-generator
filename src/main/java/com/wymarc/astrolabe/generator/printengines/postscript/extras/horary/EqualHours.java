@@ -422,7 +422,7 @@ public class EqualHours {
         }
 
         // compute and add data
-        ArrayList<String> altitudeList = new ArrayList<String>(); //todo test for accuracy
+        ArrayList<String> altitudeList = new ArrayList<>(); //todo test for accuracy
         int currentAltitude = 0;
         double newAltitude = 0.0;
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -478,7 +478,7 @@ public class EqualHours {
                 .append("\n").append("0 0 ").append(medallionRadius - 37).append(" 0 360 arc stroke");
 
         // label segments
-        List<String> dominicalSeguenceList = new ArrayList<String>();
+        List<String> dominicalSeguenceList = new ArrayList<>();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         for (int i = 0; i < 28; i++) {
             dominicalSeguenceList.add(AstroMath.getDominicalLetter(year + i));

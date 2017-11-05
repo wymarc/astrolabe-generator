@@ -23,10 +23,8 @@ import com.wymarc.astrolabe.generator.gui.GeneratorGui;
 
 public class AstrolabeGenerator{
 
-    private GeneratorGui gui = null;
-
     public AstrolabeGenerator(){
-        gui = new GeneratorGui();
+        GeneratorGui gui = new GeneratorGui();
     }
 
 

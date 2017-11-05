@@ -263,11 +263,11 @@ public class GeneratorGui extends JFrame implements ActionListener {
         } else if (action.equals("Print current view")){
             print(false);
         } else if (action.equals("Program Help")){
-            new HelpDialog(this,true);
+            new HelpDialog(this);
         } else if (action.equals("Astrolabe Resources")){
-            new ResourcesDialog(this,true);
+            new ResourcesDialog(this);
         } else if (action.equals("About")){
-            new AboutDialog(this,true);
+            new AboutDialog(this);
         } else if (action.equals("Assembly Instructions")){
             FileHandler.saveInstructable();
         } else {

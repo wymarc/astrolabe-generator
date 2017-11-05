@@ -286,7 +286,7 @@ public class RetePrintEngine {
 
             if( tenLine ){
             	//Save 10 deg positions for labels
-                label[j] = new HashMap<String, Double>();
+                label[j] = new HashMap<>();
                 label[j].put("angle",Math.toDegrees(lonLine.get("b")));
                 label[j].put("x",xro);
                 label[j].put("y",yro);
@@ -295,7 +295,7 @@ public class RetePrintEngine {
 
             if( fifteenLine ){
             //Save 15 deg positions for Names
-                name[k] = new HashMap<String, Double>();
+                name[k] = new HashMap<>();
                 name[k].put("angle",Math.toDegrees(lonLine.get("b")));
                 name[k].put("x",xro);
                 name[k].put("y",yro);

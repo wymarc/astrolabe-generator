@@ -27,8 +27,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ResourcesDialog extends JDialog {
-    public ResourcesDialog(JFrame frame, boolean modal) {
-        super(frame, modal);
+    public ResourcesDialog(JFrame frame) {
+        super(frame, true);
         init();
         pack();
         setLocationRelativeTo(frame);

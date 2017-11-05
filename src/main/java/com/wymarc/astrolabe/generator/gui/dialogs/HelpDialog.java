@@ -27,8 +27,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class HelpDialog extends JDialog {
-    public HelpDialog(JFrame frame, boolean modal) {
-        super(frame, modal);
+    public HelpDialog(JFrame frame) {
+        super(frame, true);
         init();
         pack();
         setLocationRelativeTo(frame);

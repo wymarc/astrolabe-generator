@@ -59,7 +59,7 @@ public class Config {
             defaultLocation = defaultSetting.getElementsByTagName("location").item(0).getTextContent();
 
             // get example astrolabes
-            astrolabeExamples = new ArrayList<AstrolabeExample>();
+            astrolabeExamples = new ArrayList<>();
             NodeList astrolabes = doc.getElementsByTagName("astrolabe");
             for (int i = 0; i < astrolabes.getLength(); i++) {
                 Node nNode = astrolabes.item(i);
@@ -103,7 +103,7 @@ public class Config {
             }
 
             //get climate sets
-            climateSets = new ArrayList<ClimateSet>();
+            climateSets = new ArrayList<>();
             NodeList climateSetNodes = doc.getElementsByTagName("climateSet");
             for (int i = 0; i < climateSetNodes.getLength(); i++) {
                 Node climateSetNode = climateSetNodes.item(i);

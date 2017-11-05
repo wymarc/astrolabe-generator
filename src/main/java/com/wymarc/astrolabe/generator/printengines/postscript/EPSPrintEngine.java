@@ -34,10 +34,8 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.swing.*;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class EPSPrintEngine {
@@ -51,36 +49,36 @@ public class EPSPrintEngine {
      * 2. 1. Name of component 2
      *    2. EPS data for 2
      *
-     * @return List<List<String>>
+     * @return List  of components
      */
     private List<List<String>> getComponents(){
-        List<List<String>> selectedComponents = new ArrayList<List<String>>();
+        List<List<String>> selectedComponents = new ArrayList<>();
         List<String> component;
 
         // create front side
         FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
-        component = new ArrayList<String>();
+        component = new ArrayList<>();
         component.add("AstrolabeFront.eps");
         component.add(myAstrolabeFront.createFront(GeneratorGui.MY_ASTROLABE));
         selectedComponents.add(component);
 
         // create back side
         BackPrintEngine myAstrolabeBack = new BackPrintEngine();
-        component = new ArrayList<String>();
+        component = new ArrayList<>();
         component.add("AstrolabeBack.eps");
         component.add(myAstrolabeBack.createBack(GeneratorGui.MY_ASTROLABE));
         selectedComponents.add(component);
 
         // create Rete sheet
         RetePrintEngine myAstrolabeRete = new RetePrintEngine();
-        component = new ArrayList<String>();
+        component = new ArrayList<>();
         component.add("AstrolabeRete.eps");
         component.add(myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE));
         selectedComponents.add(component);
 
         // create accessory sheet
         RulePrintEngine myAstrolabeRule = new RulePrintEngine();
-        component = new ArrayList<String>();
+        component = new ArrayList<>();
         component.add("AstrolabeRules.eps");
         component.add(myAstrolabeRule.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true));
         selectedComponents.add(component);
@@ -88,17 +86,17 @@ public class EPSPrintEngine {
         //print universal astrolabe
         if (GeneratorGui.MY_ASTROLABE.getPrintUniversalAstrolabe()){
             UniversalPrintEngine myUniversalAstrolabe = new UniversalPrintEngine();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("UniversalPlate.eps");
             component.add(myUniversalAstrolabe.createPlate(GeneratorGui.MY_ASTROLABE));
             selectedComponents.add(component);
 
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("UniversalPlateRete.eps");
             component.add(myUniversalAstrolabe.createRete(GeneratorGui.MY_ASTROLABE));
             selectedComponents.add(component);
 
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("UniversalPlateRegula.eps");
             component.add(myUniversalAstrolabe.createRegula(GeneratorGui.MY_ASTROLABE));
             selectedComponents.add(component);
@@ -107,14 +105,14 @@ public class EPSPrintEngine {
         // create extras sheets
         if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
             myAstrolabeRule = new RulePrintEngine();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("AstrolabeRulesSheet.eps");
             component.add(myAstrolabeRule.buildRulesSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged()));
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAlidadeSheet()){
             myAstrolabeRule = new RulePrintEngine();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("AstrolabeAlidadeSheet.eps");
             component.add(myAstrolabeRule.buildAlidadeSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged()));
             selectedComponents.add(component);
@@ -129,48 +127,48 @@ public class EPSPrintEngine {
         // quadrants
         if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
             BasicHoraryQuadrant basicHoraryQuad = new BasicHoraryQuadrant();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("BasicHoraryQuadrant.eps");
             component.add(basicHoraryQuad.printQuadrant());
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
             AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("AdvancedHoraryQuadrant.eps");
             component.add(advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE));
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintSineQuadrant()){
             SineQuadrant sineQuadrant = new SineQuadrant();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("SineQuadrant.eps");
             component.add(sineQuadrant.printQuadrant(false));
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintColorSineQuadrant()){
             SineQuadrant sineQuadrant = new SineQuadrant();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("ColorSineQuadrant.eps");
             component.add(sineQuadrant.printQuadrant(true));
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
             VernierSineQuadrant vernierSineQuadrant = new VernierSineQuadrant();
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("VernierSineQuadrant.eps");
             component.add(vernierSineQuadrant.printQuadrant());
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintEqualHoursHoraryQuadrant()){
             EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,false);
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("EqualHoursQuadrantBack.eps");
             component.add(equalhoursQuadrantBack.createQuadrantBack());
             selectedComponents.add(component);
 
             EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,false);
-            component = new ArrayList<String>();
+            component = new ArrayList<>();
             component.add("EqualHoursQuadrantFront.eps");
             component.add(equalhoursQuadrantFront.createQuadrantFront());
             selectedComponents.add(component);
@@ -292,7 +290,7 @@ public class EPSPrintEngine {
      * Print the component(s) on the currently selected tab
      */
     public void printCurrent(){
-        ArrayList<String> postScriptStrings = new ArrayList<String>();
+        ArrayList<String> postScriptStrings = new ArrayList<>();
 
         if (GeneratorGui.tabSelected.equals("Front")){
             FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
@@ -355,7 +353,7 @@ public class EPSPrintEngine {
      * Print all selected components
      */
     public void printAll(){
-        ArrayList<String> postScriptStrings = new ArrayList<String>();
+        ArrayList<String> postScriptStrings = new ArrayList<>();
 
         // create front side
         FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
