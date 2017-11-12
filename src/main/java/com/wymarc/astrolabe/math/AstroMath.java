@@ -33,7 +33,7 @@ public class AstroMath {
 
     /**
      * normalizes angle to 0 - 360
-     * ex: 405 => 45
+     * ex: 405 becomes 45
      * 
      * modified from Morrison
      *
@@ -344,7 +344,7 @@ public class AstroMath {
         double precessedRA = normal(Math.toDegrees(z + Math.atan2(a, b)))/15.0 ;
         double precessedDec = Math.toDegrees(Math.asin(c)) ;
 
-        HashMap<String,Double> precessedLocation = new HashMap<String, Double>();
+        HashMap<String,Double> precessedLocation = new HashMap<>();
         precessedLocation.put("precessedRA",precessedRA);
         precessedLocation.put("precessedDec",precessedDec);
 
@@ -427,27 +427,6 @@ public class AstroMath {
         return correction;
     }
 
-//    /**
-//     * After Herbert O. Ramp, Equation of Time – Comparison of Approximating Formulae , Compendium of
-//     * the North American Sundial Society, Vol. 18, No. 1, pp. 20‐22, March 2011.
-//     *
-//     * @param dayIn Day of the year (Jan 1 = 1 etc)
-//     * @return Time correction for the day of the year in decimal minutes
-//     */
-//    public static double equationOfTime(int dayIn){
-//        double temp = 22.0/7.0*(dayIn*360.0/365.2422-80.535132)/180.0;
-//        double minuteCorrection = (
-//                (-107.0605*Math.sin(temp))
-//                -(428.6697*Math.cos(temp))
-//                +(596.1009*Math.sin(2*temp))
-//                -(2.0898*Math.cos(2*temp))
-//                +(4.4173*Math.sin(3*temp))
-//                +(19.2776*Math.cos(3*temp))
-//                +(12.7338*Math.sin(4*temp)))/60.0;
-//
-//        return minuteCorrection; //EqT in minutes
-//	}
-
     /**
      * Calculate the Equation of Time from 'day of year'
      * Originally written by Del Smith, 2016-11-29
@@ -485,7 +464,7 @@ public class AstroMath {
      * @return An ArrayList of Point2D
      */
     public static ArrayList<Point2D> equationOfTimePoints(double innerLimit, double outerlimit){
-        ArrayList<Point2D> points = new ArrayList<Point2D>();
+        ArrayList<Point2D> points = new ArrayList<>();
         double scaling = (outerlimit - innerLimit)/34.0; //-17 to 17
 
         // First compute the angle of the first day of the year to use to align the EOT angle to the calendar ring
@@ -508,7 +487,7 @@ public class AstroMath {
 
     /**
      * return integer part of number
-     * 25.3345 => 25.0
+     * 25.3345 becomes 25.0
      *	
      * modified from Morrison
      *
@@ -527,7 +506,7 @@ public class AstroMath {
      * Asr begins when the length of any vertical gnomon's shadow equals the length
      * of the gnomon itself plus the length of that gnomon's shadow at noon.
      *
-     * @param interval
+     * @param interval double
      *
      * @param  multiplier 1 gives the start of Asr (+ the gnomon length), 2 gives the end (+ twice the gnomon length)
      *

@@ -131,8 +131,7 @@ public class ArcsOfTheSigns {
 	    out += "\n" + "[2 2] 0 setdash"; // set dashed line
 	    arcInterval = 6.0;
 		out += "\n" + "0 setgray";
-	    for (count = 1; count < 18; count++)
-	    {	 
+	    for (count = 1; count < 18; count++){
 		    if (count != 3 && count != 6 && count != 9 && count != 12 && count != 15)// ignore existing lines
 		    {  
 			    out += "\n" + "newpath";
@@ -149,14 +148,12 @@ public class ArcsOfTheSigns {
 		Point2D.Double currentPoint;
 	    Point2D.Double previousPoint;
 	    
-	    for (count1 = 0; count1 < latList.length; count1++)
-	    {
+	    for (count1 = 0; count1 < latList.length; count1++){
 		    noonAlt = AstroMath.sunsNoonAltitude((double)latList[count1],-90.0);
 			previousPoint = new Point2D.Double((innerRadius * Math.cos(Math.toRadians(noonAlt))),
 	    									(innerRadius * Math.sin(Math.toRadians(noonAlt))));	// set start	    
 		    
-		    for (count = -85; count <= 90; count = count + 5)
-		    {
+		    for (count = -85; count <= 90; count = count + 5){
 		    	noonAlt = AstroMath.sunsNoonAltitude((double)latList[count1],(double)count);
 		    	radius = innerRadius + ((count + 90) * interval);
 		    	currentPoint = new Point2D.Double((radius * Math.cos(Math.toRadians(noonAlt))),
@@ -176,13 +173,11 @@ public class ArcsOfTheSigns {
 	
 		//Qibla lines
 		Location[] cities = getCities();
-		for(count1 = 0; count1 < cities.length; count1++)
-		{
+		for(count1 = 0; count1 < cities.length; count1++){
 			Double qiblaAlt = sunsAltitudeAtQiblaAngle(cities[count1],-90.0);
 			previousPoint = new Point2D.Double((innerRadius * Math.cos(Math.toRadians(qiblaAlt))),
 	    									(innerRadius * Math.sin(Math.toRadians(qiblaAlt))));	// set start	  
-		    for (count = -85; count <= 90; count = count + 5)
-		    {
+		    for (count = -85; count <= 90; count = count + 5){
 		    	qiblaAlt = sunsAltitudeAtQiblaAngle(cities[count1],(double)count);
 		    	radius = innerRadius + ((count + 90) * interval);
 		    	currentPoint = new Point2D.Double((radius * Math.cos(Math.toRadians(qiblaAlt))),
@@ -279,19 +274,16 @@ public class ArcsOfTheSigns {
 		Double zodiacPos;
 		Double decl;
 		Double radius;
-		for (count = -9; count <= 9; count++)
-		{
+		for (count = -9; count <= 9; count++){
 			zodiacPos = (double)count * 10;
 			decl = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(23.44))* Math.sin(Math.toRadians(zodiacPos)))); 
 			radius = radEQ * Math.tan(Math.toRadians(90 - decl)/2.0);
 			if(count == -9 || count == -6 || count == -3 || count == 0 ||
-				count == 3 || count == 6 || count == 9)
-			{
+				count == 3 || count == 6 || count == 9){
 			    out += "\n" + "[] 0 setdash"; // set solid line
 			    out += "\n" + "newpath";
 				out += "\n" + "0 0 " + radius + " 0 90 arc stroke"; 
-			}else
-			{
+			}else{
 			    out += "\n" + "[1 1] 0 setdash"; // set dashed line
 			    out += "\n" + "newpath";
 				out += "\n" + "0 0 " + radius + " 10 80 arc stroke"; 			
@@ -332,14 +324,12 @@ public class ArcsOfTheSigns {
 	    Point2D.Double currentPoint;
         Point2D.Double previousPoint;
 	    
-	    for (count1 = 0; count1 < latList.length; count1++)
-	    {
+	    for (count1 = 0; count1 < latList.length; count1++){
 		    noonAlt = AstroMath.sunsNoonAltitude((double)latList[count1],-90.0);
 			previousPoint = new Point2D.Double((innerRadius * Math.cos(Math.toRadians(noonAlt))),
 	    									(innerRadius * Math.sin(Math.toRadians(noonAlt))));	// set start	    
 		    
-		    for (count = -85; count <= 90; count = count + 5)
-		    {
+		    for (count = -85; count <= 90; count = count + 5){
 				zodiacPos = (double)-count;
 				decl = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(23.44))* Math.sin(Math.toRadians(zodiacPos)))); 
 				radius = radEQ * Math.tan(Math.toRadians(90 - decl)/2.0);
@@ -361,13 +351,11 @@ public class ArcsOfTheSigns {
 	
 		//Qibla lines
 		Location[] cities = getCities();
-		for(count1 = 0; count1 < cities.length; count1++)
-		{
+		for(count1 = 0; count1 < cities.length; count1++){
 			Double qiblaAlt = sunsAltitudeAtQiblaAngle(cities[count1],-90.0);
 			previousPoint = new Point2D.Double((innerRadius * Math.cos(Math.toRadians(qiblaAlt))),
 	    									(innerRadius * Math.sin(Math.toRadians(qiblaAlt))));	// set start	  
-		    for (count = -85; count <= 90; count = count + 5)
-		    {
+		    for (count = -85; count <= 90; count = count + 5){
 		    	zodiacPos = (double)-count;
 				decl = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(23.44))* Math.sin(Math.toRadians(zodiacPos)))); 
 				radius = radEQ * Math.tan(Math.toRadians(90 - decl)/2.0);
@@ -394,20 +382,18 @@ public class ArcsOfTheSigns {
 		Double[] dividerRadialPos = new Double[7];
 		Double[] zodiacRadialPos = new Double[7];
 		int index = 0;
-		for (count = -9; count <= 9; count++)
-		{
+		for (count = -9; count <= 9; count++){
 			zodiacPos = (double)count * 10;
 			decl = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(23.44))* Math.sin(Math.toRadians(zodiacPos))));
 			radius = radEQ * Math.tan(Math.toRadians(90 - decl)/2.0);
 			if(count == -9 || count == -6 || count == -3 || count == 0 ||
-				count == 3 || count == 6 || count == 9)
-			{
+				count == 3 || count == 6 || count == 9){
 			    dividerRadialPos[index] = radius;
 			    index++; 
 			} 		
 		}
 		
-		for (count = 0; count < dividerRadialPos.length; count++){
+		for (count = 0; count < dividerRadialPos.length -1; count++){
 			zodiacRadialPos[count] = (((dividerRadialPos[count+1]+dividerRadialPos[count])/2.0));
 		}
 			

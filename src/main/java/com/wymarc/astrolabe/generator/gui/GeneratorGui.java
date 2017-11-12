@@ -85,6 +85,12 @@ public class GeneratorGui extends JFrame implements ActionListener {
             MY_ASTROLABE.setShowUnequalHoursLines(defaultAstrolabe.isShowUnequalHours());
             MY_ASTROLABE.setShowHousesofHeavenLines(defaultAstrolabe.isShowHouses());
             MY_ASTROLABE.setShowLunarMansions(defaultAstrolabe.isShowMansions());
+            MY_ASTROLABE.setShowCosine(defaultAstrolabe.isShowCosine());
+            MY_ASTROLABE.setUse100(defaultAstrolabe.isUse100());
+            MY_ASTROLABE.setGridPerDegree(defaultAstrolabe.isGridPerDegree());
+            MY_ASTROLABE.setShowRadials(defaultAstrolabe.isShowRadials());
+            MY_ASTROLABE.setShowArcs(defaultAstrolabe.isShowArcs());
+            MY_ASTROLABE.setShowObliqityArc(defaultAstrolabe.isShowObliqityArc());
             MY_ASTROLABE.setTopLeft(defaultAstrolabe.getBackTopLeft());
             MY_ASTROLABE.setTopRight(defaultAstrolabe.getBackTopRight());
             MY_ASTROLABE.setBottomLeft(defaultAstrolabe.getBackBottomLeft());
@@ -182,7 +188,7 @@ public class GeneratorGui extends JFrame implements ActionListener {
             //JLabel statusLabel = new JLabel("tooltip");
             statusPanel.add(statusLabel, BorderLayout.WEST);
 
-            JLabel versionLabel = new JLabel("v3.0 astrolabeproject.com");
+            JLabel versionLabel = new JLabel("v" + Config.version + " astrolabeproject.com");
             statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
             statusPanel.add(versionLabel, BorderLayout.EAST);
         }
@@ -257,11 +263,11 @@ public class GeneratorGui extends JFrame implements ActionListener {
         } else if (action.equals("Print current view")){
             print(false);
         } else if (action.equals("Program Help")){
-            new HelpDialog(this,true);
+            new HelpDialog(this);
         } else if (action.equals("Astrolabe Resources")){
-            new ResourcesDialog(this,true);
+            new ResourcesDialog(this);
         } else if (action.equals("About")){
-            new AboutDialog(this,true);
+            new AboutDialog(this);
         } else if (action.equals("Assembly Instructions")){
             FileHandler.saveInstructable();
         } else {

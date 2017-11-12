@@ -29,6 +29,12 @@ public class AstrolabeExample {
     private boolean showHorizonPlate;
     private boolean printTimeCorrection;
     private int hourMarkings;
+    private boolean showCosine;
+    private boolean use100;
+    private boolean gridPerDegree;
+    private boolean showRadials;
+    private boolean showArcs;
+    private boolean showObliqityArc;
     private int almucantarInterval;
     private boolean showAzimuth;
     private boolean showTwilight;
@@ -116,6 +122,54 @@ public class AstrolabeExample {
 
     public void setHourMarkings(int hourMarkings) {
         this.hourMarkings = hourMarkings;
+    }
+
+    public boolean isShowCosine() {
+        return showCosine;
+    }
+
+    public void setShowCosine(boolean showCosine) {
+        this.showCosine = showCosine;
+    }
+
+    public boolean isUse100() {
+        return use100;
+    }
+
+    public void setUse100(boolean use100) {
+        this.use100 = use100;
+    }
+
+    public boolean isGridPerDegree() {
+        return gridPerDegree;
+    }
+
+    public void setGridPerDegree(boolean gridPerDegree) {
+        this.gridPerDegree = gridPerDegree;
+    }
+
+    public boolean isShowRadials() {
+        return showRadials;
+    }
+
+    public void setShowRadials(boolean showRadials) {
+        this.showRadials = showRadials;
+    }
+
+    public boolean isShowArcs() {
+        return showArcs;
+    }
+
+    public void setShowArcs(boolean showArcs) {
+        this.showArcs = showArcs;
+    }
+
+    public boolean isShowObliqityArc() {
+        return showObliqityArc;
+    }
+
+    public void setShowObliqityArc(boolean showObliqityArc) {
+        this.showObliqityArc = showObliqityArc;
     }
 
     public int getAlmucantarInterval() {

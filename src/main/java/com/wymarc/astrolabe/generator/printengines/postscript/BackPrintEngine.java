@@ -234,90 +234,6 @@ public class BackPrintEngine {
         return out;
     }
 
-
-    /**
-     * computes and draws the Sin/Cos scale on the first quarter (top left)
-     *
-     * @param option: 2: Sine 60, 3: Sine 100, 4: SineCos 60, 5: SineCos 100
-     * @return  returns the ps code for drawing the SinCos Scale
-     */
-    private String sinCosScale(int option){
-
-        int divisions;  // either 50 for base 100 or 60 for base 60
-        double step;	// interval between lines
-        double myX;
-        double myY;		// X/Y Coordinates
-        int i;
-        String out = "";
-
-        //compute size of arc that contains the scale and draw it
-        // note eventually this will be done by looking at what rings are drawn and figuring
-        // the remaining radius
-        double radius = myAstrolabe.getMaterRadius() - 67;
-
-        if (option == 2 || option == 4){
-            step = radius/60.0; // mark off 60 tics
-            divisions = 60;
-        } else{
-            step = radius/50.0; // mark off 50 tics (100, every second tic)
-            divisions = 50;
-        }
-
-        //Print outline of scale
-
-        out += "\n" + "%% ================ Draw Sin/Cos Scale =================";
-        out += "\n" + "newpath";
-        out += "\n" + "0 0 moveto";
-        out += "\n" + "0 " + radius + " lineto";
-        out += "\n" + "0 0 " + radius + " 90 180 arc";
-        out += "\n" + "0 0 lineto stroke";
-
-        //Print vertical (Sine) scale
-        for (i = 0; i <= divisions; i++){
-            myY = step*i;
-            myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
-            out += "\n" + "newpath";
-            out += "\n" + "[1 1] 0 setdash";
-            out += "\n" + "0 "+ myY +" moveto";
-            out += "\n" + -myX + " " + myY + " lineto stroke";
-        }
-
-        //Print vertical ticks
-        for (i = 5; i <= divisions; i=i+5){
-            myY = step*i;
-            myX = Math.sqrt((radius*radius)-(myY*myY)); // from circle eq
-            out += "\n" + "newpath";
-            out += "\n" + "[] 0 setdash";
-            out += "\n" + "0 "+ myY +" moveto";
-            out += "\n" + -myX + " " + myY + " lineto stroke";
-        }
-
-        if (option == 4 || option == 5){
-            //Print horizontal (Cosine) scale
-            for (i = 0; i <= divisions; i++){
-                myX = step*i;
-                myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
-                out += "\n" + "newpath";
-                out += "\n" + "[1 1] 0 setdash";
-                out += "\n" + -myX + " 0 moveto";
-                out += "\n" + -myX + " " + myY + " lineto stroke";
-            }
-
-            //Print horizontal ticks
-           for (i = 5; i <= divisions; i=i+5){
-                myX = step*i;
-                myY = Math.sqrt((radius*radius)-(myX*myX)); // from circle eq
-                out += "\n" + "newpath";
-                out += "\n" + "[] 0 setdash";
-                out += "\n" + -myX + " 0 moveto";
-                out += "\n" + -myX + " " + myY + " lineto stroke";
-            }
-        }
-        out += "\n" + "%% ================ End Sin/Cos Scale =================";
-
-        return out;
-    }
-
     /**
      * computes and draws the Unequal Hours scales
      *
@@ -336,13 +252,13 @@ public class BackPrintEngine {
 
         out += "\n" + "%% ================ Draw Unequal Hours =================";
 
-        if (myAstrolabe.getTopLeft() == 1 && myAstrolabe.getTopRight() == 1){
+        if ((myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3) && myAstrolabe.getTopRight() == 1){
             //both first and second quadrants unequal hours
             out += "\n" + "newpath";
             out += "\n" + -unequalRadius + " 0 moveto";
             out += "\n" + unequalRadius + " 0 lineto";
             out += "\n" + "0 0 " + unequalRadius + " 0 180 arc stroke";
-        } else if (myAstrolabe.getTopLeft() == 1){
+        } else if (myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3){
             out += "\n" + "newpath";
             out += "\n" + "0 0 moveto";
             out += "\n" + "0 " + unequalRadius + " lineto";
@@ -357,7 +273,7 @@ public class BackPrintEngine {
             out += "\n" + "0 0 lineto stroke";
         }
 
-        if (myAstrolabe.getTopLeft() == 1){
+        if (myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3){
             // draw unequal hour lines
             for (i = 1; i <= 6; i++){
                 Ri = (unequalRadius/(2*(Math.sin(Math.toRadians(15*i)))));
@@ -383,13 +299,13 @@ public class BackPrintEngine {
             }
         }
 
-        if (myAstrolabe.getTopLeft() == 1 && myAstrolabe.getTopRight() == 1){
+        if ((myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3) && myAstrolabe.getTopRight() == 1){
             //both first and second quadrants unequal hours
             out += "\n" + "NormalFont5 setfont";
             for (i = 1; i <= 11; i++){
                 out += EPSToolKit.drawOutsideCircularText(Integer.toString(i), 5, (180 - (i*15)), unequalRadius +2);
             }
-        }else if(myAstrolabe.getTopLeft() == 1){
+        }else if(myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3){
             out += "\n" + "NormalFont5 setfont";
             for (i = 1; i <= 6; i++){
                 out += EPSToolKit.drawOutsideCircularText(Integer.toString(7-i), 5, (90+((i-1)*15)), unequalRadius +2);
@@ -1105,23 +1021,6 @@ public class BackPrintEngine {
         out += "\n" + "grestore";
         out += "\n" + "";
 
-        //print first and second quadrant
-        out += "\n" + "gsave";
-        if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3)||(myAstrolabe.getTopLeft() == 4)||(myAstrolabe.getTopLeft() == 5)){
-            //Sin cos
-            out += sinCosScale(myAstrolabe.getTopLeft());
-        }
-        out += "\n" + "grestore";
-        out += "\n" + "gsave";
-        out += buildUnequalHoursBack();
-        out += "\n" + "grestore";
-        if ((myAstrolabe.getTopRight() == 2)||(myAstrolabe.getTopRight() == 3)){
-            //Arcs
-            out += "\n" + "gsave";
-            ArcsOfTheSigns arcsTool = new ArcsOfTheSigns(myAstrolabe);
-            out += arcsTool.buildArcsOfSignsEqual();
-            out += "\n" + "grestore";
-        }
         //print third and fourth quadrant
         out += "\n" + "gsave";
         out += buildShadowSquare();
@@ -1132,6 +1031,33 @@ public class BackPrintEngine {
             //Arcs
             out += "\n" + "gsave";
             out += buildLunarMansions();
+            out += "\n" + "grestore";
+        }
+
+        //print first and second quadrant
+        out += "\n" + "gsave";
+        if ((myAstrolabe.getTopLeft() == 2)||(myAstrolabe.getTopLeft() == 3)){
+            //Sin cos grid
+            out += "\n" + "gsave";
+            SineGrid sineGridTool = new SineGrid(myAstrolabe);
+            out += sineGridTool.buildSineGrid();
+            out += "\n" + "grestore";
+        }
+        out += "\n" + "grestore";
+        out += "\n" + "gsave";
+        out += buildUnequalHoursBack();
+        out += "\n" + "grestore";
+        if ((myAstrolabe.getTopRight() == 2)||(myAstrolabe.getTopRight() == 3)){
+            //Arcs
+            out += "\n" + "gsave";
+            ArcsOfTheSigns arcsTool = new ArcsOfTheSigns(myAstrolabe);
+            if ((myAstrolabe.getTopRight() == 2)){
+                out += arcsTool.buildArcsOfSignsEqual();
+            }else{
+                out += arcsTool.buildArcsOfSignsProjected();
+            }
+
+
             out += "\n" + "grestore";
         }
 

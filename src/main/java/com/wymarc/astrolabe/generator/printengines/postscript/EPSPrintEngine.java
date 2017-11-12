@@ -20,12 +20,14 @@
 package com.wymarc.astrolabe.generator.printengines.postscript;
 
 import com.wymarc.astrolabe.generator.gui.GeneratorGui;
+import com.wymarc.astrolabe.generator.io.FileHandler;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.AdvancedHoraryQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.EqualHours;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.BasicHoraryQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
+import com.wymarc.astrolabe.generator.printengines.postscript.extras.volvelles.Lunar;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -33,173 +35,147 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.swing.*;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.zip.ZipEntry;
+import java.util.List;
 import java.util.zip.ZipOutputStream;
 
-public class EPSPrintEngine {	
+public class EPSPrintEngine {
 
     /**
-     * creates an Astrolabe object and sets its properties then
-     * creates and runs the appropriate print engines
+     * Assemble a List of the selected components for output
+     *
+     * Data is returned in the form of a nested list:
+     * 1. 1. Name of component 1
+     *    2. EPS data for 1
+     * 2. 1. Name of component 2
+     *    2. EPS data for 2
+     *
+     * @return List  of components
      */
-    private Boolean setFilePath(String filePathIn) {
-        // first check to see if the path exists if not create it
-        File path = new File(filePathIn);
-        boolean exists = path.exists();
-        if (!exists) {
-            try{
-                return path.mkdir();
-            } catch(Exception e){
-                e.printStackTrace();
-                System.out.println("Error -- Folder path does not exist and cannot be created");
-                exists = false;
-            }
-        }
-        
-        return exists;
-    }
+    private List<List<String>> getComponents(){
+        List<List<String>> selectedComponents = new ArrayList<>();
+        List<String> component;
 
-    private Boolean save(String target, String fileData){
+        // create front side
+        FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
+        component = new ArrayList<>();
+        component.add("AstrolabeFront.eps");
+        component.add(myAstrolabeFront.createFront(GeneratorGui.MY_ASTROLABE));
+        selectedComponents.add(component);
 
-        try {
-            FileWriter outFile = new FileWriter(target);
-            PrintWriter out = new PrintWriter(outFile);
-            out.print(fileData);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        // create back side
+        BackPrintEngine myAstrolabeBack = new BackPrintEngine();
+        component = new ArrayList<>();
+        component.add("AstrolabeBack.eps");
+        component.add(myAstrolabeBack.createBack(GeneratorGui.MY_ASTROLABE));
+        selectedComponents.add(component);
 
-        return true;
-    }
+        // create Rete sheet
+        RetePrintEngine myAstrolabeRete = new RetePrintEngine();
+        component = new ArrayList<>();
+        component.add("AstrolabeRete.eps");
+        component.add(myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE));
+        selectedComponents.add(component);
 
+        // create accessory sheet
+        RulePrintEngine myAstrolabeRule = new RulePrintEngine();
+        component = new ArrayList<>();
+        component.add("AstrolabeRules.eps");
+        component.add(myAstrolabeRule.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true));
+        selectedComponents.add(component);
 
-    /**
-     * creates an Astrolabe object and sets its properties then
-     * creates and runs the appropriate print engines
-     */
-    public void saveFiles(){
+        //print universal astrolabe
+        if (GeneratorGui.MY_ASTROLABE.getPrintUniversalAstrolabe()){
+            UniversalPrintEngine myUniversalAstrolabe = new UniversalPrintEngine();
+            component = new ArrayList<>();
+            component.add("UniversalPlate.eps");
+            component.add(myUniversalAstrolabe.createPlate(GeneratorGui.MY_ASTROLABE));
+            selectedComponents.add(component);
 
-        JFileChooser chooser = new JFileChooser();
-        if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
-            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
-        }else{
-            chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
-        }
-        chooser.setDialogTitle("Select location to save files to");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            component = new ArrayList<>();
+            component.add("UniversalPlateRete.eps");
+            component.add(myUniversalAstrolabe.createRete(GeneratorGui.MY_ASTROLABE));
+            selectedComponents.add(component);
 
-        // disable the "All files" option.
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setApproveButtonText("Select");
-        // Set the mnemonic
-        chooser.setApproveButtonMnemonic('s');
-        // Set the tool tip
-        chooser.setApproveButtonToolTipText("Save here");
-
-
-        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
-            return;
+            component = new ArrayList<>();
+            component.add("UniversalPlateRegula.eps");
+            component.add(myUniversalAstrolabe.createRegula(GeneratorGui.MY_ASTROLABE));
+            selectedComponents.add(component);
         }
 
-        String filePath = chooser.getSelectedFile().getPath();
-        GeneratorGui.MY_ASTROLABE.setFilePath(filePath);
-
-        // verify the filepath and the Astrolabe Object
-        Boolean noProblems = setFilePath(filePath) && (GeneratorGui.MY_ASTROLABE != null) ;
-        String dataString;
-
-		if (noProblems){			
-			// create front side
-	        FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
-	        dataString = myAstrolabeFront.createFront(GeneratorGui.MY_ASTROLABE);
-            save(filePath + "/AstrolabeFront.eps",dataString);
-
-	        // create back side
-	        BackPrintEngine myAstrolabeBack = new BackPrintEngine();
-            dataString = myAstrolabeBack.createBack(GeneratorGui.MY_ASTROLABE);
-            save(filePath + "/AstrolabeBack.eps",dataString);
-
-	        // create Rete sheet
-	        RetePrintEngine myAstrolabeRete = new RetePrintEngine();
-            dataString = myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE);
-            save(filePath + "/AstrolabeRete.eps",dataString);
-
-	        // create accessory sheet
-            RulePrintEngine myAstrolabeRule = new RulePrintEngine();
-            dataString = myAstrolabeRule.createRule(GeneratorGui.MY_ASTROLABE, true);
-            save(filePath + "/AstrolabeRules.eps",dataString);
-
-            //print universal astrolabe
-            if (GeneratorGui.MY_ASTROLABE.getPrintUniversalAstrolabe()){
-                UniversalPrintEngine myUniversalAstrolabe = new UniversalPrintEngine();
-                dataString = myUniversalAstrolabe.createPlate(GeneratorGui.MY_ASTROLABE);
-                save(filePath + "/UniversalPlate.eps",dataString);
-                dataString = myUniversalAstrolabe.createRete(GeneratorGui.MY_ASTROLABE);
-                save(filePath + "/UniversalPlateRete.eps",dataString);
-                dataString = myUniversalAstrolabe.createRegula(GeneratorGui.MY_ASTROLABE);
-                save(filePath + "/UniversalPlateRegula.eps",dataString);
-            }
-
-            // create extras sheets
-            if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
-                myAstrolabeRule = new RulePrintEngine();
-                dataString = myAstrolabeRule.buildRulesSheet(GeneratorGui.MY_ASTROLABE,GeneratorGui.MY_ASTROLABE.isCounterChanged());
-                save(filePath + "/AstrolabeRulesSheet.eps",dataString);
-            }
-            if (GeneratorGui.MY_ASTROLABE.getPrintAlidadeSheet()){
-                myAstrolabeRule = new RulePrintEngine();
-                dataString = myAstrolabeRule.buildAlidadeSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged());
-                save(filePath + "/AstrolabeAlidadeSheet.eps",dataString);
-            }
-            // print climate plate sets, if any
+        // create extras sheets
+        if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
+            myAstrolabeRule = new RulePrintEngine();
+            component = new ArrayList<>();
+            component.add("AstrolabeRulesSheet.eps");
+            component.add(myAstrolabeRule.buildRulesSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged()));
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAlidadeSheet()){
+            myAstrolabeRule = new RulePrintEngine();
+            component = new ArrayList<>();
+            component.add("AstrolabeAlidadeSheet.eps");
+            component.add(myAstrolabeRule.buildAlidadeSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged()));
+            selectedComponents.add(component);
+        }
+        // print climate plate sets, if any
 //            for (JCheckBox chk : GeneratorGui.MY_ASTROLABE.getClimateSetCheckboxes()){
 //                if (chk.isSelected()){
 //                    //todo print the suckers
 //                }
 //            }
 
-            // quadrants
-            if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
-                BasicHoraryQuadrant basicHoraryQuad = new BasicHoraryQuadrant();
-                dataString = basicHoraryQuad.printQuadrant();
-                save(filePath + "/BasicHoraryQuadrant.eps",dataString);
-            }
-            if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
-                AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
-                dataString = advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE);
-                save(filePath + "/AdvancedHoraryQuadrant.eps",dataString);
-            }
-            if (GeneratorGui.MY_ASTROLABE.getPrintSineQuadrant()){
-                SineQuadrant sineQuadrant = new SineQuadrant();
-                dataString = sineQuadrant.printQuadrant(false);
-                save(filePath + "/SineQuadrant.eps",dataString);
-            }
-            if (GeneratorGui.MY_ASTROLABE.getPrintColorSineQuadrant()){
-                SineQuadrant sineQuadrant = new SineQuadrant();
-                dataString = sineQuadrant.printQuadrant(true);
-                save(filePath + "/ColorSineQuadrant.eps",dataString);
-            }
-            if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
-                VernierSineQuadrant vernierSineQuadrant = new VernierSineQuadrant();
-                dataString = vernierSineQuadrant.printQuadrant();
-                save(filePath + "/VernierSineQuadrant.eps",dataString);
-            }
-            if (GeneratorGui.MY_ASTROLABE.getPrintEqualHoursHoraryQuadrant()){
-                EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,false);
-                dataString = equalhoursQuadrantBack.createQuadrantBack();
-                save(filePath + "/EqualHoursQuadrantBack.eps",dataString);
+        // quadrants
+        if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
+            BasicHoraryQuadrant basicHoraryQuad = new BasicHoraryQuadrant();
+            component = new ArrayList<>();
+            component.add("BasicHoraryQuadrant.eps");
+            component.add(basicHoraryQuad.printQuadrant());
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
+            AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
+            component = new ArrayList<>();
+            component.add("AdvancedHoraryQuadrant.eps");
+            component.add(advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE));
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintSineQuadrant()){
+            SineQuadrant sineQuadrant = new SineQuadrant();
+            component = new ArrayList<>();
+            component.add("SineQuadrant.eps");
+            component.add(sineQuadrant.printQuadrant(false));
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintColorSineQuadrant()){
+            SineQuadrant sineQuadrant = new SineQuadrant();
+            component = new ArrayList<>();
+            component.add("ColorSineQuadrant.eps");
+            component.add(sineQuadrant.printQuadrant(true));
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
+            VernierSineQuadrant vernierSineQuadrant = new VernierSineQuadrant();
+            component = new ArrayList<>();
+            component.add("VernierSineQuadrant.eps");
+            component.add(vernierSineQuadrant.printQuadrant());
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintEqualHoursHoraryQuadrant()){
+            EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,false);
+            component = new ArrayList<>();
+            component.add("EqualHoursQuadrantBack.eps");
+            component.add(equalhoursQuadrantBack.createQuadrantBack());
+            selectedComponents.add(component);
 
-                EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,false);
-                dataString = equalhoursQuadrantFront.createQuadrantFront();
-                save(filePath + "/EqualHoursQuadrantFront.eps",dataString);
+            EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,false);
+            component = new ArrayList<>();
+            component.add("EqualHoursQuadrantFront.eps");
+            component.add(equalhoursQuadrantFront.createQuadrantFront());
+            selectedComponents.add(component);
+        }
 
-            }
-
-            // for each climate set create a folder with the set name and print the climates to it
+        // for each climate set create a folder with the set name and print the climates to it
 //            for (JCheckBox chk : GeneratorGui.MY_ASTROLABE.getClimateSetCheckboxes()){
 //                if (chk.isSelected()){
 //                    FrontPrintEngine climateEngine = new FrontPrintEngine();
@@ -235,8 +211,25 @@ public class EPSPrintEngine {
 //            }
 
 
-	        // todo
-	        // quadrants, tools, instructions etc
+//        // Volvelle project, to be removed at some point
+//        Lunar lunarVolvelle = new Lunar();
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleBase.eps");
+//        component.add(lunarVolvelle.createVolvelleBase(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleSun.eps");
+//        component.add(lunarVolvelle.createVolvelleSun(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleMoon.eps");
+//        component.add(lunarVolvelle.createVolvelleMoon(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+
+        // todo
+        // quadrants, tools, instructions etc
 
 //            Dastur myDastur = new Dastur();                     // todo tool
 //            dataString = myDastur.createDastur();
@@ -256,6 +249,24 @@ public class EPSPrintEngine {
 
 
 
+        return selectedComponents;
+    }
+    /**
+     * creates an Astrolabe object and sets its properties then
+     * creates and runs the appropriate print engines
+     */
+    public void saveFiles(){
+        String filePath = FileHandler.getSavePath();
+
+        // verify the filepath and the Astrolabe Object
+        Boolean noProblems = filePath != null && GeneratorGui.MY_ASTROLABE != null ;
+		if (noProblems){
+            List<List<String>> components = getComponents();
+
+            for (List<String> component : components){
+                FileHandler.saveFile(filePath + "/" + component.get(0), component.get(1));
+            }
+
             JOptionPane.showMessageDialog(null,"Files saved to:\n" + filePath);
 	    } else{
             JOptionPane.showMessageDialog(null,"There was a problem saving the files","Save Error",JOptionPane.ERROR_MESSAGE);
@@ -270,179 +281,34 @@ public class EPSPrintEngine {
     public void saveZip(){
     	//saving to zip: http://www.javaworld.com/community/node/8362
 
-        JFileChooser chooser = new JFileChooser();
-        if (null == GeneratorGui.MY_ASTROLABE.getFilePath()){
-            chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
-        }else{
-            chooser.setCurrentDirectory(new java.io.File(GeneratorGui.MY_ASTROLABE.getFilePath()));
-        }
-        chooser.setDialogTitle("Select location to save zip file to");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        String filePath = FileHandler.getSavePath();
 
-        // disable the "All files" option.
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setApproveButtonText("Select");
-        // Set the mnemonic
-        chooser.setApproveButtonMnemonic('s');
-        // Set the tool tip
-        chooser.setApproveButtonToolTipText("Save here");
-
-
-        if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
-            return;
-        }
-
-        ZipOutputStream zos;
-        String filePath = "";
-        try {
-            filePath = chooser.getSelectedFile() + "/astrolabe.zip";
-            GeneratorGui.MY_ASTROLABE.setFilePath(filePath);
-
-            zos = new ZipOutputStream(new FileOutputStream(filePath));
-
-            //front
-            FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
-            String dataString = myAstrolabeFront.createFront(GeneratorGui.MY_ASTROLABE);
-            updateZip("AstrolabeFront.eps", zos, dataString);
-
-            //back
-            BackPrintEngine myAstrolabeBack = new BackPrintEngine();
-            dataString = myAstrolabeBack.createBack(GeneratorGui.MY_ASTROLABE);
-            updateZip("AstrolabeBack.eps", zos, dataString);
-
-            //rete
-            RetePrintEngine myAstrolabeRete = new RetePrintEngine();
-            dataString = myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE);
-            updateZip("AstrolabeRete.eps", zos, dataString);
-
-            //rule
-            RulePrintEngine myAstrolabeRule = new RulePrintEngine();
-            dataString = myAstrolabeRule.createRule(GeneratorGui.MY_ASTROLABE, true);
-            updateZip("AstrolabeRule.eps", zos, dataString);
-
-            //extras
-            if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
-                dataString = myAstrolabeRule.buildRulesSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged());
-                updateZip("AstrolabeRules.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintAlidadeSheet()){
-                dataString = myAstrolabeRule.buildAlidadeSheet(GeneratorGui.MY_ASTROLABE, GeneratorGui.MY_ASTROLABE.isCounterChanged());
-                updateZip("AstrolabeAlidades.eps", zos, dataString);
-            }
-
-            // for each climate set create a folder with the set name and print the climates to it
-//            for (JCheckBox chk : GeneratorGui.MY_ASTROLABE.getClimateSetCheckboxes()){
-//                if (chk.isSelected()){
-//                    FrontPrintEngine climateEngine = new FrontPrintEngine();
-//                    // make a local copy of the current settings
-//                    Astrolabe workingAstrolabe = GeneratorGui.MY_ASTROLABE;
-//                    //set it to hide the mater
-//                    workingAstrolabe.setFrontPrintOption(1);
-//                    workingAstrolabe.setShowHorizonPlate(false);
-//                    // get the climate list
-//                    List<ClimateSet> climateSets = GeneratorGui.MY_CONFIG.getClimateSets();
-//                    for (ClimateSet set : climateSets){
-//                        if (set.getName().equals(chk.getText())){
-//                            String folder = set.getName();
-//                            updateZip(folder + "/", zos, null);
-//                            for(ClimatePlate plate :set.getClimates()){
-//                                workingAstrolabe.getLocation().setLocation(plate.getLocation() + " 0000000E");
-//                                String plateName = plate.getName();
-//                                dataString = climateEngine.createFront(workingAstrolabe);
-//                                updateZip(folder + "/" + plateName + ".eps", zos, dataString);
-//                            }
-//                            // Add horizons plate
-//                            workingAstrolabe.setShowHorizonPlate(true);
-//                            dataString = climateEngine.createFront(workingAstrolabe);
-//                            updateZip(folder + "/horizons.eps", zos, dataString);
-//                            workingAstrolabe.setShowHorizonPlate(false);
-//                        }
-//                    }
-//                }
-//            }
-
-            // quadrants
-            if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
-                BasicHoraryQuadrant basicHoraryQuad = new BasicHoraryQuadrant();
-                dataString = basicHoraryQuad.printQuadrant();
-                updateZip("basicHoraryQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
-                AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
-                dataString = advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE);
-                updateZip("AdvancedHoraryQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintSineQuadrant()){
-                SineQuadrant sineQuadrant = new SineQuadrant();
-                dataString = sineQuadrant.printQuadrant(false);
-                updateZip("SineQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintColorSineQuadrant()){
-                SineQuadrant sineQuadrant = new SineQuadrant();
-                dataString = sineQuadrant.printQuadrant(true);
-                updateZip("ColorSineQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
-                VernierSineQuadrant vernierSineQuadrant = new VernierSineQuadrant();
-                dataString = vernierSineQuadrant.printQuadrant();
-                updateZip("VernierSineQuadrant.eps", zos, dataString);
-            }
-
-            if (GeneratorGui.MY_ASTROLABE.getPrintEqualHoursHoraryQuadrant()){
-                EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,false);  //todo new quadrant
-                dataString = equalhoursQuadrantBack.createQuadrantBack();
-                updateZip("EqualHoursQuadrantBack.eps", zos, dataString);
-
-                EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,false);  //todo new quadrant
-                dataString = equalhoursQuadrantFront.createQuadrantFront();
-                updateZip("EqualHoursQuadrantFront.eps", zos, dataString);
-
-            }
-
-
-            // todo add other extras
-            zos.close();
-        }catch(Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"There was a problem saving the ZIP archive","Save Error",JOptionPane.ERROR_MESSAGE);
-        }
-
-        JOptionPane.showMessageDialog(null,"ZIP archive saved to: \n" + filePath);
-    }
-
-    private void updateZip(String fileName, ZipOutputStream zos, String dataString){
-        try {
-            if (null == dataString && fileName.endsWith("/")){ //this is a folder
-                ZipEntry ze1 = new ZipEntry(fileName);
-                zos.putNextEntry(ze1);
-                zos.closeEntry();
-                zos.flush();
+        // verify the filepath and the Astrolabe Object
+        Boolean noProblems = filePath != null && GeneratorGui.MY_ASTROLABE != null ;
+        if (noProblems){
+            filePath = filePath + "/astrolabe.zip";
+            List<List<String>> components = getComponents();
+            try {
+                ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(filePath));
+                for (List<String> component : components){
+                    FileHandler.updateZip(component.get(0), zos, component.get(1));
+                }
+                zos.close();
+            }catch(Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null,"There was a problem saving the ZIP archive","Save Error",JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            byte[] buf = new byte[1024];
-            ZipEntry ze1 = new ZipEntry(fileName);
-            zos.putNextEntry(ze1);
-            InputStream is = new ByteArrayInputStream(dataString.getBytes(Charset.defaultCharset()));
-            int len;
-            while ((len = is.read(buf)) > 0) {
-                zos.write(buf, 0, len);
-            }
-            zos.closeEntry();
-            zos.flush();
-        }catch(Exception e){
-            e.printStackTrace();
         }
+        JOptionPane.showMessageDialog(null,"ZIP archive saved to: \n" + filePath);
     }
 
+    /**
+     * Print the component(s) on the currently selected tab
+     */
     public void printCurrent(){
-       //todo  locate current selected tab and print that
-        ArrayList<String> postScriptStrings = new ArrayList<String>();
+        ArrayList<String> postScriptStrings = new ArrayList<>();
 
         if (GeneratorGui.tabSelected.equals("Front")){
             FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
@@ -456,7 +322,7 @@ public class EPSPrintEngine {
             postScriptStrings.add(myAstrolabeRete.createRete(GeneratorGui.MY_ASTROLABE));
             // create rules
             RulePrintEngine myAstrolabeRules = new RulePrintEngine();
-            postScriptStrings.add(myAstrolabeRules.createRule(GeneratorGui.MY_ASTROLABE, true));
+            postScriptStrings.add(myAstrolabeRules.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true));
         }else if (GeneratorGui.tabSelected.equals("Quadrants")){
             //Quadrants
             if (GeneratorGui.MY_ASTROLABE.getPrintBasicHoraryQuadrant()){
@@ -501,8 +367,11 @@ public class EPSPrintEngine {
         printPage(postScriptStrings);
     }
 
+    /**
+     * Print all selected components
+     */
     public void printAll(){
-        ArrayList<String> postScriptStrings = new ArrayList<String>();
+        ArrayList<String> postScriptStrings = new ArrayList<>();
 
         // create front side
         FrontPrintEngine myAstrolabeFront = new FrontPrintEngine();
@@ -518,7 +387,7 @@ public class EPSPrintEngine {
 
         // create rules
         RulePrintEngine myAstrolabeRules = new RulePrintEngine();
-        postScriptStrings.add(myAstrolabeRules.createRule(GeneratorGui.MY_ASTROLABE, true));
+        postScriptStrings.add(myAstrolabeRules.createCombinedSheet(GeneratorGui.MY_ASTROLABE, true));
 
         //extras
         if (GeneratorGui.MY_ASTROLABE.getPrintRuleSheet()){
@@ -534,6 +403,11 @@ public class EPSPrintEngine {
         printPage(postScriptStrings);
     }
 
+    /**
+     * This will attempt to locate PostScript compatable printers on the machine and
+     * allow the user to print files directly.
+     * @param postScriptStrings ArrayList<String> containing the PostScript data for the components
+     */
     private void printPage( ArrayList<String> postScriptStrings){
         if (null == postScriptStrings || postScriptStrings.isEmpty()){
             return;

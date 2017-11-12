@@ -232,11 +232,7 @@ public class Location
 			return false;
 		}
 
-		if ((lonDeg == 180) && (lonMin > 0 || lonSec > 0) ){
-			return false;
-		}
-
-		return true;
+		return !((lonDeg == 180) && (lonMin > 0 || lonSec > 0));
 	}
 
 	public int getLatDeg(){

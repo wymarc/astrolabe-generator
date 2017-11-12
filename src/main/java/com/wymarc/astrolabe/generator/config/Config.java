@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config {
+    public static String version = "";
+
     private String defaultLocationName = "";
     private String defaultLocation = "";
     private List<ClimateSet> climateSets;
@@ -45,6 +47,11 @@ public class Config {
             Document doc = dBuilder.parse(is);
             doc.getDocumentElement().normalize();
 
+            // get version
+            NodeList projectSettings = doc.getElementsByTagName("project");
+            Element projectSetting = (Element)projectSettings.item(0);
+            version = projectSetting.getElementsByTagName("version").item(0).getTextContent();
+
             // get default location
             NodeList defaultSettings = doc.getElementsByTagName("defaultLocation");
             Element defaultSetting = (Element)defaultSettings.item(0);
@@ -52,7 +59,7 @@ public class Config {
             defaultLocation = defaultSetting.getElementsByTagName("location").item(0).getTextContent();
 
             // get example astrolabes
-            astrolabeExamples = new ArrayList<AstrolabeExample>();
+            astrolabeExamples = new ArrayList<>();
             NodeList astrolabes = doc.getElementsByTagName("astrolabe");
             for (int i = 0; i < astrolabes.getLength(); i++) {
                 Node nNode = astrolabes.item(i);
@@ -76,6 +83,12 @@ public class Config {
                     tempAstrolabe.setShowUnequalHours(eElement.getElementsByTagName("showUnequalHours").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowHouses(eElement.getElementsByTagName("showHouses").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setShowMansions(eElement.getElementsByTagName("showMansions").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowCosine(eElement.getElementsByTagName("showCosine").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setUse100(eElement.getElementsByTagName("use100").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setGridPerDegree(eElement.getElementsByTagName("gridPerDegree").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowRadials(eElement.getElementsByTagName("showRadials").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowArcs(eElement.getElementsByTagName("showArcs").item(0).getTextContent().equals("true"));
+                    tempAstrolabe.setShowObliqityArc(eElement.getElementsByTagName("showObliqityArc").item(0).getTextContent().equals("true"));
                     tempAstrolabe.setBackTopLeft(Integer.parseInt(eElement.getElementsByTagName("backTopLeft").item(0).getTextContent()));
                     tempAstrolabe.setBackTopRight(Integer.parseInt(eElement.getElementsByTagName("backTopRight").item(0).getTextContent()));
                     tempAstrolabe.setBackBottomLeft(Integer.parseInt(eElement.getElementsByTagName("backBottomLeft").item(0).getTextContent()));
@@ -90,7 +103,7 @@ public class Config {
             }
 
             //get climate sets
-            climateSets = new ArrayList<ClimateSet>();
+            climateSets = new ArrayList<>();
             NodeList climateSetNodes = doc.getElementsByTagName("climateSet");
             for (int i = 0; i < climateSetNodes.getLength(); i++) {
                 Node climateSetNode = climateSetNodes.item(i);

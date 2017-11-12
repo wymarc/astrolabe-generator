@@ -27,7 +27,7 @@ public class ClimateSet {
     private List<ClimatePlate> climates;
 
     public ClimateSet() {
-        climates = new ArrayList<ClimatePlate>();
+        climates = new ArrayList<>();
     }
 
     public String getLocationNames(){

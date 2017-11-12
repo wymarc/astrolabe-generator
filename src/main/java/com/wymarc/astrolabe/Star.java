@@ -40,11 +40,12 @@ public class Star {
      *      name (String) The star's display name
      *      ra (double) right ascension
      *      dec (double) declination
-     *	    base1 (Point2D.Double) position one base point of the pointer to the star
-     *	    base2 (Point2D.Double) position for the other base point
+     *	    base1 (Point2D.Double) position one base point of the rete pointer to the star
+     *	    base2 (Point2D.Double) position for the other rete base point
      *	    labelPos (Point2D.Double) position for the label
      *      labelOrient (double) label orientation  
-     * 
+     *
+     * @param hemiSphere N or S
      * @return Filled array of Star objects
      */
     public static Star[] getStarsList(String hemiSphere){

@@ -286,7 +286,7 @@ public class RetePrintEngine {
 
             if( tenLine ){
             	//Save 10 deg positions for labels
-                label[j] = new HashMap<String, Double>();
+                label[j] = new HashMap<>();
                 label[j].put("angle",Math.toDegrees(lonLine.get("b")));
                 label[j].put("x",xro);
                 label[j].put("y",yro);
@@ -295,7 +295,7 @@ public class RetePrintEngine {
 
             if( fifteenLine ){
             //Save 15 deg positions for Names
-                name[k] = new HashMap<String, Double>();
+                name[k] = new HashMap<>();
                 name[k].put("angle",Math.toDegrees(lonLine.get("b")));
                 name[k].put("x",xro);
                 name[k].put("y",yro);
@@ -676,6 +676,11 @@ public class RetePrintEngine {
         return out;
     }
 
+    /**
+     * Locates pointer to star properly
+     * @param starPointer Star containing settings for the pointer
+     * @return PS code for placing pointer
+     */
     private String placeStarPointer(Star starPointer){
         String out = "";
 		// compute angle and radius
@@ -712,6 +717,11 @@ public class RetePrintEngine {
         return out;
     }
 
+    /**
+     * Labels a given starpointer
+     * @param starLabel Star containing settings for the pointer
+     * @return PS code for label
+     */
     private String labelStarPointer(Star starLabel){
         String out = "";
         // label star
@@ -723,6 +733,10 @@ public class RetePrintEngine {
         return out;
     }
 
+    /**
+     * Draws the pointers for the Rete
+     * @return PS code for pointers
+     */
     private String drawStarPointers(){
         String out = "";
         //get star position
@@ -808,11 +822,12 @@ public class RetePrintEngine {
     }
 
     /**
-     * computes and draws an arc of a given width
-     * at a given postion
-     *
-     * since   2.0
-     *
+     * computes and draws an arc of a given width at a given position
+     * @param startAngle double
+     * @param endAngle double
+     * @param arcRadius double
+     * @param arcWidth double
+     * @return PS code for arc
      */
     private String drawCenteredArc(double startAngle, double endAngle, double arcRadius, double arcWidth){
         String out = "";
@@ -826,12 +841,8 @@ public class RetePrintEngine {
 
     /**
      * Draws the rete and rules using EPS
-     *
-     * since   0.1
-     *
-     *
-     * return returns String containing EPS code for Rete printing
-     *
+     * @param myAstrolabeIn Astrolabe containing settings
+     * @return returns String containing EPS code for Rete printing
      */
     public String createRete(Astrolabe myAstrolabeIn){
         myAstrolabe = myAstrolabeIn;

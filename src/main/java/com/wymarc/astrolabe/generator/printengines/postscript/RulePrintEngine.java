@@ -67,43 +67,8 @@ public class RulePrintEngine {
 
         if (scale)
         {
-            // mark rule
-            double r;
-            int h;
-            Boolean label;
-            int labelNum;
-
-            for(int i = -22; i <= 50; i++)
-            {
-                r = myAstrolabe.getEquatorRadius()*(Math.tan(Math.toRadians((90-i)/2.0)));
-                if((i == 0)||((i%10) == 0))
-                {
-                    h = 10;
-                    label = true;
-                }
-                else
-                {
-                    h = 5;
-                    label = false;
-                }
-                out += "\n" + "newpath";
-                out += "\n" + r + " 0 moveto";
-                out += "\n" + r + " " + h + " lineto stroke";
-                if(label)
-                {
-                    out += "\n" + "newpath";
-                    out += "\n" + "NormalFont6 setfont";
-                    out += "\n" + (r-5) + " 10  moveto";                    
-				    if (myAstrolabe.getLocation().getLatDir().equals("S"))
-				    {
-				    	labelNum = -i; //invert scale if southern Hemisphere
-				    }else
-				    {
-				    	labelNum = i;
-				    }
-                    out += "\n" + "( " + labelNum + ") show";
-                }
-            }
+            // Mark rule
+            out += markRule();
         }
 
         if (showLabel){
@@ -174,43 +139,7 @@ public class RulePrintEngine {
         if (scale)
         {
             // mark rule
-            double r;
-            int h;
-            Boolean label;
-            int labelNum;
-
-            for(int i = -22; i <= 50; i++)
-            {
-                r = myAstrolabe.getEquatorRadius()*(Math.tan(Math.toRadians((90-i)/2.0)));
-                if((i == 0)||((i%10) == 0))
-                {
-                    h = 10;
-                    label = true;
-                }
-                else
-                {
-                    h = 5;
-                    label = false;
-                }
-                out += "\n" + "newpath";
-                out += "\n" + r + " 0 moveto";
-                out += "\n" + r + " " + h + " lineto stroke";
-                if(label)
-                {
-                    out += "\n" + "newpath";
-                    out += "\n" + "NormalFont6 setfont";
-                    out += "\n" + (r-5) + " 10  moveto";
-				    if (myAstrolabe.getLocation().getLatDir().equals("S"))
-				    {
-				    	labelNum = -i; //invert scale if southern Hemisphere
-				    }else
-				    {
-				    	labelNum = i;
-				    }
-                    out += "\n" + "( " + labelNum + ") show";
-                }
-
-            }
+            out += markRule();
         }
 
         if (showLabel){
@@ -225,6 +154,50 @@ public class RulePrintEngine {
         out += "\n" + "";
 
         return out;
+    }
+
+    private String markRule(){
+        String markings = "";
+
+        // mark rule
+        double r;
+        int h;
+        Boolean label;
+        int labelNum;
+
+        for(int i = -22; i <= 50; i++)
+        {
+            r = myAstrolabe.getEquatorRadius()*(Math.tan(Math.toRadians((90-i)/2.0)));
+            if((i == 0)||((i%10) == 0))
+            {
+                h = 10;
+                label = true;
+            }
+            else
+            {
+                h = 5;
+                label = false;
+            }
+            markings += "\n" + "newpath";
+            markings += "\n" + r + " 0 moveto";
+            markings += "\n" + r + " " + h + " lineto stroke";
+            if(label)
+            {
+                markings += "\n" + "newpath";
+                markings += "\n" + "NormalFont6 setfont";
+                markings += "\n" + (r-5) + " 10  moveto";
+                if (myAstrolabe.getLocation().getLatDir().equals("S"))
+                {
+                    labelNum = -i; //invert scale if southern Hemisphere
+                }else
+                {
+                    labelNum = i;
+                }
+                markings += "\n" + "( " + labelNum + ") show";
+            }
+
+        }
+        return markings;
     }
 
     /**
@@ -341,6 +314,39 @@ public class RulePrintEngine {
             }
         }
 
+        // reference scale for Sine Quadrant and unequal hours
+        if(myAstrolabe.getTopLeft() != 0){
+            // mark the left arm with an arbitrary scale for reference
+            double radius = myAstrolabe.getMaterRadius() - 67;
+            double pivotRadius = 25;
+            double scaleLength = radius - pivotRadius;
+            double step = scaleLength/60.0; // 60 divisions
+
+            int h = 5;
+            boolean label = false;
+
+            for (int i = 0; i < 61; i++){
+                if((i == 0)||((i%5) == 0)){
+                    h = 10;
+                    label = true;
+                }else{
+                    h = 5;
+                    label = false;
+                }
+                double r = pivotRadius + (step * i);
+                out += "\n" + "newpath";
+                out += "\n" + -r + " 0 moveto";
+                out += "\n" + -r + " " + -h + " lineto stroke";
+
+                if(label){
+                    out += "\n" + "newpath";
+                    out += "\n" + "NormalFont6 setfont";
+                    out += "\n" + -(r+5) + " -15  moveto";
+                    out += "\n" + "( " + i + ") show";
+                }
+            }
+        }
+
         if (showLabel){
             // label on the sheet
             out += "\n" + "newpath";
@@ -364,7 +370,7 @@ public class RulePrintEngine {
      * @return  returns the ps code for drawing the rules and pointers
      *
      */
-    public String createRule(Astrolabe myAstrolabeIn, boolean showLabel){
+    public String createCombinedSheet(Astrolabe myAstrolabeIn, boolean showLabel){
 
         myAstrolabe = myAstrolabeIn;
 
@@ -436,9 +442,7 @@ public class RulePrintEngine {
         out += EPSToolKit.getHeader(myAstrolabe,"Alidade Sheet");
         out += "\n" + "%% setup";
         out += "\n" + ".1 setlinewidth";
-        if(myAstrolabe.getShowEquationOfTime()){
-            out += EPSToolKit.setUpFonts();
-        }
+        out += EPSToolKit.setUpFonts();
 
         for(int i = 1; i <= 10; i++)
         {

@@ -20,14 +20,15 @@
 package com.wymarc.astrolabe.generator.gui.dialogs;
 
 import com.wymarc.astrolabe.generator.AstrolabeGenerator;
+import com.wymarc.astrolabe.generator.config.Config;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class HelpDialog extends JDialog {
-    public HelpDialog(JFrame frame, boolean modal) {
-        super(frame, modal);
+    public HelpDialog(JFrame frame) {
+        super(frame, true);
         init();
         pack();
         setLocationRelativeTo(frame);
@@ -61,7 +62,7 @@ public class HelpDialog extends JDialog {
         title.setForeground(Color.BLUE);
         textPanel.add(title, c);
 
-        JLabel version = new JLabel("Version 3.0");
+        JLabel version = new JLabel("Version " + Config.version);
         version.setHorizontalAlignment(JLabel.RIGHT);
         version.setFont(new Font("Times New Roman", Font.PLAIN, 12));
         c.gridy = 1;
