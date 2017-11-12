@@ -27,6 +27,20 @@ For more information visit:
 
 ## Release History:
 
+3.3:
+
+- Fixed bug in Arcs of the Signs. Both options now work.
+- Expanded options for the sine/cosine grid scale on the astrolabe back:
+  - Grid divided by 60 or 100
+  - Optional cosine lines
+  - Arcs and radials
+  - Lines for each degree option
+- Under the hood:
+  - Version number displays in interface now pulled dynamically from pom.xml
+  - Default folder for saving is now the folder the app was run from
+  - Consolidated file handling in the FileHandler class
+  - Updated to Java 1.8
+
 3.2:
 
 - Fixed bug in the formatting of shadow square numbers
