@@ -201,18 +201,35 @@ public class Lunar {
      *
      */
     private String buildSunDisk(){
-        double outerRadius = workingRadius - 81;
+        double outerRadius = 96;
         int count;
         int count1;
         String out = "";
 
         out += "\n" + "% ==================== Create sun disc ====================";
-        out += "\n" + "% sun pointer";
+        out += "\n" + "% Sun pointer";
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
         out += "\n" + outerRadius + " 0 moveto";
         out += "\n" + workingRadius + " 0 lineto";
-        out += "\n" + "0 " + outerRadius + " lineto stroke";
+        out += "\n" + (workingRadius -10) + " 10 lineto";
+        out += "\n" + (workingRadius -100) + " 50 lineto";
+        out += "\n" + "0 50 lineto stroke";
+
+        out += "\n" + "% secondary pointers";
+        out += "\n" + "0 setgray";
+        out += "\n" + "newpath";
+        out += "\n" + -outerRadius + " 0 moveto";
+        out += "\n" + -(outerRadius + 10) + " 0 lineto";
+        out += "\n" + -(outerRadius - 10) + " -20 lineto stroke";
+        out += "\n" + "newpath";
+        out += "\n" + "0 " + outerRadius + " moveto";
+        out += "\n" + "0 " + (outerRadius + 10) + " lineto";
+        out += "\n" + "-20 " + (outerRadius - 10) + " lineto stroke";
+        out += "\n" + "newpath";
+        out += "\n" + "0 " + -outerRadius + " moveto";
+        out += "\n" + "0 " + -(outerRadius + 10) + " lineto";
+        out += "\n" + "20 " + -(outerRadius - 10) + " lineto stroke";
 
         out += "\n" + "% Draw outer circle";
         out += "\n" + "1 setgray";
@@ -222,31 +239,35 @@ public class Lunar {
 
         out += "\n" + "% inner circle";
         out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (outerRadius - 20) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (outerRadius - 3) + " 0 360 arc stroke";
 
-        out += "\n" + "% sun symbol";
-        out += "\n" + "1 setgray";
-        out += "\n" + (outerRadius + 18) + " 0 18 0 360 arc fill";
+        out += "\n" + "% innermost circle";
         out += "\n" + "0 setgray";
-        out += "\n" + (outerRadius + 18) + " 0 18 0 360 arc stroke";
+        out += "\n" + "0 0 " + (outerRadius - 15) + " 0 360 arc stroke";
 
         out += "\n" + "% sun circle";
-        out += "\n" + ".5 setgray";
-        out += "\n" + "12 0 39 0 360 arc fill";
         out += "\n" + "0 setgray";
+        out += "\n" + "30 0 48 0 360 arc stroke";
 
         // create day marks
-        for (count = 1; count <= 30; count++){
+        out += "\n" + "gsave";
+        double step = 360.0/118.0;
+        for (count = 0; count < 118; count++){
             out += "\n" + "newpath";
-            out += "\n" + (outerRadius - 20) + " 0 moveto";
+            if ( count % 4 == 0){
+                out += "\n" + (outerRadius - 15) + " 0 moveto";
+            }else{
+                out += "\n" + (outerRadius - 3) + " 0 moveto";
+            }
             out += "\n" + outerRadius + " 0 lineto stroke";
-            out += "\n" + "12 rotate";
+            out += "\n" + step + " rotate";
         }
+        out += "\n" + "grestore";
 
-        out += "\n" + "NormalFont12 setfont";
-        for (count = 1; count <= 30; count++){
-            out += EPSToolKit.drawInsideCircularText(Integer.toString(count), 5, (count * 12), (outerRadius - 4));
-        }
+//        out += "\n" + "NormalFont12 setfont";
+//        for (count = 1; count <= 30; count++){
+//            out += EPSToolKit.drawInsideCircularText(Integer.toString(count), 5, (count * 12), (outerRadius - 4));
+//        }
 
         out += "\n" + "0 setgray";
         out += "\n" + "%% ==================== End Create zodiac ====================";
@@ -262,12 +283,11 @@ public class Lunar {
      *
      */
     private String buildMoonDisk(){
-        double outerRadius = workingRadius - 137;
-        int count;
+        double outerRadius = 78.0;
         String out = "";
 
         out += "\n" + "% ==================== Create moon disc ====================";
-        out += "\n" + "% sun pointer";
+        out += "\n" + "% Moon pointer";
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
         out += "\n" + outerRadius + " 0 moveto";
