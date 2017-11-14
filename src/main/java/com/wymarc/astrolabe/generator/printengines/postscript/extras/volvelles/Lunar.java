@@ -206,7 +206,7 @@ public class Lunar {
         int count1;
         String out = "";
 
-        out += "\n" + "% ==================== Create sun disc ====================";
+        out += "\n" + "% ==================== Create sun disk ====================";
         out += "\n" + "% Sun pointer";
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
@@ -247,7 +247,7 @@ public class Lunar {
 
         out += "\n" + "% sun circle";
         out += "\n" + "0 setgray";
-        out += "\n" + "30 0 48 0 360 arc stroke";
+        out += "\n" + "21 0 42 0 360 arc stroke";
 
         // create day marks
         out += "\n" + "gsave";
@@ -270,7 +270,7 @@ public class Lunar {
 //        }
 
         out += "\n" + "0 setgray";
-        out += "\n" + "%% ==================== End Create zodiac ====================";
+        out += "\n" + "%% ==================== End Create sun disk ====================";
         out += "\n" + "";
 
         return out;
@@ -286,7 +286,7 @@ public class Lunar {
         double outerRadius = 78.0;
         String out = "";
 
-        out += "\n" + "% ==================== Create moon disc ====================";
+        out += "\n" + "% ==================== Create moon disk ====================";
         out += "\n" + "% Moon pointer";
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
@@ -382,11 +382,61 @@ public class Lunar {
         out += "\n" + (outerRadius/2.0) + " 0 21 0 360 arc stroke";
 
         out += "\n" + "0 setgray";
-        out += "\n" + "%% ==================== End Create zodiac ====================";
+        out += "\n" + "%% ==================== End Create moon disk ====================";
         out += "\n" + "";
 
         return out;
     }
+
+
+    /**
+     * Computes the markings for the back bezel
+     *
+     * @return  returns the ps code for drawing the Degree Scale
+     *
+     */
+    private String buildInnerRings(){
+        double innerRadius = 96;
+        int count;
+        int count1;
+        String out = "";
+
+        out += "\n" + "% ==================== Create inner rings ====================";
+        out += "\n" + "% Draw inner circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + innerRadius + " 0 360 arc stroke";
+
+        out += "\n" + "% inner circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 3) + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 15) + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 18) + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 30) + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 42) + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 45) + " 0 360 arc stroke";
+
+        out += "\n" + "0 setgray";
+        out += "\n" + "%% ==================== End Create inner rings ====================";
+        out += "\n" + "";
+
+        return out;
+    }
+
 
     /**
      * Draws the back of the Astrolabe
@@ -396,13 +446,13 @@ public class Lunar {
      *
      *
      */
-    public String createVolvelleBase(Astrolabe myAstrolabeIn){
+    public String createVolvelleCalendar(Astrolabe myAstrolabeIn){
 
         myAstrolabe = myAstrolabeIn;
 
         // Write header to file
         String out = "";
-        out += EPSToolKit.getHeader(myAstrolabe,"Lunar Volvelle");
+        out += EPSToolKit.getHeader(myAstrolabe,"Lunar Volvelle Calendar");
         out += "\n" + "%% setup";
 
         out += "\n" + "306 396 translate";
@@ -412,12 +462,19 @@ public class Lunar {
         out += EPSToolKit.setUpCircularText();
 
         out += "\n" + "gsave";
+        out += buildConcentricCalendarRing();
+        out += "\n" + "grestore";
+        out += "\n" + "";
+
+        out += "\n" + "gsave";
         out += buildZodiac();
         out += "\n" + "grestore";
         out += "\n" + "";
+
         out += "\n" + "gsave";
-        out += buildConcentricCalendarRing();
+        out += buildInnerRings();
         out += "\n" + "grestore";
+        out += "\n" + "";
 
         // mark pivot point
         out += "\n" + "%% Mark pivot";
