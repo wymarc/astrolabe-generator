@@ -203,16 +203,16 @@ public class Lunar {
         // create 5 degree marks
         out += "\n" + "5 rotate"; //we make the 5 deg marks by rotating the 10 deg marks 5 deg
         for (count = 1; count <= 36; count++){
-            out += "\n" + (outerRadius - 8) + " 0 moveto";
-            out += "\n" + (outerRadius - 2) + " 0 lineto stroke";
+            out += "\n" + (outerRadius - 5) + " 0 moveto";
+            out += "\n" + (outerRadius - 7) + " 0 lineto stroke";
             out += "\n" + "10 rotate";
         }
         out += "\n" + "-5 rotate"; //rotate back
 
         // create degree marks
         for (count = 1; count <= 360; count++){
-            out += "\n" + (outerRadius - 10) + " 0 moveto";
-            out += "\n" + (outerRadius -5) + " 0 lineto stroke";
+            out += "\n" + (outerRadius - 5) + " 0 moveto";
+            out += "\n" + outerRadius + " 0 lineto stroke";
             out += "\n" + "1 rotate";
         }
 
@@ -238,7 +238,7 @@ public class Lunar {
         out += "\n" + "NormalFont5 setfont";
         for (count = 0; count <= 11; count++){
             for (count1 = 1; count1 <= 3; count1++){
-                out += EPSToolKit.drawInsideCircularText(Integer.toString(count1 * 10), 5, ((count * 30) + (count1 * 10) - 1), (outerRadius - 1));
+                out += EPSToolKit.drawInsideCircularText(Integer.toString(count1 * 10), 5, ((count * 30) + (count1 * 10) - 1), (outerRadius - 6));
             }
         }
 
@@ -480,6 +480,35 @@ public class Lunar {
         out += "\n" + "% innermost circle";
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (innerRadius + 42) + " 0 360 arc stroke";
+
+        double[] marks = { 24.0, 60.0, 90.0, 120.0, 156.0 };
+        double[] ticks = { 33.0, 42.0, 51.0, 67.5, 75.0, 82.5, 97.5, 105.0, 112.5, 129.0, 138.0, 147.0 };
+
+        // mark mystery lines
+        out += "\n" + "gsave";
+        out += "\n" + "90 rotate";
+        for (double angle : marks){
+            out += "\n" + angle + " rotate";
+            out += "\n" + (innerRadius + 18) + " 0 moveto";
+            out += "\n" + (innerRadius + 42) + " 0 lineto stroke";
+            out += "\n" + (-(innerRadius + 18)) + " 0 moveto";
+            out += "\n" + (-(innerRadius + 42)) + " 0 lineto stroke";
+            out += "\n" + (-angle) + " rotate";
+        }
+        out += "\n" + "-90 rotate";
+        out += "\n" + "grestore";
+
+        // create mystery ticks
+        out += "\n" + "gsave";
+        out += "\n" + "90 rotate";
+        for (double angle : ticks){
+            out += "\n" + angle + " rotate";
+            out += "\n" + (innerRadius + 30) + " 0 1 0 360 arc fill";
+            out += "\n" + (-(innerRadius + 30)) + " 0 1 0 360 arc fill";
+            out += "\n" + (-angle) + " rotate";
+        }
+        out += "\n" + "-90 rotate";
+        out += "\n" + "grestore";
 
         out += "\n" + "0 setgray";
         out += "\n" + "%% ==================== End Create inner rings ====================";
