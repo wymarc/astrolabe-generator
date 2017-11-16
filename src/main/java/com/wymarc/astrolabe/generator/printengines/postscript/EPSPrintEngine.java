@@ -213,6 +213,12 @@ public class EPSPrintEngine {
 
         // Volvelle project, to be removed at some point
         Lunar lunarVolvelle = new Lunar();
+
+        component = new ArrayList<>();
+        component.add("LunarVolvelleBasePage.eps");
+        component.add(lunarVolvelle.createBasePage(GeneratorGui.MY_ASTROLABE));
+        selectedComponents.add(component);
+
         component = new ArrayList<>();
         component.add("LunarVolvelleCalendar.eps");
         component.add(lunarVolvelle.createVolvelleCalendar(GeneratorGui.MY_ASTROLABE));

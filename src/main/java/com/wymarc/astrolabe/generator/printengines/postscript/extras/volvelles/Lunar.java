@@ -14,8 +14,63 @@ public class Lunar {
 
     private Astrolabe myAstrolabe = new Astrolabe();
     private double lineWidth = .4;
-    private double workingRadius = 215.0;
 
+    public static String setUpCrossCross(){
+        String out = "";
+        out += "\n" + "/crosscross {";
+        out += "\n" + "newpath      ";
+        out += "\n" + "moveto       ";
+        out += "\n" + "-1 1 rmoveto  ";
+        out += "\n" + "0 4 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 -4 rlineto";
+        out += "\n" + "4 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "-4 0 rlineto";
+        out += "\n" + "0 -4 rlineto";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 4 rlineto ";
+        out += "\n" + "-4 0 rlineto";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "-2 0 rlineto ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 2 rlineto  ";
+        out += "\n" + "2 0 rlineto  ";
+        out += "\n" + "0 -2 rlineto ";
+        out += "\n" + "closepath    ";
+        out += "\n" + "}def         ";
+        out += "\n" + "";
+        out += "\n" + "%% ================ End Set Up CrossCross routine =================";
+
+        return out;
+    }
 
     /**
      * Builds the concentric calendar ring
@@ -24,7 +79,7 @@ public class Lunar {
      *
      */
     private String buildConcentricCalendarRing(){
-        double calendarRadius = workingRadius;
+        double calendarRadius = 186.0;
         int count;
         int count2; // counters
         double lineOfApsides; //angle of line of apsides
@@ -113,7 +168,7 @@ public class Lunar {
      *
      */
     private String buildZodiac(){
-        double outerRadius = workingRadius - 20;
+        double outerRadius = 166.0;
         int count;
         int count1;
         String out = "";
@@ -202,6 +257,7 @@ public class Lunar {
      */
     private String buildSunDisk(){
         double outerRadius = 96;
+        double workingRadius = 215.0;
         int count;
         int count1;
         String out = "";
@@ -284,6 +340,7 @@ public class Lunar {
      */
     private String buildMoonDisk(){
         double outerRadius = 78.0;
+        double workingRadius = 215.0;
         String out = "";
 
         out += "\n" + "% ==================== Create moon disk ====================";
@@ -397,8 +454,6 @@ public class Lunar {
      */
     private String buildInnerRings(){
         double innerRadius = 96;
-        int count;
-        int count1;
         String out = "";
 
         out += "\n" + "% ==================== Create inner rings ====================";
@@ -426,12 +481,62 @@ public class Lunar {
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (innerRadius + 42) + " 0 360 arc stroke";
 
-        out += "\n" + "% innermost circle";
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (innerRadius + 45) + " 0 360 arc stroke";
-
         out += "\n" + "0 setgray";
         out += "\n" + "%% ==================== End Create inner rings ====================";
+        out += "\n" + "";
+
+        return out;
+    }
+
+
+    private String buildClockRing(){
+        double innerRadius = 186.0;
+        String out = "";
+
+        out += "\n" + "% ==================== Create clock ring ====================";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + innerRadius + " 0 360 arc stroke";
+
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 12) + " 0 360 arc stroke";
+
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 15) + " 0 360 arc stroke";
+
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 18) + " 0 360 arc stroke";
+
+        out += "\n" + "gsave";
+        double rotationIncrement = (double)360/1440; //degrees per minute
+        int count;
+        // create 15 minute marks
+        for (count = 1; count <= 96; count++)
+        {
+            out += "\n" + (innerRadius + 12) + " 0 moveto";
+            out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
+            out += "\n" + (15 * rotationIncrement) + " rotate";
+        }
+        // create hour marks
+        for (count = 1; count <= 24; count++)
+        {
+            out += "\n" + innerRadius + " 0 moveto";
+            out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
+            out += "\n" + (60 * rotationIncrement) + " rotate";
+        }
+        out += "\n" + "grestore";
+
+        out += "\n" + "gsave";
+        rotationIncrement = (double)360/32; //degrees per compass point
+        // create compass point marks
+        for (count = 0; count < 32; count++)
+        {
+            out += "\n" + (innerRadius + 15) + " 0 moveto";
+            out += "\n" + (innerRadius + 18) + " 0 lineto stroke";
+            out += "\n" + rotationIncrement + " rotate";
+        }
+        out += "\n" + "grestore";
+
+        out += "\n" + "%% ==================== End Create clock ring ====================";
         out += "\n" + "";
 
         return out;
@@ -460,6 +565,8 @@ public class Lunar {
         out += "\n" + "";
         out += EPSToolKit.setUpFonts();
         out += EPSToolKit.setUpCircularText();
+        out += setUpCrossCross();
+
 
         out += "\n" + "gsave";
         out += buildConcentricCalendarRing();
@@ -473,6 +580,10 @@ public class Lunar {
 
         out += "\n" + "gsave";
         out += buildInnerRings();
+        out += "\n" + ".5 setgray";
+        out += "\n" + "0 126 crosscross fill";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 -126 crosscross fill";
         out += "\n" + "grestore";
         out += "\n" + "";
 
@@ -573,6 +684,48 @@ public class Lunar {
 
         out += "\n" + "gsave";
         out += buildMoonDisk();
+        out += "\n" + "grestore";
+        out += "\n" + "";
+
+        // mark pivot point
+        out += "\n" + "%% Mark pivot";
+        out += "\n" + "1 setgray";
+        out += "\n" + "0 0 5 0 360 arc fill";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 5 0 360 arc stroke";
+        out += "\n" + "newpath";
+        out += "\n" + "-5 0 moveto";
+        out += "\n" + "5 0 lineto stroke";
+        out += "\n" + "newpath";
+        out += "\n" + "0 5 moveto";
+        out += "\n" + "0 -5 lineto stroke";
+        out += "\n" + "";
+
+        // Write Footer
+        out += "\n" + "% Eject the page";
+        out += "\n" + "end cleartomark";
+        out += "\n" + "showpage";
+
+        return out;
+    }
+
+    public String createBasePage(Astrolabe myAstrolabeIn){
+
+        myAstrolabe = myAstrolabeIn;
+
+        // Write header to file
+        String out = "";
+        out += EPSToolKit.getHeader(myAstrolabe,"Lunar Volvelle Sun");
+        out += "\n" + "%% setup";
+
+        out += "\n" + "306 396 translate";
+        out += "\n" + lineWidth + " setlinewidth";
+        out += "\n" + "";
+        out += EPSToolKit.setUpFonts();
+        out += EPSToolKit.setUpCircularText();
+
+        out += "\n" + "gsave";
+        out += buildClockRing();
         out += "\n" + "grestore";
         out += "\n" + "";
 
