@@ -303,7 +303,7 @@ public class Lunar {
 
         out += "\n" + "% sun circle";
         out += "\n" + "0 setgray";
-        out += "\n" + "21 0 42 0 360 arc stroke";
+        out += "\n" + "19.5 0 40.5 0 360 arc stroke";
 
         // create day marks
         out += "\n" + "gsave";
@@ -320,10 +320,10 @@ public class Lunar {
         }
         out += "\n" + "grestore";
 
-//        out += "\n" + "NormalFont12 setfont";
-//        for (count = 1; count <= 30; count++){
-//            out += EPSToolKit.drawInsideCircularText(Integer.toString(count), 5, (count * 12), (outerRadius - 4));
-//        }
+        out += "\n" + "NormalFont12 setfont";
+        for (count = 1; count <= 29; count++){
+            out += EPSToolKit.drawInsideCircularText(Integer.toString(count), 5, ((count -0.5) * (360.0/29.5)), (outerRadius - 5));
+        }
 
         out += "\n" + "0 setgray";
         out += "\n" + "%% ==================== End Create sun disk ====================";
@@ -539,15 +539,13 @@ public class Lunar {
         double rotationIncrement = (double)360/1440; //degrees per minute
         int count;
         // create 15 minute marks
-        for (count = 1; count <= 96; count++)
-        {
+        for (count = 1; count <= 96; count++){
             out += "\n" + (innerRadius + 12) + " 0 moveto";
             out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
             out += "\n" + (15 * rotationIncrement) + " rotate";
         }
         // create hour marks
-        for (count = 1; count <= 24; count++)
-        {
+        for (count = 1; count <= 24; count++){
             out += "\n" + innerRadius + " 0 moveto";
             out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
             out += "\n" + (60 * rotationIncrement) + " rotate";
@@ -557,13 +555,32 @@ public class Lunar {
         out += "\n" + "gsave";
         rotationIncrement = (double)360/32; //degrees per compass point
         // create compass point marks
-        for (count = 0; count < 32; count++)
-        {
+        for (count = 0; count < 32; count++){
             out += "\n" + (innerRadius + 15) + " 0 moveto";
             out += "\n" + (innerRadius + 18) + " 0 lineto stroke";
             out += "\n" + rotationIncrement + " rotate";
         }
         out += "\n" + "grestore";
+
+        String[] hourArray = Astrolabe.ARABICHOURS;
+        out += "\n" + "NormalFont12 setfont";
+        for (count = 0; count <= 11; count++){
+            out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-90+(count*15)), (innerRadius + 2));
+        }
+        for (count = 0; count <= 11; count++){
+            out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-270+(count*15)), (innerRadius + 2));
+        }
+
+        out += "\n" + "NormalFont20 setfont";
+        out += "\n" + "0 " + (innerRadius + 20) + " moveto";
+        out += EPSToolKit.centerText("South");
+        out += "\n" + "180 rotate";
+        out += "\n" + "0 " + (innerRadius + 20) + " moveto";
+        out += EPSToolKit.centerText("North");
+        out += "\n" + "-180 rotate";
+
+        String[] compassArray = {"South b West", "SSW", "SW b S", "Southwest", "SW b West", "WSW", "West b South",
+                "West b North", "WNW", "NW b West", "Northwest", "NW b N", "NNW", };
 
         out += "\n" + "%% ==================== End Create clock ring ====================";
         out += "\n" + "";
