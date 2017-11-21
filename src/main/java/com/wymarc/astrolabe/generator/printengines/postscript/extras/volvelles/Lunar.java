@@ -483,9 +483,12 @@ public class Lunar {
 
         double[] marks = { 24.0, 60.0, 90.0, 120.0, 156.0 };
         double[] ticks = { 33.0, 42.0, 51.0, 67.5, 75.0, 82.5, 97.5, 105.0, 112.5, 129.0, 138.0, 147.0 };
+        String[] labels= {"4", "5", "6", "7", "8", "8", "7", "6", "5", "4"};
 
         // mark mystery lines
+        int count = 0;
         out += "\n" + "gsave";
+        out += "\n" + "NormalFont10 setfont";
         out += "\n" + "90 rotate";
         for (double angle : marks){
             out += "\n" + angle + " rotate";
@@ -494,6 +497,9 @@ public class Lunar {
             out += "\n" + (-(innerRadius + 18)) + " 0 moveto";
             out += "\n" + (-(innerRadius + 42)) + " 0 lineto stroke";
             out += "\n" + (-angle) + " rotate";
+            out += EPSToolKit.drawInsideCircularText(labels[count], 10, angle, (innerRadius + 27));
+            out += EPSToolKit.drawInsideCircularText(labels[count], 10, -angle, (innerRadius + 27));
+            count++;
         }
         out += "\n" + "-90 rotate";
         out += "\n" + "grestore";
@@ -572,15 +578,34 @@ public class Lunar {
         }
 
         out += "\n" + "NormalFont20 setfont";
-        out += "\n" + "0 " + (innerRadius + 20) + " moveto";
+        out += "\n" + "0 " + (innerRadius + 22) + " moveto";
         out += EPSToolKit.centerText("South");
-        out += "\n" + "180 rotate";
-        out += "\n" + "0 " + (innerRadius + 20) + " moveto";
+        out += "\n" + "90 rotate";
+        out += "\n" + "0 " + (innerRadius + 22) + " moveto";
+        out += EPSToolKit.centerText("East");
+        out += "\n" + "90 rotate";
+        out += "\n" + "0 " + (innerRadius + 22) + " moveto";
         out += EPSToolKit.centerText("North");
-        out += "\n" + "-180 rotate";
+        out += "\n" + "90 rotate";
+        out += "\n" + "0 " + (innerRadius + 22) + " moveto";
+        out += EPSToolKit.centerText("West");
+        out += "\n" + "90 rotate";
 
-        String[] compassArray = {"South b West", "SSW", "SW b S", "Southwest", "SW b West", "WSW", "West b South",
-                "West b North", "WNW", "NW b West", "Northwest", "NW b N", "NNW", };
+        String[] compassArray = {"West","W b N", "WNW", "NW b W", "Northwest", "NW b N", "NNW", "N b W", "North", "N b E",
+                "NNE", "NE b N", "Northeast", "NE b E", "EnE", "E b N", "East", "E b S", "ESE", "SE b E", "Southeast",
+                "SE b S", "SSE", "S b E", "South", "S b W", "SSW", "SW b S", "Southwest", "SW b W", "WSW", "W b S"};
+
+        out += "\n" + "gsave";
+        rotationIncrement = (double)360/32; //degrees per compass point
+        // create compass point marks
+        out += "\n" + "NormalFont16 setfont";
+        for (count = 0; count < 32; count++){
+            if (count != 0 && count != 8 && count != 16 && count != 24){
+                out += "\n" + "(" + compassArray[count] + ") " + (innerRadius + 22) + " -5 moveto show";
+            }
+            out += "\n" + (-rotationIncrement) + " rotate";
+        }
+        out += "\n" + "grestore";
 
         out += "\n" + "%% ==================== End Create clock ring ====================";
         out += "\n" + "";
