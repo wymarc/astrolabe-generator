@@ -483,7 +483,8 @@ public class Lunar {
 
         double[] marks = { 24.0, 60.0, 90.0, 120.0, 156.0 };
         double[] ticks = { 33.0, 42.0, 51.0, 67.5, 75.0, 82.5, 97.5, 105.0, 112.5, 129.0, 138.0, 147.0 };
-        String[] labels= {"4", "5", "6", "7", "8", "8", "7", "6", "5", "4"};
+        String[] innerLabels= {"4", "5", "6", "7", "8", "8", "7", "6", "5", "4"};
+        String[] outerLabels= {"8", "7", "6", "5", "4", "4", "5", "6", "7", "8"};
 
         // mark mystery lines
         int count = 0;
@@ -497,8 +498,10 @@ public class Lunar {
             out += "\n" + (-(innerRadius + 18)) + " 0 moveto";
             out += "\n" + (-(innerRadius + 42)) + " 0 lineto stroke";
             out += "\n" + (-angle) + " rotate";
-            out += EPSToolKit.drawInsideCircularText(labels[count], 10, angle, (innerRadius + 27));
-            out += EPSToolKit.drawInsideCircularText(labels[count], 10, -angle, (innerRadius + 27));
+            out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, angle, (innerRadius + 27));
+            out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, -angle, (innerRadius + 27));
+            out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, angle, (innerRadius + 39));
+            out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, -angle, (innerRadius + 39));
             count++;
         }
         out += "\n" + "-90 rotate";
