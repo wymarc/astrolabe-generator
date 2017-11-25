@@ -14,6 +14,7 @@ public class Lunar {
 
     private Astrolabe myAstrolabe = new Astrolabe();
     private double lineWidth = .4;
+    private boolean color = true;
 
     public static String setUpCrossCross(){
         String out = "";
@@ -140,10 +141,16 @@ public class Lunar {
 
         for (count = 0; count <= 11; count++){
             double rotation = AstroMath.geolong(t + ((totalDays + (Astrolabe.MONTHSDAYS[count] / 2)) * jDay));
+            if (color && count % 2 == 0){
+                out += "\n" + "1 0 0 setrgbcolor";
+            }else{
+                out += "\n" + "0 setgray";
+            }
             out += EPSToolKit.drawInsideCircularText(Astrolabe.MONTHS[count], 10,
                     rotation, (calendarRadius - 12));
             totalDays += Astrolabe.MONTHSDAYS[count];
         }
+        out += "\n" + "0 setgray";
         out += "\n" + "NormalFont5 setfont";  // label tens of days
         totalDays = 0;
         for (count = 0; count <= 11; count++){
@@ -151,7 +158,7 @@ public class Lunar {
                 double rotation = AstroMath.geolong(t + (totalDays + count2) * jDay);
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
                     out += EPSToolKit.drawInsideCircularText("" + count2, 5,
-                            rotation, (calendarRadius - 6));
+                            rotation - 1, (calendarRadius - 6));
                 }
             }
             totalDays += Astrolabe.MONTHSDAYS[count];
@@ -216,23 +223,25 @@ public class Lunar {
             out += "\n" + "1 rotate";
         }
 
-        if (myAstrolabe.getShowZodiacSymbols()){
-            //Mark Zodiac symbols
-            out += "\n" + "gsave";
-            out += "\n" + "-75 rotate";
-            for (count = 0; count <= 11; count++)
-            {
-                out += ZodiacSigns.placeSignNumAt(count + 1, new Point2D.Double(0, (outerRadius - 22)), .35, .35);
-                out += "\n" + "30 rotate";
+        //Mark Zodiac Labels
+        out += "\n" + "NormalFont10 setfont";
+        for (count = 0; count <= 11; count++){
+            if (color){
+                if (count == 0 || count == 4 || count == 8){
+                    out += "\n" + "1 0 0 setrgbcolor";
+                }else if (count == 2 || count == 6 || count == 10){
+                    out += "\n" + "0 0 1 setrgbcolor";
+                }else if (count == 3 || count == 7 || count == 11){
+                    out += "\n" + "0 1 0 setrgbcolor";
+                }else{
+                    out += "\n" + "0 setgray";
+                }
+            }else{
+                out += "\n" + "0 setgray";
             }
-            out += "\n" + "grestore";
-        }else{
-            //Mark Zodiac Labels
-            out += "\n" + "NormalFont10 setfont";
-            for (count = 0; count <= 11; count++){
-                out += EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[count], 10, ((count * 30) + 15), (outerRadius - 14));//
-            }
+            out += EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[count], 10, ((count * 30) + 15), (outerRadius - 14));//
         }
+        out += "\n" + "0 setgray";
 
         //Mark Zodiac Degrees
         out += "\n" + "NormalFont5 setfont";
@@ -257,7 +266,7 @@ public class Lunar {
      */
     private String buildSunDisk(){
         double outerRadius = 96;
-        double workingRadius = 215.0;
+        double workingRadius = 204.0;
         int count;
         int count1;
         String out = "";
@@ -303,7 +312,7 @@ public class Lunar {
 
         out += "\n" + "% sun circle";
         out += "\n" + "0 setgray";
-        out += "\n" + "19.5 0 40.5 0 360 arc stroke";
+        out += "\n" + "21 0 39 0 360 arc stroke";
 
         // create day marks
         out += "\n" + "gsave";
@@ -322,10 +331,22 @@ public class Lunar {
 
         out += "\n" + "NormalFont12 setfont";
         for (count = 1; count <= 29; count++){
+            if (color && count % 2 != 0){
+                out += "\n" + "1 0 0 setrgbcolor";
+            }else{
+                out += "\n" + "0 setgray";
+            }
             out += EPSToolKit.drawInsideCircularText(Integer.toString(count), 5, ((count -0.5) * (360.0/29.5)), (outerRadius - 5));
         }
 
         out += "\n" + "0 setgray";
+
+//        out += "\n" + "newpath";
+//        out += "\n" + (-78.0/2.0) + " 0 21 0 360 arc stroke";
+//        out += "\n" + "newpath";
+//        out += "\n" + (78.0/2.0) + " 0 21 0 360 arc stroke";
+
+
         out += "\n" + "%% ==================== End Create sun disk ====================";
         out += "\n" + "";
 
@@ -340,7 +361,7 @@ public class Lunar {
      */
     private String buildMoonDisk(){
         double outerRadius = 78.0;
-        double workingRadius = 215.0;
+        double workingRadius = 204.0;
         String out = "";
 
         out += "\n" + "% ==================== Create moon disk ====================";
@@ -437,6 +458,12 @@ public class Lunar {
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
         out += "\n" + (outerRadius/2.0) + " 0 21 0 360 arc stroke";
+        out += "\n" + "newpath";
+        out += "\n" + ((outerRadius/2.0)-5) + " 0 moveto";
+        out += "\n" + ((outerRadius/2.0)+5) + " 0 lineto stroke";
+        out += "\n" + "newpath";
+        out += "\n" + (outerRadius/2.0) + " -5 moveto";
+        out += "\n" + (outerRadius/2.0) + " 5 lineto stroke";
 
         out += "\n" + "0 setgray";
         out += "\n" + "%% ==================== End Create moon disk ====================";
@@ -498,8 +525,14 @@ public class Lunar {
             out += "\n" + (-(innerRadius + 18)) + " 0 moveto";
             out += "\n" + (-(innerRadius + 42)) + " 0 lineto stroke";
             out += "\n" + (-angle) + " rotate";
+            if (color){
+                out += "\n" + "1 0 0 setrgbcolor";
+            }else{
+                out += "\n" + "0 setgray";
+            }
             out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, angle, (innerRadius + 27));
             out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, -angle, (innerRadius + 27));
+            out += "\n" + "0 setgray";
             out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, angle, (innerRadius + 39));
             out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, -angle, (innerRadius + 39));
             count++;
@@ -573,26 +606,53 @@ public class Lunar {
 
         String[] hourArray = Astrolabe.ARABICHOURS;
         out += "\n" + "NormalFont12 setfont";
+        if (color){
+            out += "\n" + "1 0 0 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
         for (count = 0; count <= 11; count++){
             out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-90+(count*15)), (innerRadius + 2));
         }
         for (count = 0; count <= 11; count++){
             out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-270+(count*15)), (innerRadius + 2));
         }
+        out += "\n" + "0 setgray";
 
         out += "\n" + "NormalFont20 setfont";
         out += "\n" + "0 " + (innerRadius + 22) + " moveto";
+        if (color){
+            out += "\n" + "1 0 0 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
         out += EPSToolKit.centerText("South");
         out += "\n" + "90 rotate";
         out += "\n" + "0 " + (innerRadius + 22) + " moveto";
+        if (color){
+            out += "\n" + "0 0 1 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
         out += EPSToolKit.centerText("East");
         out += "\n" + "90 rotate";
         out += "\n" + "0 " + (innerRadius + 22) + " moveto";
+        if (color){
+            out += "\n" + "1 0 0 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
         out += EPSToolKit.centerText("North");
         out += "\n" + "90 rotate";
         out += "\n" + "0 " + (innerRadius + 22) + " moveto";
+        if (color){
+            out += "\n" + "0 0 1 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
         out += EPSToolKit.centerText("West");
         out += "\n" + "90 rotate";
+        out += "\n" + "0 setgray";
 
         String[] compassArray = {"West","W b N", "WNW", "NW b W", "Northwest", "NW b N", "NNW", "N b W", "North", "N b E",
                 "NNE", "NE b N", "Northeast", "NE b E", "EnE", "E b N", "East", "E b S", "ESE", "SE b E", "Southeast",
@@ -601,9 +661,14 @@ public class Lunar {
         out += "\n" + "gsave";
         rotationIncrement = (double)360/32; //degrees per compass point
         // create compass point marks
-        out += "\n" + "NormalFont16 setfont";
+        out += "\n" + "NormalFont12 setfont";
         for (count = 0; count < 32; count++){
             if (count != 0 && count != 8 && count != 16 && count != 24){
+                if (color && count % 2 == 0){
+                    out += "\n" + "1 0 0 setrgbcolor";
+                }else{
+                    out += "\n" + "0 setgray";
+                }
                 out += "\n" + "(" + compassArray[count] + ") " + (innerRadius + 22) + " -5 moveto show";
             }
             out += "\n" + (-rotationIncrement) + " rotate";
@@ -654,7 +719,11 @@ public class Lunar {
 
         out += "\n" + "gsave";
         out += buildInnerRings();
-        out += "\n" + ".5 setgray";
+        if (color){
+            out += "\n" + "0 0 1 setrgbcolor";
+        }else{
+            out += "\n" + ".5 setgray";
+        }
         out += "\n" + "0 126 crosscross fill";
         out += "\n" + "0 setgray";
         out += "\n" + "0 -126 crosscross fill";
