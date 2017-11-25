@@ -14,7 +14,7 @@ public class Lunar {
 
     private Astrolabe myAstrolabe = new Astrolabe();
     private double lineWidth = .4;
-    private boolean color = true;
+    private boolean color = false;
 
     public static String setUpCrossCross(){
         String out = "";
@@ -285,15 +285,15 @@ public class Lunar {
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
         out += "\n" + -outerRadius + " 0 moveto";
-        out += "\n" + -(outerRadius + 10) + " 0 lineto";
+        out += "\n" + "-114 0 lineto";
         out += "\n" + -(outerRadius - 10) + " -20 lineto stroke";
         out += "\n" + "newpath";
         out += "\n" + "0 " + outerRadius + " moveto";
-        out += "\n" + "0 " + (outerRadius + 10) + " lineto";
+        out += "\n" + "0 114 lineto";
         out += "\n" + "-20 " + (outerRadius - 10) + " lineto stroke";
         out += "\n" + "newpath";
         out += "\n" + "0 " + -outerRadius + " moveto";
-        out += "\n" + "0 " + -(outerRadius + 10) + " lineto";
+        out += "\n" + "0 -114 lineto";
         out += "\n" + "20 " + -(outerRadius - 10) + " lineto stroke";
 
         out += "\n" + "% Draw outer circle";
@@ -310,9 +310,15 @@ public class Lunar {
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (outerRadius - 15) + " 0 360 arc stroke";
 
+//        out += "\n" + "newpath";
+//        out += "\n" + (-78.0/2.0) + " 0 21 0 360 arc stroke";
+//        out += "\n" + "newpath";
+//        out += "\n" + (78.0/2.0) + " 0 21 0 360 arc stroke";
+
         out += "\n" + "% sun circle";
         out += "\n" + "0 setgray";
         out += "\n" + "21 0 39 0 360 arc stroke";
+        out += "\n" + "0 0 60 0 360 arc stroke";
 
         // create day marks
         out += "\n" + "gsave";
@@ -340,12 +346,6 @@ public class Lunar {
         }
 
         out += "\n" + "0 setgray";
-
-//        out += "\n" + "newpath";
-//        out += "\n" + (-78.0/2.0) + " 0 21 0 360 arc stroke";
-//        out += "\n" + "newpath";
-//        out += "\n" + (78.0/2.0) + " 0 21 0 360 arc stroke";
-
 
         out += "\n" + "%% ==================== End Create sun disk ====================";
         out += "\n" + "";
@@ -378,25 +378,25 @@ public class Lunar {
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
         out += "\n" + -outerRadius + " 0 moveto";
-        out += "\n" + -(outerRadius + 10) + " 0 lineto";
+        out += "\n" + "-96 0 lineto";
         out += "\n" + -(outerRadius - 10) + " -20 lineto stroke";
         out += "\n" + "newpath";
         out += "\n" + "0 " + outerRadius + " moveto";
-        out += "\n" + "0 " + (outerRadius + 10) + " lineto";
+        out += "\n" + "0 96 lineto";
         out += "\n" + "-20 " + (outerRadius - 10) + " lineto stroke";
         out += "\n" + "newpath";
         out += "\n" + "0 " + -outerRadius + " moveto";
-        out += "\n" + "0 " + -(outerRadius + 10) + " lineto";
+        out += "\n" + "0 -96 lineto";
         out += "\n" + "20 " + -(outerRadius - 10) + " lineto stroke";
         out += "\n" + "gsave";
         out += "\n -30 rotate";
         out += "\n" + "newpath";
         out += "\n" + "0 " + outerRadius + " moveto";
-        out += "\n" + "0 " + (outerRadius + 10) + " lineto";
+        out += "\n" + "0 96 lineto";
         out += "\n" + "-20 " + (outerRadius - 10) + " lineto stroke";
         out += "\n" + "newpath";
         out += "\n" + "0 " + -outerRadius + " moveto";
-        out += "\n" + "0 " + -(outerRadius + 10) + " lineto";
+        out += "\n" + "0 -96 lineto";
         out += "\n" + "20 " + -(outerRadius - 10) + " lineto stroke";
         out += "\n 30 rotate";
         out += "\n" + "grestore";
@@ -404,21 +404,21 @@ public class Lunar {
         out += "\n 30 rotate";
         out += "\n" + "newpath";
         out += "\n" + "0 " + outerRadius + " moveto";
-        out += "\n" + "0 " + (outerRadius + 10) + " lineto";
+        out += "\n" + "0 96 lineto";
         out += "\n" + "-20 " + (outerRadius - 10) + " lineto stroke";
         out += "\n" + "newpath";
         out += "\n" + "0 " + -outerRadius + " moveto";
-        out += "\n" + "0 " + -(outerRadius + 10) + " lineto";
+        out += "\n" + "0 -96 lineto";
         out += "\n" + "20 " + -(outerRadius - 10) + " lineto stroke";
         out += "\n -30 rotate";
         out += "\n" + "grestore";
 
         out += "\n" + "% Draw outer circle";
         out += "\n" + "1 setgray";
-        out += "\n" + "0 0 " + outerRadius + " 0 360 arc fill";
+        out += "\n" + "0 0 " + (outerRadius + 3) + " 0 360 arc fill";
         out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (outerRadius + 3) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + outerRadius + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (outerRadius - 3) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (outerRadius - 12) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (outerRadius - 15) + " 0 360 arc stroke";
 
