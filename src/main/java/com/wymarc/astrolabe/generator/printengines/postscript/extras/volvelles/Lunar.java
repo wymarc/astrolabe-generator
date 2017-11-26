@@ -314,6 +314,11 @@ public class Lunar {
 //        out += "\n" + (-78.0/2.0) + " 0 21 0 360 arc stroke";
 //        out += "\n" + "newpath";
 //        out += "\n" + (78.0/2.0) + " 0 21 0 360 arc stroke";
+//
+//        out += "\n" + "newpath";
+//        out += "\n" + "0 " + (-78.0/2.0) + " 21 0 360 arc stroke";
+//        out += "\n" + "newpath";
+//        out += "\n" + "0 " + (78.0/2.0) + " 21 0 360 arc stroke";
 
         out += "\n" + "% sun circle";
         out += "\n" + "0 setgray";
