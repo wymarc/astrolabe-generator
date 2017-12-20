@@ -80,7 +80,7 @@ public class Lunar {
      *
      */
     private String buildConcentricCalendarRing(){
-        double calendarRadius = 186.0;
+        double calendarRadius = 171.0;
         int count;
         int count2; // counters
         double lineOfApsides; //angle of line of apsides
@@ -175,7 +175,7 @@ public class Lunar {
      *
      */
     private String buildZodiac(){
-        double outerRadius = 166.0;
+        double outerRadius = 151.0;
         int count;
         int count1;
         String out = "";
@@ -266,7 +266,7 @@ public class Lunar {
      */
     private String buildSunDisk(){
         double outerRadius = 96;
-        double workingRadius = 204.0;
+        double workingRadius = 189.0;
         int count;
         int count1;
         String out = "";
@@ -366,7 +366,7 @@ public class Lunar {
      */
     private String buildMoonDisk(){
         double outerRadius = 78.0;
-        double workingRadius = 204.0;
+        double workingRadius = 189.0;
         String out = "";
 
         out += "\n" + "% ==================== Create moon disk ====================";
@@ -503,15 +503,7 @@ public class Lunar {
 
         out += "\n" + "% innermost circle";
         out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (innerRadius + 18) + " 0 360 arc stroke";
-
-        out += "\n" + "% innermost circle";
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (innerRadius + 30) + " 0 360 arc stroke";
-
-        out += "\n" + "% innermost circle";
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (innerRadius + 42) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (innerRadius + 27) + " 0 360 arc stroke";
 
         double[] marks = { 24.0, 60.0, 90.0, 120.0, 156.0 };
         double[] ticks = { 33.0, 42.0, 51.0, 67.5, 75.0, 82.5, 97.5, 105.0, 112.5, 129.0, 138.0, 147.0 };
@@ -525,21 +517,21 @@ public class Lunar {
         out += "\n" + "90 rotate";
         for (double angle : marks){
             out += "\n" + angle + " rotate";
-            out += "\n" + (innerRadius + 18) + " 0 moveto";
-            out += "\n" + (innerRadius + 42) + " 0 lineto stroke";
-            out += "\n" + (-(innerRadius + 18)) + " 0 moveto";
-            out += "\n" + (-(innerRadius + 42)) + " 0 lineto stroke";
+            out += "\n" + (innerRadius + 3) + " 0 moveto";
+            out += "\n" + (innerRadius + 27) + " 0 lineto stroke";
+            out += "\n" + (-(innerRadius + 3)) + " 0 moveto";
+            out += "\n" + (-(innerRadius + 27)) + " 0 lineto stroke";
             out += "\n" + (-angle) + " rotate";
             if (color){
                 out += "\n" + "1 0 0 setrgbcolor";
             }else{
                 out += "\n" + "0 setgray";
             }
-            out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, angle, (innerRadius + 27));
-            out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, -angle, (innerRadius + 27));
+            out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, angle, (innerRadius + 12));
+            out += EPSToolKit.drawInsideCircularText(innerLabels[count], 10, -angle, (innerRadius + 12));
             out += "\n" + "0 setgray";
-            out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, angle, (innerRadius + 39));
-            out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, -angle, (innerRadius + 39));
+            out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, angle, (innerRadius + 24));
+            out += EPSToolKit.drawInsideCircularText(outerLabels[count], 10, -angle, (innerRadius + 24));
             count++;
         }
         out += "\n" + "-90 rotate";
@@ -550,8 +542,8 @@ public class Lunar {
         out += "\n" + "90 rotate";
         for (double angle : ticks){
             out += "\n" + angle + " rotate";
-            out += "\n" + (innerRadius + 30) + " 0 1 0 360 arc fill";
-            out += "\n" + (-(innerRadius + 30)) + " 0 1 0 360 arc fill";
+            out += "\n" + (innerRadius + 15) + " 0 1 0 360 arc fill";
+            out += "\n" + (-(innerRadius + 15)) + " 0 1 0 360 arc fill";
             out += "\n" + (-angle) + " rotate";
         }
         out += "\n" + "-90 rotate";
@@ -566,7 +558,7 @@ public class Lunar {
 
 
     private String buildClockRing(){
-        double innerRadius = 186.0;
+        double innerRadius = 171.0;
         String out = "";
 
         out += "\n" + "% ==================== Create clock ring ====================";
@@ -729,9 +721,9 @@ public class Lunar {
         }else{
             out += "\n" + ".5 setgray";
         }
-        out += "\n" + "0 126 crosscross fill";
+        out += "\n" + "0 111 crosscross fill";
         out += "\n" + "0 setgray";
-        out += "\n" + "0 -126 crosscross fill";
+        out += "\n" + "0 -111 crosscross fill";
         out += "\n" + "grestore";
         out += "\n" + "";
 
