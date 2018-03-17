@@ -510,6 +510,34 @@ public class Lunar {
         String[] innerLabels= {"4", "5", "6", "7", "8", "8", "7", "6", "5", "4"};
         String[] outerLabels= {"8", "7", "6", "5", "4", "4", "5", "6", "7", "8"};
 
+        // mark mystery lines for research
+//        out += "\n" + "gsave";
+//        out += "\n" + "90 rotate";
+//        for (double angle : marks){
+//            out += "\n" + angle + " rotate";
+//            out += "\n" + (innerRadius + 3) + " 0 moveto";
+//            out += "\n" + (innerRadius + 127) + " 0 lineto stroke";
+//            out += "\n" + (-(innerRadius + 3)) + " 0 moveto";
+//            out += "\n" + (-(innerRadius + 127)) + " 0 lineto stroke";
+//            out += "\n" + (-angle) + " rotate";
+//        }
+//        out += "\n" + "-90 rotate";
+//        out += "\n" + "grestore";
+//        out += "\n" + "gsave";
+//        out += "\n" + "90 rotate";
+//        for (double angle : ticks){
+//            out += "\n" + angle + " rotate";
+//            out += "\n" + (innerRadius + 3) + " 0 moveto";
+//            out += "\n" + (innerRadius + 127) + " 0 lineto stroke";
+//            out += "\n" + (-(innerRadius + 3)) + " 0 moveto";
+//            out += "\n" + (-(innerRadius + 127)) + " 0 lineto stroke";
+//            out += "\n" + (-angle) + " rotate";
+//        }
+//        out += "\n" + (-(innerRadius + 127)) + " 0 moveto";
+//        out += "\n" + (innerRadius + 127) + " 0 lineto stroke";
+//        out += "\n" + "-90 rotate";
+//        out += "\n" + "grestore";
+
         // mark mystery lines
         int count = 0;
         out += "\n" + "gsave";
