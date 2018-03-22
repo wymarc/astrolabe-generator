@@ -362,8 +362,21 @@ public class AstroMath {
      */
     public static Double sunsNoonAltitude(Double latitude,Double zodiacAngle){
         Double declination = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(23.44)) * Math.sin(Math.toRadians(zodiacAngle))));
-        return 90 - latitude + declination;
+        return 90.0 - latitude + declination;
     }
+
+    /**
+     * Given a latitude and an angle above the horizon, this will return the zodiac location of the sun
+     * (from Aries 0.0) for that angle
+     * @param latitude Double latitude of observer (degrees)
+     * @param noonAngle Double noon angle of sun (degrees)
+     * @return Zodiac location (degrees)
+     */
+    public static Double SunsZodiacAngleForNoonAltitude(Double latitude,Double noonAngle){
+        Double declination = noonAngle - (90.0 - latitude);
+        return Math.toDegrees(Math.asin(Math.sin(Math.toRadians(declination)) / Math.sin(Math.toRadians(23.44))));
+    }
+
 
     /**
      * Computes the great circle azimuth to Mecca(Qibla)for a given location
