@@ -372,7 +372,7 @@ public class AstroMath {
      * @param noonAngle Double noon angle of sun (degrees)
      * @return Zodiac location (degrees)
      */
-    public static Double SunsZodiacAngleForNoonAltitude(Double latitude,Double noonAngle){
+    public static Double zodiacAngleForNoonAltitude(Double latitude,Double noonAngle){
         Double declination = noonAngle - (90.0 - latitude);
         return Math.toDegrees(Math.asin(Math.sin(Math.toRadians(declination)) / Math.sin(Math.toRadians(23.44))));
     }

@@ -8,7 +8,7 @@ import com.wymarc.astrolabe.math.AstroMath;
 import java.awt.geom.Point2D;
 
 /**
- * Created by user on 11/5/2017.
+ * Generates parts for a Lunar Volvelle
  */
 public class Lunar {
 
@@ -16,8 +16,13 @@ public class Lunar {
     private double lineWidth = .4;
     private boolean color = false;
 
-    public static String setUpCrossCross(){
+    /**
+     * Sets up routine to draw the cross markings for the volvelle
+     * @return string containing the ps code for the cross
+     */
+    private static String setUpCrossCross(){
         String out = "";
+        out += "\n" + "%% ================ Set Up CrossCross routine =================";
         out += "\n" + "/crosscross {";
         out += "\n" + "newpath      ";
         out += "\n" + "moveto       ";
@@ -80,10 +85,9 @@ public class Lunar {
      *
      */
     private String buildConcentricCalendarRing(){
-        double calendarRadius = 171.0;
+        double calendarRadius = 192.0;
         int count;
         int count2; // counters
-        double lineOfApsides; //angle of line of apsides
         double t; //Time in Julian centuries from J2000.0
 
         String out = "";
@@ -95,9 +99,8 @@ public class Lunar {
         out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc stroke"; //use fill to remove hidden parts of line of apsides
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (calendarRadius - 5) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (calendarRadius - 10) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (calendarRadius - 20) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 3) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (calendarRadius - 15) + " 0 360 arc stroke";
 
         double jDay = 1.0/36525.0; // change in T per day
 
@@ -105,7 +108,7 @@ public class Lunar {
         for (count = 0; count < 365; count++){// mark days
             double rotation = AstroMath.geolong(t + (count * jDay));
             out += "\n" + rotation + " rotate";
-            out += "\n" + (calendarRadius - 5) + " 0 moveto";
+            out += "\n" + (calendarRadius - 3) + " 0 moveto";
             out += "\n" + calendarRadius + " 0 lineto stroke";
             out += "\n" + -rotation + " rotate";
         }
@@ -113,7 +116,7 @@ public class Lunar {
         for (count = 0; count <= 11; count++){// mark months
             double rotation = AstroMath.geolong(t + (totalDays * jDay));
             out += "\n" + rotation + " rotate";
-            out += "\n" + (calendarRadius - 20) + " 0 moveto";
+            out += "\n" + (calendarRadius - 27) + " 0 moveto";
             out += "\n" + calendarRadius + " 0 lineto stroke";
             out += "\n" + -rotation + " rotate";
             totalDays = totalDays + Astrolabe.MONTHSDAYS[count];
@@ -125,11 +128,11 @@ public class Lunar {
                 double rotation = AstroMath.geolong(t + ((totalDays + count2) * jDay));
                 out += "\n" + rotation + " rotate";
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
-                    out += "\n" + (calendarRadius - 10) + " 0 moveto";
+                    out += "\n" + (calendarRadius - 15) + " 0 moveto";
                     out += "\n" + calendarRadius + " 0 lineto stroke";
                 }
                 if((count2 == 5)||(count2 == 15)||(count2 == 25)){
-                    out += "\n" + (calendarRadius - 8) + " 0 moveto";
+                    out += "\n" + (calendarRadius - 15) + " 0 moveto";
                     out += "\n" + calendarRadius + " 0 lineto stroke";
                 }
                 out += "\n" + -rotation + " rotate";
@@ -147,18 +150,18 @@ public class Lunar {
                 out += "\n" + "0 setgray";
             }
             out += EPSToolKit.drawInsideCircularText(Astrolabe.MONTHS[count], 10,
-                    rotation, (calendarRadius - 12));
+                    rotation, (calendarRadius - 18));
             totalDays += Astrolabe.MONTHSDAYS[count];
         }
         out += "\n" + "0 setgray";
-        out += "\n" + "NormalFont5 setfont";  // label tens of days
+        out += "\n" + "NormalFont10 setfont";  // label tens of days
         totalDays = 0;
         for (count = 0; count <= 11; count++){
             for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
                 double rotation = AstroMath.geolong(t + (totalDays + count2) * jDay);
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
-                    out += EPSToolKit.drawInsideCircularText("" + count2, 5,
-                            rotation - 1, (calendarRadius - 6));
+                    out += EPSToolKit.drawInsideCircularText("" + count2, 10,
+                            rotation - 2, (calendarRadius - 6));
                 }
             }
             totalDays += Astrolabe.MONTHSDAYS[count];
@@ -169,56 +172,45 @@ public class Lunar {
     }
 
     /**
-     * Computes the markings for the back bezel
+     * Computes the markings for the zodiac scale
      *
-     * @return  returns the ps code for drawing the Degree Scale
+     * @return  returns the ps code for drawing the zodiac Scale
      *
      */
     private String buildZodiac(){
-        double outerRadius = 151.0;
+        double outerRadius = 165.0;
         int count;
         int count1;
         String out = "";
 
         out += "\n" + "% ==================== Create zodiac ====================";
         out += "\n" + "% Draw outer circle";
-//        out += "\n" + "1 setgray";
-//        out += "\n" + "0 0 " + (outerRadius) + " 0 360 arc stroke";
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + outerRadius + " 0 360 arc stroke";
 
         out += "\n" + "% Draw degree rings";
         out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (outerRadius - 5) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (outerRadius - 10) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (outerRadius - 25) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (outerRadius - 3) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (outerRadius - 15) + " 0 360 arc stroke";
+        out += "\n" + "0 0 " + (outerRadius - 27) + " 0 360 arc stroke";
 
         // create 30 degree marks
         for (count = 1; count <= 12; count++){
-            out += "\n" + (outerRadius - 25) + " 0 moveto";
+            out += "\n" + (outerRadius - 27) + " 0 moveto";
             out += "\n" + outerRadius + " 0 lineto stroke";
             out += "\n" + "30 rotate";
         }
 
         // create 10 degree marks
         for (count = 1; count <= 36; count++){
-            out += "\n" + (outerRadius - 10) + " 0 moveto";
+            out += "\n" + (outerRadius - 15) + " 0 moveto";
             out += "\n" + outerRadius + " 0 lineto stroke";
             out += "\n" + "10 rotate";
         }
 
-        // create 5 degree marks
-        out += "\n" + "5 rotate"; //we make the 5 deg marks by rotating the 10 deg marks 5 deg
-        for (count = 1; count <= 36; count++){
-            out += "\n" + (outerRadius - 5) + " 0 moveto";
-            out += "\n" + (outerRadius - 7) + " 0 lineto stroke";
-            out += "\n" + "10 rotate";
-        }
-        out += "\n" + "-5 rotate"; //rotate back
-
         // create degree marks
         for (count = 1; count <= 360; count++){
-            out += "\n" + (outerRadius - 5) + " 0 moveto";
+            out += "\n" + (outerRadius - 3) + " 0 moveto";
             out += "\n" + outerRadius + " 0 lineto stroke";
             out += "\n" + "1 rotate";
         }
@@ -239,15 +231,17 @@ public class Lunar {
             }else{
                 out += "\n" + "0 setgray";
             }
-            out += EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[count], 10, ((count * 30) + 15), (outerRadius - 14));//
+            out += EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[count], 10, ((count * 30) + 15),
+                    (outerRadius - 18));//
         }
         out += "\n" + "0 setgray";
 
         //Mark Zodiac Degrees
-        out += "\n" + "NormalFont5 setfont";
+        out += "\n" + "NormalFont10 setfont";
         for (count = 0; count <= 11; count++){
             for (count1 = 1; count1 <= 3; count1++){
-                out += EPSToolKit.drawInsideCircularText(Integer.toString(count1 * 10), 5, ((count * 30) + (count1 * 10) - 1), (outerRadius - 6));
+                out += EPSToolKit.drawInsideCircularText(Integer.toString(count1 * 10), 10, ((count * 30) +
+                        (count1 * 10) - 2), (outerRadius - 6));
             }
         }
 
@@ -259,19 +253,18 @@ public class Lunar {
     }
 
     /**
-     * Computes the markings for the back bezel
+     * Computes the markings Sun Disc
      *
-     * @return  returns the ps code for drawing the Degree Scale
+     * @return  returns the ps code for drawing the sun disc
      *
      */
-    private String buildSunDisk(){
+    private String buildSunDisc(){
         double outerRadius = 96;
         double workingRadius = 189.0;
         int count;
-        int count1;
         String out = "";
 
-        out += "\n" + "% ==================== Create sun disk ====================";
+        out += "\n" + "% ==================== Create sun disc ====================";
         out += "\n" + "% Sun pointer";
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
@@ -352,24 +345,24 @@ public class Lunar {
 
         out += "\n" + "0 setgray";
 
-        out += "\n" + "%% ==================== End Create sun disk ====================";
+        out += "\n" + "%% ==================== End Create sun disc ====================";
         out += "\n" + "";
 
         return out;
     }
 
     /**
-     * Computes the markings for the back bezel
+     * Computes the markings for the moon disc
      *
-     * @return  returns the ps code for drawing the Degree Scale
+     * @return  returns the ps code for drawing the moon disc
      *
      */
-    private String buildMoonDisk(){
+    private String buildMoonDisc(){
         double outerRadius = 78.0;
         double workingRadius = 189.0;
         String out = "";
 
-        out += "\n" + "% ==================== Create moon disk ====================";
+        out += "\n" + "% ==================== Create moon disc ====================";
         out += "\n" + "% Moon pointer";
         out += "\n" + "0 setgray";
         out += "\n" + "newpath";
@@ -471,7 +464,7 @@ public class Lunar {
         out += "\n" + (outerRadius/2.0) + " 5 lineto stroke";
 
         out += "\n" + "0 setgray";
-        out += "\n" + "%% ==================== End Create moon disk ====================";
+        out += "\n" + "%% ==================== End Create moon disc ====================";
         out += "\n" + "";
 
         return out;
@@ -479,29 +472,21 @@ public class Lunar {
 
 
     /**
-     * Computes the markings for the back bezel
+     * Computes the markings for the day length scale
      *
-     * @return  returns the ps code for drawing the Degree Scale
+     * @return  returns the ps code for drawing the day length scale
      *
      */
-    private String buildInnerRings(){
-        double innerRadius = 96;
+    private String buildDayLengthScale(){
+        double innerRadius = 96 + 12; //12 for scale inside this one
         String out = "";
 
-        out += "\n" + "% ==================== Create inner rings ====================";
-        out += "\n" + "% Draw inner circle";
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + innerRadius + " 0 360 arc stroke";
-
-        out += "\n" + "% inner circle";
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 " + (innerRadius + 3) + " 0 360 arc stroke";
-
-        out += "\n" + "% innermost circle";
+        out += "\n" + "% ==================== Create day length scale ====================";
+        out += "\n" + "% middle circle";
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (innerRadius + 15) + " 0 360 arc stroke";
 
-        out += "\n" + "% innermost circle";
+        out += "\n" + "% outer circle";
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (innerRadius + 27) + " 0 360 arc stroke";
 
@@ -510,7 +495,7 @@ public class Lunar {
         String[] innerLabels= {"4", "5", "6", "7", "8", "8", "7", "6", "5", "4"};
         String[] outerLabels= {"8", "7", "6", "5", "4", "4", "5", "6", "7", "8"};
 
-        // mark mystery lines for research
+        // mark day length lines for research - marks out to calendar ring, replaces similar section below
 //        out += "\n" + "gsave";
 //        out += "\n" + "90 rotate";
 //        for (double angle : marks){
@@ -538,7 +523,7 @@ public class Lunar {
 //        out += "\n" + "-90 rotate";
 //        out += "\n" + "grestore";
 
-        // mark mystery lines
+        // mark day length lines
         int count = 0;
         out += "\n" + "gsave";
         out += "\n" + "NormalFont10 setfont";
@@ -565,7 +550,7 @@ public class Lunar {
         out += "\n" + "-90 rotate";
         out += "\n" + "grestore";
 
-        // create mystery ticks
+        // create hour ticks
         out += "\n" + "gsave";
         out += "\n" + "90 rotate";
         for (double angle : ticks){
@@ -577,18 +562,122 @@ public class Lunar {
         out += "\n" + "-90 rotate";
         out += "\n" + "grestore";
 
+        // crosses
         out += "\n" + "0 setgray";
-        out += "\n" + "%% ==================== End Create inner rings ====================";
+        if (color){
+            out += "\n" + "0 0 1 setrgbcolor";
+        }else{
+            out += "\n" + ".5 setgray";
+        }
+        out += "\n" + "0 123 crosscross fill";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 -123 crosscross fill";
+        out += "\n" + "%% ==================== End create day length scale ====================";
+        out += "\n" + "";
+
+        return out;
+    }
+
+    /**
+     * Computes the markings for the noon altitude scale
+     *
+     * @return  returns the ps code for drawing the noon altitude scale
+     *
+     */
+    private String buildNoonAltitudeScale(){
+        double innerRadius = 96;
+        String out = "";
+        out += "\n" + "gsave";
+        out += "\n" + "% ==================== Create noon altitude scale ====================";
+        out += "\n" + "% Draw inner circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + innerRadius + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 12) + " 0 360 arc stroke";
+
+        out += "\n" + "% innermost circle";
+        out += "\n" + "0 setgray";
+        out += "\n" + "0 0 " + (innerRadius + 15) + " 0 360 arc stroke";
+
+        out += "\n" + "grestore";
+
+        // compute max and min altitude of the sun at the latitude of Oxford
+        // latitude of Oxford: 51.8N
+        // Obliquity: 23.44
+        double oxford = 51.8;
+        double max = (90.0 - oxford) + 23.44;
+        double min = (90.0 - oxford) - 23.44;
+
+        // round results to nearest 5 degrees, round up for min, down for max
+        max = 5.0*(Math.floor(Math.abs(max/5.0)));
+        min = 5.0*(Math.ceil(Math.abs(min/5.0)));
+
+        // mark every 5 degrees between min and max inclusive
+        // create hour ticks
+        out += "\n" + "gsave";
+        out += "\n" + "NormalFont10 setfont";
+        if (color){
+            out += "\n" + "1 0 0 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
+        for (double alt = min; alt <= max; alt = alt + 5.0 ){
+            String label = Integer.toString((int)alt);
+            double angle = AstroMath.zodiacAngleForNoonAltitude(oxford, alt);
+            out += "\n" + angle + " rotate";
+            out += "\n" + innerRadius + " 0 moveto";
+            out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
+            out += "\n" + (-angle) + " rotate";
+            out += EPSToolKit.drawInsideCircularText(label, 10, (angle - 4), (innerRadius + 10));
+            out += "\n" + (180 - angle) + " rotate";
+            out += "\n" + innerRadius + " 0 moveto";
+            out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
+            out += "\n" + (-(180 - angle)) + " rotate";
+            out += EPSToolKit.drawInsideCircularText(label, 10, ((180 - angle) + 4), (innerRadius + 10));
+        }
+        out += "\n" + "grestore";
+
+        // mark every degree between min and max inclusive
+        // create hour ticks
+        out += "\n" + "gsave";
+        out += "\n" + "NormalFont12 setfont";
+        if (color){
+            out += "\n" + "1 0 0 setrgbcolor";
+        }else{
+            out += "\n" + "0 setgray";
+        }
+        for (double alt = min; alt <= max; alt = alt + 1.0 ){
+            double angle = AstroMath.zodiacAngleForNoonAltitude(oxford, alt);
+            out += "\n" + angle + " rotate";
+            out += "\n" + (innerRadius + 12) + " 0 moveto";
+            out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
+            out += "\n" + (-angle) + " rotate";
+            out += "\n" + (180 - angle) + " rotate";
+            out += "\n" + (innerRadius + 12) + " 0 moveto";
+            out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
+            out += "\n" + (-(180 - angle)) + " rotate";
+        }
+        out += "\n" + "grestore";
+
+        out += "\n" + "0 setgray";
+        out += "\n" + "%% ==================== End create noon altitude scale ====================";
         out += "\n" + "";
 
         return out;
     }
 
 
-    private String buildClockRing(){
-        double innerRadius = 171.0;
+    /**
+     * Generates the ps code for drawing the base sheet of the Volvelle
+     * @return returns the ps code for drawing the base sheet with the clock face and wind rose
+     */
+    private String buildVolvelleBase(){
+        double innerRadius = 192.0;
         String out = "";
 
+        out += "\n" + "% ==================== Create base sheet ====================";
         out += "\n" + "% ==================== Create clock ring ====================";
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + innerRadius + " 0 360 arc stroke";
@@ -619,16 +708,6 @@ public class Lunar {
         }
         out += "\n" + "grestore";
 
-        out += "\n" + "gsave";
-        rotationIncrement = (double)360/32; //degrees per compass point
-        // create compass point marks
-        for (count = 0; count < 32; count++){
-            out += "\n" + (innerRadius + 15) + " 0 moveto";
-            out += "\n" + (innerRadius + 18) + " 0 lineto stroke";
-            out += "\n" + rotationIncrement + " rotate";
-        }
-        out += "\n" + "grestore";
-
         String[] hourArray = Astrolabe.ARABICHOURS;
         out += "\n" + "NormalFont12 setfont";
         if (color){
@@ -643,6 +722,20 @@ public class Lunar {
             out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-270+(count*15)), (innerRadius + 2));
         }
         out += "\n" + "0 setgray";
+
+        out += "\n" + "% ==================== End Create clock ring ====================";
+
+        out += "\n" + "% ==================== Create wind rose ====================";
+
+        out += "\n" + "gsave";
+        rotationIncrement = (double)360/32; //degrees per compass point
+        // create compass point marks
+        for (count = 0; count < 32; count++){
+            out += "\n" + (innerRadius + 15) + " 0 moveto";
+            out += "\n" + (innerRadius + 18) + " 0 lineto stroke";
+            out += "\n" + rotationIncrement + " rotate";
+        }
+        out += "\n" + "grestore";
 
         out += "\n" + "NormalFont20 setfont";
         out += "\n" + "0 " + (innerRadius + 22) + " moveto";
@@ -700,7 +793,8 @@ public class Lunar {
         }
         out += "\n" + "grestore";
 
-        out += "\n" + "%% ==================== End Create clock ring ====================";
+        out += "\n" + "%% ==================== end create wind rose ====================";
+        out += "\n" + "% ==================== end create base sheet ====================";
         out += "\n" + "";
 
         return out;
@@ -708,14 +802,13 @@ public class Lunar {
 
 
     /**
-     * Draws the back of the Astrolabe
+     * Generates the ps code for drawing the zodiac calendar disc of the Volvelle
      *
-     * @param   myAstrolabeIn    the astrolabe object
-     * @return  returns the ps code for drawing the back of the astrolabe
-     *
+     * @param   myAstrolabeIn    the astrolabe object (used for some routines)
+     * @return  returns the ps code for drawing the zodiac calendar disc
      *
      */
-    public String createVolvelleCalendar(Astrolabe myAstrolabeIn){
+    public String createVolvelleZodiacCalendarDisc(Astrolabe myAstrolabeIn){
 
         myAstrolabe = myAstrolabeIn;
 
@@ -731,7 +824,7 @@ public class Lunar {
         out += EPSToolKit.setUpCircularText();
         out += setUpCrossCross();
 
-
+        out += "\n" + "% ==================== Create zodiac calendar disc ====================";
         out += "\n" + "gsave";
         out += buildConcentricCalendarRing();
         out += "\n" + "grestore";
@@ -743,15 +836,62 @@ public class Lunar {
         out += "\n" + "";
 
         out += "\n" + "gsave";
-        out += buildInnerRings();
-        if (color){
-            out += "\n" + "0 0 1 setrgbcolor";
-        }else{
-            out += "\n" + ".5 setgray";
-        }
-        out += "\n" + "0 111 crosscross fill";
+        out += buildNoonAltitudeScale();
+        out += "\n" + "grestore";
+        out += "\n" + "";
+
+        out += "\n" + "gsave";
+        out += buildDayLengthScale();
+        out += "\n" + "grestore";
+        out += "\n" + "";
+
+        // mark pivot point
+        out += "\n" + "%% Mark pivot";
+        out += "\n" + "1 setgray";
+        out += "\n" + "0 0 5 0 360 arc fill";
         out += "\n" + "0 setgray";
-        out += "\n" + "0 -111 crosscross fill";
+        out += "\n" + "0 0 5 0 360 arc stroke";
+        out += "\n" + "newpath";
+        out += "\n" + "-5 0 moveto";
+        out += "\n" + "5 0 lineto stroke";
+        out += "\n" + "newpath";
+        out += "\n" + "0 5 moveto";
+        out += "\n" + "0 -5 lineto stroke";
+        out += "\n" + "";
+        out += "\n" + "% ==================== end create zodiac calendar disc ====================";
+
+        // Write Footer
+        out += "\n" + "% Eject the page";
+        out += "\n" + "end cleartomark";
+        out += "\n" + "showpage";
+
+        return out;
+    }
+
+    /**
+     * Generates the ps code for drawing the sun disc of the Volvelle
+     *
+     * @param   myAstrolabeIn    the astrolabe object (used for some routines)
+     * @return  returns the ps code for drawing the sun disc
+     *
+     */
+    public String createVolvelleSunDisc(Astrolabe myAstrolabeIn){
+
+        myAstrolabe = myAstrolabeIn;
+
+        // Write header to file
+        String out = "";
+        out += EPSToolKit.getHeader(myAstrolabe,"Lunar Volvelle Sun");
+        out += "\n" + "%% setup";
+
+        out += "\n" + "306 396 translate";
+        out += "\n" + lineWidth + " setlinewidth";
+        out += "\n" + "";
+        out += EPSToolKit.setUpFonts();
+        out += EPSToolKit.setUpCircularText();
+
+        out += "\n" + "gsave";
+        out += buildSunDisc();
         out += "\n" + "grestore";
         out += "\n" + "";
 
@@ -778,14 +918,13 @@ public class Lunar {
     }
 
     /**
-     * Draws the back of the Astrolabe
+     * Generates the ps code for drawing the moon disc of the Volvelle
      *
-     * @param   myAstrolabeIn    the astrolabe object
-     * @return  returns the ps code for drawing the back of the astrolabe
-     *
+     * @param   myAstrolabeIn    the astrolabe object (used for some routines)
+     * @return  returns the ps code for drawing the moon disc
      *
      */
-    public String createVolvelleSun(Astrolabe myAstrolabeIn){
+    public String createVolvelleMoonDisc(Astrolabe myAstrolabeIn){
 
         myAstrolabe = myAstrolabeIn;
 
@@ -801,7 +940,7 @@ public class Lunar {
         out += EPSToolKit.setUpCircularText();
 
         out += "\n" + "gsave";
-        out += buildSunDisk();
+        out += buildMoonDisc();
         out += "\n" + "grestore";
         out += "\n" + "";
 
@@ -828,55 +967,12 @@ public class Lunar {
     }
 
     /**
-     * Draws the back of the Astrolabe
+     * Generates the ps code for drawing the base page of the Volvelle
      *
-     * @param   myAstrolabeIn    the astrolabe object
-     * @return  returns the ps code for drawing the back of the astrolabe
-     *
+     * @param   myAstrolabeIn    the astrolabe object (used for some routines)
+     * @return  returns the ps code for drawing the base page
      *
      */
-    public String createVolvelleMoon(Astrolabe myAstrolabeIn){
-
-        myAstrolabe = myAstrolabeIn;
-
-        // Write header to file
-        String out = "";
-        out += EPSToolKit.getHeader(myAstrolabe,"Lunar Volvelle Sun");
-        out += "\n" + "%% setup";
-
-        out += "\n" + "306 396 translate";
-        out += "\n" + lineWidth + " setlinewidth";
-        out += "\n" + "";
-        out += EPSToolKit.setUpFonts();
-        out += EPSToolKit.setUpCircularText();
-
-        out += "\n" + "gsave";
-        out += buildMoonDisk();
-        out += "\n" + "grestore";
-        out += "\n" + "";
-
-        // mark pivot point
-        out += "\n" + "%% Mark pivot";
-        out += "\n" + "1 setgray";
-        out += "\n" + "0 0 5 0 360 arc fill";
-        out += "\n" + "0 setgray";
-        out += "\n" + "0 0 5 0 360 arc stroke";
-        out += "\n" + "newpath";
-        out += "\n" + "-5 0 moveto";
-        out += "\n" + "5 0 lineto stroke";
-        out += "\n" + "newpath";
-        out += "\n" + "0 5 moveto";
-        out += "\n" + "0 -5 lineto stroke";
-        out += "\n" + "";
-
-        // Write Footer
-        out += "\n" + "% Eject the page";
-        out += "\n" + "end cleartomark";
-        out += "\n" + "showpage";
-
-        return out;
-    }
-
     public String createBasePage(Astrolabe myAstrolabeIn){
 
         myAstrolabe = myAstrolabeIn;
@@ -893,7 +989,7 @@ public class Lunar {
         out += EPSToolKit.setUpCircularText();
 
         out += "\n" + "gsave";
-        out += buildClockRing();
+        out += buildVolvelleBase();
         out += "\n" + "grestore";
         out += "\n" + "";
 

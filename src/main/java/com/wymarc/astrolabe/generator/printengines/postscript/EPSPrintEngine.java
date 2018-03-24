@@ -221,17 +221,17 @@ public class EPSPrintEngine {
 
         component = new ArrayList<>();
         component.add("LunarVolvelleCalendar.eps");
-        component.add(lunarVolvelle.createVolvelleCalendar(GeneratorGui.MY_ASTROLABE));
+        component.add(lunarVolvelle.createVolvelleZodiacCalendarDisc(GeneratorGui.MY_ASTROLABE));
         selectedComponents.add(component);
 
         component = new ArrayList<>();
         component.add("LunarVolvelleSun.eps");
-        component.add(lunarVolvelle.createVolvelleSun(GeneratorGui.MY_ASTROLABE));
+        component.add(lunarVolvelle.createVolvelleSunDisc(GeneratorGui.MY_ASTROLABE));
         selectedComponents.add(component);
 
         component = new ArrayList<>();
         component.add("LunarVolvelleMoon.eps");
-        component.add(lunarVolvelle.createVolvelleMoon(GeneratorGui.MY_ASTROLABE));
+        component.add(lunarVolvelle.createVolvelleMoonDisc(GeneratorGui.MY_ASTROLABE));
         selectedComponents.add(component);
 
         // todo
