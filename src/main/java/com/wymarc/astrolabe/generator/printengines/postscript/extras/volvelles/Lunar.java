@@ -2,10 +2,7 @@ package com.wymarc.astrolabe.generator.printengines.postscript.extras.volvelles;
 
 import com.wymarc.astrolabe.Astrolabe;
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
-import com.wymarc.astrolabe.generator.printengines.postscript.util.ZodiacSigns;
 import com.wymarc.astrolabe.math.AstroMath;
-
-import java.awt.geom.Point2D;
 
 /**
  * Generates parts for a Lunar Volvelle
@@ -14,7 +11,7 @@ public class Lunar {
 
     private Astrolabe myAstrolabe = new Astrolabe();
     private double lineWidth = .4;
-    private boolean color = true;
+    private boolean color = false;
 
     /**
      * Sets up routine to draw the cross markings for the volvelle
@@ -157,7 +154,7 @@ public class Lunar {
         out += "\n" + "NormalFont10 setfont";  // label tens of days
         totalDays = 0;
         for (count = 0; count <= 11; count++){
-            for (count2 = 0; count2 < Astrolabe.MONTHSDAYS[count]; count2++){
+            for (count2 = 0; count2 <= Astrolabe.MONTHSDAYS[count]; count2++){
                 double rotation = AstroMath.geolong(t + (totalDays + count2) * jDay);
                 if((count2 == 10)||(count2 == 20)||(count2 == 30)){
                     out += EPSToolKit.drawInsideCircularText("" + count2, 10,
@@ -260,7 +257,7 @@ public class Lunar {
      */
     private String buildSunDisc(){
         double outerRadius = 96;
-        double workingRadius = 189.0;
+        double workingRadius = 210.0;
         int count;
         String out = "";
 
@@ -359,7 +356,7 @@ public class Lunar {
      */
     private String buildMoonDisc(){
         double outerRadius = 78.0;
-        double workingRadius = 189.0;
+        double workingRadius = 210.0;
         String out = "";
 
         out += "\n" + "% ==================== Create moon disc ====================";
