@@ -14,7 +14,7 @@ public class Lunar {
 
     private Astrolabe myAstrolabe = new Astrolabe();
     private double lineWidth = .4;
-    private boolean color = false;
+    private boolean color = true;
 
     /**
      * Sets up routine to draw the cross markings for the volvelle
@@ -607,22 +607,17 @@ public class Lunar {
         // latitude of Oxford: 51.8N
         // Obliquity: 23.44
         double oxford = 51.8;
-        double max = (90.0 - oxford) + 23.44;
+        double max = (90.0 - oxford) + 23.44; //todo kludge
         double min = (90.0 - oxford) - 23.44;
 
         // round results to nearest 5 degrees, round up for min, down for max
-        max = 5.0*(Math.floor(Math.abs(max/5.0)));
+        max = 61.0; //todo kludge
         min = 5.0*(Math.ceil(Math.abs(min/5.0)));
 
         // mark every 5 degrees between min and max inclusive
         // create hour ticks
         out += "\n" + "gsave";
         out += "\n" + "NormalFont10 setfont";
-        if (color){
-            out += "\n" + "1 0 0 setrgbcolor";
-        }else{
-            out += "\n" + "0 setgray";
-        }
         for (double alt = min; alt <= max; alt = alt + 5.0 ){
             String label = Integer.toString((int)alt);
             double angle = AstroMath.zodiacAngleForNoonAltitude(oxford, alt);
@@ -630,24 +625,24 @@ public class Lunar {
             out += "\n" + innerRadius + " 0 moveto";
             out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
             out += "\n" + (-angle) + " rotate";
-            out += EPSToolKit.drawInsideCircularText(label, 10, (angle - 4), (innerRadius + 10));
             out += "\n" + (180 - angle) + " rotate";
             out += "\n" + innerRadius + " 0 moveto";
             out += "\n" + (innerRadius + 15) + " 0 lineto stroke";
             out += "\n" + (-(180 - angle)) + " rotate";
+            if (color){
+                out += "\n" + "1 0 0 setrgbcolor";
+            }else{
+                out += "\n" + "0 setgray";
+            }
+            out += EPSToolKit.drawInsideCircularText(label, 10, (angle - 4), (innerRadius + 10));
             out += EPSToolKit.drawInsideCircularText(label, 10, ((180 - angle) + 4), (innerRadius + 10));
+            out += "\n" + "0 setgray";
         }
         out += "\n" + "grestore";
 
         // mark every degree between min and max inclusive
         // create hour ticks
         out += "\n" + "gsave";
-        out += "\n" + "NormalFont12 setfont";
-        if (color){
-            out += "\n" + "1 0 0 setrgbcolor";
-        }else{
-            out += "\n" + "0 setgray";
-        }
         for (double alt = min; alt <= max; alt = alt + 1.0 ){
             double angle = AstroMath.zodiacAngleForNoonAltitude(oxford, alt);
             out += "\n" + angle + " rotate";
@@ -660,8 +655,6 @@ public class Lunar {
             out += "\n" + (-(180 - angle)) + " rotate";
         }
         out += "\n" + "grestore";
-
-        out += "\n" + "0 setgray";
         out += "\n" + "%% ==================== End create noon altitude scale ====================";
         out += "\n" + "";
 
