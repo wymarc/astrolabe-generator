@@ -212,27 +212,27 @@ public class EPSPrintEngine {
 
 
         // Volvelle project, to be removed at some point
-        Lunar lunarVolvelle = new Lunar();
-
-        component = new ArrayList<>();
-        component.add("LunarVolvelleBasePage.eps");
-        component.add(lunarVolvelle.createBasePage(GeneratorGui.MY_ASTROLABE));
-        selectedComponents.add(component);
-
-        component = new ArrayList<>();
-        component.add("LunarVolvelleCalendar.eps");
-        component.add(lunarVolvelle.createVolvelleZodiacCalendarDisc(GeneratorGui.MY_ASTROLABE));
-        selectedComponents.add(component);
-
-        component = new ArrayList<>();
-        component.add("LunarVolvelleSun.eps");
-        component.add(lunarVolvelle.createVolvelleSunDisc(GeneratorGui.MY_ASTROLABE));
-        selectedComponents.add(component);
-
-        component = new ArrayList<>();
-        component.add("LunarVolvelleMoon.eps");
-        component.add(lunarVolvelle.createVolvelleMoonDisc(GeneratorGui.MY_ASTROLABE));
-        selectedComponents.add(component);
+//        Lunar lunarVolvelle = new Lunar();
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleBasePage.eps");
+//        component.add(lunarVolvelle.createBasePage(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleCalendar.eps");
+//        component.add(lunarVolvelle.createVolvelleZodiacCalendarDisc(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleSun.eps");
+//        component.add(lunarVolvelle.createVolvelleSunDisc(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
+//
+//        component = new ArrayList<>();
+//        component.add("LunarVolvelleMoon.eps");
+//        component.add(lunarVolvelle.createVolvelleMoonDisc(GeneratorGui.MY_ASTROLABE));
+//        selectedComponents.add(component);
 
         // todo
         // quadrants, tools, instructions etc

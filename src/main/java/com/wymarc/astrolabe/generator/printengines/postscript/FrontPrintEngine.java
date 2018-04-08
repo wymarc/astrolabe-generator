@@ -110,10 +110,10 @@ public class FrontPrintEngine {
             altitude = interval; // fixes issue with equator
         }
         out += "\n" + "%% ================ Draw Almucantars =================";
+        StringBuilder sb = new StringBuilder();
         while (altitude <= 85)  //stop at 85 deg
         {
-            out += "\n" + "newpath";
-
+            sb.append("\n").append("newpath");
             //Compute center
             center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
             //compute radius
@@ -122,16 +122,17 @@ public class FrontPrintEngine {
             if(((interval == 1)||(interval == 2))&&((altitude == 10)||(altitude == 30)||(altitude == 50)||(altitude == 70)))
             {
                 // if interval is every 1 or 2 degrees mark every tenth with heavier lines
-                out += "\n" + ".4 setlinewidth";
+                sb.append("\n").append(".4 setlinewidth");
             }else if((altitude == 0)||(altitude == 20)||(altitude == 40)||(altitude == 60)||(altitude == 80))
             {
                 // if interval is every 5 or 10 mark every 20 deg with heavier lines
-                out += "\n" + ".4 setlinewidth";
+                sb.append("\n").append(".4 setlinewidth");
             }else
             {
-                out += "\n" + ".1 setlinewidth";
+                sb.append("\n").append(".1 setlinewidth");
             }
-            out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
+            sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" 0 360 arc stroke");
+
             if((altitude == 20)||(altitude == 40)||(altitude == 60))
             {
                 if(altitude == 20)
@@ -159,23 +160,25 @@ public class FrontPrintEngine {
                     }
                 }
                 //mark altitude
-                out += "\n" + "%% Label Almucantar";
-                out += "\n" + "NormalFont6 setfont";
-                out += "\n" + 0 + " " + ((center + radius)+1) + " moveto";
-                out += EPSToolKit.centerText(label);
-                out += "\n" + 0 + " " + ((center - radius)+1) + " moveto";
-                out += EPSToolKit.centerText(label);
+                sb.append("\n").append("%% Label Almucantar");
+                sb.append("\n").append("NormalFont6 setfont");
+                sb.append("\n").append(0).append(" ").append(((center + radius)+1)).append(" moveto");
+                sb.append(EPSToolKit.centerText(label));
+                sb.append("\n").append(0).append(" ").append(((center - radius)+1)).append(" moveto");
+                sb.append(EPSToolKit.centerText(label));
 
             }
             altitude = altitude + interval;
         }
 
+        out += "\n" + sb.toString();
         // Twilight line
         if (myAstrolabe.getShowTwilightLines()){//todo: consolidate this to simplify
             out += "\n" + "[4 4] 0 setdash"; // set dashed line
 
             if (myAstrolabe.getShowAllTwilightLines()){
                 int count = 1;
+                sb = new StringBuilder();
                 while (count <= 3)
                 {
                     altitude = -6 * count;
@@ -187,14 +190,16 @@ public class FrontPrintEngine {
                     InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
                     if (myInterSect.getIntersection())
                     {
-                        out += "\n" + "0 " + center + " " + radius + " "+myInterSect.getAngle2()+" "+myInterSect.getAngle1()+" arc stroke";
+                        sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" ")
+                                .append(myInterSect.getAngle2()).append(" ").append(myInterSect.getAngle1()).append(" arc stroke");
                     }else
                     {
-                        out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
+                        sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" 0 360 arc stroke");
                     }
 
                     count++;
                 }
+                out += "\n" + sb.toString();
             }else{
                 // compute and draw just the 18 degree twilight line
                 altitude = -18;
@@ -236,15 +241,16 @@ public class FrontPrintEngine {
 
         String out = "";
         out += "\n" + "%% ================ Draw Horizons =================";
+        StringBuilder sb = new StringBuilder();
         while (latitude <= 70) //10 to 70
         {
-            out += "\n" + "newpath";
+            sb.append("\n").append("newpath");
             //Compute center
             center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(latitude)) / (Math.sin(Math.toRadians(latitude)) + Math.sin(Math.toRadians(0))));
             //compute radius
             radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(0)) / (Math.sin(Math.toRadians(latitude)) + Math.sin(Math.toRadians(0))));
             //draw
-            out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
+            sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" 0 360 arc stroke");
             if((latitude == 20)||(latitude == 40)||(latitude == 60))
             {
                 if(latitude == 20)
@@ -260,14 +266,16 @@ public class FrontPrintEngine {
                     label = "6 0";
                 }
                 //mark altitude
-                out += "\n" + "%% Label Almucantar";
-                out += "\n" + "NormalFont6 setfont";
-                out += "\n" + 0 + " " + ((center - radius)-2) + " moveto";
-                out += EPSToolKit.centerText(label);
+                sb.append("\n").append("%% Label Almucantar");
+                sb.append("\n").append("NormalFont6 setfont");
+                sb.append("\n").append(0).append(" ").append(((center - radius)-2)).append(" moveto");
+                sb.append("\n").append(EPSToolKit.centerText(label));
 
             }
             latitude = latitude + interval;
         }
+
+        out += "\n" + sb.toString();
 
         out += "\n" + "%% ================ End Horizons =================";
 
@@ -292,11 +300,13 @@ public class FrontPrintEngine {
         }else if (Math.abs(myAstrolabe.getLocation().getLatitude()) < 0.5){
             // at the equator the unequal hour lines are not arcs, but radial lines
             // Below a half degree latitude they don't draw properly, so substitute radial lines
+            StringBuilder sb = new StringBuilder();
             for (int i = 1; i < 12; i++){
-                out += "\n" + "-15 rotate";
-                out += "\n" + (myAstrolabe.getCapricornRadius()) + " 0 moveto";
-                out += "\n" + (myAstrolabe.getCancerRadius()) + " 0 lineto stroke";
+                sb.append("\n").append("-15 rotate");
+                sb.append("\n").append(myAstrolabe.getCapricornRadius()).append(" 0 moveto");
+                sb.append("\n").append(myAstrolabe.getCancerRadius()).append(" 0 lineto stroke");
             }
+            out += "\n" + sb.toString();
             out += "\n" + "165 rotate";
         }else{
             double temp = (Math.tan(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))))*(Math.tan(Math.toRadians(23.44)));
@@ -309,6 +319,7 @@ public class FrontPrintEngine {
             double x;
             double centerX;
             double centerY;
+            StringBuilder sb = new StringBuilder();
             for(int i = 1; i<=6; i++)
             {
                 x =((Math.pow(myAstrolabe.getEquatorRadius(),2))-(Math.pow(myAstrolabe.getCancerRadius(),2)))/(2*myAstrolabe.getCancerRadius()*Math.sin(Math.toRadians((15*i)-(cI*i))));
@@ -318,9 +329,12 @@ public class FrontPrintEngine {
                 //compute clipping
                 InterSect myInterSect = new InterSect(centerX, centerY, radius, 0, 0, myAstrolabe.getCancerRadius());
                 InterSect myInterSect2 = new InterSect(-centerX, centerY, radius, 0, 0, myAstrolabe.getCancerRadius());
-                out += "\n" + centerX + " " + centerY + " " + radius + " " + myInterSect.getAngle2() + " 360 arc stroke";
-                out += "\n" + (-centerX) + " " + centerY + " " + radius + " " + "90" + " " + myInterSect2.getAngle1() + " arc stroke";
+                sb.append("\n").append(centerX).append(" ").append(centerY).append(" ")
+                        .append(radius).append(" ").append(myInterSect.getAngle2()).append(" 360 arc stroke");
+                sb.append("\n").append(-centerX).append(" ").append(centerY).append(" ")
+                        .append(radius).append(" ").append("90").append(" ").append(myInterSect2.getAngle1()).append(" arc stroke");
             }
+            out += "\n" + sb.toString();
         }
         out += "\n" + "%% ================ End Unequal Hours =================";
         return out;
@@ -342,12 +356,13 @@ public class FrontPrintEngine {
         if (Math.abs(myAstrolabe.getLocation().getLatitude()) == 90.0){
             // at 90 degrees latitude the azimuths are not circles but radial lines
             // Horizon circle will be at the equator line
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < 180; i = i + myAstrolabe.getAzimuthInterval()){
-                out += "\n" + (-myAstrolabe.getEquatorRadius()) + " 0 moveto";
-                out += "\n" + (myAstrolabe.getEquatorRadius()) + " 0 lineto stroke";
-                out += "\n" + myAstrolabe.getAzimuthInterval() + " rotate";
+                sb.append("\n").append(-myAstrolabe.getEquatorRadius()).append(" 0 moveto");
+                sb.append("\n").append(myAstrolabe.getEquatorRadius()).append(" 0 lineto stroke");
+                sb.append("\n").append(myAstrolabe.getAzimuthInterval()).append(" rotate");
             }
-
+            out += "\n" + sb.toString();
         }else{
             // draw circles for azimuths
             double azLine = myAstrolabe.getEquatorRadius() / Math.cos(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude())));
@@ -372,6 +387,7 @@ public class FrontPrintEngine {
                 azimuth = -90;
             }
 
+            StringBuilder sb = new StringBuilder();
             while (azimuth <= 89)
             {
                 //Compute center
@@ -381,24 +397,25 @@ public class FrontPrintEngine {
 
                 // mark 0, 45 and 90 with heavier lines
                 if((azimuth == 0)||(azimuth == 45)||(azimuth == -45)){
-                    out += "\n" + ".4 setlinewidth";
+                    sb.append("\n").append(".4 setlinewidth");
                 }else{
-                    out += "\n" + ".1 setlinewidth";
+                    sb.append("\n").append(".1 setlinewidth");
                 }
 
                 if (Math.abs(myAstrolabe.getLocation().getLatitude()) == 0.0){
                     // there is no horizon circle at 0 degrees, so intersecting will not work
                     // use hardcoded 0-180 instead
-                    out += "\n" + centerX + " " + centerY + " " + radius + " " + "0" + " "
-                        + "180" + " arc stroke";
+                    sb.append("\n").append(centerX).append(" ").append(centerY).append(" ")
+                            .append(radius).append(" ").append("0 ").append("180").append(" arc stroke");
                 }else{
                     //compute intersection with horizon circle
                     InterSect myInterSect = new InterSect(centerX, centerY, radius, 0, hCenter, hRadius);
-                    out += "\n" + centerX + " " + centerY + " " + radius + " " + myInterSect.getAngle1() + " "
-                            + myInterSect.getAngle2() + " arc stroke";
+                    sb.append("\n").append(centerX).append(" ").append(centerY).append(" ")
+                            .append(radius).append(" ").append(myInterSect.getAngle1()).append(" ").append(myInterSect.getAngle2()).append(" arc stroke");
                 }
                 azimuth = azimuth + myAstrolabe.getAzimuthInterval();
             }
+            out += "\n" + sb.toString();
         }
         out += "\n" + "%% ================ End Azimuth Lines =================";
         return out;
@@ -561,55 +578,58 @@ public class FrontPrintEngine {
                 out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 360 arc stroke";
                 rotationIncrement = 1.0;
                 // create degree marks
+                StringBuilder sb = new StringBuilder();
                 for (count = 1; count <= 360; count++)
                 {
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 5) + " 0 moveto";
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 lineto stroke";
-                    out += "\n" + rotationIncrement + " rotate";
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 5).append(" 0 moveto");
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 lineto stroke");
+                    sb.append("\n").append(rotationIncrement).append(" rotate");
                 }
                 // create 5 degree marks
                 for (count = 1; count <= 72; count++)
                 {
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() ) + " 0 moveto";
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 lineto stroke";
-                    out += "\n" + 5*rotationIncrement + " rotate";
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 lineto stroke");
+                    sb.append("\n").append(5*rotationIncrement).append(" rotate");
                 }
+                out += "\n" + sb.toString();
             }else // anything else
             {
                 // show the front degree scale
-                //fileIn += "\n" + "0 0 " + (myAstrolabe.innerLimbRadius + 15) + " 0 360 arc stroke";
+                StringBuilder sb = new StringBuilder();
                 out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 360 arc stroke";
                 rotationIncrement = 1.0;
                 // create degree marks
                 for (count = 1; count <= 360; count++)
                 {
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 15) + " 0 moveto";
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 lineto stroke";
-                    out += "\n" + rotationIncrement + " rotate";
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 15).append(" 0 moveto");
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 lineto stroke");
+                    sb.append("\n").append(rotationIncrement).append(" rotate");
                 }
                 // create 10 degree marks
                 for (count = 1; count <= 36; count++)
                 {
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 moveto";
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius()) + " 0 lineto stroke";
-                    out += "\n" + 10*rotationIncrement + " rotate";
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 moveto");
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 lineto stroke");
+                    sb.append("\n").append(10*rotationIncrement).append(" rotate");
                 }
                 // create 5 degree marks
-                out += "\n" + "5 rotate";
+                sb.append("\n").append("5 rotate");
                 for (count = 1; count <= 36; count++)
                 {
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 moveto";
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 lineto stroke";
-                    out += "\n" + 10*rotationIncrement + " rotate";
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 moveto");
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 lineto stroke");
+                    sb.append("\n").append(10*rotationIncrement).append(" rotate");
                 }
-                out += "\n" + "-5 rotate";
+                sb.append("\n").append("-5 rotate");
                 // create hour marks 15 degree
                 for (count = 1; count <= 24; count++)
                 {
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 moveto";
-                    out += "\n" + (myAstrolabe.getInnerLimbRadius() + 25) + " 0 lineto stroke";
-                    out += "\n" + 15*rotationIncrement + " rotate";
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 moveto");
+                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 25).append(" 0 lineto stroke");
+                    sb.append("\n").append(15*rotationIncrement).append(" rotate");
                 }
+                out += "\n" + sb.toString();
             }
         } else // Scale is in minutes not degrees
         {
