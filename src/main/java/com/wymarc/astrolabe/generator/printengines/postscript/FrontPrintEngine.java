@@ -1,22 +1,3 @@
-/**
- * $Id: AstrolabeGenerator.java,v 3.1
- * <p/>
- * The Astrolabe Generator is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 3 of
- * the License, or(at your option) any later version.
- * <p/>
- * The Astrolabe Generator is distributed in the hope that it will be
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * <p/>
- * Copyright (c) 2017 Timothy J. Mitchell
- */
 package com.wymarc.astrolabe.generator.printengines.postscript;
 
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
@@ -27,6 +8,25 @@ import com.wymarc.astrolabe.math.ThreePointCenter;
 import java.awt.geom.Point2D;
 
 public class FrontPrintEngine {
+    /**
+     * $Id: AstrolabeGenerator.java,v 3.1
+     * <p/>
+     * The Astrolabe Generator is free software; you can redistribute it
+     * and/or modify it under the terms of the GNU General Public License
+     * as published by the Free Software Foundation; either version 3 of
+     * the License, or(at your option) any later version.
+     * <p/>
+     * The Astrolabe Generator is distributed in the hope that it will be
+     * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+     * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU General Public License for more details.
+     * <p/>
+     * You should have received a copy of the GNU General Public License
+     * along with this program; if not, write to the Free Software
+     * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+     * <p/>
+     * Copyright (c) 2017 Timothy J. Mitchell
+     */
 
     private Astrolabe myAstrolabe = new Astrolabe();
 
@@ -64,11 +64,9 @@ public class FrontPrintEngine {
         int latMinutes = myAstrolabe.getLocation().getLatMin();
         String degreeString = latDegrees + "\\260 "; //260 is degree symbol
         String minuteString;
-        if(latMinutes < 10)
-        {
+        if(latMinutes < 10){
             minuteString = "0" + latMinutes + "'";
-        }else
-        {
+        }else{
             minuteString = latMinutes + "'";
         }
 
@@ -111,48 +109,40 @@ public class FrontPrintEngine {
         }
         out += "\n" + "%% ================ Draw Almucantars =================";
         StringBuilder sb = new StringBuilder();
-        while (altitude <= 85)  //stop at 85 deg
-        {
+        while (altitude <= 85){  //stop at 85 deg
             sb.append("\n").append("newpath");
             //Compute center
             center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
             //compute radius
             radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
 
-            if(((interval == 1)||(interval == 2))&&((altitude == 10)||(altitude == 30)||(altitude == 50)||(altitude == 70)))
-            {
+            if(((interval == 1)||(interval == 2))&&((altitude == 10)||(altitude == 30)||(altitude == 50)||(altitude == 70))){
                 // if interval is every 1 or 2 degrees mark every tenth with heavier lines
                 sb.append("\n").append(".4 setlinewidth");
-            }else if((altitude == 0)||(altitude == 20)||(altitude == 40)||(altitude == 60)||(altitude == 80))
-            {
+            }else if((altitude == 0)||(altitude == 20)||(altitude == 40)||(altitude == 60)||(altitude == 80)){
                 // if interval is every 5 or 10 mark every 20 deg with heavier lines
                 sb.append("\n").append(".4 setlinewidth");
-            }else
-            {
+            }else{
                 sb.append("\n").append(".1 setlinewidth");
             }
             sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" 0 360 arc stroke");
 
-            if((altitude == 20)||(altitude == 40)||(altitude == 60))
-            {
-                if(altitude == 20)
-                {
+            if((altitude == 20)||(altitude == 40)||(altitude == 60)){
+                if(altitude == 20){
                     if (myAstrolabe.getLocation().getLatitude() < 0){
                         label = "-2 0 ";
                     }else{
                         label = "2 0";
                     }
                 }
-                if(altitude == 40)
-                {
+                if(altitude == 40){
                     if (myAstrolabe.getLocation().getLatitude() < 0){
                         label = "-4 0 ";
                     }else{
                         label = "4 0";
                     }
                 }
-                if(altitude == 60)
-                {
+                if(altitude == 60){
                     if (myAstrolabe.getLocation().getLatitude() < 0){
                         label = "-6 0 ";
                     }else{
@@ -179,8 +169,7 @@ public class FrontPrintEngine {
             if (myAstrolabe.getShowAllTwilightLines()){
                 int count = 1;
                 sb = new StringBuilder();
-                while (count <= 3)
-                {
+                while (count <= 3){
                     altitude = -6 * count;
                     //Compute center
                     center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(myAstrolabe.getLocation().getLatitude())) / (Math.sin(Math.toRadians(myAstrolabe.getLocation().getLatitude())) + Math.sin(Math.toRadians(altitude))));
@@ -188,12 +177,10 @@ public class FrontPrintEngine {
                     radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(myAstrolabe.getLocation().getLatitude())) + Math.sin(Math.toRadians(altitude))));
                     //compute clipping
                     InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
-                    if (myInterSect.getIntersection())
-                    {
+                    if (myInterSect.getIntersection()){
                         sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" ")
                                 .append(myInterSect.getAngle2()).append(" ").append(myInterSect.getAngle1()).append(" arc stroke");
-                    }else
-                    {
+                    }else{
                         sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" 0 360 arc stroke");
                     }
 
@@ -209,11 +196,9 @@ public class FrontPrintEngine {
                 radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(altitude)) / (Math.sin(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))) + Math.sin(Math.toRadians(altitude))));
                 //compute clipping
                 InterSect myInterSect = new InterSect(0, center, radius, 0, 0, myAstrolabe.getCancerRadius());
-                if (myInterSect.getIntersection())
-                {
+                if (myInterSect.getIntersection()){
                     out += "\n" + "0 " + center + " " + radius + " "+myInterSect.getAngle2()+" "+myInterSect.getAngle1()+" arc stroke";
-                }else
-                {
+                }else{
                     out += "\n" + "0 " + center + " " + radius + " 0 360 arc stroke";
                 }
             }
@@ -242,8 +227,7 @@ public class FrontPrintEngine {
         String out = "";
         out += "\n" + "%% ================ Draw Horizons =================";
         StringBuilder sb = new StringBuilder();
-        while (latitude <= 70) //10 to 70
-        {
+        while (latitude <= 70){ //10 to 70
             sb.append("\n").append("newpath");
             //Compute center
             center = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(latitude)) / (Math.sin(Math.toRadians(latitude)) + Math.sin(Math.toRadians(0))));
@@ -251,18 +235,14 @@ public class FrontPrintEngine {
             radius = myAstrolabe.getEquatorRadius() * (Math.cos(Math.toRadians(0)) / (Math.sin(Math.toRadians(latitude)) + Math.sin(Math.toRadians(0))));
             //draw
             sb.append("\n").append("0 ").append(center).append(" ").append(radius).append(" 0 360 arc stroke");
-            if((latitude == 20)||(latitude == 40)||(latitude == 60))
-            {
-                if(latitude == 20)
-                {
+            if((latitude == 20)||(latitude == 40)||(latitude == 60)){
+                if(latitude == 20){
                     label = "2 0";
                 }
-                if(latitude == 40)
-                {
+                if(latitude == 40){
                     label = "4 0";
                 }
-                if(latitude == 60)
-                {
+                if(latitude == 60){
                     label = "6 0";
                 }
                 //mark altitude
@@ -310,8 +290,7 @@ public class FrontPrintEngine {
             out += "\n" + "165 rotate";
         }else{
             double temp = (Math.tan(Math.toRadians(Math.abs(myAstrolabe.getLocation().getLatitude()))))*(Math.tan(Math.toRadians(23.44)));
-            if (temp > 1)
-            {
+            if (temp > 1){
                 temp = temp -1;
             }
             double cI = Math.toDegrees(Math.acos(temp))/6.0;
@@ -320,8 +299,7 @@ public class FrontPrintEngine {
             double centerX;
             double centerY;
             StringBuilder sb = new StringBuilder();
-            for(int i = 1; i<=6; i++)
-            {
+            for(int i = 1; i<=6; i++){
                 x =((Math.pow(myAstrolabe.getEquatorRadius(),2))-(Math.pow(myAstrolabe.getCancerRadius(),2)))/(2*myAstrolabe.getCancerRadius()*Math.sin(Math.toRadians((15*i)-(cI*i))));
                 radius = Math.sqrt(Math.pow(myAstrolabe.getEquatorRadius(),2)+Math.pow(x,2));
                 centerX = x*(Math.cos(Math.toRadians(15.0*i)));
@@ -379,17 +357,14 @@ public class FrontPrintEngine {
 
             int azimuth;
 
-            if (myAstrolabe.getAzimuthInterval() == 5)
-            {
+            if (myAstrolabe.getAzimuthInterval() == 5){
                 azimuth = -85;
-            }else
-            {
+            }else{
                 azimuth = -90;
             }
 
             StringBuilder sb = new StringBuilder();
-            while (azimuth <= 89)
-            {
+            while (azimuth <= 89){
                 //Compute center
                 centerX = azLine * Math.tan(Math.toRadians(azimuth));
                 //compute radius
@@ -486,8 +461,7 @@ public class FrontPrintEngine {
     private String buildPlate(){
         String out = "";
         out += "\n" + "%% ==================== Build Plate ====================";
-        if (myAstrolabe.getFrontPrintOption() == 1)
-        {
+        if (myAstrolabe.getFrontPrintOption() == 1){
             // if the plate alone is being drawn, draw line for edge (inner rim of limb)
             out += "\n" + "newpath";
             out += "\n" + "0 setgray";
@@ -504,12 +478,10 @@ public class FrontPrintEngine {
         out += "\n" + "newpath";
         out += computeTropics(myAstrolabe);
         out += "\n" + "";
-        if (myAstrolabe.getShowHorizonPlate()) // if we want the horizon plate
-        {
+        if (myAstrolabe.getShowHorizonPlate()){ // if we want the horizon plate
             out += "\n" + "newpath";
             out += computeHorizonPlate(myAstrolabe);
-        }else // otherwise... 
-        {
+        }else{ // otherwise...
             out += "\n" + "%% Label the Plate";
             out += "\n" + "newpath";
             out += labelPlate(myAstrolabe);
@@ -518,25 +490,22 @@ public class FrontPrintEngine {
             out += "\n" + "newpath";
             out += computeAlmucantars(myAstrolabe);
             out += "\n" + "";
-            if (myAstrolabe.getShowUnequalHoursLines())
-            {
+            if (myAstrolabe.getShowUnequalHoursLines()){
                 out += "\n" + "%% draw The Unequal Hour Lines";
                 out += "\n" + "newpath";
                 out += computeUnequalHours(myAstrolabe);
                 out += "\n" + "";
             }
-            if (myAstrolabe.getShowAzimuthLines())
-            {
+            if (myAstrolabe.getShowAzimuthLines()){
                 out += "\n" + "%% draw The azimuth Lines";
                 out += "\n" + "newpath";
                 out += computeAzimuthLines(myAstrolabe);
                 out += "\n" + "";
             }
-            if (myAstrolabe.getShowHousesofHeavenLines())
-            {
+            if (myAstrolabe.getShowHousesofHeavenLines()){
                 out += "\n" + "%% draw The azimuth Lines";
                 out += "\n" + "newpath";
-                out += computeHousesofHeaven(myAstrolabe);
+                out += computeHousesOfHeaven(myAstrolabe);
                 out += "\n" + "";
             }
             out += "\n" + "%% Clear zenith circle";
@@ -569,93 +538,82 @@ public class FrontPrintEngine {
         Double rotationIncrement;
         String out = "";
 
-        if ((myAstrolabe.getDegreeScaleType() == 1)||(myAstrolabe.getDegreeScaleType() == 2))// If the scale is in degrees, not minutes
-        {
-            if ((myAstrolabe.getHourMarkings() == 2)||(myAstrolabe.getHourMarkings() == 3)) // Symbol markings
-            {
+        if ((myAstrolabe.getDegreeScaleType() == 1)||(myAstrolabe.getDegreeScaleType() == 2)){// If the scale is in degrees, not minutes
+            if ((myAstrolabe.getHourMarkings() == 2)||(myAstrolabe.getHourMarkings() == 3)){ // Symbol markings
                 // show the front degree scale
                 out += "\n" + "0 0 " + (myAstrolabe.getMaterRadius() - 4) + " 0 360 arc stroke";
                 out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 360 arc stroke";
                 rotationIncrement = 1.0;
                 // create degree marks
                 StringBuilder sb = new StringBuilder();
-                for (count = 1; count <= 360; count++)
-                {
+                for (count = 1; count <= 360; count++){
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 5).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 lineto stroke");
                     sb.append("\n").append(rotationIncrement).append(" rotate");
                 }
                 // create 5 degree marks
-                for (count = 1; count <= 72; count++)
-                {
+                for (count = 1; count <= 72; count++){
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 lineto stroke");
                     sb.append("\n").append(5*rotationIncrement).append(" rotate");
                 }
                 out += "\n" + sb.toString();
-            }else // anything else
-            {
+            }else{ // anything else
                 // show the front degree scale
                 StringBuilder sb = new StringBuilder();
                 out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 360 arc stroke";
                 rotationIncrement = 1.0;
                 // create degree marks
-                for (count = 1; count <= 360; count++)
-                {
+                for (count = 1; count <= 360; count++){
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 15).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 lineto stroke");
                     sb.append("\n").append(rotationIncrement).append(" rotate");
                 }
                 // create 10 degree marks
-                for (count = 1; count <= 36; count++)
-                {
+                for (count = 1; count <= 36; count++){
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 lineto stroke");
                     sb.append("\n").append(10*rotationIncrement).append(" rotate");
                 }
                 // create 5 degree marks
                 sb.append("\n").append("5 rotate");
-                for (count = 1; count <= 36; count++)
-                {
+                for (count = 1; count <= 36; count++){
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 lineto stroke");
                     sb.append("\n").append(10*rotationIncrement).append(" rotate");
                 }
                 sb.append("\n").append("-5 rotate");
                 // create hour marks 15 degree
-                for (count = 1; count <= 24; count++)
-                {
+                for (count = 1; count <= 24; count++){
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 25).append(" 0 lineto stroke");
                     sb.append("\n").append(15*rotationIncrement).append(" rotate");
                 }
                 out += "\n" + sb.toString();
             }
-        } else // Scale is in minutes not degrees
-        {
+        } else{ // Scale is in minutes not degrees
             out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 5) + " 0 360 arc stroke";
             // create 5 minute marks
             rotationIncrement = (double)360/1440; //degrees per minute
-            for (count = 1; count <= 288; count++)
-            {
-                out += "\n" + (myAstrolabe.getInnerLimbRadius() + 5) + " 0 moveto";
-                out += "\n" + myAstrolabe.getInnerLimbRadius() + " 0 lineto stroke";
-                out += "\n" + (5 * rotationIncrement) + " rotate";
+            StringBuilder sb = new StringBuilder();
+            for (count = 1; count <= 288; count++){
+                sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 5).append(" 0 moveto");
+                sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 lineto stroke");
+                sb.append("\n").append(5 * rotationIncrement).append(" rotate");
             }
             // create 15 minute marks
-            for (count = 1; count <= 96; count++)
-            {
-                out += "\n" + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 moveto";
-                out += "\n" + myAstrolabe.getInnerLimbRadius() + " 0 lineto stroke";
-                out += "\n" + (15 * rotationIncrement) + " rotate";
+            for (count = 1; count <= 96; count++){
+                sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 moveto");
+                sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 lineto stroke");
+                sb.append("\n").append(15 * rotationIncrement).append(" rotate");
             }
             // create hour marks
-            for (count = 1; count <= 24; count++)
-            {
-                out += "\n" + (myAstrolabe.getInnerLimbRadius() + 15) + " 0 moveto";
-                out += "\n" + myAstrolabe.getInnerLimbRadius() + " 0 lineto stroke";
-                out += "\n" + (60 * rotationIncrement) + " rotate";
+            for (count = 1; count <= 24; count++){
+                sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 15).append(" 0 moveto");
+                sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 lineto stroke");
+                sb.append("\n").append(60 * rotationIncrement).append(" rotate");
             }
+            out += "\n" + sb.toString();
         }
         return out;
     }
@@ -690,13 +648,16 @@ public class FrontPrintEngine {
             }
 
             out += "\n" + fontSizeText + " setfont";
+            StringBuilder sb = new StringBuilder();
             for (count = 0; count <= 11; count++)            {
-                out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-90+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset));
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText(hourArray[count], 10,
+                        (-90+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset)));
             }
             for (count = 0; count <= 11; count++)            {
-                out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-270+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset));
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText(hourArray[count], 10,
+                        (-270+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset)));
             }
-
+            out += "\n" + sb.toString();
         }else if(myAstrolabe.getHourMarkings() == 1){//Arabic
             // check for southern hemisphere
             if (myAstrolabe.getLocation().getLatDir().equals("S")){
@@ -707,26 +668,32 @@ public class FrontPrintEngine {
 
             // mark hours
             out += "\n" + fontSizeText + " setfont";
+            StringBuilder sb = new StringBuilder();
             for (count = 0; count <= 11; count++){
-                out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-90+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset));
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText(hourArray[count], 10,
+                        (-90+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset)));
             }
             for (count = 0; count <= 11; count++){
-                out += EPSToolKit.drawOutsideCircularText(hourArray[count], 10, (-270+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset));
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText(hourArray[count], 10,
+                        (-270+(count*15)), (myAstrolabe.getMaterRadius() - radiusOffset)));
             }
-
+            out += "\n" + sb.toString();
         }else if(myAstrolabe.getHourMarkings() == 2){//symbol
             out += EPSToolKit.setUpSymbols();
             out += "\n" + "NormalFont12 setfont";
             // draw cross at noon
             out += "\n" + "0 " + (myAstrolabe.getMaterRadius() - 14) + " cross";
+            StringBuilder sb = new StringBuilder();
             for (count = 0; count < 23; count++){
-                out += EPSToolKit.drawOutsideCircularText(Astrolabe.SYMBOLLETTERS[count], 10, (-(-90+((count+1)*15))), (myAstrolabe.getMaterRadius() - 18));
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText(Astrolabe.SYMBOLLETTERS[count], 10,
+                        (-(-90+((count+1)*15))), (myAstrolabe.getMaterRadius() - 18)));
             }
-            out += "\n" + "7.5 rotate";
+            sb.append("\n").append("7.5 rotate");
             for (count = 0; count <= 23; count++){
-                out += "\n" + (myAstrolabe.getMaterRadius() - 14) + " 0 diamond";
-                out += "\n" + "15 rotate";
+                sb.append("\n").append(myAstrolabe.getMaterRadius() - 14).append(" 0 diamond");
+                sb.append("\n").append("15 rotate");
             }
+            out += "\n" + sb.toString();
             out += "\n" + "-7.5 rotate";
         }
 
@@ -746,26 +713,30 @@ public class FrontPrintEngine {
 
         if(myAstrolabe.getDegreeScaleType() == 1){//0-90
             //Mark degrees
+            StringBuilder sb = new StringBuilder();
             for (count = 1; count <= 9; count++){
-                out += EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, ((count*10)), labelRadius);
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, ((count*10)), labelRadius));
             }
             for (count = 1; count < 9; count++){
-                out += EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (180-(count*10)), labelRadius);
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (180-(count*10)), labelRadius));
             }
             for (count = 1; count <= 9; count++){
-                out += EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (-(count*10)), labelRadius);
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (-(count*10)), labelRadius));
             }
             for (count = 1; count < 9; count++){
-                out += EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, -((180-(count*10))), labelRadius);
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, -((180-(count*10))), labelRadius));
             }
+            out += "\n" + sb.toString();
             //Mark 00
             out += EPSToolKit.drawOutsideCircularText("00", fontSize, 0, labelRadius);
             out += EPSToolKit.drawOutsideCircularText("00", fontSize, 180, labelRadius);
         }else if(myAstrolabe.getDegreeScaleType() == 2){//0-360
             // draw cross at noon
+            StringBuilder sb = new StringBuilder();
             for (count = 0; count < 36; count++){
-                out += EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (-(-90+(count*10))), labelRadius);
+                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (-(-90+(count*10))), labelRadius));
             }
+            out += "\n" + sb.toString();
         }
 
         return out;
@@ -803,7 +774,7 @@ public class FrontPrintEngine {
      * @return  returns the ps code for drawing the Quadratum Nauticum
      *
      */
-    public String buildNauticum(){
+    private String buildNauticum(){
         //compute size of box
         double boxRadius = myAstrolabe.getCapricornRadius();
         double boxHalfSide = Math.sqrt((boxRadius*boxRadius)/2.0); //from pythagorus
@@ -853,76 +824,68 @@ public class FrontPrintEngine {
         currentBoxHalfSide = boxHalfSide - 20;
         degreeInterval = currentBoxHalfSide/90.0;
 
-        for (count1 = 0; count1 < 4; count1++)
-        {
-
-            for (count = 0; count <= 90; count++)
-            {
-                out += "\n" + "newpath";// top
-                out += "\n" + (count * degreeInterval) + " " + currentBoxHalfSide + " moveto";
-                out += "\n" + (count * degreeInterval) + " " + (currentBoxHalfSide + 4) + " lineto stroke";
-                out += "\n" + "newpath";
-                out += "\n" + (-(count * degreeInterval)) + " " + currentBoxHalfSide + " moveto";
-                out += "\n" + (-(count * degreeInterval)) + " " + (currentBoxHalfSide + 4) + " lineto stroke";
+        StringBuilder sb = new StringBuilder();
+        for (count1 = 0; count1 < 4; count1++){
+            for (count = 0; count <= 90; count++){
+                sb.append("\n").append("newpath");// top
+                sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide).append(" moveto");
+                sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide + 4).append(" lineto stroke");
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide).append(" moveto");
+                sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide + 4).append(" lineto stroke");
             }
-            out += "\n" + "90 rotate";
+            sb.append("\n").append("90 rotate");
         }
 
         // draw 5 degree marks
         currentBoxHalfSide = boxHalfSide - 20;
         degreeInterval = currentBoxHalfSide/18.0;
 
-        for (count1 = 0; count1 < 4; count1++)
-        {
-            for (count = 0; count <= 18; count++)
-            {
-                out += "\n" + "newpath";// top
-                out += "\n" + (count * degreeInterval) + " " + currentBoxHalfSide + " moveto";
-                out += "\n" + (count * degreeInterval) + " " + (currentBoxHalfSide + 8) + " lineto stroke";
-                out += "\n" + "newpath";
-                out += "\n" + (-(count * degreeInterval)) + " " + currentBoxHalfSide + " moveto";
-                out += "\n" + (-(count * degreeInterval)) + " " + (currentBoxHalfSide + 8) + " lineto stroke";
+        for (count1 = 0; count1 < 4; count1++){
+            for (count = 0; count <= 18; count++){
+                sb.append("\n").append("newpath");// top
+                sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide).append(" moveto");
+                sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide + 8).append(" lineto stroke");
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide).append(" moveto");
+                sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide + 8).append(" lineto stroke");
             }
-            out += "\n" + "90 rotate";
+            sb.append("\n").append("90 rotate");
         }
 
         // draw 10 degree marks
         currentBoxHalfSide = boxHalfSide - 20;
         degreeInterval = currentBoxHalfSide/9.0;
 
-        for (count1 = 0; count1 < 4; count1++)
-        {
-            for (count = 0; count <= 9; count++)
-            {
-                out += "\n" + "newpath";// top
-                out += "\n" + (count * degreeInterval) + " " + currentBoxHalfSide + " moveto";
-                out += "\n" + (count * degreeInterval) + " " + (currentBoxHalfSide + 16) + " lineto stroke";
-                if (count > 0) // mark tens
-                {
-                    out += "\n" + (count * degreeInterval) + " "+ (currentBoxHalfSide + 8) + " moveto";
-                    out += "\n" + "NormalFont5 setfont";
-                    out += EPSToolKit.centerText(Integer.toString(count * 10));
+        for (count1 = 0; count1 < 4; count1++){
+            for (count = 0; count <= 9; count++){
+                sb.append("\n").append("newpath");// top
+                sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide).append(" moveto");
+                sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide + 16).append(" lineto stroke");
+                if (count > 0){ // mark tens
+                    sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide + 8).append(" moveto");
+                    sb.append("\n").append("NormalFont5 setfont");
+                    sb.append("\n").append(EPSToolKit.centerText(Integer.toString(count * 10)));
                 }
 
-                if ((count == 3)||(count == 6)) //draw grid at 30 and 60
-                {
-                    out += "\n" + "newpath";
-                    out += "\n" + (count * degreeInterval) + " " + currentBoxHalfSide + " moveto";
-                    out += "\n" + (count * degreeInterval) + " " + (-currentBoxHalfSide) + " lineto stroke";
+                if ((count == 3)||(count == 6)){ //draw grid at 30 and 60
+                    sb.append("\n").append("newpath");
+                    sb.append("\n").append(count * degreeInterval).append(" ").append(currentBoxHalfSide).append(" moveto");
+                    sb.append("\n").append(count * degreeInterval).append(" ").append(-currentBoxHalfSide).append(" lineto stroke");
                 }
 
-                out += "\n" + "newpath";
-                out += "\n" + (-(count * degreeInterval)) + " " + currentBoxHalfSide + " moveto";
-                out += "\n" + (-(count * degreeInterval)) + " " + (currentBoxHalfSide + 16) + " lineto stroke";
-                if (count > 0) // mark tens
-                {
-                    out += "\n" + (-(count * degreeInterval)) + " "+ (currentBoxHalfSide + 8) + " moveto";
-                    out += "\n" + "NormalFont5 setfont";
-                    out += EPSToolKit.centerText(Integer.toString(count * 10));
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide).append(" moveto");
+                sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide + 16).append(" lineto stroke");
+                if (count > 0){ // mark tens
+                    sb.append("\n").append(-(count * degreeInterval)).append(" ").append(currentBoxHalfSide + 8).append(" moveto");
+                    sb.append("\n").append("NormalFont5 setfont");
+                    sb.append("\n").append(EPSToolKit.centerText(Integer.toString(count * 10)));
                 }
             }
-            out += "\n" + "90 rotate";
+            sb.append("\n").append("90 rotate");
         }
+        out += "\n" + sb.toString();
 
         // draw diagonal divisions
         out += "\n" + "newpath";
@@ -946,21 +909,21 @@ public class FrontPrintEngine {
         out += "\n" + "0 0 " + (windRose - 16) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (windRose - 20) + " 0 360 arc stroke";
 
-        for (count = 0; count < 32; count++)
-        {
-            out += "\n" + "newpath";
-            out += "\n" + "0 " + (windRose - 4) + " moveto";
-            out += "\n" + "0 " + (windRose - 16) + " lineto stroke";
-            out += "\n" + "11.25 rotate";
+        sb = new StringBuilder();
+        for (count = 0; count < 32; count++){
+            sb.append("\n").append("newpath");
+            sb.append("\n").append("0 ").append(windRose - 4).append(" moveto");
+            sb.append("\n").append("0 ").append(windRose - 16).append(" lineto stroke");
+            sb.append("\n").append("11.25 rotate");
         }
 
-        for (count = 0; count < 16; count++)
-        {
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + "0 " + (windRose - 16) + " lineto stroke";
-            out += "\n" + "22.5 rotate";
+        for (count = 0; count < 16; count++){
+            sb.append("\n").append("newpath");
+            sb.append("\n").append("0 0 moveto");
+            sb.append("\n").append("0 ").append(windRose - 16).append(" lineto stroke");
+            sb.append("\n").append("22.5 rotate");
         }
+        out += "\n" + sb.toString();
 
         // Label
         out += "\n" + "0 " + (boxHalfSide + 10) + " moveto";
@@ -989,7 +952,7 @@ public class FrontPrintEngine {
      * @return  returns the ps code for drawing the houses of heaven
      *
      */
-    private String computeHousesofHeaven(Astrolabe myAstrolabe){
+    private String computeHousesOfHeaven(Astrolabe myAstrolabe){
         String out = "";
         if (Math.abs(myAstrolabe.getLocation().getLatitude()) > 60.0){  //todo remove multiple calls to myAstrolabe.getLocation()
             // Houses do not draw properly above about 60 degrees
@@ -1002,12 +965,13 @@ public class FrontPrintEngine {
         if (Math.abs(myAstrolabe.getLocation().getLatitude()) < 1.0){
             // at the equator the lines are not arcs, but radial lines
             // Below a half degree latitude they don't draw properly, so substitute radial lines
-            for (int i = 0; i <= 5; i++)
-            {
-                out += "\n" + "30 rotate";
-                out += "\n" + (-myAstrolabe.getCapricornRadius()) + " 0 moveto";
-                out += "\n" + (myAstrolabe.getCapricornRadius()) + " 0 lineto stroke";
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i <= 5; i++){
+                sb.append("\n").append("30 rotate");
+                sb.append("\n").append(-myAstrolabe.getCapricornRadius()).append(" 0 moveto");
+                sb.append("\n").append(myAstrolabe.getCapricornRadius()).append(" 0 lineto stroke");
             }
+            out += "\n" + sb.toString();
             out += "\n" + "-180 rotate";
         }else{
 
@@ -1029,17 +993,21 @@ public class FrontPrintEngine {
 
             ThreePointCenter MyCircle;
 
-            for (int i = 0; i <= 2; i++)        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i <= 2; i++){
                 equatorPoint.x = Math.cos(Math.toRadians(30 * i)) * myAstrolabe.getEquatorRadius();
                 equatorPoint.y = Math.sin(Math.toRadians(30 * i)) * myAstrolabe.getEquatorRadius();
 
                 MyCircle = new ThreePointCenter(northPoint, southPoint, equatorPoint );
 
                 if (MyCircle.isCircle()){
-                    out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 0 360 arc stroke";
-                    out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 0 360 arc stroke";
+                    sb.append("\n").append(MyCircle.getCenter().x).append(" ").append(MyCircle.getCenter().y)
+                            .append(" ").append(MyCircle.getRadius()).append(" 0 360 arc stroke");
+                    sb.append("\n").append(-MyCircle.getCenter().x).append(" ").append(MyCircle.getCenter().y)
+                            .append(" ").append(MyCircle.getRadius()).append(" 0 360 arc stroke");
                 }
             }
+            out += "\n" + sb.toString();
         }
         out += "\n" + "[] 0 setdash"; // set solid line
         out += "\n" + "%% ================ End Draw Houses of Heaven Lines =================";
@@ -1051,16 +1019,15 @@ public class FrontPrintEngine {
         String[] hourArray;
         if (myAstrolabe.getLocation().getLatDir().equals("S")){
             hourArray = Astrolabe.S_ROMAN;
-        }else
-        {
+        }else{
             hourArray = Astrolabe.ROMAN;
         }
 
-
-        for (int i = 0; i <= 11; i++)
-        {
-            out += EPSToolKit.drawOutsideCircularText(hourArray[i], 10, (-165+(i*30)), (myAstrolabe.getEquatorRadius() -5));
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= 11; i++){
+            sb.append("\n").append(EPSToolKit.drawOutsideCircularText(hourArray[i], 10, (-165+(i*30)), (myAstrolabe.getEquatorRadius() -5)));
         }
+        out += "\n" + sb.toString();
         out += "\n" + "0 setgray";
         out += "\n" + "%% ================ End Label Houses of Heaven =================";
 
@@ -1083,8 +1050,7 @@ public class FrontPrintEngine {
         out += EPSToolKit.getHeader(myAstrolabe,"Astrolabe Front");
         out += "\n" + "%% setup";
 
-        if (myAstrolabe.getShowRegistrationMarks())
-        {
+        if (myAstrolabe.getShowRegistrationMarks()){
             out += EPSToolKit.registrationMarks();
         }
 
@@ -1096,18 +1062,15 @@ public class FrontPrintEngine {
 
         if (myAstrolabe.getShowThrone() && myAstrolabe.getFrontPrintOption() != 1){
             out += "\n" + "gsave";
-            if (myAstrolabe.getShapeOption() == 1)
-            {
+            if (myAstrolabe.getShapeOption() == 1){
                 out += EPSToolKit.buildMaterThrone2(myAstrolabe);
-            }else
-            {
+            }else{
                 out += EPSToolKit.buildMaterThrone(myAstrolabe);
             }
             out += "\n" + "grestore";
             out += "\n" + "";
         }
-        if (myAstrolabe.getFrontPrintOption() != 1) // not just the plate
-        {
+        if (myAstrolabe.getFrontPrintOption() != 1){ // not just the plate
             if (myAstrolabe.getShapeOption() == 1){
                 out += "\n" + "gsave";
                 out += EPSToolKit.buildOctagon(myAstrolabe);
@@ -1119,16 +1082,13 @@ public class FrontPrintEngine {
             out += "\n" + "";
         }
 
-        if (myAstrolabe.getFrontPrintOption() == 3) // if the mater and quad
-        {
+        if (myAstrolabe.getFrontPrintOption() == 3){ // if the mater and quad
             out += "\n" + "gsave";
             out += buildNauticum();
             out += "\n" + "grestore";
             out += "\n" + "";
-
         }
-        if (myAstrolabe.getFrontPrintOption() == 0 || myAstrolabe.getFrontPrintOption() == 1) // if not just the mater
-        {
+        if (myAstrolabe.getFrontPrintOption() == 0 || myAstrolabe.getFrontPrintOption() == 1){ // if not just the mater
             out += "\n" + "gsave";
             out += buildPlate();
             out += "\n" + "grestore";
