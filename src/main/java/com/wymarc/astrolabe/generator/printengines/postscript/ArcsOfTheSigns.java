@@ -1,22 +1,3 @@
-/**
- * $Id: AstrolabeGenerator.java,v 3.1
- * <p/>
- * The Astrolabe Generator is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 3 of
- * the License, or(at your option) any later version.
- * <p/>
- * The Astrolabe Generator is distributed in the hope that it will be
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p/>
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * <p/>
- * Copyright (c) 2017 Timothy J. Mitchell
- */
 package com.wymarc.astrolabe.generator.printengines.postscript;
 
 import com.wymarc.astrolabe.Astrolabe;
@@ -27,8 +8,27 @@ import com.wymarc.astrolabe.math.AstroMath;
 import java.awt.geom.Point2D;
 
 public class ArcsOfTheSigns {
+	/**
+	 * $Id: AstrolabeGenerator.java,v 3.1
+	 * <p/>
+	 * The Astrolabe Generator is free software; you can redistribute it
+	 * and/or modify it under the terms of the GNU General Public License
+	 * as published by the Free Software Foundation; either version 3 of
+	 * the License, or(at your option) any later version.
+	 * <p/>
+	 * The Astrolabe Generator is distributed in the hope that it will be
+	 * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+	 * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 * GNU General Public License for more details.
+	 * <p/>
+	 * You should have received a copy of the GNU General Public License
+	 * along with this program; if not, write to the Free Software
+	 * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+	 * <p/>
+	 * Copyright (c) 2017 Timothy J. Mitchell
+	 */
 
-	private Astrolabe myAstrolabe = new Astrolabe();
+	private Astrolabe myAstrolabe;
 	
 	/**
 	 * Computes the great circle azimuth to Mecca(Qibla)for a given location 
@@ -95,11 +95,13 @@ public class ArcsOfTheSigns {
 	    //draw 30 degree arcs
 	    arcInterval = 18.0;
 		out += "\n" + "0 setgray";
-	    for (count = 0; count < 7; count++){	 
-		    out += "\n" + "newpath";
-			out += "\n" + "0 0 " + (innerRadius + (arcInterval * count)) + " 0 90 arc stroke";     
+		StringBuilder sb = new StringBuilder();
+	    for (count = 0; count < 7; count++){
+            sb.append("\n").append("newpath");
+            sb.append("\n").append("0 0 ").append(innerRadius + (arcInterval * count)).append(" 0 90 arc stroke");
 	    }
-	    
+        out += "\n" + sb.toString();
+
 	    //draw end lines
 	    out += "\n" + "newpath";
 	    out += "\n" +  innerRadius + " 0 moveto";
@@ -131,13 +133,15 @@ public class ArcsOfTheSigns {
 	    out += "\n" + "[2 2] 0 setdash"; // set dashed line
 	    arcInterval = 6.0;
 		out += "\n" + "0 setgray";
+        sb = new StringBuilder();
 	    for (count = 1; count < 18; count++){
 		    if (count != 3 && count != 6 && count != 9 && count != 12 && count != 15)// ignore existing lines
-		    {  
-			    out += "\n" + "newpath";
-				out += "\n" + "0 0 " + (innerRadius + (arcInterval * count)) + " 10 80 arc stroke";
+		    {
+                sb.append("\n").append("newpath");
+                sb.append("\n").append("0 0 ").append(innerRadius + (arcInterval * count)).append(" 10 80 arc stroke");
 		    }
 	    }
+        out += "\n" + sb.toString();
 	    out += "\n" + "[] 0 setdash"; // set solid line 
 	    
 	    // draw Noon altitude lines
@@ -147,7 +151,8 @@ public class ArcsOfTheSigns {
 	    Double interval = (outerRadius-innerRadius)/180;
 		Point2D.Double currentPoint;
 	    Point2D.Double previousPoint;
-	    
+
+        sb = new StringBuilder();
 	    for (count1 = 0; count1 < latList.length; count1++){
 		    noonAlt = AstroMath.sunsNoonAltitude((double)latList[count1],-90.0);
 			previousPoint = new Point2D.Double((innerRadius * Math.cos(Math.toRadians(noonAlt))),
@@ -158,19 +163,19 @@ public class ArcsOfTheSigns {
 		    	radius = innerRadius + ((count + 90) * interval);
 		    	currentPoint = new Point2D.Double((radius * Math.cos(Math.toRadians(noonAlt))),
 		    								(radius * Math.sin(Math.toRadians(noonAlt))));
-			    out += "\n" + "newpath";
-			    out += "\n" +  previousPoint.x + " " + previousPoint.y + " moveto";
-			    out += "\n" +  currentPoint.x + " " + currentPoint.y + " lineto stroke";
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(previousPoint.x).append(" ").append(previousPoint.y).append(" moveto");
+                sb.append("\n").append(currentPoint.x).append(" ").append(currentPoint.y).append(" lineto stroke");
 			    previousPoint = currentPoint;        	    
 		    }
 		    // Label noon altitude lines
-		    out += "\n" + (noonAlt - 90) + " rotate";
-		    out += "\n" + "NormalFont5 setfont";
-		    out += "\n" + "0 " + (outerRadius + 2 ) + " moveto";        
-		    out += "\n" + "(" + latList[count1] + ") show";
-		    out += "\n" + (-(noonAlt - 90)) + " rotate";	    
-	    } 
-	
+            sb.append("\n").append(noonAlt - 90).append(" rotate");
+            sb.append("\n").append("NormalFont5 setfont");
+            sb.append("\n").append("0 ").append(outerRadius + 2 ).append(" moveto");
+            sb.append("\n").append("(").append(latList[count1]).append(") show");
+            sb.append("\n").append(-(noonAlt - 90)).append(" rotate");
+	    }
+
 		//Qibla lines
 		Location[] cities = getCities();
 		for(count1 = 0; count1 < cities.length; count1++){
@@ -182,19 +187,20 @@ public class ArcsOfTheSigns {
 		    	radius = innerRadius + ((count + 90) * interval);
 		    	currentPoint = new Point2D.Double((radius * Math.cos(Math.toRadians(qiblaAlt))),
 		    								(radius * Math.sin(Math.toRadians(qiblaAlt))));
-			    out += "\n" + "newpath";
-			    out += "\n" +  previousPoint.x + " " + previousPoint.y + " moveto";
-			    out += "\n" +  currentPoint.x + " " + currentPoint.y + " lineto stroke";
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(previousPoint.x).append(" ").append(previousPoint.y).append(" moveto");
+                sb.append("\n").append(currentPoint.x).append(" ").append(currentPoint.y).append(" lineto stroke");
 			    previousPoint = currentPoint;        	    
 		    }
 		    // Label Qibla arcs
-		    out += "\n" + (qiblaAlt) + " rotate";
-		    out += "\n" + "NormalFont5 setfont";
-		    out += "\n" + (outerRadius - 15 ) + " 0 moveto";        
-		    out += "\n" + "(" + cities[count1].getLocationName() + ") show";
-		    out += "\n" + (-(qiblaAlt)) + " rotate";	 		
-		}	
-	    
+            sb.append("\n").append(qiblaAlt).append(" rotate");
+            sb.append("\n").append("NormalFont5 setfont");
+            sb.append("\n").append(outerRadius - 15 ).append(" 0 moveto");
+            sb.append("\n").append("(").append(cities[count1].getLocationName()).append(") show");
+            sb.append("\n").append(-(qiblaAlt)).append(" rotate");
+		}
+        out += "\n" + sb.toString();
+
 	    // label arcs with the correct Zodiac symbols
 	    out += "\n" + "%% Label Vertical";
 	    out += "\n" + "gsave";
@@ -205,18 +211,20 @@ public class ArcsOfTheSigns {
 	    double y;
 	    Double scale = 0.3;
 	    
-	    for(int i = 0; i < 6; i++){    	
+	    sb = new StringBuilder();
+	    for(int i = 0; i < 6; i++){
 	    	y = outerRadius-9-(i*18);
-	    	scale = scale - 0.02; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels[i], new Point2D.Double(0, y), scale, scale);
+	    	scale = scale - 0.02;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels[i], new Point2D.Double(0, y), scale, scale));
 	    }
-		out += "\n" + "-5 rotate";
+        sb.append("\n").append("-5 rotate");
 	    scale = 0.3;    
 	    for(int i = 0; i < 6; i++){    	
 	    	y = outerRadius-9-(i*18);
-	    	scale = scale - 0.02; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels2[i], new Point2D.Double(0, y), scale, scale);
+	    	scale = scale - 0.02;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels2[i], new Point2D.Double(0, y), scale, scale));
 	    }
+        out += "\n" + sb.toString();
 	         
 		out += "\n" + "%% End Label Vertical";
 		out += "\n" + "grestore";
@@ -227,19 +235,21 @@ public class ArcsOfTheSigns {
 		
 	    Double x;
 	    scale = 0.3;
-	    
+
+        sb = new StringBuilder();
 	    for(int i = 0; i < 6; i++){    	
 	    	x = outerRadius-9-(i*18);
-	    	scale = scale - 0.02; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels[5-i], new Point2D.Double(x, 0), scale, scale);
+	    	scale = scale - 0.02;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels[5-i], new Point2D.Double(x, 0), scale, scale));
 	    }
-		out += "\n" + "5 rotate";
+        sb.append("\n").append("5 rotate");
 	    scale = 0.3;    
 	    for(int i = 0; i < 6; i++){    	
 	    	x = outerRadius-9-(i*18);
-	    	scale = scale - 0.02; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels2[5-i], new Point2D.Double(x, 0), scale, scale);
+	    	scale = scale - 0.02;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels2[5-i], new Point2D.Double(x, 0), scale, scale));
 	    }
+        out += "\n" + sb.toString();
 	         
 		out += "\n" + "%% End Label Horiz";
 		out += "\n" + "grestore";
@@ -274,21 +284,25 @@ public class ArcsOfTheSigns {
 		Double zodiacPos;
 		Double decl;
 		Double radius;
+
+        StringBuilder sb = new StringBuilder();
 		for (count = -9; count <= 9; count++){
 			zodiacPos = (double)count * 10;
 			decl = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(23.44))* Math.sin(Math.toRadians(zodiacPos)))); 
 			radius = radEQ * Math.tan(Math.toRadians(90 - decl)/2.0);
 			if(count == -9 || count == -6 || count == -3 || count == 0 ||
 				count == 3 || count == 6 || count == 9){
-			    out += "\n" + "[] 0 setdash"; // set solid line
-			    out += "\n" + "newpath";
-				out += "\n" + "0 0 " + radius + " 0 90 arc stroke"; 
+                sb.append("\n").append("[] 0 setdash"); // set solid line
+                sb.append("\n").append("newpath");
+                sb.append("\n").append("0 0 ").append(radius).append(" 0 90 arc stroke");
 			}else{
-			    out += "\n" + "[1 1] 0 setdash"; // set dashed line
-			    out += "\n" + "newpath";
-				out += "\n" + "0 0 " + radius + " 10 80 arc stroke"; 			
+                sb.append("\n").append("[1 1] 0 setdash"); // set dashed line
+                sb.append("\n").append("newpath");
+                sb.append("\n").append("0 0 ").append(radius).append(" 10 80 arc stroke");
 			}			 		
 		}
+        out += "\n" + sb.toString();
+
 		out += "\n" + "[] 0 setdash"; // set solid line
 			
 		//draw end lines
@@ -323,8 +337,9 @@ public class ArcsOfTheSigns {
 	    Double noonAlt;
 	    Point2D.Double currentPoint;
         Point2D.Double previousPoint;
-	    
-	    for (count1 = 0; count1 < latList.length; count1++){
+
+        sb = new StringBuilder();
+        for (count1 = 0; count1 < latList.length; count1++){
 		    noonAlt = AstroMath.sunsNoonAltitude((double)latList[count1],-90.0);
 			previousPoint = new Point2D.Double((innerRadius * Math.cos(Math.toRadians(noonAlt))),
 	    									(innerRadius * Math.sin(Math.toRadians(noonAlt))));	// set start	    
@@ -336,19 +351,19 @@ public class ArcsOfTheSigns {
 		    	noonAlt = AstroMath.sunsNoonAltitude((double)latList[count1],(double)count);
 		    	currentPoint = new Point2D.Double((radius * Math.cos(Math.toRadians(noonAlt))),
 		    								(radius * Math.sin(Math.toRadians(noonAlt))));
-			    out += "\n" + "newpath";
-			    out += "\n" +  previousPoint.x + " " + previousPoint.y + " moveto";
-			    out += "\n" +  currentPoint.x + " " + currentPoint.y + " lineto stroke";
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(previousPoint.x).append(" ").append(previousPoint.y).append(" moveto");
+                sb.append("\n").append(currentPoint.x).append(" ").append(currentPoint.y).append(" lineto stroke");
 			    previousPoint = currentPoint;        	    
 		    }
 		    // Label Noon altitude lines
-		    out += "\n" + (noonAlt - 90) + " rotate";
-		    out += "\n" + "NormalFont5 setfont";
-		    out += "\n" + "0 " + (outerRadius + 2 ) + " moveto";        
-		    out += "\n" + "(" + latList[count1] + ") show";
-		    out += "\n" + (-(noonAlt - 90)) + " rotate";	    
-	    } 
-	
+            sb.append("\n").append(noonAlt - 90).append(" rotate");
+            sb.append("\n").append("NormalFont5 setfont");
+            sb.append("\n").append("0 ").append(outerRadius + 2 ).append(" moveto");
+            sb.append("\n").append("(").append(latList[count1]).append(") show");
+            sb.append("\n").append(-(noonAlt - 90)).append(" rotate");
+	    }
+
 		//Qibla lines
 		Location[] cities = getCities();
 		for(count1 = 0; count1 < cities.length; count1++){
@@ -362,18 +377,19 @@ public class ArcsOfTheSigns {
 		    	qiblaAlt = sunsAltitudeAtQiblaAngle(cities[count1],(double)count);
 		    	currentPoint = new Point2D.Double((radius * Math.cos(Math.toRadians(qiblaAlt))),
 		    								(radius * Math.sin(Math.toRadians(qiblaAlt))));
-			    out += "\n" + "newpath";
-			    out += "\n" +  previousPoint.x + " " + previousPoint.y + " moveto";
-			    out += "\n" +  currentPoint.x + " " + currentPoint.y + " lineto stroke";
+                sb.append("\n").append("newpath");
+                sb.append("\n").append(previousPoint.x).append(" ").append(previousPoint.y).append(" moveto");
+                sb.append("\n").append(currentPoint.x).append(" ").append(currentPoint.y).append(" lineto stroke");
 			    previousPoint = currentPoint;        	    
 		    }
 		    // Label Qibla lines
-		    out += "\n" + (qiblaAlt) + " rotate";
-		    out += "\n" + "NormalFont5 setfont";
-		    out += "\n" + (outerRadius - 15 ) + " 0 moveto";        
-		    out += "\n" + "(" + cities[count1].getLocationName() + ") show";
-		    out += "\n" + (-(qiblaAlt)) + " rotate";	 		
+            sb.append("\n").append(qiblaAlt).append(" rotate");
+            sb.append("\n").append("NormalFont5 setfont");
+            sb.append("\n").append(outerRadius - 15 ).append(" 0 moveto");
+            sb.append("\n").append("(").append(cities[count1].getLocationName()).append(") show");
+            sb.append("\n").append(-(qiblaAlt)).append(" rotate");
 		}
+        out += "\n" + sb.toString();
 		
 		// compute radial locations for zodiac symbols use variation of code to project lines
 		// Note: each line dividing the symbols is a different distance from its neighbors, so 
@@ -406,19 +422,21 @@ public class ArcsOfTheSigns {
 	    String[] ZodiacLabels2 = {"Gemini", "Taurus", "Aries", "Pisces", "Aquarius", "Capricorn"};
 	    Double y;
 	    Double scale = 0.3;
-	    
+
+        sb = new StringBuilder();
 	    for(int i = 0; i < 6; i++){    	
 	    	y = zodiacRadialPos[i];
-	    	scale = scale - 0.025; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels[i], new Point2D.Double(0, y), scale, scale);
+	    	scale = scale - 0.025;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels[i], new Point2D.Double(0, y), scale, scale));
 	    }
-		out += "\n" + "-5 rotate";
+        sb.append("\n").append("-5 rotate");
 	    scale = 0.3;    
 	    for(int i = 0; i < 6; i++){
 	    	y = zodiacRadialPos[i];
-	    	scale = scale - 0.025; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels2[i], new Point2D.Double(0, y), scale, scale);
+	    	scale = scale - 0.025;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels2[i], new Point2D.Double(0, y), scale, scale));
 	    }
+        out += "\n" + sb.toString();
 	         
 		out += "\n" + "%% End Label Vertical";
 		out += "\n" + "grestore";
@@ -429,20 +447,22 @@ public class ArcsOfTheSigns {
 		
 	    Double x;
 	    scale = 0.3;
-	    
+
+        sb = new StringBuilder();
 	    for(int i = 0; i < 6; i++){
 	    	x = zodiacRadialPos[i];
-	    	scale = scale - 0.025; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels[5-i], new Point2D.Double(x, 0), scale, scale);
+	    	scale = scale - 0.025;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels[5-i], new Point2D.Double(x, 0), scale, scale));
 	    }
-		out += "\n" + "5 rotate";
+        sb.append("\n").append("5 rotate");
 	    scale = 0.3;    
 	    for(int i = 0; i < 6; i++){
 	    	x = zodiacRadialPos[i];
-	    	scale = scale - 0.025; 
-	    	out += ZodiacSigns.placeSignAt(ZodiacLabels2[5-i], new Point2D.Double(x, 0), scale, scale);
+	    	scale = scale - 0.025;
+            sb.append("\n").append(ZodiacSigns.placeSignAt(ZodiacLabels2[5-i], new Point2D.Double(x, 0), scale, scale));
 	    }
-	         
+        out += "\n" + sb.toString();
+
 		out += "\n" + "%% End Label Horiz";
 		out += "\n" + "grestore";	
 	

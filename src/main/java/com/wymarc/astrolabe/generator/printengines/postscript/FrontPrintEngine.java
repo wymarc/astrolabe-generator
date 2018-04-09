@@ -214,7 +214,7 @@ public class FrontPrintEngine {
      * Computes the horizon plate
      *
      * @param   myAstrolabe    the astrolabe object
-     * @return  returns the ps code for drawing the Hozizon plate
+     * @return  returns the ps code for drawing the Horizon plate
      *
      */
     private String computeHorizonPlate(Astrolabe myAstrolabe){
