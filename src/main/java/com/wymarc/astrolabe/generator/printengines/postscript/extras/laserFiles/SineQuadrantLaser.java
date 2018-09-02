@@ -17,7 +17,7 @@
  * <p/>
  * Copyright (c) 2017 Timothy J. Mitchell
  */
-package com.wymarc.astrolabe.generator.printengines.postscript.extras.sine;
+package com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles;
 
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
 import com.wymarc.astrolabe.math.AstroMath;
@@ -33,9 +33,7 @@ import java.awt.geom.Point2D;
  * link      http://www.astrolabes.org 
  */
 
-public class SineQuadrantOne {
-
-    boolean color = false;
+public class SineQuadrantLaser {
 
     private String drawCuttingLines() {
         StringBuilder out = new StringBuilder();
@@ -280,7 +278,7 @@ public class SineQuadrantOne {
                 .append("\n").append(length).append(" ").append(-length).append(" lineto stroke")
                 .append("\n").append("%% ================ Draw 45 Line =================");
 
-        out.append("\n").append("%% ================ Draw Mystery Line =================");
+        out.append("\n").append("%% ================ Draw Tangent Line =================");
         // draw mystery line
         out.append("\n").append("newpath")
                 .append("\n").append("452 0 moveto")

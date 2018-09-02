@@ -76,9 +76,12 @@ public class EqualHours {
                     .append("\n").append("-40 -508 lineto")
                     .append("\n").append("0 -508 lineto stroke")
                     .append("\n").append("newpath")
-                    .append("\n").append("0 0 508 270 360 arc stroke")
-                    .append("\n").append("newpath")
-                    .append("\n").append("0 0 3 0 360 arc stroke");
+                    .append("\n").append("0 0 508 270 360 arc stroke");
+            if (!forCAD) {
+                out.append("\n").append("newpath")
+                        .append("\n").append("0 0 3 0 360 arc stroke");
+            }
+
         } else if (orientation.equals("left")) {
             out.append("\n").append("% draw outlines")
                     .append("\n").append("468 0 translate")
@@ -89,9 +92,11 @@ public class EqualHours {
                     .append("\n").append("40 -508 lineto")
                     .append("\n").append("0 -508 lineto stroke")
                     .append("\n").append("newpath")
-                    .append("\n").append("0 0 508 180 270 arc stroke")
-                    .append("\n").append("newpath")
-                    .append("\n").append("0 0 3 0 360 arc stroke");
+                    .append("\n").append("0 0 508 180 270 arc stroke");
+            if (!forCAD) {
+                out.append("\n").append("newpath")
+                        .append("\n").append("0 0 3 0 360 arc stroke");
+            }
         }
 
         return out.toString();
@@ -100,7 +105,7 @@ public class EqualHours {
     private String drawOutline(String orientation) {
         StringBuilder out = new StringBuilder();
         if (forCAD) {
-            out.append("\n").append("1 0 0 setrgbcolor"); //set red
+            out.append("\n").append("1 1 0 setrgbcolor"); //set yellow
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
@@ -394,7 +399,7 @@ public class EqualHours {
     private String labelBackGrid() {
         StringBuilder out = new StringBuilder();
         if (forCAD) {
-            out.append("\n").append("0 1 0 setrgbcolor"); //set red
+            out.append("\n").append("0 setgray"); //set black
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
@@ -460,6 +465,14 @@ public class EqualHours {
 
         double medallionRadius = 316.8 / (Math.sqrt(2.0) + 1);
 
+        if (forCAD) {
+            out.append("\n").append("0 1 0 setrgbcolor"); //set green
+        } else if (isColor) {
+            out.append("\n").append("0 setgray");
+        } else {
+            out.append("\n").append("0 setgray");
+        }
+
         // draw medallion
         // move center to center of medallion
         out.append("\n").append(468 - medallionRadius).append(" ").append(-medallionRadius).append(" translate");
@@ -476,20 +489,6 @@ public class EqualHours {
                 .append("\n").append("0 0 ").append(medallionRadius - 22).append(" 0 360 arc stroke")
                 .append("\n").append("newpath")
                 .append("\n").append("0 0 ").append(medallionRadius - 37).append(" 0 360 arc stroke");
-
-        // label segments
-        List<String> dominicalSeguenceList = new ArrayList<>();
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 0; i < 28; i++) {
-            dominicalSeguenceList.add(AstroMath.getDominicalLetter(year + i));
-        }
-
-        // label medallion as "Tabula Bisexti"
-        out.append("\n").append("%% Label Tabula Bisexti")
-                .append("\n").append("NormalFont20 setfont")
-                .append("\n").append("newpath")
-                .append("\n").append("0 -5 moveto")
-                .append("\n").append(EPSToolKit.centerText("Tabula Bisexti"));
 
         // draw box for ribbon
         out.append("\n").append("newpath");
@@ -530,6 +529,28 @@ public class EqualHours {
                 .append("\n").append(length).append(" -15 moveto")
                 .append("\n").append("-15 -10 rlineto stroke");
 
+        if (forCAD) {
+            out.append("\n").append("0 setgray"); //set green
+        } else if (isColor) {
+            out.append("\n").append("0 setgray");
+        } else {
+            out.append("\n").append("0 setgray");
+        }
+
+        // label segments
+        List<String> dominicalSeguenceList = new ArrayList<>();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = 0; i < 28; i++) {
+            dominicalSeguenceList.add(AstroMath.getDominicalLetter(year + i));
+        }
+
+        // label medallion as "Tabula Bisexti"
+        out.append("\n").append("%% Label Tabula Bisexti")
+                .append("\n").append("NormalFont20 setfont")
+                .append("\n").append("newpath")
+                .append("\n").append("0 -5 moveto")
+                .append("\n").append(EPSToolKit.centerText("Tabula Bisexti"));
+
         // Label location, Latitude, time correction
         out.append("\n").append("%% Label location and latitude")
                 .append("\n").append("NormalFont12 setfont")
@@ -550,8 +571,15 @@ public class EqualHours {
                 .append("\n").append("-90 rotate")
                 .append("\n").append("NormalFont18 setfont")
                 .append("\n").append("-170 -6 moveto")
-                .append("\n").append("(").append(year).append(") show")
-                .append("\n").append("newpath")
+                .append("\n").append("(").append(year).append(") show");
+        if (forCAD) {
+            out.append("\n").append("0 1 0 setrgbcolor"); //set green
+        } else if (isColor) {
+            out.append("\n").append("0 setgray");
+        } else {
+            out.append("\n").append("0 setgray");
+        }
+                out.append("\n").append("newpath")
                 .append("\n").append("-175 -10 moveto")
                 .append("\n").append("-128 -10 lineto stroke")
                 .append("\n").append("newpath")
@@ -560,6 +588,13 @@ public class EqualHours {
                 .append("\n").append("90 rotate");
 
         // mark segments
+        if (forCAD) {
+            out.append("\n").append("0 1 0 setrgbcolor"); //set green
+        } else if (isColor) {
+            out.append("\n").append("0 setgray");
+        } else {
+            out.append("\n").append("0 setgray");
+        }
         double markRotation = (360.0 / 28.0) / 2.0;
         for (int i = 0; i < 28; i++) {
             double rotation = (360.0 / 28.0) * i;

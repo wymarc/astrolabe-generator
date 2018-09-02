@@ -27,7 +27,6 @@ import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.Basi
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
-import com.wymarc.astrolabe.generator.printengines.postscript.extras.volvelles.Lunar;
 
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -162,13 +161,13 @@ public class EPSPrintEngine {
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintEqualHoursHoraryQuadrant()){
-            EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,false);
+            EqualHours equalhoursQuadrantBack = new EqualHours(GeneratorGui.MY_ASTROLABE,false,true);
             component = new ArrayList<>();
             component.add("EqualHoursQuadrantBack.eps");
             component.add(equalhoursQuadrantBack.createQuadrantBack());
             selectedComponents.add(component);
 
-            EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,false);
+            EqualHours equalhoursQuadrantFront = new EqualHours(GeneratorGui.MY_ASTROLABE,true,true);
             component = new ArrayList<>();
             component.add("EqualHoursQuadrantFront.eps");
             component.add(equalhoursQuadrantFront.createQuadrantFront());
@@ -234,9 +233,16 @@ public class EPSPrintEngine {
 //        component.add(lunarVolvelle.createVolvelleMoonDisc(GeneratorGui.MY_ASTROLABE));
 //        selectedComponents.add(component);
 
+        // todo LASER CUTTER files
+//        SineQuadrantLaser mySineQuadrantLaser = new SineQuadrantLaser();  //todo colored for laser cutter
+//        component = new ArrayList<>();
+//        component.add("SineQuadrantLaser.eps");
+//        component.add(mySineQuadrantLaser.printQuadrant(true));
+//        selectedComponents.add(component);
+
+
         // todo
         // quadrants, tools, instructions etc
-
 //            Dastur myDastur = new Dastur();                     // todo tool
 //            dataString = myDastur.createDastur();
 //            save(filePath + "/myDastur.eps",dataString);
@@ -244,10 +250,6 @@ public class EPSPrintEngine {
 //            QuadrantTwo myAstrolabeQuad2 = new QuadrantTwo();  //todo small sine quadrant
 //            dataString = myAstrolabeQuad2.printQuadrant();
 //            save(filePath + "/QuadrantTwo.eps",dataString);
-//
-//            SineQuadrantOne mySineQuadrantOne = new SineQuadrantOne();  //todo colored for laser cutter
-//            dataString = mySineQuadrantOne.printQuadrant();
-//            save(filePath + "/SineQuadrantOne.eps",dataString);
 //
 //            DemoArms myDemoArms = new DemoArms();
 //            dataString = myDemoArms.printArms();
