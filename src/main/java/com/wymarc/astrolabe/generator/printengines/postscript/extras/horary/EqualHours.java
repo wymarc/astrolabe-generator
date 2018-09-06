@@ -331,10 +331,10 @@ public class EqualHours {
                 out.append("\n").append(EPSToolKit.drawInsideCircularText("12", 5, 359, workingRadius + 13));
 
                 //set clipping
-                out.append("\n").append("newpath")
-                        .append("\n").append("0 0 moveto")
-                        .append("\n").append("clipsave")
-                        .append("\n").append("0 0 ").append(workingRadius).append(" 270 360 arc clip");
+//                out.append("\n").append("newpath")
+//                        .append("\n").append("0 0 moveto")
+//                        .append("\n").append("clipsave")
+//                        .append("\n").append("0 0 ").append(workingRadius).append(" 270 360 arc clip");
 
                 out.append("\n").append("newpath")
                         .append("\n").append(MyCircle.getCenter().x).append(" ")
@@ -343,7 +343,7 @@ public class EqualHours {
                         .append(angle1).append(" ").append(angle2).append(" arc stroke");
 
                 //remove clipping
-                out.append("\n").append("\n" + "cliprestore");
+//                out.append("\n").append("\n" + "cliprestore");
             }
         }
 
@@ -672,7 +672,7 @@ public class EqualHours {
                 .append("\n").append("Quadrant begin")
                 .append("\n").append("")
                 .append("\n").append("%% setup");
-        if (myAstrolabe.getShowRegistrationMarks()) {
+        if (myAstrolabe.getShowRegistrationMarks() && !forCAD) {
             out.append("\n").append(EPSToolKit.registrationMarks());
         }
         out.append("\n").append("72 630 translate")
