@@ -315,7 +315,12 @@ public class EqualHours {
                         MyCircle.getRadius());
 
                 double angle1 = interSect1.getAngle2();
-                double angle2 = interSect2.getAngle2();
+                double angle2;
+                if (i > 5){
+                    angle2 = interSect2.getAngle1();
+                }else{
+                    angle2 = interSect2.getAngle2();
+                }
                 double labelAngle1 = interSect3.getAngle1();
                 double labelAngle2 = interSect3.getAngle2();
 
