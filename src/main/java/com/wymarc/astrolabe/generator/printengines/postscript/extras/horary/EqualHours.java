@@ -143,7 +143,7 @@ public class EqualHours {
         int count;
 
         if (forCAD) {
-            out.append("\n").append("1 0 0 setrgbcolor"); //set red
+            out.append("\n").append("0 1 0 setrgbcolor"); //set red
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
@@ -198,6 +198,7 @@ public class EqualHours {
         out.append("\n").append("90 rotate");
 
         //Mark degrees
+        out.append("\n").append("0 setgray");
         out.append("\n").append("/Times-Roman findfont 10 scalefont setfont");
         for (count = 1; count <= 9; count++) {
             if (count == 9) {// 90 is offset
@@ -215,7 +216,7 @@ public class EqualHours {
         double noonRadius = workingRadius / 2.0;
 
         if (forCAD) {
-            out.append("\n").append("1 0 0 setrgbcolor"); //set red
+            out.append("\n").append("0 1 0 setrgbcolor"); //set red
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
@@ -325,6 +326,7 @@ public class EqualHours {
                 double labelAngle2 = interSect3.getAngle2();
 
                 // label
+                out.append("\n").append("0 setgray");
                 out.append("\n").append("/Times-Roman findfont 10 scalefont setfont");
                 if (labelAngle1 > 270) {
                     out.append("\n").append(EPSToolKit.drawInsideCircularText((12 - i) + "", 5, labelAngle1, workingRadius + 13));
@@ -333,7 +335,17 @@ public class EqualHours {
                     out.append("\n").append(EPSToolKit.drawInsideCircularText((12 - i) + "", 5, labelAngle2, workingRadius + 13));
                     out.append("\n").append(EPSToolKit.drawInsideCircularText((i) + "", 5, labelAngle2, workingRadius + 28));
                 }
-                out.append("\n").append(EPSToolKit.drawInsideCircularText("12", 5, 359, workingRadius + 13));
+                if (i == 1){
+                    out.append("\n").append(EPSToolKit.drawInsideCircularText("12", 5, 359, workingRadius + 13));
+                }
+
+                if (forCAD) {
+                    out.append("\n").append("0 1 0 setrgbcolor"); //set red
+                } else if (isColor) {
+                    out.append("\n").append("0 setgray");
+                } else {
+                    out.append("\n").append("0 setgray");
+                }
 
                 //set clipping
 //                out.append("\n").append("newpath")
@@ -535,7 +547,7 @@ public class EqualHours {
                 .append("\n").append("-15 -10 rlineto stroke");
 
         if (forCAD) {
-            out.append("\n").append("0 setgray"); //set green
+            out.append("\n").append("0 setgray"); //set black
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
@@ -594,7 +606,7 @@ public class EqualHours {
 
         // mark segments
         if (forCAD) {
-            out.append("\n").append("0 1 0 setrgbcolor"); //set green
+            out.append("\n").append("0 setgray"); //set black
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
