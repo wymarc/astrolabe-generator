@@ -315,11 +315,15 @@ public class EqualHours {
                 InterSect interSect3 = new InterSect(0, 0, workingRadius, MyCircle.getCenter().x, MyCircle.getCenter().y,
                         MyCircle.getRadius());
 
-                double angle1 = interSect1.getAngle2();
+                double angle1;
                 double angle2;
                 if (i > 5){
+                    angle1 = interSect1.getAngle2();
+                    // TODO: 9/7/2018
+                    //angle1 = lineClipAngle(244.0, MyCircle.getCenter().x, MyCircle.getCenter().y, MyCircle.getRadius());
                     angle2 = interSect2.getAngle1();
                 }else{
+                    angle1 = interSect1.getAngle2();
                     angle2 = interSect2.getAngle2();
                 }
                 double labelAngle1 = interSect3.getAngle1();
@@ -347,20 +351,11 @@ public class EqualHours {
                     out.append("\n").append("0 setgray");
                 }
 
-                //set clipping
-//                out.append("\n").append("newpath")
-//                        .append("\n").append("0 0 moveto")
-//                        .append("\n").append("clipsave")
-//                        .append("\n").append("0 0 ").append(workingRadius).append(" 270 360 arc clip");
-
                 out.append("\n").append("newpath")
                         .append("\n").append(MyCircle.getCenter().x).append(" ")
                         .append(MyCircle.getCenter().y).append(" ")
                         .append(MyCircle.getRadius()).append(" ")
                         .append(angle1).append(" ").append(angle2).append(" arc stroke");
-
-                //remove clipping
-//                out.append("\n").append("\n" + "cliprestore");
             }
         }
 
