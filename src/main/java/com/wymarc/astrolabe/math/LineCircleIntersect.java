@@ -20,6 +20,7 @@
 package com.wymarc.astrolabe.math;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,9 +40,9 @@ public class LineCircleIntersect {
     /**
      * Given a circle defined by center and radius, and a line segment defined by its end points
      * this will return the intersection points
-     * @param pointA One endpoint of the line segment
-     * @param pointB The other endpoint
-     * @param center The center of the circle
+     * @param pointA One endpoint of the line segment (Point2D)
+     * @param pointB The other endpoint (Point2D)
+     * @param center The center of the circle (Point2D)
      * @param radius The radius of the circle
      * @return A list containing the points of intersection
      */
@@ -78,16 +79,34 @@ public class LineCircleIntersect {
         return Arrays.asList(p1, p2);
     }
 
-    public static List<Double> getCircleLineIntersectionAngless(Point2D pointA,
-                                                               Point2D pointB, Point2D center, double radius){
+    /**
+     * Given a circle defined by center and radius, and a line segment defined by its end points
+     * this will return the angles of any intersection points
+     * @param pointA One endpoint of the line segment (Point2D)
+     * @param pointB The other endpoint (Point2D)
+     * @param center The center of the circle (Point2D)
+     * @param radius The radius of the circle
+     * @return A list containing the angles of intersection in radians
+     */
+    public static List<Double> getCircleLineIntersectionAngles(Point2D pointA, Point2D pointB,
+                                                               Point2D center, double radius){
+        List<Double> angles = new ArrayList<>();
         // Get the intersection points
         List<Point2D> points = getCircleLineIntersectionPoints(pointA, pointB, center, radius);
 
-        // use trig to get the angles Radians or degrees? // TODO: 9/7/2018
+        // There are three possible results:
+        //      The line segment does not intersect (no points)
+        //      The line intersects once (one point)
+        //      The line intersects twice (two points)
 
-        return null;
+        if (points == null){
+            return angles;
+        }else{
+            for (Point2D point : points){
+                angles.add(AstroMath.cartesianToPolar(point));
+            }
+        }
+        return angles;
     }
-
-
 
 }

@@ -19,6 +19,8 @@
  */
 package com.wymarc.astrolabe.math;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 /**
  * Given two circles defined by center and radius, this class will return the intersection
  * points and intersection angles
@@ -75,6 +77,7 @@ public class InterSect {
     }
 
     private double polar ( double num, double den ){
+        // todo replace with AstroMath.cartesianToPolar
         // Polar Arctangent
         double ang = Math.atan2( num , den );
         if (ang < 0.0)
@@ -99,6 +102,7 @@ public class InterSect {
      */
     public InterSect(double x0, double y0, double r0, double x1, double y1, double r1)
     {
+        //todo recode for point2d
         double a;
         double dx;
         double dy;

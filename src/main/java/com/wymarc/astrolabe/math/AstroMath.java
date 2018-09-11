@@ -594,7 +594,7 @@ public class AstroMath {
      * Determines if a given year is a leap year
      *
      * @param year an integer representing the year
-     * @return true if a leap teat, false if not
+     * @return true if a leap year, false if not
      */
     public static boolean isLeapYear(int year) {
         // The year is a leap year if:
@@ -602,5 +602,19 @@ public class AstroMath {
         // If the year is divisible by 400
 
         return year % 400 == 0 || year % 4 == 0 && year % 100 != 0;
+    }
+
+    /**
+     * Converts an x,y  coordinate of type Point2D to an angle relative to the origin
+     * @param point Point2D coordinate
+     * @return angle in radians
+     */
+    public static double cartesianToPolar ( Point2D point ){
+        // Polar Arctangent
+        double ang = Math.atan2( point.getY() , point.getX() );
+        if (ang < 0.0){ // Always return positive angle
+            ang = ang + 2.0 * Math.PI;
+        }
+        return ang;
     }
 }
