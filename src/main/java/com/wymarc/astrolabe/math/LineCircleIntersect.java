@@ -86,7 +86,7 @@ public class LineCircleIntersect {
      * @param pointB The other endpoint (Point2D)
      * @param center The center of the circle (Point2D)
      * @param radius The radius of the circle
-     * @return A list containing the angles of intersection in radians
+     * @return A list containing the angles of intersection in degrees
      */
     public static List<Double> getCircleLineIntersectionAngles(Point2D pointA, Point2D pointB,
                                                                Point2D center, double radius){
@@ -103,7 +103,7 @@ public class LineCircleIntersect {
             return angles;
         }else{
             for (Point2D point : points){
-                angles.add(AstroMath.cartesianToPolar(point));
+                angles.add(Math.toDegrees(AstroMath.cartesianToPolar(point)));
             }
         }
         return angles;

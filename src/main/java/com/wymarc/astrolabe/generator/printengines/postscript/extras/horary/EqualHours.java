@@ -23,6 +23,7 @@ import com.wymarc.astrolabe.Astrolabe;
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
 import com.wymarc.astrolabe.math.AstroMath;
 import com.wymarc.astrolabe.math.InterSect;
+import com.wymarc.astrolabe.math.LineCircleIntersect;
 import com.wymarc.astrolabe.math.ThreePointCenter;
 
 import java.awt.geom.Point2D;
@@ -105,7 +106,7 @@ public class EqualHours {
     private String drawOutline(String orientation) {
         StringBuilder out = new StringBuilder();
         if (forCAD) {
-            out.append("\n").append("1 1 0 setrgbcolor"); //set yellow
+            out.append("\n").append("0 1 0 setrgbcolor"); //set yellow
         } else if (isColor) {
             out.append("\n").append("0 setgray");
         } else {
@@ -320,7 +321,10 @@ public class EqualHours {
                 if (i > 5){
                     angle1 = interSect1.getAngle2();
                     // TODO: 9/7/2018
-                    //angle1 = lineClipAngle(244.0, MyCircle.getCenter().x, MyCircle.getCenter().y, MyCircle.getRadius());
+//                    Point2D pointA = new Point2D.Double(244.0, 0.0);
+//                    Point2D pointB = new Point2D.Double(244.0, 700.0);
+//                    Point2D myCenter = new Point2D.Double(MyCircle.getCenter().x, MyCircle.getCenter().y);
+//                    angle1 = LineCircleIntersect.getCircleLineIntersectionAngles(pointA, pointB, myCenter, workingRadius).get(1) + 180.0;
                     angle2 = interSect2.getAngle1();
                 }else{
                     angle1 = interSect1.getAngle2();
