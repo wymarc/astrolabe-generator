@@ -617,4 +617,19 @@ public class AstroMath {
         }
         return ang;
     }
+
+    /**
+     * Converts an x,y  coordinate of type Point2D to an angle relative to given center
+     * @param center Point2D coordinate of center
+     * @param point Point2D coordinate
+     * @return angle in radians
+     */
+    public static double cartesianToPolar ( Point2D center, Point2D point ){
+        // Polar Arctangent
+        double ang = Math.atan2( point.getY() -  center.getY() , point.getX() - center.getX() );
+        if (ang < 0.0){ // Always return positive angle
+            ang = ang + 2.0 * Math.PI;
+        }
+        return ang;
+    }
 }

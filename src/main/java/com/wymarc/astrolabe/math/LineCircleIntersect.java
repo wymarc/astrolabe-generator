@@ -103,7 +103,8 @@ public class LineCircleIntersect {
             return angles;
         }else{
             for (Point2D point : points){
-                angles.add(Math.toDegrees(AstroMath.cartesianToPolar(point)));
+                // Todo we need the angle relative to the current center, not 0,0
+                angles.add(Math.toDegrees(AstroMath.cartesianToPolar(center, point)));
             }
         }
         return angles;

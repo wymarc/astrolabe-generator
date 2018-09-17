@@ -319,13 +319,21 @@ public class EqualHours {
                 double angle1;
                 double angle2;
                 if (i > 5){
-                    angle1 = interSect1.getAngle2();
+//                    angle1 = interSect1.getAngle2();
                     // TODO: 9/7/2018
-//                    Point2D pointA = new Point2D.Double(244.0, 0.0);
-//                    Point2D pointB = new Point2D.Double(244.0, 700.0);
-//                    Point2D myCenter = new Point2D.Double(MyCircle.getCenter().x, MyCircle.getCenter().y);
-//                    angle1 = LineCircleIntersect.getCircleLineIntersectionAngles(pointA, pointB, myCenter, workingRadius).get(1) + 180.0;
+                    Point2D pointA = new Point2D.Double(0.0, 0.0);
+                    Point2D pointB = new Point2D.Double(0.0, -700.0);
+                    angle1 = LineCircleIntersect.getCircleLineIntersectionAngles(pointA, pointB, MyCircle.getCenter(), MyCircle.getRadius()).get(1);
+
                     angle2 = interSect2.getAngle1();
+                } else if (i > 4){
+//                    angle1 = interSect1.getAngle2();
+                    // TODO: 9/7/2018
+                    Point2D pointA = new Point2D.Double(0.0, 0.0);
+                    Point2D pointB = new Point2D.Double(0.0, -700.0);
+                    angle1 = LineCircleIntersect.getCircleLineIntersectionAngles(pointA, pointB, MyCircle.getCenter(), MyCircle.getRadius()).get(1);
+
+                    angle2 = interSect2.getAngle2();
                 }else{
                     angle1 = interSect1.getAngle2();
                     angle2 = interSect2.getAngle2();
