@@ -19,8 +19,6 @@
  */
 package com.wymarc.astrolabe.math;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 /**
  * Given two circles defined by center and radius, this class will return the intersection
  * points and intersection angles
