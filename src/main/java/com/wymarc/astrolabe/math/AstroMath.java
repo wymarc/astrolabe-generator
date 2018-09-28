@@ -409,15 +409,16 @@ public class AstroMath {
 
     /**
      * Computes time correction for location within time zone. time zones are 1 hour wide so the difference 
-     * between the suns positon and therefore local solar time will vary 60 minutes across a timezone
+     * between the sun's position and therefore local solar time will vary 60 minutes (-30 to +30) across a timezone
      *	
      * @param lonDegree double longitude degrees
      * @param lonMin double longitude minutes
      * @param lonSec double longitude seconds
      * @param lonDir String longitude direction (E/W)
+     * @param shorten Boolean determine if the user wants the long or short version
      * @return time correct string
      */
-    public static String getTimeCorrection(double lonDegree, double lonMin, double lonSec, String lonDir){
+    public static String getTimeCorrection(double lonDegree, double lonMin, double lonSec, String lonDir, boolean shorten){
         double longitude = lonDegree + lonMin/60.0 + lonSec/3600.0;
         if(lonDir.equals("W")){
             longitude = -longitude;
@@ -435,7 +436,12 @@ public class AstroMath {
         offset = (Math.abs(longitude) - (timeZone*15))*4;
         minutes = (int)offset;
         seconds = Math.abs((int)((offset-minutes)*60));
-        correction = "Time correction: " + minutes + " Minutes " +  seconds + " Seconds";
+        if (!shorten){
+            correction = "Time correction: " + minutes + " Minutes " +  seconds + " Seconds";
+        }else{
+            correction = "Time Correction: " + minutes + ":" +  seconds;
+        }
+
 
         return correction;
     }

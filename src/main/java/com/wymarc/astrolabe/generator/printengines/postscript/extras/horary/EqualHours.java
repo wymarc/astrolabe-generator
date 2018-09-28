@@ -584,11 +584,11 @@ public class EqualHours {
                 .append("\n").append("newpath")
                 .append("\n").append("0 -60 moveto")
                 .append("\n").append(EPSToolKit.centerText(myAstrolabe.getLocation().getLocationName()))
-                .append("\n").append("NormalFont10 setfont")
+                .append("\n").append("NormalFont12 setfont")
                 .append("\n").append("newpath")
                 .append("\n").append("0 -40 moveto")
                 .append("\n").append(EPSToolKit.centerText(AstroMath.getTimeCorrection(myAstrolabe.getLocation().getLonDeg(), myAstrolabe.getLocation().getLonMin(),
-                myAstrolabe.getLocation().getLonSec(), myAstrolabe.getLocation().getLonDir())));
+                myAstrolabe.getLocation().getLonSec(), myAstrolabe.getLocation().getLonDir(),true)));
 
         // label year
         out.append("\n").append("%% Label year")
@@ -634,9 +634,17 @@ public class EqualHours {
                 out.append("\n").append(EPSToolKit.centerText(dominicalSeguenceList.get(i).substring(1)));
 
                 out.append("\n").append("-").append(markRotation).append(" rotate");
+                if (forCAD) {
+                    out.append("\n").append("0 1 0 setrgbcolor"); //set green
+                } else if (isColor) {
+                    out.append("\n").append("0 setgray");
+                } else {
+                    out.append("\n").append("0 setgray");
+                }
                 out.append("\n").append("newpath");
                 out.append("\n").append(medallionRadius - 7).append(" 0 moveto");
                 out.append("\n").append(medallionRadius - 37).append(" 0 lineto stroke");
+                out.append("\n").append("0 setgray");
                 out.append("\n").append(markRotation).append(" rotate");
 
             } else {
@@ -650,6 +658,13 @@ public class EqualHours {
                     markIndex--;
                 }
 
+                if (forCAD) {
+                    out.append("\n").append("0 1 0 setrgbcolor"); //set green
+                } else if (isColor) {
+                    out.append("\n").append("0 setgray");
+                } else {
+                    out.append("\n").append("0 setgray");
+                }
                 // if the previous letter was doubled, Mark the tick long
                 if (dominicalSeguenceList.get(markIndex).length() == 1) {
                     out.append("\n").append("-").append(markRotation).append(" rotate");
@@ -664,7 +679,7 @@ public class EqualHours {
                     out.append("\n").append(medallionRadius - 37).append(" 0 lineto stroke");
                     out.append("\n").append(markRotation).append(" rotate");
                 }
-
+                out.append("\n").append("0 setgray");
             }
 
             out.append("\n").append(rotation).append(" rotate");

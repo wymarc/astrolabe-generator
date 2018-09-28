@@ -935,7 +935,7 @@ public class BackPrintEngine {
         if(myAstrolabe.getShowTimeCorrection()){
             out += "\n" + "0 " + -correctionPos + " moveto";
             out += EPSToolKit.centerText(AstroMath.getTimeCorrection(myAstrolabe.getLocation().getLonDeg(),myAstrolabe.getLocation().getLonMin(),
-                    myAstrolabe.getLocation().getLonSec(), myAstrolabe.getLocation().getLonDir()));
+                    myAstrolabe.getLocation().getLonSec(), myAstrolabe.getLocation().getLonDir(), false));
         }
 
         out += "\n" + "0 " + -lonLabelPos + " moveto";
