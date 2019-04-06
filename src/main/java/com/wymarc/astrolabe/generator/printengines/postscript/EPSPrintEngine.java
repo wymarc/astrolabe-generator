@@ -25,6 +25,7 @@ import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.Adva
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.EqualHours;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.BasicHoraryQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.QuadransVetus;
+import com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles.VernierSineQuadrantLaser;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
@@ -134,19 +135,12 @@ public class EPSPrintEngine {
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
-            QuadransVetus quadransVetus = new QuadransVetus();
+            AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
             component = new ArrayList<>();
-            component.add("QuadransVetus.eps");
-            component.add(quadransVetus.printQuadrant(GeneratorGui.MY_ASTROLABE));
+            component.add("AdvancedHoraryQuadrant.eps");
+            component.add(advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE));
             selectedComponents.add(component);
         }
-//        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
-//            AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
-//            component = new ArrayList<>();
-//            component.add("AdvancedHoraryQuadrant.eps");
-//            component.add(advancedHoraryQuadrant.printQuadrant(GeneratorGui.MY_ASTROLABE));
-//            selectedComponents.add(component);
-//        }
         if (GeneratorGui.MY_ASTROLABE.getPrintSineQuadrant()){
             SineQuadrant sineQuadrant = new SineQuadrant();
             component = new ArrayList<>();
@@ -159,6 +153,13 @@ public class EPSPrintEngine {
             component = new ArrayList<>();
             component.add("ColorSineQuadrant.eps");
             component.add(sineQuadrant.printQuadrant(true));
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
+            VernierSineQuadrantLaser vernierSineQuadrantLaser = new VernierSineQuadrantLaser();
+            component = new ArrayList<>();
+            component.add("VernierSineQuadrantLaser.eps");
+            component.add(vernierSineQuadrantLaser.printQuadrant());
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){

@@ -1,0 +1,1663 @@
+%!PS-Adobe-3.0 EPSF-30.
+%%BoundingBox: 0 0 612 792
+%%Title: Astrolabe Front
+%%Creator: Richard Wymarc
+%%CreationDate: Sat Oct 27 21:22:06 EDT 2018
+%%EndComments
+%% Astrolabe Generator Postscript file
+%% for Latitude: 40.97638888888889
+%% for Longitude: -80.13583333333334
+
+mark
+/Astrolabe 10 dict def %local variable dictionary
+Astrolabe begin
+
+%% setup
+%% ================ Draw Registration Marks =================
+% Fill Background
+1 setgray
+newpath
+0 0 moveto
+0 792 lineto
+612 792 lineto
+612 0 lineto
+0 0 lineto
+fill
+0 setgray
+% Registration Marks
+.1 setlinewidth
+36 36 5 0 360 arc stroke
+30 36 moveto
+50 36 lineto stroke
+36 30 moveto
+36 50 lineto stroke
+576 36 5 0 360 arc stroke
+582 36 moveto
+562 36 lineto stroke
+576 30 moveto
+576 50 lineto stroke
+576 756 5 0 360 arc stroke
+582 756 moveto
+562 756 lineto stroke
+576 762 moveto
+576 742 lineto stroke
+36 756 5 0 360 arc stroke
+30 756 moveto
+50 756 lineto stroke
+36 762 moveto
+36 742 lineto stroke
+%% ================ End Registration Marks =================
+306 396 translate
+.1 setlinewidth
+
+%% ================ Set Up Fonts =================
+/NormalFont /Times-Roman findfont
+dup length dict begin {1 index /FID ne {def} {pop pop} ifelse} forall
+/Encoding ISOLatin1Encoding def currentdict end
+/Times-Roman-ISOLatin1 exch definefont
+def
+/NormalFont5 NormalFont 5 scalefont def
+/NormalFont6 NormalFont 6 scalefont def
+/NormalFont7 NormalFont 7 scalefont def
+/NormalFont8 NormalFont 8 scalefont def
+/NormalFont10 NormalFont 10 scalefont def
+/NormalFont12 NormalFont 12 scalefont def
+/NormalFont14 NormalFont 14 scalefont def
+/NormalFont16 NormalFont 16 scalefont def
+/NormalFont18 NormalFont 18 scalefont def
+/NormalFont20 NormalFont 20 scalefont def
+%% ================ End Set Up Fonts =================
+%% ================ Set Up Circular Text Routine =================
+/outsidecircletext
+{ circtextdict begin
+/radius exch def
+/centerangle exch def
+/ptsize exch def
+/str exch def
+/xradius radius ptsize 4 div add def
+
+gsave
+centerangle str findhalfangle add rotate
+
+str
+{ /charcode exch def
+( ) dup 0 charcode put outsideplacechar
+} forall
+grestore
+end
+} def
+
+/insidecircletext
+{ circtextdict begin
+/radius exch def /centerangle exch def
+/ptsize exch def /str exch def
+/xradius radius ptsize 3 div sub def
+gsave
+centerangle str findhalfangle sub rotate
+str
+{ /charcode exch def
+( ) dup 0 charcode put insideplacechar
+} forall
+grestore
+end
+} def
+
+/circtextdict 16 dict def
+circtextdict begin
+/findhalfangle
+{ stringwidth pop 2 div
+2 xradius mul pi mul div 360 mul
+} def
+
+/outsideplacechar
+{ /char exch def
+/halfangle char findhalfangle def
+gsave
+halfangle neg rotate
+radius 0 translate
+-90 rotate
+char stringwidth pop 2 div neg 0 moveto
+char show
+grestore
+halfangle 2 mul neg rotate
+} def
+
+/insideplacechar
+{ /char exch def
+/halfangle char findhalfangle def
+gsave
+halfangle rotate
+radius 0 translate
+90 rotate
+char stringwidth pop 2 div neg 0 moveto
+char show
+grestore
+halfangle 2 mul rotate
+} def
+/pi 3.1415923 def
+end
+
+%% ================ End Circular Text Routine =================
+gsave
+%% ================ Draw Throne =================
+0 280.0 7 0 360 arc stroke
+0 280.0 38 0 180 arc stroke
+-38 242.0 38 90 270 arc stroke
+38 242.0 38 -90 90 arc stroke
+.1 setlinewidth
+0 277.0 moveto
+0 283.0 lineto stroke
+-3 280.0 moveto
+3 280.0 lineto stroke
+%% ================ Draw Throne =================
+grestore
+
+gsave
+%% ==================== Create Mater Limb ====================
+% Draw outer circle
+1 setgray
+0 0 252.0 0 360 arc fill
+0 setgray
+0 0 252.0 0 360 arc stroke
+0 0 216.0 0 360 arc stroke
+0 0 221.0 0 360 arc stroke
+
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+221.0 0 moveto
+216.0 0 lineto stroke
+1.25 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+226.0 0 moveto
+216.0 0 lineto stroke
+3.75 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+231.0 0 moveto
+216.0 0 lineto stroke
+15.0 rotate
+NormalFont12 setfont
+
+
+(XII) 10.0 -90.0 234.0 outsidecircletext
+
+(XI) 10.0 -75.0 234.0 outsidecircletext
+
+(X) 10.0 -60.0 234.0 outsidecircletext
+
+(IX) 10.0 -45.0 234.0 outsidecircletext
+
+(VIII) 10.0 -30.0 234.0 outsidecircletext
+
+(VII) 10.0 -15.0 234.0 outsidecircletext
+
+(VI) 10.0 0.0 234.0 outsidecircletext
+
+(V) 10.0 15.0 234.0 outsidecircletext
+
+(IIII) 10.0 30.0 234.0 outsidecircletext
+
+(III) 10.0 45.0 234.0 outsidecircletext
+
+(II) 10.0 60.0 234.0 outsidecircletext
+
+(I) 10.0 75.0 234.0 outsidecircletext
+
+(XII) 10.0 -270.0 234.0 outsidecircletext
+
+(XI) 10.0 -255.0 234.0 outsidecircletext
+
+(X) 10.0 -240.0 234.0 outsidecircletext
+
+(IX) 10.0 -225.0 234.0 outsidecircletext
+
+(VIII) 10.0 -210.0 234.0 outsidecircletext
+
+(VII) 10.0 -195.0 234.0 outsidecircletext
+
+(VI) 10.0 -180.0 234.0 outsidecircletext
+
+(V) 10.0 -165.0 234.0 outsidecircletext
+
+(IIII) 10.0 -150.0 234.0 outsidecircletext
+
+(III) 10.0 -135.0 234.0 outsidecircletext
+
+(II) 10.0 -120.0 234.0 outsidecircletext
+
+(I) 10.0 -105.0 234.0 outsidecircletext
+NormalFont8 setfont
+%% ==================== End Create Mater Limb ====================
+
+grestore
+
+gsave
+%% ==================== Build Plate ====================
+%% Set Clipping
+0 0 202.0 0 360 arc clip
+
+%% Find center of page and mark it
+0 0 5 0 360 arc stroke
+
+%% draw The Tropics
+newpath
+%% ================ Draw Tropics =================
+0 0 202.0 0 360 arc stroke
+0 0 132.58828599945423 0 360 arc stroke
+0 0 87.02798804095579 0 360 arc stroke
+%% ================ End Tropics =================
+
+%% Label the Plate
+newpath
+%% ================ Draw Front Labels =================
+%% Label latitude of plate
+NormalFont12 setfont
+ 0 -167.29414299972711 moveto
+(40\260 58') dup stringwidth pop 2 div neg 0 rmoveto show
+
+%% ================ End Front Labels =================
+
+%% draw The Almucantars
+newpath
+%% ================ Draw Almucantars =================
+
+newpath
+.4 setlinewidth
+0 152.65237986967384 202.19397286800682 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 134.74355611149375 177.79390031144354 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 120.69200984164073 157.4325771289332 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 109.45232694167582 140.03397068183105 0 360 arc stroke
+newpath
+.4 setlinewidth
+0 100.32540282007577 124.8709325016486 0 360 arc stroke
+%% Label Almucantar
+NormalFont6 setfont
+0 226.19633532172435 moveto
+(2 0) dup stringwidth pop 2 div neg 0 rmoveto show
+0 -23.54552968157283 moveto
+(2 0) dup stringwidth pop 2 div neg 0 rmoveto show
+newpath
+.1 setlinewidth
+0 92.82698669291575 111.4331970214043 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 86.61186556555893 99.35109341910915 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 81.42804881769163 88.34931244550411 0 360 arc stroke
+newpath
+.4 setlinewidth
+0 77.08798227181339 78.21774142111016 0 360 arc stroke
+%% Label Almucantar
+NormalFont6 setfont
+0 156.30572369292355 moveto
+(4 0) dup stringwidth pop 2 div neg 0 rmoveto show
+0 -0.129759149296774 moveto
+(4 0) dup stringwidth pop 2 div neg 0 rmoveto show
+newpath
+.1 setlinewidth
+0 73.44985783441854 68.79242008839928 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 70.40513564502973 59.942722310014666 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 67.87001608189486 51.56248977471151 0 360 arc stroke
+newpath
+.4 setlinewidth
+0 65.77949739458704 43.56374241537292 0 360 arc stroke
+%% Label Almucantar
+NormalFont6 setfont
+0 110.34323980995995 moveto
+(6 0) dup stringwidth pop 2 div neg 0 rmoveto show
+0 23.21575497921412 moveto
+(6 0) dup stringwidth pop 2 div neg 0 rmoveto show
+newpath
+.1 setlinewidth
+0 64.08317194475666 35.87210695040774 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 62.74222195126929 28.423411701540182 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 61.72726468166391 21.16108294037215 0 360 arc stroke
+newpath
+.4 setlinewidth
+0 61.01681658374218 14.034094671664143 0 360 arc stroke
+newpath
+.1 setlinewidth
+0 60.596223814151436 6.99529760478223 0 360 arc stroke
+[4 4] 0 setdash
+0 288.7007394686283 363.6795224717129 277.8184749302981 262.1815250697018 arc stroke
+[] 0 setdash
+%% ================ End Almucantars =================
+
+%% draw The azimuth Lines
+newpath
+%% ================ Draw Azimuth Lines =================
+
+.1 setlinewidth
+-2007.326418590105 -115.16134631691693 2014.9940794055883 1.8692699549838752 13.329563319093305 arc stroke
+.1 setlinewidth
+-995.9809038702442 -115.16134631691693 1011.345514719864 3.7446789600055457 26.356358510675044 arc stroke
+.1 setlinewidth
+-655.4164393231805 -115.16134631691693 678.5370278804793 5.632440329041769 38.81899289012422 arc stroke
+.1 setlinewidth
+-482.5073291413262 -115.16134631691693 513.4735747289183 7.538917613482127 50.52565488849354 arc stroke
+.1 setlinewidth
+-376.61467177610325 -115.16134631691693 415.5483127950587 9.470704051466644 61.36317380197716 arc stroke
+.1 setlinewidth
+-304.1798280777241 -115.16134631691693 351.23661124545623 11.43470737494319 71.289603951066 arc stroke
+.1 setlinewidth
+-250.80893312252667 -115.16134631691693 306.1811721903521 13.438242034407432 80.31768313121395 arc stroke
+.1 setlinewidth
+-209.29374665119423 -115.16134631691693 273.21358249013207 15.489131147602322 88.49632830489628 arc stroke
+.4 setlinewidth
+-175.61830562272812 -115.16134631691693 248.3617896126453 17.595820800112904 95.89462396542973 arc stroke
+.1 setlinewidth
+-147.36125547601 -115.16134631691693 229.25341630009322 19.7675097308641 102.58997711783275 arc stroke
+.1 setlinewidth
+-122.9692614446509 -115.16134631691693 214.39036482556966 22.014297931826423 108.66034453257882 arc stroke
+.1 setlinewidth
+-101.39327602590805 -115.16134631691693 202.7865520518161 24.347358284128276 114.17968472977515 arc stroke
+.1 setlinewidth
+-81.89216082408318 -115.16134631691693 193.77336058972466 26.779136041170855 119.2156644788244 arc stroke
+.1 setlinewidth
+-63.919835838937885 -115.16134631691693 186.8890972835888 29.323581738587162 123.82880432438472 arc stroke
+.1 setlinewidth
+-47.0567831677321 -115.16134631691693 181.8134486551886 31.996423920440424 128.0724704113985 arc stroke
+.1 setlinewidth
+-30.96624558759209 -115.16134631691693 178.3275010636021 34.815488833446295 131.99331876993926 arc stroke
+.1 setlinewidth
+-15.364610849619751 -115.16134631691693 176.2891390198449 37.801074786368595 135.6319471758369 arc stroke
+.4 setlinewidth
+0.0 -115.16134631691693 175.61830562272814 40.97638888888889 139.0236111111111 arc stroke
+.1 setlinewidth
+15.364610849619751 -115.16134631691693 176.2891390198449 44.36805282416308 142.19892521363138 arc stroke
+.1 setlinewidth
+30.96624558759209 -115.16134631691693 178.3275010636021 48.006681230060735 145.1845111665537 arc stroke
+.1 setlinewidth
+47.0567831677321 -115.16134631691693 181.8134486551886 51.92752958860151 148.0035760795596 arc stroke
+.1 setlinewidth
+63.919835838937885 -115.16134631691693 186.8890972835888 56.17119567561527 150.67641826141283 arc stroke
+.1 setlinewidth
+81.89216082408318 -115.16134631691693 193.77336058972466 60.78433552117563 153.22086395882917 arc stroke
+.1 setlinewidth
+101.39327602590805 -115.16134631691693 202.7865520518161 65.82031527022488 155.65264171587174 arc stroke
+.1 setlinewidth
+122.9692614446509 -115.16134631691693 214.39036482556966 71.33965546742118 157.98570206817357 arc stroke
+.1 setlinewidth
+147.36125547601 -115.16134631691693 229.25341630009322 77.41002288216727 160.2324902691359 arc stroke
+.4 setlinewidth
+175.61830562272812 -115.16134631691693 248.3617896126453 84.10537603457028 162.40417919988712 arc stroke
+.1 setlinewidth
+209.29374665119423 -115.16134631691693 273.21358249013207 91.50367169510372 164.51086885239766 arc stroke
+.1 setlinewidth
+250.80893312252667 -115.16134631691693 306.1811721903521 99.68231686878606 166.5617579655926 arc stroke
+.1 setlinewidth
+304.1798280777241 -115.16134631691693 351.23661124545623 108.71039604893402 168.5652926250568 arc stroke
+.1 setlinewidth
+376.61467177610325 -115.16134631691693 415.5483127950587 118.63682619802286 170.52929594853333 arc stroke
+.1 setlinewidth
+482.5073291413262 -115.16134631691693 513.4735747289183 129.4743451115065 172.4610823865179 arc stroke
+.1 setlinewidth
+655.4164393231805 -115.16134631691693 678.5370278804793 141.1810071098758 174.36755967095823 arc stroke
+.1 setlinewidth
+995.9809038702442 -115.16134631691693 1011.345514719864 153.64364148932495 176.25532103999447 arc stroke
+.1 setlinewidth
+2007.326418590105 -115.16134631691693 2014.9940794055883 166.67043668090668 178.13073004501612 arc stroke
+%% ================ End Azimuth Lines =================
+
+%% Clear zenith circle
+1 setgray
+0 61.01681658374218 14.034094671664143 0 360 arc fill
+0 setgray
+0 61.01681658374218 14.034094671664143 0 360 arc stroke
+.4 setlinewidth
+0.0 -115.16134631691693 175.61830562272814 40.97638888888889 139.0236111111111 arc stroke
+.1 setlinewidth
+%% draw compass points
+.4 setlinewidth
+newpath
+-202.0 0 moveto
+202.0 0 lineto
+0 -202.0 moveto
+0 202.0 lineto
+stroke
+.1 setlinewidth
+
+%% ==================== End Build Plate ====================
+
+grestore
+
+%% Mark pivot
+1 setgray
+0 0 5 0 360 arc fill
+0 setgray
+0 0 5 0 360 arc stroke
+newpath
+-5 0 moveto
+5 0 lineto stroke
+newpath
+0 5 moveto
+0 -5 lineto stroke
+
+% Eject the page
+end cleartomark
+showpage
