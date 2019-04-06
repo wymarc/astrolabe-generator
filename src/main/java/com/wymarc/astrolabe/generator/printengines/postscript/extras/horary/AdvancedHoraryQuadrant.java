@@ -30,7 +30,7 @@ import java.util.Calendar;
  * print the results to an Encapsulated PostScript (EPS) file. Note that
  * This file is static with no inputs. Software is included for reference.
  * <p>
- * link      http://astrolabeproject.com.com
+ * link      http://astrolabeproject.com
  * link      http://www.astrolabes.org
  */
 
