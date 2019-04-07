@@ -26,6 +26,7 @@ import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.Equa
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.BasicHoraryQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.horary.QuadransVetus;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles.VernierSineQuadrantLaser;
+import com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles.ZodiacSineQuadrantLaser;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
@@ -135,6 +136,13 @@ public class EPSPrintEngine {
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
+            QuadransVetus quadransVetus = new QuadransVetus();
+            component = new ArrayList<>();
+            component.add("QuadransVetus.eps");
+            component.add(quadransVetus.printQuadrant(GeneratorGui.MY_ASTROLABE));
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedHoraryQuadrant()){
             AdvancedHoraryQuadrant advancedHoraryQuadrant = new AdvancedHoraryQuadrant();
             component = new ArrayList<>();
             component.add("AdvancedHoraryQuadrant.eps");
@@ -160,6 +168,13 @@ public class EPSPrintEngine {
             component = new ArrayList<>();
             component.add("VernierSineQuadrantLaser.eps");
             component.add(vernierSineQuadrantLaser.printQuadrant());
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
+            ZodiacSineQuadrantLaser zodiacQuadrantLaser = new ZodiacSineQuadrantLaser();
+            component = new ArrayList<>();
+            component.add("ZodiacSineQuadrantLaser.eps");
+            component.add(zodiacQuadrantLaser.printQuadrant());
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
