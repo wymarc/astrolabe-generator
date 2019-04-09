@@ -69,6 +69,7 @@ public class ZodiacSineQuadrantLaser {
 
         out.append("\n").append("newpath")
                 .append("\n").append("36 -36 516 270 360 arc stroke")//494
+                .append("\n").append("36 -36 513 270 360 arc stroke")//494
                 .append("\n").append("newpath")
                 .append("\n").append("36 -36 456 270 360 arc stroke")//494
                 .append("\n").append("newpath")
@@ -88,15 +89,42 @@ public class ZodiacSineQuadrantLaser {
 
     private String drawZodiacScale(){
         StringBuilder out = new StringBuilder();
+        out.append("\n").append("%% ================ start Draw zodiac scale =================");
         out.append("\n").append("-30 rotate")
                 .append("\n").append("newpath")
                 .append("\n").append("456 0 moveto")
-                .append("\n").append("516 0 lineto stroke")
+                .append("\n").append("513 0 lineto stroke")
                 .append("\n").append("-30 rotate")
                 .append("\n").append("newpath")
                 .append("\n").append("456 0 moveto")
-                .append("\n").append("516 0 lineto stroke")
+                .append("\n").append("513 0 lineto stroke")
                 .append("\n").append("60 rotate");
+
+        out.append("\n").append("%% ================ start Draw arrow lines =================");
+        out.append("\n").append("newpath")
+                .append("\n").append("0 0 467 277 299 arc stroke")
+                .append("\n").append("0 0 467 307 329 arc stroke")
+                .append("\n").append("0 0 467 337 359 arc stroke")
+
+                .append("\n").append("0 0 478 271 293 arc stroke")
+                .append("\n").append("0 0 478 301 323 arc stroke")
+                .append("\n").append("0 0 478 331 353 arc stroke")
+
+                .append("\n").append("0 0 489 277 299 arc stroke")
+                .append("\n").append("0 0 489 307 329 arc stroke")
+                .append("\n").append("0 0 489 337 359 arc stroke")
+
+                .append("\n").append("0 0 500 271 293 arc stroke")
+                .append("\n").append("0 0 500 301 323 arc stroke")
+                .append("\n").append("0 0 500 331 353 arc stroke");
+        out.append("\n").append("%% ================ stop Draw arrow lines =================");
+        out.append("\n").append("%% ================ start Draw arrow heads =================");
+        out.append("\n").append("0 -467 29 arrowhead");
+        out.append("\n").append("0 -467 7 arrowhead");
+        out.append("\n").append("0 -467 7.25 arrowhead");
+        out.append("\n").append("0 -467 7.5 arrowhead");
+        out.append("\n").append("%% ================ stop Draw arrow heads =================");
+
 
 
         return out.toString();

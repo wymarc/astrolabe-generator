@@ -404,6 +404,19 @@ public class EPSToolKit {
         out += "\n" + "x y 2 0 360 arc stroke";
         out += "\n" + "grestore}def";
 
+        // call as "x y angle arrowhead"
+        out += "\n" + "/arrowhead";
+        out += "\n" + "{gsave";
+        out += "\n" + "rotate";
+        out += "\n" + "newpath";
+        out += "\n" + "moveto";
+        out += "\n" + "-4 -2 rlineto";
+        out += "\n" + "2 2 rlineto";
+        out += "\n" + "-2 2 rlineto";
+        out += "\n" + "4 -2 rlineto fill";
+        out += "\n" + "grestore}def";
+        out += "\n";
+
         return out;
     }
 
