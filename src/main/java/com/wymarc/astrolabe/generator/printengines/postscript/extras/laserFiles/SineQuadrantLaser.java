@@ -283,7 +283,7 @@ public class SineQuadrantLaser {
         out.append("\n").append("newpath")
                 .append("\n").append("452 0 moveto")
                 .append("\n").append("0 -452 lineto stroke")
-                .append("\n").append("%% ================ End Draw Mystery Line =================");
+                .append("\n").append("%% ================ End Draw Tangent Line =================");
 
         out.append("\n").append("%% ================ Draw sine/cosine arcs =================")
                 .append("\n").append("newpath")

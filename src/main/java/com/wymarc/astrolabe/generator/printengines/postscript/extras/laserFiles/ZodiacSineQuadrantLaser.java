@@ -4,6 +4,8 @@ import com.wymarc.astrolabe.Astrolabe;
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
 import com.wymarc.astrolabe.math.AstroMath;
 
+import java.awt.geom.Point2D;
+
 /**
  * This Plugin will calculate the components of the a Sine Quadrant with a zodiac scale and
  * print the results to an Encapsulated PostScript (EPS) file. Note that
@@ -13,23 +15,49 @@ import com.wymarc.astrolabe.math.AstroMath;
  * link      http://www.astrolabes.org
  */
 public class ZodiacSineQuadrantLaser {
-    private String drawCuttingLines() {
+
+    /**
+     * Draws a cutting line
+     * @param type 0: Plain, 1: Space for sights, 2: Notch Sight
+     * @return
+     */
+    private String drawCuttingLines(int type) {
         StringBuilder out = new StringBuilder();
         out.append("\n").append("%% ================ Draw cutting lines =================");
-        double interval5 = 414.0 / 12.0;
-        out.append("\n").append("newpath")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append("0 -540 lineto")
-                .append("\n").append("36 -540 lineto")
-                .append("\n").append("36 -36 504 270 360 arc")
-                .append("\n").append("540 36 lineto")
-                .append("\n").append(interval5 * 10).append(" 36 lineto")
-                .append("\n").append(interval5 * 10).append(" 18 lineto")
-                .append("\n").append(interval5 * 4).append(" 18 lineto")
-                .append("\n").append(interval5 * 4).append(" 36 lineto")
-                .append("\n").append("0 36 lineto")
-                .append("\n").append("0 0 lineto stroke")
-                .append("\n").append("%% ================ End Draw cutting lines =================");
+        if (type == 0){
+            out.append("\n").append("newpath")
+                    .append("\n").append("0 0 moveto")
+                    .append("\n").append("0 -562 lineto")
+                    .append("\n").append("36 -562 lineto")
+                    .append("\n").append("36 -36 526 270 360 arc")
+                    .append("\n").append("562 0 lineto")
+                    .append("\n").append("0 0 lineto stroke");
+        }else if(type == 1){
+            out.append("\n").append("newpath")
+                    .append("\n").append("0 0 moveto")
+                    .append("\n").append("0 -562 lineto")
+                    .append("\n").append("36 -562 lineto")
+                    .append("\n").append("36 -36 526 270 360 arc")
+                    .append("\n").append("562 36 lineto")
+                    .append("\n").append("0 36 lineto")
+                    .append("\n").append("0 0 lineto stroke");
+        }else if (type == 2){
+            double interval5 = 414.0 / 12.0;
+            out.append("\n").append("newpath")
+                    .append("\n").append("0 0 moveto")
+                    .append("\n").append("0 -562 lineto")
+                    .append("\n").append("36 -562 lineto")
+                    .append("\n").append("36 -36 526 270 360 arc")
+                    .append("\n").append("562 36 lineto")
+                    .append("\n").append(interval5 * 10).append(" 36 lineto")
+                    .append("\n").append(interval5 * 10).append(" 18 lineto")
+                    .append("\n").append(interval5 * 4).append(" 18 lineto")
+                    .append("\n").append(interval5 * 4).append(" 36 lineto")
+                    .append("\n").append("0 36 lineto")
+                    .append("\n").append("0 0 lineto stroke");
+        }
+
+        out.append("\n").append("%% ================ End Draw cutting lines =================");
 
         return out.toString();
     }
@@ -342,6 +370,7 @@ public class ZodiacSineQuadrantLaser {
         return out.toString();
     }
 
+
     private String drawAdvancedLines() {
         StringBuilder out = new StringBuilder();
         out.append("\n").append("%% ================ Draw Advanced Lines =================")
@@ -367,6 +396,27 @@ public class ZodiacSineQuadrantLaser {
                 .append("\n").append("newpath")
                 .append("\n").append("0 -207 207 270 90 arc stroke")
                 .append("\n").append("%% ================ End Draw sine/cosine arcs =================");
+
+        out.append("\n").append("%% ================ Draw Asr start Arc  =================");
+        double interval = 414.0 / 60.0;
+        Point2D[] asrLine = AstroMath.defineAsrLine(interval, 1.0);
+        out.append("\n").append("newpath")
+                .append("\n").append(asrLine[0].getY()).append(" ").append(-asrLine[0].getX()).append(" moveto");     //todo fix this so it isn't reversed yx
+        for (int i = 1; i < 90; i++) {
+            out.append("\n").append(asrLine[i].getY()).append(" ").append(-asrLine[i].getX()).append(" lineto");
+        }
+        out.append("\n").append(asrLine[90].getY()).append(" ").append(-asrLine[90].getX()).append(" lineto stroke")
+                .append("\n").append("%% ================ End Draw Asr start Arc  =================");
+
+        out.append("\n").append("%% ================ Draw Asr End arc =================");
+        asrLine = AstroMath.defineAsrLine(interval, 2.0);
+        out.append("\n").append("newpath")
+                .append("\n").append(asrLine[0].getY()).append(" ").append(-asrLine[0].getX()).append(" moveto");     //todo fix this so it isn't reversed yx
+        for (int i = 1; i < 90; i++) {
+            out.append("\n").append(asrLine[i].getY()).append(" ").append(-asrLine[i].getX()).append(" lineto");
+        }
+        out.append("\n").append(asrLine[90].getY()).append(" ").append(-asrLine[90].getX()).append(" lineto stroke")
+                .append("\n").append("%% ================ End Draw Asr End arc =================");
 
         out.append("\n").append("%% ================ Draw obliquity arc =================");
         // draw obliquity arc
@@ -485,11 +535,11 @@ public class ZodiacSineQuadrantLaser {
                 .append(drawAdvancedLines())
                 .append("\n").append("grestore");
 
-//        out.append("\n").append("-36 36 translate")
-//                .append("\n").append("gsave")
-//                .append("\n").append("1 0 0 setrgbcolor")
-//                .append(drawCuttingLines())
-//                .append("\n").append("grestore");
+        out.append("\n").append("-36 36 translate")
+                .append("\n").append("gsave")
+                .append("\n").append("1 0 0 setrgbcolor")
+                .append(drawCuttingLines(1))
+                .append("\n").append("grestore");
 
         out.append("\n").append("grestore");
         // Write Footer

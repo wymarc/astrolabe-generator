@@ -1,0 +1,2430 @@
+%!PS-Adobe-3.0 EPSF-30.
+%%BoundingBox: 0 0 612 792
+%%Title: Vernier Sine Quadrant
+%%Creator: Richard Wymarc
+%%CreationDate: 
+%%EndComments
+mark
+/Quadrant 10 dict def %local variable dictionary
+Quadrant begin
+
+%% setup
+36 626 translate
+.4 setlinewidth
+
+%% ================ Set Up Fonts =================
+/NormalFont /Times-Roman findfont
+dup length dict begin {1 index /FID ne {def} {pop pop} ifelse} forall
+/Encoding ISOLatin1Encoding def currentdict end
+/Times-Roman-ISOLatin1 exch definefont
+def
+/NormalFont5 NormalFont 5 scalefont def
+/NormalFont6 NormalFont 6 scalefont def
+/NormalFont7 NormalFont 7 scalefont def
+/NormalFont8 NormalFont 8 scalefont def
+/NormalFont10 NormalFont 10 scalefont def
+/NormalFont12 NormalFont 12 scalefont def
+/NormalFont14 NormalFont 14 scalefont def
+/NormalFont16 NormalFont 16 scalefont def
+/NormalFont18 NormalFont 18 scalefont def
+/NormalFont20 NormalFont 20 scalefont def
+%% ================ End Set Up Fonts =================
+/drawX
+{gsave
+newpath
+moveto
+-1.5 -1.5 rmoveto
+3 3 rlineto
+-3 0 rmoveto
+3 -3 rlineto stroke
+grestore}def
+
+/drawSmallX
+{gsave
+newpath
+moveto
+-1 -1 rmoveto
+2 2 rlineto
+-2 0 rmoveto
+2 -2 rlineto stroke
+grestore}def
+
+/cross
+{gsave
+newpath
+moveto
+-4 6 rlineto
+8 0 rlineto
+-4 -6 rlineto
+6 4 rlineto
+0 -8 rlineto
+-6 4 rlineto
+4 -6 rlineto
+-8 0 rlineto
+4 6 rlineto
+-6 -4 rlineto
+0 8 rlineto
++6 -4 rlineto fill
+grestore}def
+
+/diamond
+{
+/y exch def
+/x exch def
+gsave
+newpath
+x y moveto
+0 6 rmoveto
+6 -6 rlineto
+-6 -6 rlineto
+-6 6 rlineto
+6 6 rlineto
+-3 -3 rmoveto
+6 -6 rlineto
+0 6 rmoveto
+-6 -6 rlineto stroke
+grestore
+gsave
+newpath
+1 setgray
+x y 2 0 360 arc fill
+0 setgray
+x y 2 0 360 arc stroke
+grestore}def
+/rightarrowhead
+{gsave
+rotate
+newpath
+moveto
+-4 -2 rlineto
+2 2 rlineto
+-2 2 rlineto
+4 -2 rlineto fill
+grestore}def
+
+/leftarrowhead
+{gsave
+rotate
+newpath
+moveto
+4 -2 rlineto
+-2 2 rlineto
+2 2 rlineto
+-4 -2 rlineto fill
+grestore}def
+
+%% ================ Set Up Circular Text Routine =================
+/outsidecircletext
+{ circtextdict begin
+/radius exch def
+/centerangle exch def
+/ptsize exch def
+/str exch def
+/xradius radius ptsize 4 div add def
+
+gsave
+centerangle str findhalfangle add rotate
+
+str
+{ /charcode exch def
+( ) dup 0 charcode put outsideplacechar
+} forall
+grestore
+end
+} def
+
+/insidecircletext
+{ circtextdict begin
+/radius exch def /centerangle exch def
+/ptsize exch def /str exch def
+/xradius radius ptsize 3 div sub def
+gsave
+centerangle str findhalfangle sub rotate
+str
+{ /charcode exch def
+( ) dup 0 charcode put insideplacechar
+} forall
+grestore
+end
+} def
+
+/circtextdict 16 dict def
+circtextdict begin
+/findhalfangle
+{ stringwidth pop 2 div
+2 xradius mul pi mul div 360 mul
+} def
+
+/outsideplacechar
+{ /char exch def
+/halfangle char findhalfangle def
+gsave
+halfangle neg rotate
+radius 0 translate
+-90 rotate
+char stringwidth pop 2 div neg 0 moveto
+char show
+grestore
+halfangle 2 mul neg rotate
+} def
+
+/insideplacechar
+{ /char exch def
+/halfangle char findhalfangle def
+gsave
+halfangle rotate
+radius 0 translate
+90 rotate
+char stringwidth pop 2 div neg 0 moveto
+char show
+grestore
+halfangle 2 mul rotate
+} def
+/pi 3.1415923 def
+end
+
+%% ================ End Circular Text Routine =================
+gsave
+0 0 1 setrgbcolor
+%% ================ Draw Outlines =================
+newpath
+10 -10 moveto
+552 -10 lineto stroke
+newpath
+13 -13 moveto
+549 -13 lineto stroke
+newpath
+13 -33 moveto
+549 -33 lineto
+549 -13 lineto stroke
+newpath
+13 -36 moveto
+552 -36 lineto
+552 -10 lineto stroke
+newpath
+10 -10 moveto
+10 -552 lineto stroke
+newpath
+13 -13 moveto
+13 -549  lineto stroke
+newpath
+33 -13 moveto
+33 -549 lineto
+13 -549 lineto stroke
+newpath
+36 -13 moveto
+36 -552 lineto
+10 -552 lineto stroke
+newpath
+36 -36 516 270 360 arc stroke
+36 -36 513 270 360 arc stroke
+newpath
+36 -36 456 270 360 arc stroke
+newpath
+36 -36 453 270 360 arc stroke
+newpath
+36 -36 429 270 360 arc stroke
+newpath
+36 -36 426 270 360 arc stroke
+newpath
+36 -36 420 270 360 arc stroke
+newpath
+36 -36 414 270 360 arc stroke
+%% ================ End Draw Outlines =================
+grestore
+36 -36 translate
+gsave
+1 0 1 setrgbcolor
+%% ================ Mark Scales =================
+%% ================ Draw Degree Scale =================
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+-0.5 rotate
+newpath
+420 0 moveto
+414 0 lineto stroke
+89.5 rotate
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+-1 rotate
+newpath
+426 0 moveto
+414 0 lineto stroke
+89 rotate
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+-5 rotate
+newpath
+429 0 moveto
+453 0 lineto stroke
+85 rotate
+%% ================ End Draw Degree Scale =================
+%% ================ Draw Sine/cosine Scales =================
+newpath
+34.5 3 moveto
+34.5 23 lineto stroke
+newpath
+-3 -34.5 moveto
+-23 -34.5 lineto stroke
+newpath
+69.0 3 moveto
+69.0 23 lineto stroke
+newpath
+-3 -69.0 moveto
+-23 -69.0 lineto stroke
+newpath
+103.5 3 moveto
+103.5 23 lineto stroke
+newpath
+-3 -103.5 moveto
+-23 -103.5 lineto stroke
+newpath
+138.0 3 moveto
+138.0 23 lineto stroke
+newpath
+-3 -138.0 moveto
+-23 -138.0 lineto stroke
+newpath
+172.5 3 moveto
+172.5 23 lineto stroke
+newpath
+-3 -172.5 moveto
+-23 -172.5 lineto stroke
+newpath
+207.0 3 moveto
+207.0 23 lineto stroke
+newpath
+-3 -207.0 moveto
+-23 -207.0 lineto stroke
+newpath
+241.5 3 moveto
+241.5 23 lineto stroke
+newpath
+-3 -241.5 moveto
+-23 -241.5 lineto stroke
+newpath
+276.0 3 moveto
+276.0 23 lineto stroke
+newpath
+-3 -276.0 moveto
+-23 -276.0 lineto stroke
+newpath
+310.5 3 moveto
+310.5 23 lineto stroke
+newpath
+-3 -310.5 moveto
+-23 -310.5 lineto stroke
+newpath
+345.0 3 moveto
+345.0 23 lineto stroke
+newpath
+-3 -345.0 moveto
+-23 -345.0 lineto stroke
+newpath
+379.5 3 moveto
+379.5 23 lineto stroke
+newpath
+-3 -379.5 moveto
+-23 -379.5 lineto stroke
+newpath
+414.0 3 moveto
+414.0 23 lineto stroke
+newpath
+-3 -414.0 moveto
+-23 -414.0 lineto stroke
+%% ================ Draw Sine/cosine Scales =================
+%% ================ End Mark Scales =================
+grestore
+gsave
+0 0 1 setrgbcolor
+%% ================ start Draw zodiac scale =================
+-30 rotate
+newpath
+456 0 moveto
+513 0 lineto stroke
+-30 rotate
+newpath
+456 0 moveto
+513 0 lineto stroke
+60 rotate
+%% ================ start Draw arrow lines =================
+newpath
+0 0 467 277 299 arc stroke
+0 0 467 307 329 arc stroke
+0 0 467 337 359 arc stroke
+0 0 478 271 293 arc stroke
+0 0 478 301 323 arc stroke
+0 0 478 331 353 arc stroke
+0 0 489 277 299 arc stroke
+0 0 489 307 329 arc stroke
+0 0 489 337 359 arc stroke
+0 0 500 271 293 arc stroke
+0 0 500 301 323 arc stroke
+0 0 500 331 353 arc stroke
+%% ================ stop Draw arrow lines =================
+%% ================ start Draw arrow heads =================
+0 setgray
+0 -467 29 rightarrowhead
+0 -467 7 rightarrowhead
+0 -467 7.25 rightarrowhead
+0 -467 7.5 rightarrowhead
+0 -467 59 rightarrowhead
+0 -467 37 rightarrowhead
+0 -467 37.25 rightarrowhead
+0 -467 37.5 rightarrowhead
+0 -467 89 rightarrowhead
+0 -467 67 rightarrowhead
+0 -467 67.25 rightarrowhead
+0 -467 67.5 rightarrowhead
+0 -467 29 rightarrowhead
+0 -489 7 rightarrowhead
+0 -489 7.25 rightarrowhead
+0 -489 7.5 rightarrowhead
+0 -489 59 rightarrowhead
+0 -489 37 rightarrowhead
+0 -489 37.25 rightarrowhead
+0 -489 37.5 rightarrowhead
+0 -489 89 rightarrowhead
+0 -489 67 rightarrowhead
+0 -489 67.25 rightarrowhead
+0 -489 67.5 rightarrowhead
+0 -478 1 leftarrowhead
+0 -478 23 leftarrowhead
+0 -478 22.75 leftarrowhead
+0 -478 22.5 leftarrowhead
+0 -478 31 leftarrowhead
+0 -478 53 leftarrowhead
+0 -478 52.75 leftarrowhead
+0 -478 52.5 leftarrowhead
+0 -478 61 leftarrowhead
+0 -478 83 leftarrowhead
+0 -478 82.75 leftarrowhead
+0 -478 82.5 leftarrowhead
+0 -500 1 leftarrowhead
+0 -500 23 leftarrowhead
+0 -500 22.75 leftarrowhead
+0 -500 22.5 leftarrowhead
+0 -500 31 leftarrowhead
+0 -500 53 leftarrowhead
+0 -500 52.75 leftarrowhead
+0 -500 52.5 leftarrowhead
+0 -500 61 leftarrowhead
+0 -500 83 leftarrowhead
+0 -500 82.75 leftarrowhead
+0 -500 82.5 leftarrowhead
+%% ================ stop Draw arrow heads =================
+%% ================ label zodiac =================
+NormalFont10 setfont
+
+(Aries) 10.0 273.5 470.0 insidecircletext
+
+(Taurus) 10.0 303.5 470.0 insidecircletext
+
+(Gemini) 10.0 333.5 470.0 insidecircletext
+
+(Cancer) 10.0 356.5 481.0 insidecircletext
+
+(Leo) 10.0 326.5 481.0 insidecircletext
+
+(Virgo) 10.0 296.5 481.0 insidecircletext
+
+(Libra) 10.0 273.5 492.0 insidecircletext
+
+(Scorpio) 10.0 303.5 492.0 insidecircletext
+
+(Sagittarius) 10.0 333.5 492.0 insidecircletext
+
+(Capricorn) 10.0 356.5 503.0 insidecircletext
+
+(Aquarius) 10.0 326.5 503.0 insidecircletext
+
+(Pisces) 10.0 296.5 503.0 insidecircletext
+%% ================ end label zodiac =================
+0 0 1 setrgbcolor
+grestore
+gsave
+0 0 0 setrgbcolor
+%% ================ label Degree Scale =================
+NormalFont20 setfont
+(  5) 20.0 -85.0 447.0 insidecircletext
+(10) 20.0 -80.0 447.0 insidecircletext
+(15) 20.0 -75.0 447.0 insidecircletext
+(20) 20.0 -70.0 447.0 insidecircletext
+(25) 20.0 -65.0 447.0 insidecircletext
+(30) 20.0 -60.0 447.0 insidecircletext
+(35) 20.0 -55.0 447.0 insidecircletext
+(40) 20.0 -50.0 447.0 insidecircletext
+(45) 20.0 -45.0 447.0 insidecircletext
+(50) 20.0 -40.0 447.0 insidecircletext
+(55) 20.0 -35.0 447.0 insidecircletext
+(60) 20.0 -30.0 447.0 insidecircletext
+(65) 20.0 -25.0 447.0 insidecircletext
+(70) 20.0 -20.0 447.0 insidecircletext
+(75) 20.0 -15.0 447.0 insidecircletext
+(80) 20.0 -10.0 447.0 insidecircletext
+(85) 20.0 -5.0 447.0 insidecircletext
+%% ================ End label Degree Scale =================
+%% ================ label Sine Scale =================
+NormalFont12 setfont
+26.5 5 moveto
+(5) show
+-11 -32.5 moveto
+(5) show
+55.0 5 moveto
+(10) show
+-17 -67.0 moveto
+(10) show
+89.5 5 moveto
+(15) show
+-17 -101.5 moveto
+(15) show
+124.0 5 moveto
+(20) show
+-17 -136.0 moveto
+(20) show
+158.5 5 moveto
+(25) show
+-17 -170.5 moveto
+(25) show
+193.0 5 moveto
+(30) show
+-17 -205.0 moveto
+(30) show
+227.5 5 moveto
+(35) show
+-17 -239.5 moveto
+(35) show
+262.0 5 moveto
+(40) show
+-17 -274.0 moveto
+(40) show
+296.5 5 moveto
+(45) show
+-17 -308.5 moveto
+(45) show
+331.0 5 moveto
+(50) show
+-17 -343.0 moveto
+(50) show
+365.5 5 moveto
+(55) show
+-17 -377.5 moveto
+(55) show
+400.0 5 moveto
+(60) show
+-17 -412.0 moveto
+(60) show
+grestore
+gsave
+0 1 0 setrgbcolor
+%% ================ Draw grid =================
+newpath
+6.9 0 moveto
+6.9 -413.9424960063898 lineto stroke
+newpath
+0 -6.9 moveto
+413.9424960063898 -6.9 lineto stroke
+newpath
+13.8 0 moveto
+13.8 -413.7699360755926 lineto stroke
+newpath
+0 -13.8 moveto
+413.7699360755926 -13.8 lineto stroke
+newpath
+20.700000000000003 0 moveto
+20.700000000000003 -413.48217615757034 lineto stroke
+newpath
+0 -20.700000000000003 moveto
+413.48217615757034 -20.700000000000003 lineto stroke
+newpath
+27.6 0 moveto
+27.6 -413.0789754998431 lineto stroke
+newpath
+0 -27.6 moveto
+413.0789754998431 -27.6 lineto stroke
+newpath
+34.5 0 moveto
+34.5 -412.5599956369982 lineto stroke
+newpath
+0 -34.5 moveto
+412.5599956369982 -34.5 lineto stroke
+newpath
+41.400000000000006 0 moveto
+41.400000000000006 -411.9247989621407 lineto stroke
+newpath
+0 -41.400000000000006 moveto
+411.9247989621407 -41.400000000000006 lineto stroke
+newpath
+48.300000000000004 0 moveto
+48.300000000000004 -411.17284686613243 lineto stroke
+newpath
+0 -48.300000000000004 moveto
+411.17284686613243 -48.300000000000004 lineto stroke
+newpath
+55.2 0 moveto
+55.2 -410.30349742599077 lineto stroke
+newpath
+0 -55.2 moveto
+410.30349742599077 -55.2 lineto stroke
+newpath
+62.1 0 moveto
+62.1 -409.31600261900337 lineto stroke
+newpath
+0 -62.1 moveto
+409.31600261900337 -62.1 lineto stroke
+newpath
+69.0 0 moveto
+69.0 -408.2095050338735 lineto stroke
+newpath
+0 -69.0 moveto
+408.2095050338735 -69.0 lineto stroke
+newpath
+75.9 0 moveto
+75.9 -406.9830340444181 lineto stroke
+newpath
+0 -75.9 moveto
+406.9830340444181 -75.9 lineto stroke
+newpath
+82.80000000000001 0 moveto
+82.80000000000001 -405.6355014048943 lineto stroke
+newpath
+0 -82.80000000000001 moveto
+405.6355014048943 -82.80000000000001 lineto stroke
+newpath
+89.7 0 moveto
+89.7 -404.1656962187662 lineto stroke
+newpath
+0 -89.7 moveto
+404.1656962187662 -89.7 lineto stroke
+newpath
+96.60000000000001 0 moveto
+96.60000000000001 -402.5722792244891 lineto stroke
+newpath
+0 -96.60000000000001 moveto
+402.5722792244891 -96.60000000000001 lineto stroke
+newpath
+103.5 0 moveto
+103.5 -400.85377633246765 lineto stroke
+newpath
+0 -103.5 moveto
+400.85377633246765 -103.5 lineto stroke
+newpath
+110.4 0 moveto
+110.4 -399.0085713365065 lineto stroke
+newpath
+0 -110.4 moveto
+399.0085713365065 -110.4 lineto stroke
+newpath
+117.30000000000001 0 moveto
+117.30000000000001 -397.03489771051613 lineto stroke
+newpath
+0 -117.30000000000001 moveto
+397.03489771051613 -117.30000000000001 lineto stroke
+newpath
+124.2 0 moveto
+124.2 -394.93082938661547 lineto stroke
+newpath
+0 -124.2 moveto
+394.93082938661547 -124.2 lineto stroke
+newpath
+131.1 0 moveto
+131.1 -392.6942703936486 lineto stroke
+newpath
+0 -131.1 moveto
+392.6942703936486 -131.1 lineto stroke
+newpath
+138.0 0 moveto
+138.0 -390.32294321497426 lineto stroke
+newpath
+0 -138.0 moveto
+390.32294321497426 -138.0 lineto stroke
+newpath
+144.9 0 moveto
+144.9 -387.8143757005405 lineto stroke
+newpath
+0 -144.9 moveto
+387.8143757005405 -144.9 lineto stroke
+newpath
+151.8 0 moveto
+151.8 -385.16588633989903 lineto stroke
+newpath
+0 -151.8 moveto
+385.16588633989903 -151.8 lineto stroke
+newpath
+158.70000000000002 0 moveto
+158.70000000000002 -382.37456766892853 lineto stroke
+newpath
+0 -158.70000000000002 moveto
+382.37456766892853 -158.70000000000002 lineto stroke
+newpath
+165.60000000000002 0 moveto
+165.60000000000002 -379.43726754234353 lineto stroke
+newpath
+0 -165.60000000000002 moveto
+379.43726754234353 -165.60000000000002 lineto stroke
+newpath
+172.5 0 moveto
+172.5 -376.35056795493216 lineto stroke
+newpath
+0 -172.5 moveto
+376.35056795493216 -172.5 lineto stroke
+newpath
+179.4 0 moveto
+179.4 -373.1107610348434 lineto stroke
+newpath
+0 -179.4 moveto
+373.1107610348434 -179.4 lineto stroke
+newpath
+186.3 0 moveto
+186.3 -369.71382175947923 lineto stroke
+newpath
+0 -186.3 moveto
+369.71382175947923 -186.3 lineto stroke
+newpath
+193.20000000000002 0 moveto
+193.20000000000002 -366.15537685523617 lineto stroke
+newpath
+0 -193.20000000000002 moveto
+366.15537685523617 -193.20000000000002 lineto stroke
+newpath
+200.10000000000002 0 moveto
+200.10000000000002 -362.4306692320615 lineto stroke
+newpath
+0 -200.10000000000002 moveto
+362.4306692320615 -200.10000000000002 lineto stroke
+newpath
+207.0 0 moveto
+207.0 -358.5345171667576 lineto stroke
+newpath
+0 -207.0 moveto
+358.5345171667576 -207.0 lineto stroke
+newpath
+213.9 0 moveto
+213.9 -354.4612672775405 lineto stroke
+newpath
+0 -213.9 moveto
+354.4612672775405 -213.9 lineto stroke
+newpath
+220.8 0 moveto
+220.8 -350.20474011640675 lineto stroke
+newpath
+0 -220.8 moveto
+350.20474011640675 -220.8 lineto stroke
+newpath
+227.70000000000002 0 moveto
+227.70000000000002 -345.75816693174437 lineto stroke
+newpath
+0 -227.70000000000002 moveto
+345.75816693174437 -227.70000000000002 lineto stroke
+newpath
+234.60000000000002 0 moveto
+234.60000000000002 -341.1141158029084 lineto stroke
+newpath
+0 -234.60000000000002 moveto
+341.1141158029084 -234.60000000000002 lineto stroke
+newpath
+241.5 0 moveto
+241.5 -336.26440489590925 lineto stroke
+newpath
+0 -241.5 moveto
+336.26440489590925 -241.5 lineto stroke
+newpath
+248.4 0 moveto
+248.4 -331.2 lineto stroke
+newpath
+0 -248.4 moveto
+331.2 -248.4 lineto stroke
+newpath
+255.3 0 moveto
+255.3 -325.9108927298994 lineto stroke
+newpath
+0 -255.3 moveto
+325.9108927298994 -255.3 lineto stroke
+newpath
+262.2 0 moveto
+262.2 -320.38595474833164 lineto stroke
+newpath
+0 -262.2 moveto
+320.38595474833164 -262.2 lineto stroke
+newpath
+269.1 0 moveto
+269.1 -314.6127619789127 lineto stroke
+newpath
+0 -269.1 moveto
+314.6127619789127 -269.1 lineto stroke
+newpath
+276.0 0 moveto
+276.0 -308.577380894971 lineto stroke
+newpath
+0 -276.0 moveto
+308.577380894971 -276.0 lineto stroke
+newpath
+282.90000000000003 0 moveto
+282.90000000000003 -302.2641063705712 lineto stroke
+newpath
+0 -282.90000000000003 moveto
+302.2641063705712 -282.90000000000003 lineto stroke
+newpath
+289.8 0 moveto
+289.8 -295.65513694167396 lineto stroke
+newpath
+0 -289.8 moveto
+295.65513694167396 -289.8 lineto stroke
+newpath
+296.7 0 moveto
+296.7 -288.73016815012596 lineto stroke
+newpath
+0 -296.7 moveto
+288.73016815012596 -296.7 lineto stroke
+newpath
+303.6 0 moveto
+303.6 -281.46587715032166 lineto stroke
+newpath
+0 -303.6 moveto
+281.46587715032166 -303.6 lineto stroke
+newpath
+310.5 0 moveto
+310.5 -273.8352606951851 lineto stroke
+newpath
+0 -310.5 moveto
+273.8352606951851 -310.5 lineto stroke
+newpath
+317.40000000000003 0 moveto
+317.40000000000003 -265.8067719227634 lineto stroke
+newpath
+0 -317.40000000000003 moveto
+265.8067719227634 -317.40000000000003 lineto stroke
+newpath
+324.3 0 moveto
+324.3 -257.3431755458069 lineto stroke
+newpath
+0 -324.3 moveto
+257.3431755458069 -324.3 lineto stroke
+newpath
+331.20000000000005 0 moveto
+331.20000000000005 -248.39999999999995 lineto stroke
+newpath
+0 -331.20000000000005 moveto
+248.39999999999995 -331.20000000000005 lineto stroke
+newpath
+338.1 0 moveto
+338.1 -238.9233977658948 lineto stroke
+newpath
+0 -338.1 moveto
+238.9233977658948 -338.1 lineto stroke
+newpath
+345.0 0 moveto
+345.0 -228.84711053452259 lineto stroke
+newpath
+0 -345.0 moveto
+228.84711053452259 -345.0 lineto stroke
+newpath
+351.90000000000003 0 moveto
+351.90000000000003 -218.08803268405163 lineto stroke
+newpath
+0 -351.90000000000003 moveto
+218.08803268405163 -351.90000000000003 lineto stroke
+newpath
+358.8 0 moveto
+358.8 -206.53948774992156 lineto stroke
+newpath
+0 -358.8 moveto
+206.53948774992156 -358.8 lineto stroke
+newpath
+365.70000000000005 0 moveto
+365.70000000000005 -194.06058332386817 lineto stroke
+newpath
+0 -365.70000000000005 moveto
+194.06058332386817 -365.70000000000005 lineto stroke
+newpath
+372.6 0 moveto
+372.6 -180.45841626258385 lineto stroke
+newpath
+0 -372.6 moveto
+180.45841626258385 -372.6 lineto stroke
+newpath
+379.5 0 moveto
+379.5 -165.45618755428882 lineto stroke
+newpath
+0 -379.5 moveto
+165.45618755428882 -379.5 lineto stroke
+newpath
+386.40000000000003 0 moveto
+386.40000000000003 -148.63054867691224 lineto stroke
+newpath
+0 -386.40000000000003 moveto
+148.63054867691224 -386.40000000000003 lineto stroke
+newpath
+393.3 0 moveto
+393.3 -129.27145856684677 lineto stroke
+newpath
+0 -393.3 moveto
+129.27145856684677 -393.3 lineto stroke
+newpath
+400.20000000000005 0 moveto
+400.20000000000005 -105.99981132058662 lineto stroke
+newpath
+0 -400.20000000000005 moveto
+105.99981132058662 -400.20000000000005 lineto stroke
+newpath
+407.1 0 moveto
+407.1 -75.27011359098621 lineto stroke
+newpath
+0 -407.1 moveto
+75.27011359098621 -407.1 lineto stroke
+grestore
+gsave
+0 1 1 setrgbcolor
+%% ================ Draw grid Intersections =================
+%% ================ Draw Intersections =================
+34.5 -34.5 drawX
+34.5 -34.5 drawX
+34.5 -69.0 drawX
+69.0 -34.5 drawX
+34.5 -103.5 drawX
+103.5 -34.5 drawX
+34.5 -138.0 drawX
+138.0 -34.5 drawX
+34.5 -172.5 drawX
+172.5 -34.5 drawX
+34.5 -207.0 drawX
+207.0 -34.5 drawX
+34.5 -241.5 drawX
+241.5 -34.5 drawX
+34.5 -276.0 drawX
+276.0 -34.5 drawX
+34.5 -310.5 drawX
+310.5 -34.5 drawX
+34.5 -345.0 drawX
+345.0 -34.5 drawX
+34.5 -379.5 drawX
+379.5 -34.5 drawX
+69.0 -34.5 drawX
+34.5 -69.0 drawX
+69.0 -69.0 drawX
+69.0 -69.0 drawX
+69.0 -103.5 drawX
+103.5 -69.0 drawX
+69.0 -138.0 drawX
+138.0 -69.0 drawX
+69.0 -172.5 drawX
+172.5 -69.0 drawX
+69.0 -207.0 drawX
+207.0 -69.0 drawX
+69.0 -241.5 drawX
+241.5 -69.0 drawX
+69.0 -276.0 drawX
+276.0 -69.0 drawX
+69.0 -310.5 drawX
+310.5 -69.0 drawX
+69.0 -345.0 drawX
+345.0 -69.0 drawX
+69.0 -379.5 drawX
+379.5 -69.0 drawX
+103.5 -34.5 drawX
+34.5 -103.5 drawX
+103.5 -69.0 drawX
+69.0 -103.5 drawX
+103.5 -103.5 drawX
+103.5 -103.5 drawX
+103.5 -138.0 drawX
+138.0 -103.5 drawX
+103.5 -172.5 drawX
+172.5 -103.5 drawX
+103.5 -207.0 drawX
+207.0 -103.5 drawX
+103.5 -241.5 drawX
+241.5 -103.5 drawX
+103.5 -276.0 drawX
+276.0 -103.5 drawX
+103.5 -310.5 drawX
+310.5 -103.5 drawX
+103.5 -345.0 drawX
+345.0 -103.5 drawX
+103.5 -379.5 drawX
+379.5 -103.5 drawX
+138.0 -34.5 drawX
+34.5 -138.0 drawX
+138.0 -69.0 drawX
+69.0 -138.0 drawX
+138.0 -103.5 drawX
+103.5 -138.0 drawX
+138.0 -138.0 drawX
+138.0 -138.0 drawX
+138.0 -172.5 drawX
+172.5 -138.0 drawX
+138.0 -207.0 drawX
+207.0 -138.0 drawX
+138.0 -241.5 drawX
+241.5 -138.0 drawX
+138.0 -276.0 drawX
+276.0 -138.0 drawX
+138.0 -310.5 drawX
+310.5 -138.0 drawX
+138.0 -345.0 drawX
+345.0 -138.0 drawX
+138.0 -379.5 drawX
+379.5 -138.0 drawX
+172.5 -34.5 drawX
+34.5 -172.5 drawX
+172.5 -69.0 drawX
+69.0 -172.5 drawX
+172.5 -103.5 drawX
+103.5 -172.5 drawX
+172.5 -138.0 drawX
+138.0 -172.5 drawX
+172.5 -172.5 drawX
+172.5 -172.5 drawX
+172.5 -207.0 drawX
+207.0 -172.5 drawX
+172.5 -241.5 drawX
+241.5 -172.5 drawX
+172.5 -276.0 drawX
+276.0 -172.5 drawX
+172.5 -310.5 drawX
+310.5 -172.5 drawX
+172.5 -345.0 drawX
+345.0 -172.5 drawX
+207.0 -34.5 drawX
+34.5 -207.0 drawX
+207.0 -69.0 drawX
+69.0 -207.0 drawX
+207.0 -103.5 drawX
+103.5 -207.0 drawX
+207.0 -138.0 drawX
+138.0 -207.0 drawX
+207.0 -172.5 drawX
+172.5 -207.0 drawX
+207.0 -207.0 drawX
+207.0 -207.0 drawX
+207.0 -241.5 drawX
+241.5 -207.0 drawX
+207.0 -276.0 drawX
+276.0 -207.0 drawX
+207.0 -310.5 drawX
+310.5 -207.0 drawX
+207.0 -345.0 drawX
+345.0 -207.0 drawX
+241.5 -34.5 drawX
+34.5 -241.5 drawX
+241.5 -69.0 drawX
+69.0 -241.5 drawX
+241.5 -103.5 drawX
+103.5 -241.5 drawX
+241.5 -138.0 drawX
+138.0 -241.5 drawX
+241.5 -172.5 drawX
+172.5 -241.5 drawX
+241.5 -207.0 drawX
+207.0 -241.5 drawX
+241.5 -241.5 drawX
+241.5 -241.5 drawX
+241.5 -276.0 drawX
+276.0 -241.5 drawX
+241.5 -310.5 drawX
+310.5 -241.5 drawX
+276.0 -34.5 drawX
+34.5 -276.0 drawX
+276.0 -69.0 drawX
+69.0 -276.0 drawX
+276.0 -103.5 drawX
+103.5 -276.0 drawX
+276.0 -138.0 drawX
+138.0 -276.0 drawX
+276.0 -172.5 drawX
+172.5 -276.0 drawX
+276.0 -207.0 drawX
+207.0 -276.0 drawX
+276.0 -241.5 drawX
+241.5 -276.0 drawX
+276.0 -276.0 drawX
+276.0 -276.0 drawX
+310.5 -34.5 drawX
+34.5 -310.5 drawX
+310.5 -69.0 drawX
+69.0 -310.5 drawX
+310.5 -103.5 drawX
+103.5 -310.5 drawX
+310.5 -138.0 drawX
+138.0 -310.5 drawX
+310.5 -172.5 drawX
+172.5 -310.5 drawX
+310.5 -207.0 drawX
+207.0 -310.5 drawX
+310.5 -241.5 drawX
+241.5 -310.5 drawX
+345.0 -34.5 drawX
+34.5 -345.0 drawX
+345.0 -69.0 drawX
+69.0 -345.0 drawX
+345.0 -103.5 drawX
+103.5 -345.0 drawX
+345.0 -138.0 drawX
+138.0 -345.0 drawX
+345.0 -172.5 drawX
+172.5 -345.0 drawX
+345.0 -207.0 drawX
+207.0 -345.0 drawX
+379.5 -34.5 drawX
+34.5 -379.5 drawX
+379.5 -69.0 drawX
+69.0 -379.5 drawX
+379.5 -103.5 drawX
+103.5 -379.5 drawX
+379.5 -138.0 drawX
+138.0 -379.5 drawX
+%% ================ End Draw Intersections =================
+%% ================ End Draw grid Intersections =================
+grestore
+gsave
+1 1 0 setrgbcolor
+%% ================ Draw Advanced Lines =================
+%% ================ Draw Intersections =================
+%% ================ Draw 45 Line =================
+newpath
+0 0 moveto
+292.74220741123065 -292.74220741123065 lineto stroke
+%% ================ Draw 45 Line =================
+%% ================ Draw Tangent Line =================
+newpath
+414 0 moveto
+0 -414 lineto stroke
+%% ================ End Draw Tangent Line =================
+%% ================ Draw sine/cosine arcs =================
+newpath
+207 0 207 180 360 arc stroke
+newpath
+0 -207 207 270 90 arc stroke
+%% ================ End Draw sine/cosine arcs =================
+%% ================ Draw Asr start Arc  =================
+newpath
+0.0 -414.0 moveto
+7.101378670529354 -406.8377115601201 lineto
+13.96143151284207 -399.8030889938251 lineto
+20.590847649551026 -392.8967785172704 lineto
+27.00004152667289 -386.1185827903118 lineto
+33.19911343895404 -379.46760301255176 lineto
+39.19782172222217 -372.9423616768646 lineto
+45.005564466683566 -366.5409082032146 lineto
+50.63136893254686 -360.2609095055084 lineto
+56.08388713727821 -354.09972736185455 lineto
+61.37139633413129 -348.05448427431173 lineto
+66.50180331724862 -342.12211932501907 lineto
+71.48265167295547 -336.29943536594675 lineto
+76.32113125336535 -330.5831387220265 lineto
+81.02408928051193 -324.9698724433833 lineto
+85.59804260014478 -319.45624401218555 lineto
+90.04919069702906 -314.0388482930035 lineto
+94.38342916072992 -308.7142864118859 lineto
+98.6063633547873 -303.47918115775013 lineto
+102.72332209494581 -298.3301894191388 lineto
+106.73937118547516 -293.26401209887837 lineto
+110.65932669812047 -288.2774018876525 lineto
+114.48776790716225 -283.3671692239934 lineto
+118.22904981754161 -278.53018672174977 lineto
+121.88731524195512 -273.7633923058871 lineto
+125.466506398024 -269.06379126271923 lineto
+128.97037600875294 -264.42845738067246 lineto
+132.40249789907034 -259.8545333318391 lineto
+135.7662770887268 -255.33923042231186 lineto
+139.06495938762342 -250.8798278201537 lineto
+142.30164050404431 -246.47367135340602 lineto
+145.4792746795483 -242.11817195640745 lineto
+148.60068286665117 -237.81080383058068 lineto
+151.6685604670723 -233.54910237543822 lineto
+154.68548464938232 -229.3306619366509 lineto
+157.65392126548733 -225.15313341038402 lineto
+160.57623138561942 -221.01422173656235 lineto
+163.45467747145418 -216.91168330812755 lineto
+166.29142920670753 -212.84332331855302 lineto
+169.08856900413082 -208.80699306578194 lineto
+171.8480972072656 -204.80058722723783 lineto
+174.5719370046765 -200.82204111755613 lineto
+177.26193907367224 -196.8693279381103 lineto
+179.9198859697838 -192.940456025205 lineto
+182.54749627749916 -189.03346610192153 lineto
+185.14642853698257 -185.1464285369826 lineto
+187.71828496073255 -181.27744061261504 lineto
+190.26461495337114 -177.4246238021919 lineto
+192.786918447011 -173.58612105740656 lineto
+195.28664906391927 -169.7600941038367 lineto
+197.76521711749268 -165.9447207429828 lineto
+200.22399246187814 -162.13819215818643 lineto
+202.6643071999168 -158.33871022123688 lineto
+205.0874582584563 -154.5444847959475 lineto
+207.4947098394691 -150.75373103450673 lineto
+209.88729575482643 -146.9646666619803 lineto
+212.26642165201326 -143.17550924394862 lineto
+214.63326713752014 -139.38447343189534 lineto
+216.98898780411722 -135.58976818061967 lineto
+219.3347171676959 -131.78959393161668 lineto
+221.671568518855 -127.98213975604753 lineto
+224.0006366939052 -124.1655804506149 lineto
+226.32299976946692 -120.33807357934427 lineto
+228.63972068433347 -116.49775645396568 lineto
+230.9518487917656 -112.64274304527927 lineto
+233.26042134486568 -108.77112081757255 lineto
+235.56646491714403 -104.8809474778395 lineto
+237.87099675983467 -100.9702476312263 lineto
+240.17502609693076 -97.03700933380327 lineto
+242.47955535828942 -93.07918053342642 lineto
+244.78558135048684 -89.09466538912525 lineto
+247.09409636438636 -85.08132045911573 lineto
+249.40608921759352 -81.03695074721763 lineto
+251.7225462291129 -76.95930559713584 lineto
+254.04445212256928 -72.84607442377114 lineto
+256.37279085329834 -68.69488227045441 lineto
+258.7085463534356 -64.50328518076454 lineto
+261.05270318780936 -60.268765373408115 lineto
+263.4062471119611 -55.988726208522614 lineto
+265.7701655219428 -51.66048693373788 lineto
+268.145447783648 -47.28127719841004 lineto
+270.5330854272881 -42.848231324671005 lineto
+272.9340721901935 -38.35838232433257 lineto
+275.3494038883531 -33.808655651307966 lineto
+277.7800780939526 -29.195862680104767 lineto
+280.2270935925888 -24.516693902169663 lineto
+282.6914495897416 -19.767711833500194 lineto
+285.1741446314179 -14.945343629073456 lineto
+287.67617519855077 -10.045873402376257 lineto
+290.1985339286479 -5.065434251798128 lineto
+292.74220741123065 -1.792529036407471E-14 lineto stroke
+%% ================ End Draw Asr start Arc  =================
+%% ================ Draw Asr End arc =================
+newpath
+0.0 -414.0 moveto
+6.981639315052223 -399.97784847914335 lineto
+13.5062086844877 -386.7672127809041 lineto
+19.616352246456135 -374.3022985292539 lineto
+25.350077460839273 -362.52299734925776 lineto
+30.74128651938587 -351.3745127707527 lineto
+35.82025427574617 -340.806954022374 lineto
+40.61405387028995 -330.77492456406367 lineto
+45.146933250009276 -321.2371219056169 lineto
+49.44064676126267 -312.155958375436 lineto
+53.514746332720925 -303.4972079582137 lineto
+57.38683673065009 -295.2296813664984 lineto
+61.072799125313516 -287.3249296350794 lineto
+64.58698685983765 -279.7569753760946 lineto
+67.94239692493251 -272.5020701652437 lineto
+71.15082025202216 -265.53847618074735 lineto
+74.22297356479996 -258.8462700747054 lineto
+77.16861518586619 -252.40716704548547 lineto
+79.9966468855004 -246.20436314872663 lineto
+82.71520358457397 -240.2223939994899 lineto
+85.33173248177783 -234.44700815662713 lineto
+87.85306296426091 -228.86505362805212 lineto
+90.28546847748126 -223.46437608314528 lineto
+92.63472137147077 -218.23372750040363 lineto
+94.90614160381473 -213.16268411152876 lineto
+97.10464006165599 -208.241572625811 lineto
+99.23475716343054 -203.46140383037024 lineto
+101.30069731357845 -198.81381276262647 lineto
+103.30635970817775 -194.29100474175786 lineto
+105.2553659246049 -189.8857066265558 lineto
+107.15108467244359 -185.59112273878708 lineto
+108.99665403466719 -181.40089495475442 lineto
+110.79500148651088 -177.30906652401788 lineto
+112.54886194348582 -173.31004922397833 lineto
+114.26079405886706 -169.39859350294873 lineto
+115.93319496402165 -165.56976130311247 lineto
+117.56831362154895 -161.8189012889848 lineto
+119.16826294087748 -158.14162623719088 lineto
+120.73503078827959 -154.5337923700322 lineto
+122.27049000785603 -150.9914804388488 lineto
+123.77640755659907 -147.51097838398206 lineto
+125.2544528448956 -144.0887654165216 lineto
+126.70620536355416 -140.72149738328105 lineto
+128.1331616694331 -137.40599329083403 lineto
+129.53674179384504 -134.13922287718836 lineto
+130.9182951309709 -130.91829513097093 lineto
+132.27910585740713 -127.74044766801475 lineto
+133.62039792859287 -124.6030368841304 lineto
+134.94333969311603 -121.50352881073893 lineto
+136.24904816171093 -118.4394906070597 lineto
+137.538592964056 -115.40858262878143 lineto
+138.8130000232066 -112.40855101869087 lineto
+140.0732549745964 -109.43722076966273 lineto
+141.32030635397214 -106.49248921480336 lineto
+142.55506857634788 -103.57231990343737 lineto
+143.77842472604434 -100.67473682509359 lineto
+144.9912291760862 -97.79781894672227 lineto
+146.19431005364007 -94.93969503110505 lineto
+147.38847156676567 -92.09853870683122 lineto
+148.57449620650388 -89.27256376234789 lineto
+149.75314683721842 -86.46001963846165 lineto
+150.9251686871325 -83.65918709531358 lineto
+152.09129125014073 -80.86837403127278 lineto
+153.25223010922045 -78.08591143242418 lineto
+154.4086886911074 -75.31014943237406 lineto
+155.56135996132673 -72.53945346297303 lineto
+156.7109280681777 -69.77220047727536 lineto
+157.8580699438503 -67.00677522661877 lineto
+159.00345687050174 -64.241566574132 lineto
+160.1477560188344 -61.47496382725704 lineto
+161.29163196648986 -58.70535307202142 lineto
+162.43574820340854 -55.93111349180071 lineto
+163.58076863119027 -53.15061365319169 lineto
+164.7273590634358 -50.36220774134967 lineto
+165.87618873404531 -47.56423172674465 lineto
+167.0279318205002 -44.75499944474366 lineto
+168.18326898925852 -41.93279856872926 lineto
+169.34288897055274 -39.0958864566086 lineto
+170.50749017009466 -36.242485849540394 lineto
+171.67778232546488 -33.37078040050183 lineto
+172.85448821530022 -30.47891000891084 lineto
+174.0383454297919 -27.564965935905914 lineto
+175.23010821147676 -24.62698567303133 lineto
+176.43054937584722 -21.662947534971632 lineto
+177.64046232192806 -18.670764944587457 lineto
+178.8606631436797 -15.64828037580106 lineto
+180.09199285389056 -12.593258916826015 lineto
+181.3353197331307 -9.503381412793644 lineto
+182.591541817359 -6.37623714294683 lineto
+183.86158953892428 -3.20931598320723 lineto
+185.14642853698257 -1.1336949054068994E-14 lineto stroke
+%% ================ End Draw Asr End arc =================
+%% ================ Draw obliquity arc =================
+newpath
+0 0 164.66336299586936 270 0 arc stroke
+%% ================ End Draw obliquity arc =================
+grestore
+-36 36 translate
+gsave
+1 0 0 setrgbcolor
+%% ================ Draw cutting lines =================
+newpath
+0 0 moveto
+0 -562 lineto
+36 -562 lineto
+36 -36 526 270 360 arc
+562 0 lineto
+0 0 lineto stroke
+%% ================ End Draw cutting lines =================
+grestore
+grestore
+% Eject the page
+end cleartomark
+showpage
