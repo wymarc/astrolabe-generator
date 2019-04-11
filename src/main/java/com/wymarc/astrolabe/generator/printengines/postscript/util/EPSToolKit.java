@@ -404,8 +404,8 @@ public class EPSToolKit {
         out += "\n" + "x y 2 0 360 arc stroke";
         out += "\n" + "grestore}def";
 
-        // call as "x y angle arrowhead"
-        out += "\n" + "/arrowhead";
+        // call as "x y angle rightarrowhead"
+        out += "\n" + "/rightarrowhead";
         out += "\n" + "{gsave";
         out += "\n" + "rotate";
         out += "\n" + "newpath";
@@ -414,6 +414,19 @@ public class EPSToolKit {
         out += "\n" + "2 2 rlineto";
         out += "\n" + "-2 2 rlineto";
         out += "\n" + "4 -2 rlineto fill";
+        out += "\n" + "grestore}def";
+        out += "\n";
+
+        // call as "x y angle leftarrowhead"
+        out += "\n" + "/leftarrowhead";
+        out += "\n" + "{gsave";
+        out += "\n" + "rotate";
+        out += "\n" + "newpath";
+        out += "\n" + "moveto";
+        out += "\n" + "4 -2 rlineto";
+        out += "\n" + "-2 2 rlineto";
+        out += "\n" + "2 2 rlineto";
+        out += "\n" + "-4 -2 rlineto fill";
         out += "\n" + "grestore}def";
         out += "\n";
 

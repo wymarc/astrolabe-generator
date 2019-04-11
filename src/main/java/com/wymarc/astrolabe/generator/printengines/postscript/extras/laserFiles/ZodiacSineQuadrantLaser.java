@@ -1,5 +1,6 @@
 package com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles;
 
+import com.wymarc.astrolabe.Astrolabe;
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
 import com.wymarc.astrolabe.math.AstroMath;
 
@@ -119,14 +120,78 @@ public class ZodiacSineQuadrantLaser {
                 .append("\n").append("0 0 500 331 353 arc stroke");
         out.append("\n").append("%% ================ stop Draw arrow lines =================");
         out.append("\n").append("%% ================ start Draw arrow heads =================");
-        out.append("\n").append("0 -467 29 arrowhead");
-        out.append("\n").append("0 -467 7 arrowhead");
-        out.append("\n").append("0 -467 7.25 arrowhead");
-        out.append("\n").append("0 -467 7.5 arrowhead");
+        out.append("\n").append("0 setgray");
+        out.append("\n").append("0 -467 29 rightarrowhead")
+                .append("\n").append("0 -467 7 rightarrowhead")
+                .append("\n").append("0 -467 7.25 rightarrowhead")
+                .append("\n").append("0 -467 7.5 rightarrowhead")
+                .append("\n").append("0 -467 59 rightarrowhead")
+                .append("\n").append("0 -467 37 rightarrowhead")
+                .append("\n").append("0 -467 37.25 rightarrowhead")
+                .append("\n").append("0 -467 37.5 rightarrowhead")
+                .append("\n").append("0 -467 89 rightarrowhead")
+                .append("\n").append("0 -467 67 rightarrowhead")
+                .append("\n").append("0 -467 67.25 rightarrowhead")
+                .append("\n").append("0 -467 67.5 rightarrowhead");
+        out.append("\n").append("0 -467 29 rightarrowhead")
+                .append("\n").append("0 -489 7 rightarrowhead")
+                .append("\n").append("0 -489 7.25 rightarrowhead")
+                .append("\n").append("0 -489 7.5 rightarrowhead")
+                .append("\n").append("0 -489 59 rightarrowhead")
+                .append("\n").append("0 -489 37 rightarrowhead")
+                .append("\n").append("0 -489 37.25 rightarrowhead")
+                .append("\n").append("0 -489 37.5 rightarrowhead")
+                .append("\n").append("0 -489 89 rightarrowhead")
+                .append("\n").append("0 -489 67 rightarrowhead")
+                .append("\n").append("0 -489 67.25 rightarrowhead")
+                .append("\n").append("0 -489 67.5 rightarrowhead");
+        out.append("\n").append("0 -478 1 leftarrowhead")
+                .append("\n").append("0 -478 23 leftarrowhead")
+                .append("\n").append("0 -478 22.75 leftarrowhead")
+                .append("\n").append("0 -478 22.5 leftarrowhead")
+                .append("\n").append("0 -478 31 leftarrowhead")
+                .append("\n").append("0 -478 53 leftarrowhead")
+                .append("\n").append("0 -478 52.75 leftarrowhead")
+                .append("\n").append("0 -478 52.5 leftarrowhead")
+                .append("\n").append("0 -478 61 leftarrowhead")
+                .append("\n").append("0 -478 83 leftarrowhead")
+                .append("\n").append("0 -478 82.75 leftarrowhead")
+                .append("\n").append("0 -478 82.5 leftarrowhead");
+        out.append("\n").append("0 -500 1 leftarrowhead")
+                .append("\n").append("0 -500 23 leftarrowhead")
+                .append("\n").append("0 -500 22.75 leftarrowhead")
+                .append("\n").append("0 -500 22.5 leftarrowhead")
+                .append("\n").append("0 -500 31 leftarrowhead")
+                .append("\n").append("0 -500 53 leftarrowhead")
+                .append("\n").append("0 -500 52.75 leftarrowhead")
+                .append("\n").append("0 -500 52.5 leftarrowhead")
+                .append("\n").append("0 -500 61 leftarrowhead")
+                .append("\n").append("0 -500 83 leftarrowhead")
+                .append("\n").append("0 -500 82.75 leftarrowhead")
+                .append("\n").append("0 -500 82.5 leftarrowhead");
         out.append("\n").append("%% ================ stop Draw arrow heads =================");
+        out.append("\n").append("%% ================ label zodiac =================");
+        out.append("\n").append("NormalFont10 setfont");
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[0], 10, 273.5, 470));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[1], 10, 303.5, 470));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[2], 10, 333.5, 470));
+
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[3], 10, 356.5, 481));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[4], 10, 326.5, 481));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[5], 10, 296.5, 481));
+
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[6], 10, 273.5, 492));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[7], 10, 303.5, 492));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[8], 10, 333.5, 492));
+
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[9], 10, 356.5, 503));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[10], 10, 326.5, 503));
+        out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[11], 10, 296.5, 503));
 
 
+        out.append("\n").append("%% ================ end label zodiac =================");
 
+        out.append("\n").append("0 0 1 setrgbcolor");
         return out.toString();
     }
 
