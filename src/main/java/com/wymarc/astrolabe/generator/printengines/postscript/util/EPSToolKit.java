@@ -161,6 +161,7 @@ public class EPSToolKit {
     public static String setUpFonts(){
         String out = "";
         out += "\n" + "%% ================ Set Up Fonts =================";
+        out += "\n" + "%% ================ Set Up Times New Roman =================";
         out += "\n" + "/NormalFont /Times-Roman findfont";
         out += "\n" + "dup length dict begin {1 index /FID ne {def} {pop pop} ifelse} forall";
         out += "\n" + "/Encoding ISOLatin1Encoding def currentdict end";
@@ -176,6 +177,24 @@ public class EPSToolKit {
         out += "\n" + "/NormalFont16 NormalFont 16 scalefont def";
         out += "\n" + "/NormalFont18 NormalFont 18 scalefont def";
         out += "\n" + "/NormalFont20 NormalFont 20 scalefont def";
+        out += "\n" + "%% ================ End Set Up Times New Roman =================";
+        out += "\n" + "%% ================ Set Up Arial =================";
+        out += "\n" + "/ArialFont /Arial findfont";
+        out += "\n" + "dup length dict begin {1 index /FID ne {def} {pop pop} ifelse} forall";
+        out += "\n" + "/Encoding ISOLatin1Encoding def currentdict end";
+        out += "\n" + "/Arial-ISOLatin1 exch definefont";
+        out += "\n" + "def";
+        out += "\n" + "/ArialFont5 ArialFont 5 scalefont def";
+        out += "\n" + "/ArialFont6 ArialFont 6 scalefont def";
+        out += "\n" + "/ArialFont7 ArialFont 7 scalefont def";
+        out += "\n" + "/ArialFont8 ArialFont 8 scalefont def";
+        out += "\n" + "/ArialFont10 ArialFont 10 scalefont def";
+        out += "\n" + "/ArialFont12 ArialFont 12 scalefont def";
+        out += "\n" + "/ArialFont14 ArialFont 14 scalefont def";
+        out += "\n" + "/ArialFont16 ArialFont 16 scalefont def";
+        out += "\n" + "/ArialFont18 ArialFont 18 scalefont def";
+        out += "\n" + "/ArialFont20 ArialFont 20 scalefont def";
+        out += "\n" + "%% ================ End Set Up Arial =================";
 
         out += "\n" + "%% ================ End Set Up Fonts =================";
 

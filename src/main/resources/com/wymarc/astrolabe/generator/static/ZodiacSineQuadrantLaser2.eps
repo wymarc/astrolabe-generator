@@ -13,6 +13,7 @@ Quadrant begin
 .4 setlinewidth
 
 %% ================ Set Up Fonts =================
+%% ================ Set Up Times New Roman =================
 /NormalFont /Times-Roman findfont
 dup length dict begin {1 index /FID ne {def} {pop pop} ifelse} forall
 /Encoding ISOLatin1Encoding def currentdict end
@@ -28,6 +29,24 @@ def
 /NormalFont16 NormalFont 16 scalefont def
 /NormalFont18 NormalFont 18 scalefont def
 /NormalFont20 NormalFont 20 scalefont def
+%% ================ End Set Up Times New Roman =================
+%% ================ Set Up Arial =================
+/ArialFont /Arial findfont
+dup length dict begin {1 index /FID ne {def} {pop pop} ifelse} forall
+/Encoding ISOLatin1Encoding def currentdict end
+/Arial-ISOLatin1 exch definefont
+def
+/ArialFont5 ArialFont 5 scalefont def
+/ArialFont6 ArialFont 6 scalefont def
+/ArialFont7 ArialFont 7 scalefont def
+/ArialFont8 ArialFont 8 scalefont def
+/ArialFont10 ArialFont 10 scalefont def
+/ArialFont12 ArialFont 12 scalefont def
+/ArialFont14 ArialFont 14 scalefont def
+/ArialFont16 ArialFont 16 scalefont def
+/ArialFont18 ArialFont 18 scalefont def
+/ArialFont20 ArialFont 20 scalefont def
+%% ================ End Set Up Arial =================
 %% ================ End Set Up Fonts =================
 /drawX
 {gsave
@@ -1536,7 +1555,7 @@ newpath
 0 -500 82.5 leftarrowhead
 %% ================ stop Draw arrow heads =================
 %% ================ label zodiac =================
-NormalFont10 setfont
+ArialFont10 setfont
 
 (Aries) 10.0 273.5 470.0 insidecircletext
 

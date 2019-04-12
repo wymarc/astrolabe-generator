@@ -199,7 +199,7 @@ public class ZodiacSineQuadrantLaser {
                 .append("\n").append("0 -500 82.5 leftarrowhead");
         out.append("\n").append("%% ================ stop Draw arrow heads =================");
         out.append("\n").append("%% ================ label zodiac =================");
-        out.append("\n").append("NormalFont10 setfont");
+        out.append("\n").append("ArialFont10 setfont");
         out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[0], 10, 273.5, 470));
         out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[1], 10, 303.5, 470));
         out.append("\n").append(EPSToolKit.drawInsideCircularText(Astrolabe.ZODIAC[2], 10, 333.5, 470));
@@ -538,7 +538,7 @@ public class ZodiacSineQuadrantLaser {
         out.append("\n").append("-36 36 translate")
                 .append("\n").append("gsave")
                 .append("\n").append("1 0 0 setrgbcolor")
-                .append(drawCuttingLines(1))
+                .append(drawCuttingLines(2))
                 .append("\n").append("grestore");
 
         out.append("\n").append("grestore");
