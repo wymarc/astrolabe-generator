@@ -1,4 +1,4 @@
-package com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles;
+package com.wymarc.astrolabe.generator.printengines.postscript.extras.sine;
 
 import com.wymarc.astrolabe.Astrolabe;
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
@@ -14,12 +14,11 @@ import java.awt.geom.Point2D;
  * link      http://astrolabeproject.com.com
  * link      http://www.astrolabes.org
  */
-public class ZodiacSineQuadrantLaser {
-
+public class ZodiacSineQuadrant {
     /**
      * Draws a cutting line
      * @param type 0: Plain, 1: Space for sights, 2: Notch Sight
-     * @return
+     * @return eps string
      */
     private String drawCuttingLines(int type) {
         StringBuilder out = new StringBuilder();
@@ -327,6 +326,14 @@ public class ZodiacSineQuadrantLaser {
             double xSquared = (xSide) * (xSide);
             length = Math.sqrt(radiusSquared - xSquared);
 
+            if ((i==5)||(i==10)||(i==15)||(i==20)||(i==25)||(i==30)||(i==35)||(i==40)||(i==45)||(i==50)||(i==55)){
+                out.append("\n" + "0 setgray")
+                .append("\n" + ".8 setlinewidth");
+            }else{
+                out.append("\n" + ".4 setlinewidth")
+                .append("\n" + ".5 setgray");
+            }
+
             out.append("\n").append("newpath")
                     .append("\n").append(xSide).append(" 0 moveto")
                     .append("\n").append(xSide).append(" ").append(-length).append(" lineto stroke")
@@ -337,39 +344,6 @@ public class ZodiacSineQuadrantLaser {
 
         return out.toString();
     }
-
-    private String markGridIntersections() {
-        StringBuilder out = new StringBuilder();
-        out.append("\n").append("%% ================ Draw grid Intersections =================")
-                .append("\n").append("%% ================ Draw Intersections =================");
-        double interval = 414.0 / 12.0;
-        double radiusSquared = 414.0 * 414.0;
-        double lengthI;
-        double lengthJ;
-
-        for (int i = 1; i < 12; i++) {
-            double iSide = interval * i;
-            double iSquared = (iSide) * (iSide);
-            lengthI = Math.sqrt(radiusSquared - iSquared);
-            for (int j = 1; j < 12; j++) {
-                double jSide = interval * j;
-                double jSquared = (jSide) * (jSide);
-                lengthJ = Math.sqrt(radiusSquared - jSquared);
-                if ((interval * j) < lengthI) {
-                    out.append("\n").append(interval * i).append(" ").append(-interval * j).append(" drawX");
-                }
-                if ((interval * i) < lengthJ) {
-                    out.append("\n").append(interval * j).append(" ").append(-interval * i).append(" drawX");
-                }
-            }
-        }
-
-        out.append("\n").append("%% ================ End Draw Intersections =================")
-                .append("\n").append("%% ================ End Draw grid Intersections =================");
-
-        return out.toString();
-    }
-
 
     private String drawAdvancedLines() {
         StringBuilder out = new StringBuilder();
@@ -460,45 +434,40 @@ public class ZodiacSineQuadrantLaser {
                 .append(EPSToolKit.setUpCircularText());
 
         out.append("\n").append("gsave")
-                .append("\n").append("0 0 1 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(drawOutlines())
                 .append("\n").append("grestore");
 
         out.append("\n").append("36 -36 translate");
 
         out.append("\n").append("gsave")
-                .append("\n").append("1 0 1 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(markScales())
                 .append("\n").append("grestore");
 
         out.append("\n").append("gsave")
-                .append("\n").append("0 0 1 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(drawZodiacScale())
                 .append("\n").append("grestore");
 
         out.append("\n").append("gsave")
-                .append("\n").append("0 0 0 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(labelScales())
                 .append("\n").append("grestore");
 
         out.append("\n").append("gsave")
-                .append("\n").append("0 1 0 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(drawGrid())
                 .append("\n").append("grestore");
 
         out.append("\n").append("gsave")
-                .append("\n").append("0 1 1 setrgbcolor")
-                .append(markGridIntersections())
-                .append("\n").append("grestore");
-
-        out.append("\n").append("gsave")
-                .append("\n").append("1 1 0 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(drawAdvancedLines())
                 .append("\n").append("grestore");
 
         out.append("\n").append("-36 36 translate")
                 .append("\n").append("gsave")
-                .append("\n").append("1 0 0 setrgbcolor")
+                .append("\n").append("0 setgray")
                 .append(drawCuttingLines(2))
                 .append("\n").append("grestore");
 

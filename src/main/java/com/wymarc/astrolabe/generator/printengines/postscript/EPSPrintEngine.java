@@ -29,6 +29,7 @@ import com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles.
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.laserFiles.ZodiacSineQuadrantLaser;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.VernierSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.SineQuadrant;
+import com.wymarc.astrolabe.generator.printengines.postscript.extras.sine.ZodiacSineQuadrant;
 import com.wymarc.astrolabe.generator.printengines.postscript.extras.universal.UniversalPrintEngine;
 
 import javax.print.*;
@@ -175,6 +176,13 @@ public class EPSPrintEngine {
             component = new ArrayList<>();
             component.add("ZodiacSineQuadrantLaser.eps");
             component.add(zodiacQuadrantLaser.printQuadrant());
+            selectedComponents.add(component);
+        }
+        if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
+            ZodiacSineQuadrant zodiacQuadrant = new ZodiacSineQuadrant();
+            component = new ArrayList<>();
+            component.add("ZodiacSineQuadrant.eps");
+            component.add(zodiacQuadrant.printQuadrant());
             selectedComponents.add(component);
         }
         if (GeneratorGui.MY_ASTROLABE.getPrintAdvancedSineQuadrant()){
