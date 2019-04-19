@@ -64,8 +64,6 @@ public class UniversalPrintEngine {
     private String buildSaphea(boolean isRete){
         String out = "";
         out += "\n" + "%% ==================== Build Saphea ====================";
-        out += "\n" + "%% Set Clipping";
-        //out += "\n" + "0 0 " + myAstrolabe.getUniversalLimbRadius() + " 0 360 arc clip";
 
         // Draw Polar arcs
         // Equation is:
