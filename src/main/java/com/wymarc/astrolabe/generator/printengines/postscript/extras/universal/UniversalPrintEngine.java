@@ -21,6 +21,7 @@ package com.wymarc.astrolabe.generator.printengines.postscript.extras.universal;
 
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
 import com.wymarc.astrolabe.Astrolabe;
+import com.wymarc.astrolabe.math.InterSect;
 import com.wymarc.astrolabe.math.ThreePointCenter;
 
 import java.awt.geom.Point2D;
@@ -28,6 +29,7 @@ import java.awt.geom.Point2D;
 public class UniversalPrintEngine {
 
     private Astrolabe myAstrolabe = new Astrolabe();
+    private boolean forCAD = false; // Each layer a separate color for using with CAD/cutting software
 
     /**
      * Draws the plate and its lines
@@ -63,7 +65,7 @@ public class UniversalPrintEngine {
         String out = "";
         out += "\n" + "%% ==================== Build Saphea ====================";
         out += "\n" + "%% Set Clipping";
-        out += "\n" + "0 0 " + myAstrolabe.getUniversalLimbRadius() + " 0 360 arc clip";
+        //out += "\n" + "0 0 " + myAstrolabe.getUniversalLimbRadius() + " 0 360 arc clip";
 
         // Draw Polar arcs
         // Equation is:
@@ -74,37 +76,39 @@ public class UniversalPrintEngine {
         Point2D.Double southPoint = new Point2D.Double(0,-(myAstrolabe.getUniversalLimbRadius()));
         Point2D.Double equatorPoint = new Point2D.Double(0,0);
         ThreePointCenter MyCircle;
-        for (int count = 1; count < 36; count++ ){
+        for (int count = 1; count < 18; count++ ){
             equatorPoint.x = myAstrolabe.getUniversalLimbRadius()*Math.tan(Math.toRadians((count*5)/2.0));
             MyCircle = new ThreePointCenter(northPoint, southPoint, equatorPoint );
             if (MyCircle.isCircle()){
-                if ( count % 2 == 0 ){
-                    if (!isRete){
-                        out += "\n" + "newpath";
-                        out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 90 270 arc stroke";
-                        out += "\n" + "newpath";
-                        out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 270 90 arc stroke";
-                    }else{
-                        out += "\n" + "newpath";
-                        out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 90 180 arc stroke";
-                        out += "\n" + "newpath";
-                        out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 0 90 arc stroke";
+                InterSect interSect1 = new InterSect(MyCircle.getCenter().x,  MyCircle.getCenter().y, MyCircle.getRadius(), 0, 0, myAstrolabe.getUniversalLimbRadius());
+                double angle11 = interSect1.getAngle1();
+                double angle12 = interSect1.getAngle2();
+                InterSect interSect2 = new InterSect(-MyCircle.getCenter().x,  MyCircle.getCenter().y, MyCircle.getRadius(), 0, 0, myAstrolabe.getUniversalLimbRadius());
+                double angle21 = interSect2.getAngle1();
+                double angle22 = interSect2.getAngle2();
+
+                if (!forCAD){
+                    if ( count % 2 != 0 ) {
+                        out += "\n" + ".5 setgray";
                     }
-                }else{
-                    out += "\n" + ".5 setgray";
-                    if (!isRete){
-                        out += "\n" + "newpath";
-                        out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 90 270 arc stroke";
-                        out += "\n" + "newpath";
-                        out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 270 90 arc stroke";
-                    }else{
-                        out += "\n" + "newpath";
-                        out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 90 180 arc stroke";
-                        out += "\n" + "newpath";
-                        out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " 0 90 arc stroke";
-                    }
-                    out += "\n" + "0 setgray";
                 }
+                if (!isRete) {
+                    out += "\n" + "newpath";
+                    out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " " + angle12 + " " + angle11 + " arc stroke";
+                    out += "\n" + "newpath";
+                    out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " " + angle21 + " " + angle22 + " arc stroke";
+                }else {
+                    out += "\n" + "newpath";
+                    out += "\n" + MyCircle.getCenter().x + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " " + 0 + " " + angle11 + " arc stroke";
+                    out += "\n" + "newpath";
+                    out += "\n" + (-MyCircle.getCenter().x) + " " + MyCircle.getCenter().y + " " + MyCircle.getRadius() + " " + angle21 + " " + 180 + " arc stroke";
+                }
+                if (!forCAD){
+                    if ( count % 2 != 0 ) {
+                        out += "\n" + "0 setgray";
+                    }
+                }
+
             }
         }
 
@@ -125,21 +129,39 @@ public class UniversalPrintEngine {
         }
         out += "\n" + "0 setgray";
 
+
         for (int count = 1; count <= 44; count++){
             y = myAstrolabe.getUniversalLimbRadius()/Math.sin(Math.toRadians(count*2));
             r = myAstrolabe.getUniversalLimbRadius()/Math.tan(Math.toRadians(count*2));
-            if (count % 5 == 0 ){
-                out += "\n" + "0 " + y + " " + r + " 0 360 arc stroke";
+
+            InterSect interSect1 = new InterSect(0, y, r, 0, 0, myAstrolabe.getUniversalLimbRadius());
+            double angle11 = interSect1.getAngle1();
+            double angle12 = interSect1.getAngle2();
+            InterSect interSect2 = new InterSect(0, -y, r, 0, 0, myAstrolabe.getUniversalLimbRadius());
+            double angle21 = interSect2.getAngle1();
+            double angle22 = interSect2.getAngle2();
+
+            out += "\n" + "newpath";
+
+            if (forCAD){
+                out += "\n" + "0 " + y + " " + r + " " + angle11 + " " + angle12 + " arc stroke";
                 if (!isRete) {
-                    out += "\n" + "0 -" + y + " " + r + " 0 360 arc stroke";
+                    out += "\n" + "0 -" + y + " " + r + " " + angle21 + " " + angle22 + " arc stroke";
                 }
             }else{
-                out += "\n" + ".5 setgray";
-                out += "\n" + "0 " + y + " " + r + " 0 360 arc stroke";
-                if (!isRete) {
-                    out += "\n" + "0 -" + y + " " + r + " 0 360 arc stroke";
+                if (count % 5 == 0 ){
+                    out += "\n" + "0 " + y + " " + r + " " + angle11 + " " + angle12 + " arc stroke";
+                    if (!isRete) {
+                        out += "\n" + "0 -" + y + " " + r + " " + angle21 + " " + angle22 + " arc stroke";
+                    }
+                }else{
+                    out += "\n" + ".5 setgray";
+                    out += "\n" + "0 " + y + " " + r + " " + angle11 + " " + angle12 + " arc stroke";
+                    if (!isRete) {
+                        out += "\n" + "0 -" + y + " " + r + " " + angle21 + " " + angle22 + " arc stroke";
+                    }
+                    out += "\n" + "0 setgray";
                 }
-                out += "\n" + "0 setgray";
             }
         }
 
@@ -184,11 +206,18 @@ public class UniversalPrintEngine {
         if (!isRete) {
             y = myAstrolabe.getUniversalLimbRadius()/Math.sin(Math.toRadians(23.44));
             r = myAstrolabe.getUniversalLimbRadius()/Math.tan(Math.toRadians(23.44));
+            InterSect interSect1 = new InterSect(0, y, r, 0, 0, myAstrolabe.getUniversalLimbRadius());
+            double angle11 = interSect1.getAngle1();
+            double angle12 = interSect1.getAngle2();
+            InterSect interSect2 = new InterSect(0, -y, r, 0, 0, myAstrolabe.getUniversalLimbRadius());
+            double angle21 = interSect2.getAngle1();
+            double angle22 = interSect2.getAngle2();
+
             out += "\n" + "newpath";
             out += "\n" + "[4 4] 0 setdash"; // set dashed line
             out += "\n" + "1 0 0 setrgbcolor";
-            out += "\n" + "0 " + y + " " + r + " 0 360 arc stroke";
-            out += "\n" + "0 -" + y + " " + r + " 0 360 arc stroke";
+            out += "\n" + "0 " + y + " " + r + " " + angle11 + " " + angle12 + " arc stroke";
+            out += "\n" + "0 -" + y + " " + r + " " + angle21 + " " + angle22 + " arc stroke";
             out += "\n" + "0 setgray";
             out += "\n" + "[] 0 setdash"; // set solid line
         }
@@ -326,8 +355,6 @@ public class UniversalPrintEngine {
         String out = "";
         out += "\n" + "%% ==================== Create Mater Limb ====================";
         out += "\n" + "% Draw outer circle";
-        out += "\n" + "1 setgray";
-        out += "\n" + "0 0 " + (myAstrolabe.getMaterRadius()) + " 0 360 arc fill";
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + myAstrolabe.getMaterRadius() + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (myAstrolabe.getUniversalLimbRadius()) + " 0 360 arc stroke";
@@ -610,6 +637,8 @@ public class UniversalPrintEngine {
                 out += EPSToolKit.buildMaterThrone2(myAstrolabe);
             }else{
                 out += EPSToolKit.buildMaterThrone(myAstrolabe);
+                out += "\n" + "1 setgray";
+                out += "\n" + "0 0 " + (myAstrolabe.getMaterRadius()) + " 0 360 arc fill";
             }
             out += "\n" + "grestore";
             out += "\n" + "";
@@ -621,15 +650,15 @@ public class UniversalPrintEngine {
             out += "\n" + "grestore";
         }
 
-        // Build the limb
-        out += "\n" + "gsave";
-        out += buildMaterLimb();
-        out += "\n" + "grestore";
-        out += "\n" + "";
-
         // Draw the Saphea
         out += "\n" + "gsave";
         out += buildSaphea(false);
+        out += "\n" + "grestore";
+        out += "\n" + "";
+
+        // Build the limb
+        out += "\n" + "gsave";
+        out += buildMaterLimb();
         out += "\n" + "grestore";
         out += "\n" + "";
 
