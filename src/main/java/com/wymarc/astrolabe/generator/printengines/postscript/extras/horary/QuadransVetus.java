@@ -16,47 +16,99 @@ public class QuadransVetus {
 
     private boolean isLaser = true;
 
+    private String drawOutline() {
+        StringBuilder out = new StringBuilder();
+
+        if (isLaser){
+            out.append("\n").append("1 0 0 setrgbcolor");
+        }
+
+        out.append("\n").append("% draw outlines")
+                .append("\n").append("-36 36 translate")
+                .append("\n").append("newpath")
+                .append("\n").append("0 0 moveto")
+                .append("\n").append("0 -540 lineto")
+                .append("\n").append("36 -540 lineto")
+                .append("\n").append("36 -36 504 270 360 arc")
+                .append("\n").append("540 0 lineto")
+                .append("\n").append("0 0 lineto stroke");
+
+        if (isLaser){
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
+
+        out.append("\n").append("% draw inner outlines")
+                .append("\n").append("newpath")
+                .append("\n").append("36 -36 moveto")
+                .append("\n").append("36 -535 lineto")
+                .append("\n").append("36 -36 499 270 360 arc")
+                .append("\n").append("36 -36 lineto stroke");
+
+        if (isLaser){
+            out.append("\n").append("0 setgray");
+        }
+
+        return out.toString();
+    }
+
+
     private String drawDegreeScale() {
         StringBuilder out = new StringBuilder();
 
+        if (isLaser){
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
+
         // draw arcs
         out.append("\n").append("% degree scale")
-                .append("\n").append("0 0 494 270 360 arc stroke")
-                .append("\n").append("0 0 490 270 360 arc stroke")
+                .append("\n").append("0 0 489 270 360 arc stroke")
+                .append("\n").append("0 0 469 270 360 arc stroke")
+                .append("\n").append("0 0 464 270 360 arc stroke")
                 .append("\n").append("");
 
         // create 1 degree marks
-        for (int count = 1; count <= 90; count++) {
-            out.append("\n").append("490 0 moveto")
-                    .append("\n").append("494 0 lineto stroke")
-                    .append("\n").append("-1 rotate");
+        for (int count = 0; count <= 89; count++) {
+            if (count > 0){
+                if (count % 5 == 0) { // longer mark at each 5 degrees
+                    out.append("\n").append("469 0 moveto");
+                }else{
+                    out.append("\n").append("489 0 moveto");
+                }
+                out.append("\n").append("499 0 lineto stroke");
+            }
+            out.append("\n").append("-1 rotate");
         }
-        out.append("\n").append("90 rotate");
-
-        // create 5 degree marks
-        for (int count = 1; count <= 18; count++) {
-            out.append("\n").append("490 0 moveto")
-                    .append("\n").append("498 0 lineto stroke")
-                    .append("\n").append("-5 rotate");
-        }
-        out.append("\n").append("90 rotate");
-
-        // create 10 degree marks
-        for (int count = 1; count <= 9; count++) {
-            out.append("\n").append("490 0 moveto")
-                    .append("\n").append("504 0 lineto stroke")
-                    .append("\n").append("-10 rotate");
-        }
-        out.append("\n").append("90 rotate");
+        out.append("\n").append("89 rotate");
 
         if (isLaser){
-            out.append("\n").append("0 1 0 setrgbcolor");
+            out.append("\n").append("0 setgray");
         }
+
         //Mark degrees
-        out.append("\n").append("/Times-Roman findfont 8 scalefont setfont");
-        for (int count = 1; count <= 9; count++) {
-            out.append(EPSToolKit.drawInsideCircularText((count * 10) + "", 5, (-90 + (count * 10) - .75), 502));
+        if (isLaser){
+            out.append("\n").append("ArialFont16 setfont");
+        }else{
+            out.append("\n").append("NormalFont16 setfont");
         }
+
+        for (int count = 1; count <= 18; count++) {
+            out.append(EPSToolKit.drawInsideCircularText((count * 5) + "", 16, (-89 + (count * 5)) - 2.5, 485));
+        }
+
+        return out.toString();
+    }
+
+    private String drawCalendarScale(double latitude) {
+        StringBuilder out = new StringBuilder();
+        if (isLaser){
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
+
+        // draw arcs
+        out.append("\n").append("% Space for calendar")
+                .append("\n").append("0 0 394 270 360 arc stroke")
+                .append("\n").append("");
+
         if (isLaser){
             out.append("\n").append("0 setgray");
         }
@@ -159,30 +211,6 @@ public class QuadransVetus {
         return out.toString();
     }
 
-    private String drawOutline() {
-        StringBuilder out = new StringBuilder();
-
-        if (isLaser){
-            out.append("\n").append("1 0 0 setrgbcolor");
-        }
-
-        out.append("\n").append("% draw outlines")
-                .append("\n").append("-36 36 translate")
-                .append("\n").append("newpath")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append("0 -540 lineto")
-                .append("\n").append("36 -540 lineto")
-                .append("\n").append("36 -36 504 270 360 arc")
-                .append("\n").append("540 0 lineto")
-                .append("\n").append("0 0 lineto stroke");
-
-        if (isLaser){
-            out.append("\n").append("0 setgray");
-        }
-
-        return out.toString();
-    }
-
     public String printQuadrant(Astrolabe myAstrolabe) {
         StringBuilder out = new StringBuilder();
 
@@ -210,20 +238,20 @@ public class QuadransVetus {
         out.append("\n").append("gsave")
                 .append(drawDegreeScale())
                 .append("\n").append("grestore")
+                .append("\n").append("gsave")
+                .append(drawOutline())
+                .append("\n").append("grestore")
+                .append("\n").append("gsave")
+                .append(drawCalendarScale(myAstrolabe.getLocation().getLatitude()))
+                .append("\n").append("grestore");
+
 //                .append("\n").append("gsave")
 //                .append(drawShadowSquare())
 //                .append("\n").append("grestore")
-                .append("\n").append("gsave")
-                .append(drawOutline())
-                .append("\n").append("grestore");
 //                .append("\n").append("gsave")
-
-
 //                .append(drawCotangentScale())
 //                .append("\n").append("grestore")
-//                .append("\n").append("gsave")
-//                .append(drawCalendarScale(myAstrolabe.getLocation().getLatitude()))
-//                .append("\n").append("grestore")
+
 //                .append("\n").append("gsave")
 //                .append(drawSineScale())
 //                .append("\n").append("grestore")
