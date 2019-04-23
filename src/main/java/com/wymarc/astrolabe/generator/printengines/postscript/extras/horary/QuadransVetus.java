@@ -129,85 +129,77 @@ public class QuadransVetus {
         double div = 12.0;
         StringBuilder out = new StringBuilder();
 
+        if (isLaser){
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
+
         out.append("\n").append("% Shadow square")
-                //Draw bottom right
                 .append("\n").append("% =============== Create Shadow Square =================")
                 .append("\n").append("newpath")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide).append(" 0 lineto")
+                .append("\n").append(shadowSide).append(" 0 moveto")
                 .append("\n").append(shadowSide).append(" ").append(-shadowSide).append(" lineto")
-                .append("\n").append("0 ").append(-shadowSide).append(" lineto")
-                .append("\n").append("0 0 lineto stroke")
-                .append("\n").append("0 0 moveto");
-
-        for (int count = 1; count < div; count++)// print division lines
-        {
-            out.append("\n").append("0 0 moveto")
-                    .append("\n").append(shadowSide).append(" ").append(-((shadowSide / div) * count)).append(" lineto stroke")
-                    .append("\n").append("0 0 moveto")
-                    .append("\n").append(((shadowSide / div) * count)).append(" ").append(-shadowSide).append(" lineto stroke");
-        }
-        out.append("\n").append("newpath")
-                .append("\n").append("1 setgray")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide - 12).append(" 0 lineto")
-                .append("\n").append(shadowSide - 12).append(" ").append(-(shadowSide - 12)).append(" lineto")
-                .append("\n").append("0 ").append(-(shadowSide - 12)).append(" lineto")
-                .append("\n").append("0 0 lineto fill")
+                .append("\n").append("0 ").append(-shadowSide).append(" lineto stroke")
                 .append("\n").append("newpath")
-                .append("\n").append("0 setgray")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide - 12).append(" 0 lineto")
-                .append("\n").append(shadowSide - 12).append(" ").append(-(shadowSide - 12)).append(" lineto")
-                .append("\n").append("0 ").append(-(shadowSide - 12)).append(" lineto")
-                .append("\n").append("0 0 lineto stroke")
-
-                //draw 1/2 way mark
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide).append(" ").append(-shadowSide / 2.0).append(" lineto stroke")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide / 2.0).append(" ").append(-shadowSide).append(" lineto stroke")
+                .append("\n").append(shadowSide - 10).append(" 0 moveto")
+                .append("\n").append(shadowSide - 10).append(" ").append(-(shadowSide - 10)).append(" lineto")
+                .append("\n").append("0 ").append(-(shadowSide - 10)).append(" lineto stroke")
                 .append("\n").append("newpath")
-                .append("\n").append("1 setgray")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide - 24).append(" 0 lineto")
+                .append("\n").append(shadowSide - 24).append(" 0 moveto")
                 .append("\n").append(shadowSide - 24).append(" ").append(-(shadowSide - 24)).append(" lineto")
-                .append("\n").append("0 ").append(-(shadowSide - 24)).append(" lineto")
-                .append("\n").append("0 0 lineto fill")
-                .append("\n").append("0 setgray");
+                .append("\n").append("0 ").append(-(shadowSide - 24)).append(" lineto stroke");
 
-        // mark 6 line
-        if (isLaser){
-            out.append("\n").append("0 1 0 setrgbcolor");
+        for (int count = 1; count < div; count++) {// print division lines
+            // determine angle
+            double angle = (45.0/12.0) * count;
+            // determine long and short mark intersections with sides
+            double outside = Math.tan(Math.toRadians(angle)) * shadowSide;
+            double middle = Math.tan(Math.toRadians(angle)) * (shadowSide - 10);
+            double inside = Math.tan(Math.toRadians(angle)) * (shadowSide - 24);
+
+            if (count == 4 || count == 8){
+                out.append("\n").append("newpath")
+                        .append("\n").append((shadowSide - 24) + " " + (-inside) + " moveto")
+                        .append("\n").append(shadowSide + " " + (-outside) + " lineto stroke")
+                        .append("\n").append(inside + " " + (-(shadowSide - 24)) + " moveto")
+                        .append("\n").append(outside + " " + (-shadowSide) + " lineto stroke");
+            }else{
+                out.append("\n").append("newpath")
+                        .append("\n").append((shadowSide - 10) + " " + (-middle) + " moveto")
+                        .append("\n").append(shadowSide + " " + (-outside) + " lineto stroke")
+                        .append("\n").append(middle + " " + (-(shadowSide - 10)) + " moveto")
+                        .append("\n").append(outside + " " + (-shadowSide) + " lineto stroke");
+            }
         }
-        out.append("\n").append((shadowSide / 2.0) - 17).append(" ").append(-(shadowSide - 15)).append(" moveto")
-                .append("\n").append("NormalFont10 setfont")
-                .append("\n").append("(6) show")
-                .append("\n").append((shadowSide - 20)).append(" ").append(-(shadowSide / 2.0 - 12)).append(" moveto")
-                .append("\n").append("(6) show");
+
+        // Draw 45 line
+        out.append("\n").append("newpath")
+                .append("\n").append("0 0 moveto")
+                .append("\n").append(shadowSide + " " + (-shadowSide) + " lineto stroke");
+
         if (isLaser){
             out.append("\n").append("0 setgray");
         }
-        out.append("\n").append("newpath")
-                .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide - 24).append(" 0 lineto")
-                .append("\n").append(shadowSide - 24).append(" ").append(-(shadowSide - 24)).append(" lineto")
-                .append("\n").append("0 ").append(-(shadowSide - 24)).append(" lineto")
-                .append("\n").append("0 0 lineto stroke")
-                .append("\n").append("0 0 moveto")
 
-                // mark 45 line
-                .append("\n").append(shadowSide).append(" ").append(-shadowSide).append(" lineto stroke") // 45 line
-                .append("\n").append(shadowSide - 31).append(" ").append(-(shadowSide - 15)).append(" moveto");
+        // label
+        //determine locations of numbers on middle line
+        double four = Math.tan(Math.toRadians(7.5)) * (shadowSide - 10);
+        double eight = Math.tan(Math.toRadians(22.5)) * (shadowSide - 10);
+        double twelve = Math.tan(Math.toRadians(37.5)) * (shadowSide - 10);
+
+        //Mark degrees
         if (isLaser){
-            out.append("\n").append("0 1 0 setrgbcolor");
+            out.append("\n").append("ArialFont16 setfont");
+        }else{
+            out.append("\n").append("NormalFont16 setfont");
         }
-        out.append("\n").append("NormalFont10 setfont")
-                .append("\n").append("(12) show");
-        if (isLaser){
-            out.append("\n").append("0 setgray");
-        }
-        out.append("\n").append("% =============== End Right Shadow Square =================");
+
+        out.append("\n").append("newpath")
+                //.append("\n").append("-10 0 moveto")
+                .append("\n").append((shadowSide - 10) + " " + four + " moveto")
+                .append("\n").append(EPSToolKit.centerText("4"));
+
+
+        out.append("\n").append("% =============== End Shadow Square =================");
 
         return out.toString();
     }
