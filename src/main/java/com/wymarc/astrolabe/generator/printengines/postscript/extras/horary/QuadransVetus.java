@@ -62,15 +62,15 @@ public class QuadransVetus {
         // draw arcs
         out.append("\n").append("% degree scale")
                 .append("\n").append("0 0 489 270 360 arc stroke")
-                .append("\n").append("0 0 469 270 360 arc stroke")
-                .append("\n").append("0 0 464 270 360 arc stroke")
+                .append("\n").append("0 0 460 270 360 arc stroke")
+                .append("\n").append("0 0 455 270 360 arc stroke")
                 .append("\n").append("");
 
         // create 1 degree marks
         for (int count = 0; count <= 89; count++) {
             if (count > 0){
                 if (count % 5 == 0) { // longer mark at each 5 degrees
-                    out.append("\n").append("469 0 moveto");
+                    out.append("\n").append("460 0 moveto");
                 }else{
                     out.append("\n").append("489 0 moveto");
                 }
@@ -92,7 +92,7 @@ public class QuadransVetus {
         }
 
         for (int count = 1; count <= 18; count++) {
-            out.append(EPSToolKit.drawInsideCircularText((count * 5) + "", 16, (-89 + (count * 5)) - 2.5, 485));
+            out.append(EPSToolKit.drawInsideCircularText((count * 5) + "", 16, (-89 + (count * 5)) - 2.5, 480));
         }
 
         return out.toString();
@@ -106,7 +106,8 @@ public class QuadransVetus {
 
         // draw arcs
         out.append("\n").append("% Space for calendar")
-                .append("\n").append("0 0 394 270 360 arc stroke")
+                .append("\n").append("0 0 343 270 360 arc stroke")
+                .append("\n").append("0 0 338 270 360 arc stroke")
                 .append("\n").append("");
 
         if (isLaser){
@@ -123,7 +124,7 @@ public class QuadransVetus {
      */
     private String drawShadowSquare() {
         //compute size of box
-        double shadowRadius = 403.0;
+        double shadowRadius = 338.0;
         double shadowSide = Math.sqrt((shadowRadius * shadowRadius) / 2.0); //from pythagoras
         double div = 12.0;
         StringBuilder out = new StringBuilder();
@@ -211,6 +212,30 @@ public class QuadransVetus {
         return out.toString();
     }
 
+    private String drawUnequalHours() {
+        StringBuilder out = new StringBuilder();
+        // mark unequal hour lines
+        // draw arcs
+        out.append("\n").append("% unequal hours")
+                .append("\n").append("newpath")
+                .append("\n").append("382 0 moveto")
+                .append("\n").append("0 0 lineto")
+                .append("\n").append("0 -382 lineto")
+                .append("\n").append("0 0 403 270 360 arc clip");
+        double Ri;
+        for (int count = 1; count <= 6; count++) {
+            Ri = (403 / (2 * (Math.sin(Math.toRadians(15 * count)))));
+            out.append("\n").append(Ri).append(" 0 ").append(Ri).append(" 180 360 arc stroke");
+        }
+
+        //Mark unequal hours
+        out.append("\n").append("NormalFont8 setfont");
+        for (int count = 1; count <= 5; count++) {
+            out.append(EPSToolKit.drawInsideCircularText(count + "", 5, (-90 + (count * 15) + 0.5), 398));
+        }
+        return out.toString();
+    }
+
     public String printQuadrant(Astrolabe myAstrolabe) {
         StringBuilder out = new StringBuilder();
 
@@ -243,21 +268,10 @@ public class QuadransVetus {
                 .append("\n").append("grestore")
                 .append("\n").append("gsave")
                 .append(drawCalendarScale(myAstrolabe.getLocation().getLatitude()))
+                .append("\n").append("grestore")
+                .append("\n").append("gsave")
+                .append(drawShadowSquare())
                 .append("\n").append("grestore");
-
-//                .append("\n").append("gsave")
-//                .append(drawShadowSquare())
-//                .append("\n").append("grestore")
-//                .append("\n").append("gsave")
-//                .append(drawCotangentScale())
-//                .append("\n").append("grestore")
-
-//                .append("\n").append("gsave")
-//                .append(drawSineScale())
-//                .append("\n").append("grestore")
-//                .append("\n").append("gsave")
-//                .append(drawOutline(myAstrolabe))
-//                .append("\n").append("grestore")
 //                .append("\n").append("gsave")
 //                .append(drawUnequalHours())
 //                .append("\n").append("grestore");
