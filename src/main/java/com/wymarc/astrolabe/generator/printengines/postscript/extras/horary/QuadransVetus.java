@@ -2,6 +2,7 @@ package com.wymarc.astrolabe.generator.printengines.postscript.extras.horary;
 
 import com.wymarc.astrolabe.Astrolabe;
 import com.wymarc.astrolabe.generator.printengines.postscript.util.EPSToolKit;
+import com.wymarc.astrolabe.math.InterSect;
 
 /**
  * This Plugin will calculate the components of A quadrans ventus and
@@ -158,23 +159,23 @@ public class QuadransVetus {
 
             if (count == 4 || count == 8){
                 out.append("\n").append("newpath")
-                        .append("\n").append((shadowSide - 24) + " " + (-inside) + " moveto")
-                        .append("\n").append(shadowSide + " " + (-outside) + " lineto stroke")
-                        .append("\n").append(inside + " " + (-(shadowSide - 24)) + " moveto")
-                        .append("\n").append(outside + " " + (-shadowSide) + " lineto stroke");
+                        .append("\n").append(shadowSide - 24).append(" ").append(-inside).append(" moveto")
+                        .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                        .append("\n").append(inside).append(" ").append(-(shadowSide - 24)).append(" moveto")
+                        .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
             }else{
                 out.append("\n").append("newpath")
-                        .append("\n").append((shadowSide - 10) + " " + (-middle) + " moveto")
-                        .append("\n").append(shadowSide + " " + (-outside) + " lineto stroke")
-                        .append("\n").append(middle + " " + (-(shadowSide - 10)) + " moveto")
-                        .append("\n").append(outside + " " + (-shadowSide) + " lineto stroke");
+                        .append("\n").append(shadowSide - 10).append(" ").append(-middle).append(" moveto")
+                        .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                        .append("\n").append(middle).append(" ").append(-(shadowSide - 10)).append(" moveto")
+                        .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
             }
         }
 
         // Draw 45 line
         out.append("\n").append("newpath")
                 .append("\n").append("0 0 moveto")
-                .append("\n").append(shadowSide + " " + (-shadowSide) + " lineto stroke");
+                .append("\n").append(shadowSide).append(" ").append(-shadowSide).append(" lineto stroke");
 
         if (isLaser){
             out.append("\n").append("0 setgray");
@@ -188,16 +189,29 @@ public class QuadransVetus {
 
         //Mark degrees
         if (isLaser){
-            out.append("\n").append("ArialFont16 setfont");
+            out.append("\n").append("ArialFont12 setfont");
         }else{
-            out.append("\n").append("NormalFont16 setfont");
+            out.append("\n").append("NormalFont12 setfont");
         }
 
         out.append("\n").append("newpath")
                 //.append("\n").append("-10 0 moveto")
-                .append("\n").append((shadowSide - 10) + " " + four + " moveto")
-                .append("\n").append(EPSToolKit.centerText("4"));
-
+                .append("\n").append(four).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("4"))
+                .append("\n").append(eight).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("8"))
+                .append("\n").append(twelve).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("12"));
+        out.append("\n").append("90 rotate");
+        out.append("\n").append("newpath")
+                //.append("\n").append("-10 0 moveto")
+                .append("\n").append(-four).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("4"))
+                .append("\n").append(-eight).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("8"))
+                .append("\n").append(-twelve).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("12"));
+        out.append("\n").append("-90 rotate");
 
         out.append("\n").append("% =============== End Shadow Square =================");
 
@@ -208,22 +222,19 @@ public class QuadransVetus {
         StringBuilder out = new StringBuilder();
         // mark unequal hour lines
         // draw arcs
-        out.append("\n").append("% unequal hours")
-                .append("\n").append("newpath")
-                .append("\n").append("382 0 moveto")
-                .append("\n").append("0 0 lineto")
-                .append("\n").append("0 -382 lineto")
-                .append("\n").append("0 0 403 270 360 arc clip");
-        double Ri;
+        out.append("\n").append("% unequal hours");
+        double radius;
         for (int count = 1; count <= 6; count++) {
-            Ri = (403 / (2 * (Math.sin(Math.toRadians(15 * count)))));
-            out.append("\n").append(Ri).append(" 0 ").append(Ri).append(" 180 360 arc stroke");
+            radius = (338 / (2 * (Math.sin(Math.toRadians(15 * count)))));
+            InterSect interSect1 = new InterSect(radius, 0.0, radius, 0.0, 0.0, 338.0);
+            double angle2 = interSect1.getAngle2();
+            out.append("\n").append(radius).append(" 0 ").append(radius).append(" 180 ").append(angle2).append(" arc stroke");
         }
 
         //Mark unequal hours
-        out.append("\n").append("NormalFont8 setfont");
+        out.append("\n").append("ArialFont12 setfont");
         for (int count = 1; count <= 5; count++) {
-            out.append(EPSToolKit.drawInsideCircularText(count + "", 5, (-90 + (count * 15) + 0.5), 398));
+            out.append(EPSToolKit.drawInsideCircularText(count + "", 12, (-90 + (count * 15) - 1), 335));
         }
         return out.toString();
     }
@@ -263,10 +274,10 @@ public class QuadransVetus {
                 .append("\n").append("grestore")
                 .append("\n").append("gsave")
                 .append(drawShadowSquare())
+                .append("\n").append("grestore")
+                .append("\n").append("gsave")
+                .append(drawUnequalHours())
                 .append("\n").append("grestore");
-//                .append("\n").append("gsave")
-//                .append(drawUnequalHours())
-//                .append("\n").append("grestore");
         // Write Footer
         out.append("\n").append("% Eject the page")
                 .append("\n").append("end cleartomark")
