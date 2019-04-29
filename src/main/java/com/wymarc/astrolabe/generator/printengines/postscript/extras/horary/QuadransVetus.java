@@ -141,8 +141,7 @@ public class QuadransVetus {
         double alt;
         int year = Calendar.getInstance().get(Calendar.YEAR);
         // draw arcs
-        out.append("\n").append("% Calendar scale")
-                .append("\n").append("0 0 403 270 360 arc stroke");
+        out.append("\n").append("% Calendar scale");
 
         alt = AstroMath.solarNoonAltitude(11, 22, year, lat);
         out.append(drawTick(alt - 183, 423, 455, ""));
@@ -150,12 +149,20 @@ public class QuadransVetus {
         alt = AstroMath.solarNoonAltitude(5, 21, year, lat);
         out.append(drawTick(alt - 177, 423, 455, ""));
         double highAngle = (alt + 3) + 270;
-        out.append("\n").append("0 0 423 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
+        //343 - 455
+        out.append("\n").append("0 0 343 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
                 .append("\n").append("0 0 433 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
                 .append("\n").append("0 0 438 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
                 .append("\n").append("0 0 440 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
                 .append("\n").append("0 0 445 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
                 .append("\n").append("0 0 455 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke");
+
+//        out.append("\n").append("0 0 423 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
+//                .append("\n").append("0 0 433 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
+//                .append("\n").append("0 0 438 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
+//                .append("\n").append("0 0 440 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
+//                .append("\n").append("0 0 445 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke")
+//                .append("\n").append("0 0 455 ").append(lowAngle).append(" ").append(highAngle).append(" arc stroke");
 
         alt = AstroMath.solarNoonAltitude(0, 1, year, lat) - 180;
         out.append(drawTick(alt, 423, 438, "J"));
