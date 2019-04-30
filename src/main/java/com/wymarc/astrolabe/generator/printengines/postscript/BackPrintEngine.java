@@ -31,6 +31,7 @@ import java.util.ArrayList;
 public class BackPrintEngine {
 
     private Astrolabe myAstrolabe = new Astrolabe();
+    private boolean isLaser = true;
 
     /**
      * Builds the default offset calendar ring
@@ -992,6 +993,9 @@ public class BackPrintEngine {
         out += EPSToolKit.setUpCircularText();
 
         if (myAstrolabe.getShowThrone()){
+            if (isLaser){
+                out += "\n" + "1 0 0 setrgbcolor";
+            }
             out += "\n" + "gsave";
             if (myAstrolabe.getShapeOption() == 1){
                 out += EPSToolKit.buildMaterThrone2(myAstrolabe);
@@ -1000,7 +1004,15 @@ public class BackPrintEngine {
             }
             out += "\n" + "grestore";
             out += "\n" + "";
+            if (isLaser){
+                out += "\n" + "gsave";
+                out += "\n" + "1 0 0 setrgbcolor";
+                out += EPSToolKit.buildScrewMount(myAstrolabe);
+                out += "\n" + "0 setgray";
+                out += "\n" + "grestore";
+            }
         }
+
         if (myAstrolabe.getShapeOption() == 1){
             out += "\n" + "gsave";
             out += EPSToolKit.buildOctagon(myAstrolabe);

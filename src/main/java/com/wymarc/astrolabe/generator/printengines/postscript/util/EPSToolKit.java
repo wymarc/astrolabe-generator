@@ -465,21 +465,16 @@ public class EPSToolKit {
         Double outerRadius = innerRadius + limb;
 
         out += "\n" + "%% ================ Draw Throne =================";
-        out += "\n" + "0 " + (outerRadius + 28) +" 7 0 360 arc stroke";
+        out += "\n" + "0 " + (outerRadius + 31) +" 7 0 360 arc stroke";
         out += "\n" + "0 " + (outerRadius + 28) +" 38 0 180 arc stroke";
         out += "\n" + "-38 " + (outerRadius - 10) +" 38 90 270 arc stroke";
         out += "\n" + "38 " + (outerRadius - 10) +" 38 -90 90 arc stroke";
-        out += "\n" + ".1 setlinewidth";
-        out += "\n" + "0 " + (outerRadius + 25) +" moveto";
-        out += "\n" + "0 " + (outerRadius + 31) +" lineto stroke";
-        out += "\n" + "-3 " + (outerRadius + 28) +" moveto";
-        out += "\n" + "3 " + (outerRadius + 28) +" lineto stroke";
         out += "\n" + "%% ================ Draw Throne =================";
         return out;
     }
 
     /**
-     * Draws alternatee astrolabe throne
+     * Draws alternate astrolabe throne
      *
      * since   2.0
      *
@@ -491,18 +486,35 @@ public class EPSToolKit {
         Double outerRadius = innerRadius + limb;
 
         out += "\n" + "%% ================ Draw Throne =================";
-        out += "\n" + "0 " + (outerRadius + 20) +" 7 0 360 arc stroke";
-        out += "\n" + "-60 " + outerRadius +" moveto";
-        out += "\n" + "-30 " + (outerRadius + 40) +" lineto";
-        out += "\n" + "30 " + (outerRadius + 40) +" lineto";
-        out += "\n" + "60 " + outerRadius +" lineto stroke";
-
-        out += "\n" + ".1 setlinewidth";
-        out += "\n" + "0 " + (outerRadius + 17) +" moveto";
-        out += "\n" + "0 " + (outerRadius + 23) +" lineto stroke";
-        out += "\n" + "-3 " + (outerRadius + 20) +" moveto";
-        out += "\n" + "3 " + (outerRadius + 20) +" lineto stroke";
+        out += "\n" + "0 " + (outerRadius + 31) +" 7 0 360 arc stroke";
+        out += "\n" + "-68 " + outerRadius +" moveto";
+        out += "\n" + "-30 " + (outerRadius + 48) +" lineto";
+        out += "\n" + "30 " + (outerRadius + 48) +" lineto";
+        out += "\n" + "68 " + outerRadius +" lineto stroke";
         out += "\n" + "%% ================ Draw Throne =================";
+        return out;
+    }
+
+    /**
+     * Draws bottom screw mount
+     *
+     * since   2.0
+     *
+     */
+    public static String buildScrewMount(Astrolabe myAstrolabe){
+        String out = "";
+        Double innerRadius = (72 * myAstrolabe.getPlateDiameter()) / 2;
+        Double limb = 72 * myAstrolabe.getLimbWidth();
+        Double outerRadius = innerRadius + limb;
+
+        out += "\n" + "%% ================ Draw Screw mount =================";
+        out += "\n" + "0 " + (outerRadius + 13) +" 5 0 360 arc stroke";
+        out += "\n" + "0 " + (-outerRadius - 20) +" 5 0 360 arc stroke";
+        out += "\n" + "-60 " + (-outerRadius + 10) +" moveto";
+        out += "\n" + "-30 " + (-outerRadius - 40) +" lineto";
+        out += "\n" + "30 " + (-outerRadius - 40) +" lineto";
+        out += "\n" + "60 " + (-outerRadius + 10) +" lineto stroke";
+        out += "\n" + "%% ================ Draw Screw mount end =================";
         return out;
     }
 

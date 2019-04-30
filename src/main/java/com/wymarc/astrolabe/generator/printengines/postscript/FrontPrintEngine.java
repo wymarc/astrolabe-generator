@@ -29,6 +29,7 @@ public class FrontPrintEngine {
      */
 
     private Astrolabe myAstrolabe = new Astrolabe();
+    private boolean isLaser = true;
 
     /**
      * computes the circles for the tropics and equator
@@ -1061,6 +1062,9 @@ public class FrontPrintEngine {
         out += EPSToolKit.setUpCircularText();
 
         if (myAstrolabe.getShowThrone() && myAstrolabe.getFrontPrintOption() != 1){
+            if (isLaser){
+                out += "\n" + "1 0 0 setrgbcolor";
+            }
             out += "\n" + "gsave";
             if (myAstrolabe.getShapeOption() == 1){
                 out += EPSToolKit.buildMaterThrone2(myAstrolabe);
@@ -1069,6 +1073,13 @@ public class FrontPrintEngine {
             }
             out += "\n" + "grestore";
             out += "\n" + "";
+            if (isLaser){
+                out += "\n" + "gsave";
+                out += "\n" + "1 0 0 setrgbcolor";
+                out += EPSToolKit.buildScrewMount(myAstrolabe);
+                out += "\n" + "0 setgray";
+                out += "\n" + "grestore";
+            }
         }
         if (myAstrolabe.getFrontPrintOption() != 1){ // not just the plate
             if (myAstrolabe.getShapeOption() == 1){
