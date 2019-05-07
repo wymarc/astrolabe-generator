@@ -962,6 +962,31 @@ public class BackPrintEngine {
             out += "\n" + point.getX() + " " + point.getY() + " lineto";
         }
         out += "\n" + "stroke";
+
+        Double outerlimit = myAstrolabe.getMaterRadius() - 80;
+        Double innerLimit = outerlimit/4.0;
+        boolean label = false;
+        double scaling = (outerlimit - innerLimit)/34.0;
+        for(int i = -14; i < 18; i++){
+            if((i == 0)||((i%10) == 0)){
+                label = true;
+            }else if((i%5) == 0){
+                label = true;
+            }else{
+                label = false;
+            }
+            double r = ((outerlimit+innerLimit)/2.0) - (i * scaling);
+            out += "\n" + "newpath";
+            out += "\n" + "0 0 " + r + " 0 360 arc stroke";
+
+            if(label){ //todo, southern herishere?
+                out += "\n" + "newpath";
+                out += "\n" + "NormalFont6 setfont";
+                out += "\n" + (r-5) + " 0  moveto";
+                out += "\n" + "( " + i + ") show";
+            }
+
+        }
         return out;
     }
 
