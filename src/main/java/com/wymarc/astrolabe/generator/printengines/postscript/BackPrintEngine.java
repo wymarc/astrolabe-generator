@@ -967,7 +967,7 @@ public class BackPrintEngine {
         Double innerLimit = outerlimit/4.0;
         boolean label = false;
         double scaling = (outerlimit - innerLimit)/34.0;
-        for(int i = -14; i < 18; i++){
+        for(int i = -14; i < 18; i = i + 2){
             if((i == 0)||((i%10) == 0)){
                 label = true;
             }else if((i%5) == 0){
