@@ -392,6 +392,157 @@ public class BackPrintEngine {
     /**
      * computes and draws the shadow squares
      *
+     * @return returns the ps code for drawing the Shadow Squares
+     */
+    private String drawShadowSquare() {
+        //compute size of box
+        // note eventually this will be done by looking at what rings are drawn and figuring
+        // the remaining radius
+        double shadowRadius = myAstrolabe.getMaterRadius() - 67;
+        if(myAstrolabe.getShowCotangentScale()){
+            //if we want to show the cotangent scale make room
+            shadowRadius = shadowRadius - 13;
+        }
+        double shadowSide = Math.sqrt((shadowRadius*shadowRadius)/2.0); //from pythagoras
+        double div = 12.0;
+        StringBuilder out = new StringBuilder();
+
+        if (isLaser){
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
+
+        out.append("\n").append("% Shadow square")
+                .append("\n").append("% =============== Create Shadow Square =================")
+                .append("\n").append("newpath")
+                .append("\n").append(shadowSide).append(" 0 moveto")
+                .append("\n").append(shadowSide).append(" ").append(-shadowSide).append(" lineto")
+                .append("\n").append("0 ").append(-shadowSide).append(" lineto stroke")
+                .append("\n").append("newpath")
+                .append("\n").append(shadowSide - 10).append(" 0 moveto")
+                .append("\n").append(shadowSide - 10).append(" ").append(-(shadowSide - 10)).append(" lineto")
+                .append("\n").append("0 ").append(-(shadowSide - 10)).append(" lineto stroke")
+                .append("\n").append("newpath")
+                .append("\n").append(shadowSide - 24).append(" 0 moveto")
+                .append("\n").append(shadowSide - 24).append(" ").append(-(shadowSide - 24)).append(" lineto")
+                .append("\n").append("0 ").append(-(shadowSide - 24)).append(" lineto stroke");
+
+        for (int count = 1; count < div; count++) {// print division lines
+            // determine angle
+            double angle = (45.0/12.0) * count;
+            // determine long and short mark intersections with sides
+            double outside = Math.tan(Math.toRadians(angle)) * shadowSide;
+            double middle = Math.tan(Math.toRadians(angle)) * (shadowSide - 10);
+            double inside = Math.tan(Math.toRadians(angle)) * (shadowSide - 24);
+
+            if (count == 4 || count == 8){
+                out.append("\n").append("newpath")
+                        .append("\n").append(shadowSide - 24).append(" ").append(-inside).append(" moveto")
+                        .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                        .append("\n").append(inside).append(" ").append(-(shadowSide - 24)).append(" moveto")
+                        .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
+            }else{
+                out.append("\n").append("newpath")
+                        .append("\n").append(shadowSide - 10).append(" ").append(-middle).append(" moveto")
+                        .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                        .append("\n").append(middle).append(" ").append(-(shadowSide - 10)).append(" moveto")
+                        .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
+            }
+        }
+
+        // Draw 45 line
+        out.append("\n").append("newpath")
+                .append("\n").append("0 0 moveto")
+                .append("\n").append(shadowSide).append(" ").append(-shadowSide).append(" lineto stroke");
+
+        if (isLaser){
+            out.append("\n").append("0 setgray");
+        }
+
+        // label
+        //determine locations of numbers on middle line
+        double four = Math.tan(Math.toRadians(7.5)) * (shadowSide - 10);
+        double eight = Math.tan(Math.toRadians(22.5)) * (shadowSide - 10);
+        double twelve = Math.tan(Math.toRadians(37.5)) * (shadowSide - 10);
+
+        //Mark degrees
+        if (isLaser){
+            out.append("\n").append("ArialFont10 setfont");
+        }else{
+            out.append("\n").append("NormalFont10 setfont");
+        }
+
+        out.append("\n").append("newpath")
+                //.append("\n").append("-10 0 moveto")
+                .append("\n").append(four).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("4"))
+                .append("\n").append(eight).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("8"))
+                .append("\n").append(twelve).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("12"));
+        out.append("\n").append("90 rotate");
+        out.append("\n").append("newpath")
+                //.append("\n").append("-10 0 moveto")
+                .append("\n").append(-four).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("4"))
+                .append("\n").append(-eight).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("8"))
+                .append("\n").append(-twelve).append(" ").append(-(shadowSide - 13)).append(" moveto")
+                .append("\n").append(EPSToolKit.centerText("12"));
+        out.append("\n").append("-90 rotate");
+
+        out.append("\n").append("% =============== End Shadow Square =================");
+
+        if(myAstrolabe.getBottomLeft() == 4) {
+            //Draw bottomleft horz shadow scale
+            String out2 = "";
+            out2 += "\n" + "% =============== Create Left Horz Shadow scale =================";
+            // draw box
+            out2 += "\n" + "0 0 1 setrgbcolor";
+            out2 += "\n" + "newpath";
+            out2 += "\n" + "0 0 moveto";
+            out2 += "\n" + "-182 0 lineto";
+            out2 += "\n" + "-182 -28 lineto";
+            out2 += "\n" + "0 -28 lineto";
+            out2 += "\n" + "0 0 lineto stroke";
+            out2 += "\n" + "newpath";
+            out2 += "\n" + "0 -28 moveto";
+            out2 += "\n" + "0 " + (-shadowSide) + " lineto stroke";
+
+
+            out2 += "\n" + "newpath";
+            out2 += "\n" + "0 -23 moveto";
+            out2 += "\n" + "-182 -23 lineto stroke";
+
+            for (int count = 0; count < 7; count++) {
+                out2 += "\n" + "newpath";
+                out2 += "\n" + (-count * 28) + " 0 moveto";
+                out2 += "\n" + (-count * 28) + " -28 lineto stroke";
+            }
+
+            for (int count = 0; count < 26; count++) {
+                out2 += "\n" + "newpath";
+                out2 += "\n" + (-count * 7) + " -23 moveto";
+                out2 += "\n" + (-count * 7) + " -28 lineto stroke";
+            }
+
+            out2 += "\n" + "0 setgray";
+            for (int count = 1; count < 7; count++) {
+                // label
+                out2 += "\n" + (-((count * 28) + 4)) + " -19 moveto";
+                out2 += "\n" + "NormalFont10 setfont";
+                out2 += EPSToolKit.centerText(Integer.toString(count));
+            }
+
+            out2 += "\n" + "% =============== End Left Horz Shadow scale =================";
+            out.append(out2);
+        }
+
+        return out.toString();
+    }
+
+    /**
+     * computes and draws the shadow squares
+     *
      * @return  returns the ps code for drawing the Shadow Squares
      */
     private String buildShadowSquare(){
@@ -976,17 +1127,22 @@ public class BackPrintEngine {
                 label = false;
             }
             double r = ((outerlimit+innerLimit)/2.0) - (i * scaling);
+
             out += "\n" + "newpath";
             out += "\n" + "0 0 " + r + " 0 360 arc stroke";
 
             if(label){ //todo, southern herishere?
                 out += "\n" + "newpath";
                 out += "\n" + "NormalFont6 setfont";
-                out += "\n" + (r-5) + " 0  moveto";
+                out += "\n" + (r-5) + " -10  moveto";
+                out += "\n" + "( " + i + ") show";
+                out += "\n" + -(r+4) + " -10  moveto";
                 out += "\n" + "( " + i + ") show";
             }
 
         }
+
+
         return out;
     }
 
@@ -1060,7 +1216,8 @@ public class BackPrintEngine {
 
         //print third and fourth quadrant
         out += "\n" + "gsave";
-        out += buildShadowSquare();
+        //out += buildShadowSquare();
+        out += drawShadowSquare();
         out += "\n" + "grestore";
 
         out += labelBack(myAstrolabe);
