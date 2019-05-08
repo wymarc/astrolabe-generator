@@ -1134,10 +1134,10 @@ public class BackPrintEngine {
             if(label){ //todo, southern herishere?
                 out += "\n" + "newpath";
                 out += "\n" + "NormalFont6 setfont";
-                out += "\n" + (r-5) + " -10  moveto";
-                out += "\n" + "( " + i + ") show";
-                out += "\n" + -(r+4) + " -10  moveto";
-                out += "\n" + "( " + i + ") show";
+                out += "\n" + r + " 0  moveto";
+                out += "\n" + EPSToolKit.centerText(i+"");
+                out += "\n" + -(r) + " 0  moveto";
+                out += "\n" + EPSToolKit.centerText(i+"");
             }
 
         }
