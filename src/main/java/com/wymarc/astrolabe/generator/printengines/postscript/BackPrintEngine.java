@@ -1138,11 +1138,15 @@ public class BackPrintEngine {
 
             if(label){ //todo, southern herishere?
                 out.append("\n").append("newpath");
+                out.append("\n").append("0 setgray");
                 out.append("\n").append("NormalFont6 setfont");
-                out.append("\n").append(" 0  moveto");
+                out.append("\n").append(r).append(" 0  moveto");
                 out.append("\n").append(EPSToolKit.centerText(i+""));
                 out.append("\n").append(-(r)).append(" 0  moveto");
                 out.append("\n").append(EPSToolKit.centerText(i+""));
+                if (isLaser){
+                    out.append("\n").append("0 0 1 setrgbcolor");
+                }
             }
 
         }
