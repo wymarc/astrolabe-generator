@@ -404,7 +404,7 @@ public class BackPrintEngine {
             shadowRadius = shadowRadius - 13;
         }
         double shadowSide = Math.sqrt((shadowRadius*shadowRadius)/2.0); //from pythagoras
-        double div = 12.0;
+        double div = 0.0;
         StringBuilder out = new StringBuilder();
 
         if (isLaser){
@@ -413,39 +413,55 @@ public class BackPrintEngine {
 
         if((myAstrolabe.getBottomRight() == 1)||(myAstrolabe.getBottomRight() == 2)||(myAstrolabe.getBottomRight() == 3)) {
             out.append("\n").append("% Shadow square")
-                    .append("\n").append("% =============== Create Shadow Square =================")
+                    .append("\n").append("% =============== Create Right Shadow Square =================")
                     .append("\n").append("newpath")
                     .append("\n").append(shadowSide).append(" 0 moveto")
                     .append("\n").append(shadowSide).append(" ").append(-shadowSide).append(" lineto")
                     .append("\n").append("0 ").append(-shadowSide).append(" lineto stroke")
                     .append("\n").append("newpath")
-                    .append("\n").append(shadowSide - 10).append(" 0 moveto")
-                    .append("\n").append(shadowSide - 10).append(" ").append(-(shadowSide - 10)).append(" lineto")
-                    .append("\n").append("0 ").append(-(shadowSide - 10)).append(" lineto stroke")
+                    .append("\n").append(shadowSide - 6).append(" 0 moveto")
+                    .append("\n").append(shadowSide - 6).append(" ").append(-(shadowSide - 6)).append(" lineto")
+                    .append("\n").append("0 ").append(-(shadowSide - 6)).append(" lineto stroke")
                     .append("\n").append("newpath")
-                    .append("\n").append(shadowSide - 24).append(" 0 moveto")
-                    .append("\n").append(shadowSide - 24).append(" ").append(-(shadowSide - 24)).append(" lineto")
-                    .append("\n").append("0 ").append(-(shadowSide - 24)).append(" lineto stroke");
+                    .append("\n").append(shadowSide - 12).append(" 0 moveto")
+                    .append("\n").append(shadowSide - 12).append(" ").append(-(shadowSide - 12)).append(" lineto")
+                    .append("\n").append("0 ").append(-(shadowSide - 12)).append(" lineto stroke");
+
+            //How many divisons? 7 10 12
+            if(myAstrolabe.getBottomRight() == 1){
+                div = 7.0;
+            }else if(myAstrolabe.getBottomRight() == 2){
+                div = 10.0;
+            }else if(myAstrolabe.getBottomRight() == 3){
+                div = 12.0;
+            }
+
 
             for (int count = 1; count < div; count++) {// print division lines
                 // determine angle
-                double angle = (45.0 / 12.0) * count;
+                double angle = (45.0 / div) * count;
                 // determine long and short mark intersections with sides
                 double outside = Math.tan(Math.toRadians(angle)) * shadowSide;
-                double middle = Math.tan(Math.toRadians(angle)) * (shadowSide - 10);
-                double inside = Math.tan(Math.toRadians(angle)) * (shadowSide - 24);
+                double middle = Math.tan(Math.toRadians(angle)) * (shadowSide - 6);
+                double inside = Math.tan(Math.toRadians(angle)) * (shadowSide - 12);
 
-                if (count == 4 || count == 8) {
+                if (div == 12.0 && count == 7) {
                     out.append("\n").append("newpath")
-                            .append("\n").append(shadowSide - 24).append(" ").append(-inside).append(" moveto")
+                            .append("\n").append(shadowSide - 12).append(" ").append(-inside).append(" moveto")
                             .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
-                            .append("\n").append(inside).append(" ").append(-(shadowSide - 24)).append(" moveto")
+                            .append("\n").append(inside).append(" ").append(-(shadowSide - 12)).append(" moveto")
+                            .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
+                } else if (div == 10.0 && count == 5) {
+                    out.append("\n").append("newpath")
+                            .append("\n").append(shadowSide - 12).append(" ").append(-inside).append(" moveto")
+                            .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                            .append("\n").append(inside).append(" ").append(-(shadowSide - 12)).append(" moveto")
                             .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
                 } else {
                     out.append("\n").append("newpath")
-                            .append("\n").append(shadowSide - 10).append(" ").append(-middle).append(" moveto")
+                            .append("\n").append(shadowSide - 6).append(" ").append(-middle).append(" moveto")
                             .append("\n").append(shadowSide).append(" ").append(-outside).append(" lineto stroke")
-                            .append("\n").append(middle).append(" ").append(-(shadowSide - 10)).append(" moveto")
+                            .append("\n").append(middle).append(" ").append(-(shadowSide - 6)).append(" moveto")
                             .append("\n").append(outside).append(" ").append(-shadowSide).append(" lineto stroke");
                 }
             }
@@ -458,84 +474,251 @@ public class BackPrintEngine {
             if (isLaser) {
                 out.append("\n").append("0 setgray");
             }
-
-            // label
-            //determine locations of numbers on middle line
-            double four = Math.tan(Math.toRadians(7.5)) * (shadowSide - 10);
-            double eight = Math.tan(Math.toRadians(22.5)) * (shadowSide - 10);
-            double twelve = Math.tan(Math.toRadians(37.5)) * (shadowSide - 10);
-
             //Mark degrees
             if (isLaser) {
-                out.append("\n").append("ArialFont10 setfont");
+                out.append("\n").append("ArialFont5 setfont");
             } else {
-                out.append("\n").append("NormalFont10 setfont");
+                out.append("\n").append("NormalFont5 setfont");
             }
 
-            out.append("\n").append("newpath")
-                    //.append("\n").append("-10 0 moveto")
-                    .append("\n").append(four).append(" ").append(-(shadowSide - 13)).append(" moveto")
-                    .append("\n").append(EPSToolKit.centerText("4"))
-                    .append("\n").append(eight).append(" ").append(-(shadowSide - 13)).append(" moveto")
-                    .append("\n").append(EPSToolKit.centerText("8"))
-                    .append("\n").append(twelve).append(" ").append(-(shadowSide - 13)).append(" moveto")
-                    .append("\n").append(EPSToolKit.centerText("12"));
+            if(div == 10){
+                // mark 5 line
+                out.append("\n").append((shadowSide/2.0)-18).append(" ").append(-(shadowSide-7)).append(" moveto");
+                out.append("\n").append("(5) show");
+                out.append("\n").append(shadowSide-10).append(" ").append(-((shadowSide/2.0)-8)).append(" moveto");
+                out.append("\n").append("(5) show");
+            }if(div == 12){
+                // mark 6 line
+                out.append("\n").append((shadowSide/2.0)-10).append(" ").append(-(shadowSide-7)).append(" moveto");
+                out.append("\n").append("(6) show");
+                out.append("\n").append(shadowSide-10).append(" ").append(-(shadowSide/2.0)).append(" moveto");
+                out.append("\n").append("(6) show");
+            }
+
+            // label 45 line
+            out.append("\n").append(shadowSide-16).append(" ").append(-(shadowSide-7)).append(" moveto");
+            out.append("\n").append("(").append(Math.round(div)).append(") show");
+
+            // Label
+            if (isLaser) {
+                out.append("\n").append("ArialFont8 setfont");
+            } else {
+                out.append("\n").append("NormalFont8 setfont");
+            }
+            out.append("\n").append(shadowSide/2.0).append(" ").append(-(shadowSide-15)).append(" moveto");
+            out.append("\n").append(EPSToolKit.centerText("Umbra Recta"));
+
             out.append("\n").append("90 rotate");
-            out.append("\n").append("newpath")
-                    //.append("\n").append("-10 0 moveto")
-                    .append("\n").append(-four).append(" ").append(-(shadowSide - 13)).append(" moveto")
-                    .append("\n").append(EPSToolKit.centerText("4"))
-                    .append("\n").append(-eight).append(" ").append(-(shadowSide - 13)).append(" moveto")
-                    .append("\n").append(EPSToolKit.centerText("8"))
-                    .append("\n").append(-twelve).append(" ").append(-(shadowSide - 13)).append(" moveto")
-                    .append("\n").append(EPSToolKit.centerText("12"));
+            out.append("\n").append(-(shadowSide/2.0)).append(" ").append(-(shadowSide-15)).append(" moveto");
+            out.append("\n").append(EPSToolKit.centerText("Umbra Versa"));
             out.append("\n").append("-90 rotate");
+            out.append("\n").append("% =============== End Right Shadow Square =================");
+
+            if((myAstrolabe.getBottomLeft() == 1)||(myAstrolabe.getBottomLeft() == 2)||(myAstrolabe.getBottomLeft() == 3)){
+                if (isLaser){
+                    out.append("\n").append("0 0 1 setrgbcolor");
+                }
+                out.append("\n").append("% Shadow square")
+                        .append("\n").append("% =============== Create Left Shadow Square =================")
+                        .append("\n").append("newpath")
+                        .append("\n").append(-shadowSide).append(" 0 moveto")
+                        .append("\n").append(-shadowSide).append(" ").append(-shadowSide).append(" lineto")
+                        .append("\n").append("0 ").append(-shadowSide).append(" lineto stroke")
+                        .append("\n").append("newpath")
+                        .append("\n").append(-(shadowSide - 6)).append(" 0 moveto")
+                        .append("\n").append(-(shadowSide - 6)).append(" ").append(-(shadowSide - 6)).append(" lineto")
+                        .append("\n").append("0 ").append(-(shadowSide - 6)).append(" lineto stroke")
+                        .append("\n").append("newpath")
+                        .append("\n").append(-(shadowSide - 12)).append(" 0 moveto")
+                        .append("\n").append(-(shadowSide - 12)).append(" ").append(-(shadowSide - 12)).append(" lineto")
+                        .append("\n").append("0 ").append(-(shadowSide - 12)).append(" lineto stroke");
+
+                //How many divisons? 7 10 12
+                if(myAstrolabe.getBottomLeft() == 1){
+                    div = 7.0;
+                }else if(myAstrolabe.getBottomLeft() == 2){
+                    div = 10.0;
+                }else if(myAstrolabe.getBottomLeft() == 3){
+                    div = 12.0;
+                }
+
+                for (int count = 1; count < div; count++) {// print division lines
+                    // determine angle
+                    double angle = (45.0 / div) * count;
+                    // determine long and short mark intersections with sides
+                    double outside = Math.tan(Math.toRadians(angle)) * shadowSide;
+                    double middle = Math.tan(Math.toRadians(angle)) * (shadowSide - 6);
+                    double inside = Math.tan(Math.toRadians(angle)) * (shadowSide - 12);
+
+                    if (div == 12.0 && count == 7) {
+                        out.append("\n").append("newpath")
+                                .append("\n").append(-(shadowSide - 12)).append(" ").append(-inside).append(" moveto")
+                                .append("\n").append(-shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                                .append("\n").append(-inside).append(" ").append(-(shadowSide - 12)).append(" moveto")
+                                .append("\n").append(-outside).append(" ").append(-shadowSide).append(" lineto stroke");
+                    } else if (div == 10.0 && count == 5) {
+                        out.append("\n").append("newpath")
+                                .append("\n").append(-(shadowSide - 12)).append(" ").append(-inside).append(" moveto")
+                                .append("\n").append(-shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                                .append("\n").append(-inside).append(" ").append(-(shadowSide - 12)).append(" moveto")
+                                .append("\n").append(-outside).append(" ").append(-shadowSide).append(" lineto stroke");
+                    } else {
+                        out.append("\n").append("newpath")
+                                .append("\n").append(-(shadowSide - 6)).append(" ").append(-middle).append(" moveto")
+                                .append("\n").append(-shadowSide).append(" ").append(-outside).append(" lineto stroke")
+                                .append("\n").append(-middle).append(" ").append(-(shadowSide - 6)).append(" moveto")
+                                .append("\n").append(-outside).append(" ").append(-shadowSide).append(" lineto stroke");
+                    }
+                }
+
+                // Draw 45 line
+                out.append("\n").append("newpath")
+                        .append("\n").append("0 0 moveto")
+                        .append("\n").append(-shadowSide).append(" ").append(-shadowSide).append(" lineto stroke");
+
+                if (isLaser) {
+                    out.append("\n").append("0 setgray");
+                }
+
+                //Mark degrees
+                if (isLaser) {
+                    out.append("\n").append("ArialFont5 setfont");
+                } else {
+                    out.append("\n").append("NormalFont5 setfont");
+                }
+
+                if(div == 10){
+                    // mark 5 line
+                    out.append("\n").append(-((shadowSide/2.0)-16)).append(" ").append(-(shadowSide-7)).append(" moveto");
+                    out.append("\n").append("(5) show");
+                    out.append("\n").append(-(shadowSide-8)).append(" ").append(-((shadowSide/2.0)-8)).append(" moveto");
+                    out.append("\n").append("(5) show");
+                }if(div == 12){
+                    // mark 6 line
+                    out.append("\n").append(-((shadowSide/2.0)-8)).append(" ").append(-(shadowSide-7)).append(" moveto");
+                    out.append("\n").append("(6) show");
+                    out.append("\n").append(-(shadowSide-8)).append(" ").append(-(shadowSide/2.0)).append(" moveto");
+                    out.append("\n").append("(6) show");
+                }
+
+                // label 45 line
+                out.append("\n").append(-(shadowSide-16)).append(" ").append(-(shadowSide-7)).append(" moveto");
+                out.append("\n").append("(").append(Math.round(div)).append(") show");
+
+                // Label
+                if (isLaser) {
+                    out.append("\n").append("ArialFont8 setfont");
+                } else {
+                    out.append("\n").append("NormalFont8 setfont");
+                }
+                out.append("\n").append(-(shadowSide/2.0)).append(" ").append(-(shadowSide-15)).append(" moveto");
+                out.append("\n").append(EPSToolKit.centerText("Umbra Recta"));
+
+                out.append("\n").append("-90 rotate");
+                out.append("\n").append(shadowSide/2.0).append(" ").append(-(shadowSide-15)).append(" moveto");
+                out.append("\n").append(EPSToolKit.centerText("Umbra Versa"));
+                out.append("\n").append("90 rotate");
+                out.append("\n").append("% =============== End Left Shadow Square =================");
+            }
+
+            // Draw centerline
+            out.append("\n").append("newpath")
+                    .append("\n").append("0 0 moveto")
+                    .append("\n").append("0").append(" ").append(-shadowSide).append(" lineto stroke");
 
             out.append("\n").append("% =============== End Shadow Square =================");
         }
         if(myAstrolabe.getBottomLeft() == 4) {
             //Draw bottomleft horz shadow scale
-            String out2 = "";
-            out2 += "\n" + "% =============== Create Left Horz Shadow scale =================";
+            out.append("\n").append("% =============== Create Left Horz Shadow scale =================");
             // draw box
-            out2 += "\n" + "0 0 1 setrgbcolor";
-            out2 += "\n" + "newpath";
-            out2 += "\n" + "0 0 moveto";
-            out2 += "\n" + "-182 0 lineto";
-            out2 += "\n" + "-182 -28 lineto";
-            out2 += "\n" + "0 -28 lineto";
-            out2 += "\n" + "0 0 lineto stroke";
-            out2 += "\n" + "newpath";
-            out2 += "\n" + "0 -28 moveto";
-            out2 += "\n" + "0 " + (-shadowSide) + " lineto stroke";
+            out.append("\n").append("0 0 1 setrgbcolor");
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 0 moveto");
+            out.append("\n").append("-182 0 lineto");
+            out.append("\n").append("-182 -28 lineto");
+            out.append("\n").append("0 -28 lineto");
+            out.append("\n").append("0 0 lineto stroke");
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 -28 moveto");
+            out.append("\n").append("0 ").append(-shadowSide).append(" lineto stroke");
 
 
-            out2 += "\n" + "newpath";
-            out2 += "\n" + "0 -23 moveto";
-            out2 += "\n" + "-182 -23 lineto stroke";
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 -23 moveto");
+            out.append("\n").append("-182 -23 lineto stroke");
 
             for (int count = 0; count < 7; count++) {
-                out2 += "\n" + "newpath";
-                out2 += "\n" + (-count * 28) + " 0 moveto";
-                out2 += "\n" + (-count * 28) + " -28 lineto stroke";
+                out.append("\n").append("newpath");
+                out.append("\n").append(-count * 28).append(" 0 moveto");
+                out.append("\n").append(-count * 28).append(" -28 lineto stroke");
             }
 
             for (int count = 0; count < 26; count++) {
-                out2 += "\n" + "newpath";
-                out2 += "\n" + (-count * 7) + " -23 moveto";
-                out2 += "\n" + (-count * 7) + " -28 lineto stroke";
+                out.append("\n").append("newpath");
+                out.append("\n").append(-count * 7).append(" -23 moveto");
+                out.append("\n").append(-count * 7).append(" -28 lineto stroke");
             }
 
-            out2 += "\n" + "0 setgray";
+            if (isLaser) {
+                out.append("\n").append("ArialFont10 setfont");
+            } else {
+                out.append("\n").append("NormalFont10 setfont");
+            }
             for (int count = 1; count < 7; count++) {
                 // label
-                out2 += "\n" + (-((count * 28) + 4)) + " -19 moveto";
-                out2 += "\n" + "NormalFont10 setfont";
-                out2 += EPSToolKit.centerText(Integer.toString(count));
+                out.append("\n").append(-((count * 28) + 4)).append(" -19 moveto");
+                out.append("\n").append(EPSToolKit.centerText(Integer.toString(count)));
             }
 
-            out2 += "\n" + "% =============== End Left Horz Shadow scale =================";
-            out.append(out2);
+            out.append("\n").append("% =============== End Left Horz Shadow scale =================");
+        }
+
+        if(myAstrolabe.getBottomRight() == 4){
+            //Draw bottom right horz shadow scale
+            out.append("\n").append("% =============== Create Right Horz Shadow scale =================");
+            // draw box
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 0 moveto");
+            out.append("\n").append("182 0 lineto");
+            out.append("\n").append("182 -28 lineto");
+            out.append("\n").append("0 -28 lineto");
+            out.append("\n").append("0 0 lineto stroke");
+
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 -23 moveto");
+            out.append("\n").append("182 -23 lineto stroke");
+
+            for (int count = 0; count < 7; count++){
+                out.append("\n").append("newpath");
+                out.append("\n").append(count * 28).append(" 0 moveto");
+                out.append("\n").append(count * 28).append(" -28 lineto stroke");
+            }
+
+            for (int count = 0; count < 26; count++){
+                out.append("\n").append("newpath");
+                out.append("\n").append(count * 7).append(" -23 moveto");
+                out.append("\n").append(count * 7).append(" -28 lineto stroke");
+            }
+
+            if (isLaser) {
+                out.append("\n").append("ArialFont5 setfont");
+            } else {
+                out.append("\n").append("NormalFont5 setfont");
+            }
+
+            for (int count = 1; count < 7; count++){
+                out.append("\n").append((count * 28) + 4).append(" -19 moveto");
+                out.append("\n").append(EPSToolKit.centerText(Integer.toString(count)));
+            }
+
+            out.append("\n").append("% =============== End Right Horz Shadow scale =================");
+        }
+
+        if (myAstrolabe.getShowCotangentScale()){
+            out.append("\n").append("gsave");
+            out.append(buildCotangentScale(myAstrolabe));
+            out.append("\n").append("grestore");
         }
 
         return out.toString();
@@ -1148,7 +1331,6 @@ public class BackPrintEngine {
                     out.append("\n").append("0 0 1 setrgbcolor");
                 }
             }
-
         }
         return out.toString();
     }
