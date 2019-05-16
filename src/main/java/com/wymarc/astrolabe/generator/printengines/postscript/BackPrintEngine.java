@@ -55,12 +55,14 @@ public class BackPrintEngine {
         t = AstroMath.getT();
         lineOfApsides = AstroMath.angleOfLineOfApsides(t);
         out += "\n" + -lineOfApsides + " rotate";// rotate to line up line of apsides with 0 degrees
-        out += "\n" + "%% draw Line of Apsides";
-        //out += "\n" + ".4 setlinewidth";
-        out += "\n" + "newpath";
-        out += "\n" + -(myAstrolabe.getMaterRadius() - 30) + " 0 moveto";
-        out += "\n" + (myAstrolabe.getMaterRadius() - 30) + " 0 lineto";
-        out += "\n" + "stroke";
+        if (!isLaser) {
+            out += "\n" + "%% draw Line of Apsides";
+            //out += "\n" + ".4 setlinewidth";
+            out += "\n" + "newpath";
+            out += "\n" + -(myAstrolabe.getMaterRadius() - 30) + " 0 moveto";
+            out += "\n" + (myAstrolabe.getMaterRadius() - 30) + " 0 lineto";
+            out += "\n" + "stroke";
+        }
         //out += "\n" + ".1 setlinewidth";        
 
         //step 2 find the offset and set the origin to it
@@ -70,8 +72,10 @@ public class BackPrintEngine {
         out += "\n" + -delta + " 0 translate"; // center on calendar center
 
         //step 3 draw the ring outlines
-        out += "\n" + "1 setgray";
-        out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc fill"; //use fill to remove hidden parts of line of apsides
+        if (!isLaser) {
+            out += "\n" + "1 setgray";
+            out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc fill"; //use fill to remove hidden parts of line of apsides
+        }
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 " + (calendarRadius) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (calendarRadius - 5) + " 0 360 arc stroke";
@@ -357,8 +361,16 @@ public class BackPrintEngine {
             //out += "\n" + "NormalFont5 setfont";
             //out = drawInsideCircularText(out, i.toString(), 5, 0, (cotangentRadius + 10));
             if(i <= 12 || i == 14 || i == 16 || i == 18 || i == 21){
-                out += "\n" + "NormalFont5 setfont";
+                if (isLaser) {
+                    out += "\n" + "0 setgray";
+                    out += "\n" + "ArialFont5 setfont";
+                } else{
+                    out += "\n" + "NormalFont5 setfont";
+                }
                 out += EPSToolKit.drawInsideCircularText(Integer.toString(i), 5, 0, (cotangentRadius + 10));
+                if (isLaser) {
+                    out += "\n" + "0 0 1 setrgbcolor";
+                }
             }
             out += "\n" + angle + " rotate";
         }
@@ -371,7 +383,16 @@ public class BackPrintEngine {
             out += "\n" + (cotangentRadius + 7) + " 0 lineto stroke";
             if(i <= 10 || i == 12 || i == 14 || i == 16 || i == 18 || i == 20 || i == 24 || i == 28 || i == 32){
                 out += "\n" + "NormalFont5 setfont";
+                if (isLaser) {
+                    out += "\n" + "0 setgray";
+                    out += "\n" + "ArialFont5 setfont";
+                } else{
+                    out += "\n" + "NormalFont5 setfont";
+                }
                 out += EPSToolKit.drawInsideCircularText(Integer.toString(i), 5, 0, (cotangentRadius + 10));
+                if (isLaser) {
+                    out += "\n" + "0 0 1 setrgbcolor";
+                }
             }
             out += "\n" + -angle + " rotate";
         }
@@ -394,7 +415,7 @@ public class BackPrintEngine {
      *
      * @return returns the ps code for drawing the Shadow Squares
      */
-    private String drawShadowSquare() {
+    private String buildShadowSquare() {
         //compute size of box
         // note eventually this will be done by looking at what rings are drawn and figuring
         // the remaining radius
@@ -411,7 +432,7 @@ public class BackPrintEngine {
             out.append("\n").append("0 0 1 setrgbcolor");
         }
 
-        if((myAstrolabe.getBottomRight() == 1)||(myAstrolabe.getBottomRight() == 2)||(myAstrolabe.getBottomRight() == 3)) {
+        if(myAstrolabe.getBottomRight() == 1 || myAstrolabe.getBottomRight() == 2 || myAstrolabe.getBottomRight() == 3) {
             out.append("\n").append("% Shadow square")
                     .append("\n").append("% =============== Create Right Shadow Square =================")
                     .append("\n").append("newpath")
@@ -620,12 +641,6 @@ public class BackPrintEngine {
                 out.append("\n").append("90 rotate");
                 out.append("\n").append("% =============== End Left Shadow Square =================");
             }
-
-            // Draw centerline
-            out.append("\n").append("newpath")
-                    .append("\n").append("0 0 moveto")
-                    .append("\n").append("0").append(" ").append(-shadowSide).append(" lineto stroke");
-
             out.append("\n").append("% =============== End Shadow Square =================");
         }
         if(myAstrolabe.getBottomLeft() == 4) {
@@ -637,33 +652,33 @@ public class BackPrintEngine {
             out.append("\n").append("0 0 moveto");
             out.append("\n").append("-182 0 lineto");
             out.append("\n").append("-182 -28 lineto");
-            out.append("\n").append("0 -28 lineto");
-            out.append("\n").append("0 0 lineto stroke");
+            out.append("\n").append("0 -28 lineto stroke");
             out.append("\n").append("newpath");
-            out.append("\n").append("0 -28 moveto");
-            out.append("\n").append("0 ").append(-shadowSide).append(" lineto stroke");
-
 
             out.append("\n").append("newpath");
             out.append("\n").append("0 -23 moveto");
             out.append("\n").append("-182 -23 lineto stroke");
 
-            for (int count = 0; count < 7; count++) {
+            for (int count = 1; count < 7; count++) {
                 out.append("\n").append("newpath");
                 out.append("\n").append(-count * 28).append(" 0 moveto");
                 out.append("\n").append(-count * 28).append(" -28 lineto stroke");
             }
 
-            for (int count = 0; count < 26; count++) {
+            for (int count = 1; count < 26; count++) {
                 out.append("\n").append("newpath");
                 out.append("\n").append(-count * 7).append(" -23 moveto");
                 out.append("\n").append(-count * 7).append(" -28 lineto stroke");
             }
 
             if (isLaser) {
-                out.append("\n").append("ArialFont10 setfont");
+                out.append("\n").append("0 setgray");
+            }
+
+            if (isLaser) {
+                out.append("\n").append("ArialFont5 setfont");
             } else {
-                out.append("\n").append("NormalFont10 setfont");
+                out.append("\n").append("NormalFont5 setfont");
             }
             for (int count = 1; count < 7; count++) {
                 // label
@@ -677,25 +692,28 @@ public class BackPrintEngine {
         if(myAstrolabe.getBottomRight() == 4){
             //Draw bottom right horz shadow scale
             out.append("\n").append("% =============== Create Right Horz Shadow scale =================");
+            if (isLaser){
+                out.append("\n").append("0 0 1 setrgbcolor");
+            }
             // draw box
             out.append("\n").append("newpath");
             out.append("\n").append("0 0 moveto");
             out.append("\n").append("182 0 lineto");
             out.append("\n").append("182 -28 lineto");
-            out.append("\n").append("0 -28 lineto");
-            out.append("\n").append("0 0 lineto stroke");
+            out.append("\n").append("0 -28 lineto stroke");
+            //out.append("\n").append("0 0 lineto stroke");
 
             out.append("\n").append("newpath");
             out.append("\n").append("0 -23 moveto");
             out.append("\n").append("182 -23 lineto stroke");
 
-            for (int count = 0; count < 7; count++){
+            for (int count = 1; count < 7; count++){
                 out.append("\n").append("newpath");
                 out.append("\n").append(count * 28).append(" 0 moveto");
                 out.append("\n").append(count * 28).append(" -28 lineto stroke");
             }
 
-            for (int count = 0; count < 26; count++){
+            for (int count = 1; count < 26; count++){
                 out.append("\n").append("newpath");
                 out.append("\n").append(count * 7).append(" -23 moveto");
                 out.append("\n").append(count * 7).append(" -28 lineto stroke");
@@ -715,6 +733,21 @@ public class BackPrintEngine {
             out.append("\n").append("% =============== End Right Horz Shadow scale =================");
         }
 
+        // Draw centerline
+        if (isLaser) {
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
+        if (myAstrolabe.getBottomRight() != 0 && myAstrolabe.getBottomRight() != 4 &
+                myAstrolabe.getBottomLeft() != 0 & myAstrolabe.getBottomLeft() != 4){
+            out.append("\n").append("newpath")
+                    .append("\n").append("0 0 moveto")
+                    .append("\n").append("0").append(" ").append(-shadowSide).append(" lineto stroke");
+        }else if (myAstrolabe.getBottomRight() == 4 || myAstrolabe.getBottomLeft() == 4){
+            out.append("\n").append("newpath")
+                    .append("\n").append("0 0 moveto")
+                    .append("\n").append("0 -28 lineto stroke");
+        }
+
         if (myAstrolabe.getShowCotangentScale()){
             out.append("\n").append("gsave");
             out.append(buildCotangentScale(myAstrolabe));
@@ -729,7 +762,7 @@ public class BackPrintEngine {
      *
      * @return  returns the ps code for drawing the Shadow Squares
      */
-    private String buildShadowSquare(){
+    private String buildShadowSquareold(){
         //compute size of box
         // note eventually this will be done by looking at what rings are drawn and figuring
         // the remaining radius
@@ -1241,6 +1274,8 @@ public class BackPrintEngine {
         double localPos;
         String out = "";
 
+        out += "\n" + "0 setgray";
+
         if(myAstrolabe.getShowConcentricCalendar()){
             fecitPos = myAstrolabe.getMaterRadius() - 60;
         }else{
@@ -1406,7 +1441,7 @@ public class BackPrintEngine {
         //print third and fourth quadrant
         out += "\n" + "gsave";
         //out += buildShadowSquare();
-        out += drawShadowSquare();
+        out += buildShadowSquare();
         out += "\n" + "grestore";
 
         out += labelBack(myAstrolabe);
@@ -1451,16 +1486,21 @@ public class BackPrintEngine {
 
         // mark pivot point
         out += "\n" + "%% Mark pivot";
-        out += "\n" + "1 setgray";
-        out += "\n" + "0 0 5 0 360 arc fill";
+        out += "\n" + "newpath";
+        if (!isLaser){
+            out += "\n" + "1 setgray";
+            out += "\n" + "0 0 5 0 360 arc fill";
+        }
         out += "\n" + "0 setgray";
         out += "\n" + "0 0 5 0 360 arc stroke";
-        out += "\n" + "newpath";
-        out += "\n" + "-5 0 moveto";
-        out += "\n" + "5 0 lineto stroke";
-        out += "\n" + "newpath";
-        out += "\n" + "0 5 moveto";
-        out += "\n" + "0 -5 lineto stroke";
+        if (!isLaser){
+            out += "\n" + "newpath";
+            out += "\n" + "-5 0 moveto";
+            out += "\n" + "5 0 lineto stroke";
+            out += "\n" + "newpath";
+            out += "\n" + "0 5 moveto";
+            out += "\n" + "0 -5 lineto stroke";
+        }
         out += "\n" + "";
 
         // Write Footer 
