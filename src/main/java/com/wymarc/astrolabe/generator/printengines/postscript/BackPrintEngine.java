@@ -253,29 +253,32 @@ public class BackPrintEngine {
         int i;
         double Ri;
         InterSect myInterSect;
-        String out = "";
+        StringBuilder out = new StringBuilder();
 
-        out += "\n" + "%% ================ Draw Unequal Hours =================";
+        out.append("\n").append("%% ================ Draw Unequal Hours =================");
+        if (isLaser){
+            out.append("\n").append("0 0 1 setrgbcolor");
+        }
 
         if ((myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3) && myAstrolabe.getTopRight() == 1){
             //both first and second quadrants unequal hours
-            out += "\n" + "newpath";
-            out += "\n" + -unequalRadius + " 0 moveto";
-            out += "\n" + unequalRadius + " 0 lineto";
-            out += "\n" + "0 0 " + unequalRadius + " 0 180 arc stroke";
+            out.append("\n").append("newpath");
+            out.append("\n").append(-unequalRadius).append(" 0 moveto");
+            out.append("\n").append(unequalRadius).append(" 0 lineto");
+            out.append("\n").append("0 0 ").append(unequalRadius).append(" 0 180 arc stroke");
         } else if (myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3){
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + "0 " + unequalRadius + " lineto";
-            out += "\n" + "0 0 " + unequalRadius + " 90 180 arc";
-            out += "\n" + "0 0 lineto stroke";
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 0 moveto");
+            out.append("\n").append("0 ").append(unequalRadius).append(" lineto");
+            out.append("\n").append("0 0 ").append(unequalRadius).append(" 90 180 arc");
+            out.append("\n").append("0 0 lineto stroke");
 
         }else if (myAstrolabe.getTopRight() == 1){
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + unequalRadius + " 0 lineto";
-            out += "\n" + "0 0 " + unequalRadius + " 0 90 arc";
-            out += "\n" + "0 0 lineto stroke";
+            out.append("\n").append("newpath");
+            out.append("\n").append("0 0 moveto");
+            out.append("\n").append(unequalRadius).append(" 0 lineto");
+            out.append("\n").append("0 0 ").append(unequalRadius).append(" 0 90 arc");
+            out.append("\n").append("0 0 lineto stroke");
         }
 
         if (myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3){
@@ -284,9 +287,11 @@ public class BackPrintEngine {
                 Ri = (unequalRadius/(2*(Math.sin(Math.toRadians(15*i)))));
                 myInterSect = new InterSect(0, Ri, Ri, 0, 0, unequalRadius);
                 if ((i==3)||(i==4)||(i==5)){
-                    out += "\n" + "0 " + Ri + " " + Ri + " " + myInterSect.getAngle2() + " 270 arc stroke";
+                    out.append("\n").append("0 ").append(Ri).append(" ").append(Ri).append(" ")
+                            .append(myInterSect.getAngle2()).append(" 270 arc stroke");
                 }else{
-                    out += "\n" + "0 " + Ri + " " + Ri + " " + myInterSect.getAngle1() + " 270 arc stroke";
+                    out.append("\n").append("0 ").append(Ri).append(" ").append(Ri).append(" ")
+                            .append(myInterSect.getAngle1()).append(" 270 arc stroke");
                 }
             }
         }
@@ -297,35 +302,53 @@ public class BackPrintEngine {
                 Ri = (unequalRadius/(2*(Math.sin(Math.toRadians(15*i)))));
                 myInterSect = new InterSect(0, Ri, Ri, 0, 0, unequalRadius);
                 if ((i==3)||(i==4)||(i==5)){
-                    out += "\n" + "0 " + Ri + " " + Ri +" 270 " + myInterSect.getAngle1() + " arc stroke";
+                    out.append("\n").append("0 ").append(Ri).append(" ").append(Ri).append(" 270 ")
+                            .append(myInterSect.getAngle1()).append(" arc stroke");
                 }else{
-                    out += "\n" + "0 " + Ri + " " + Ri +" 270 " + myInterSect.getAngle2() + " arc stroke";
+                    out.append("\n").append("0 ").append(Ri).append(" ").append(Ri).append(" 270 ")
+                            .append(myInterSect.getAngle2()).append(" arc stroke");
                 }
             }
         }
 
+        if (isLaser){
+            out.append("\n").append("0 setgray");
+        }
+
         if ((myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3) && myAstrolabe.getTopRight() == 1){
             //both first and second quadrants unequal hours
-            out += "\n" + "NormalFont5 setfont";
+            if (isLaser) {
+                out.append("\n").append("ArialFont5 setfont");
+            } else {
+                out.append("\n").append("NormalFont5 setfont");
+            }
             for (i = 1; i <= 11; i++){
-                out += EPSToolKit.drawOutsideCircularText(Integer.toString(i), 5, (180 - (i*15)), unequalRadius +2);
+                out.append("\n").append(EPSToolKit.drawOutsideCircularText(Integer.toString(i), 5, (180 - (i*15)), unequalRadius +2));
             }
         }else if(myAstrolabe.getTopLeft() == 1 || myAstrolabe.getTopLeft() == 3){
-            out += "\n" + "NormalFont5 setfont";
+            if (isLaser) {
+                out.append("\n").append("ArialFont5 setfont");
+            } else {
+                out.append("\n").append("NormalFont5 setfont");
+            }
             for (i = 1; i <= 6; i++){
-                out += EPSToolKit.drawOutsideCircularText(Integer.toString(7-i), 5, (90+((i-1)*15)), unequalRadius +2);
+                out.append("\n").append(EPSToolKit.drawOutsideCircularText(Integer.toString(7-i), 5, (90+((i-1)*15)), unequalRadius +2));
             }
         }else if(myAstrolabe.getTopRight() == 1){
-            out += "\n" + "NormalFont5 setfont";
+            if (isLaser) {
+                out.append("\n").append("ArialFont5 setfont");
+            } else {
+                out.append("\n").append("NormalFont5 setfont");
+            }
             for (i = 1; i <= 6; i++)
             {
-                out += EPSToolKit.drawOutsideCircularText(Integer.toString(i), 5, ((i*15)), unequalRadius +2);
+                out.append("\n").append(EPSToolKit.drawOutsideCircularText(Integer.toString(i), 5, ((i*15)), unequalRadius +2));
             }
         }
 
-        out += "\n" + "%% ================ End Unequal Hours =================";
+        out.append("\n").append("%% ================ End Unequal Hours =================");
 
-        return out;
+        return out.toString();
     }
 
     /**
@@ -758,306 +781,6 @@ public class BackPrintEngine {
     }
 
     /**
-     * computes and draws the shadow squares
-     *
-     * @return  returns the ps code for drawing the Shadow Squares
-     */
-    private String buildShadowSquareold(){
-        //compute size of box
-        // note eventually this will be done by looking at what rings are drawn and figuring
-        // the remaining radius
-        double shadowRadius = myAstrolabe.getMaterRadius() - 67;
-        if(myAstrolabe.getShowCotangentScale()){
-            //if we want to show the cotangent scale make room
-            shadowRadius = shadowRadius - 13;
-        }
-        double shadowSide = Math.sqrt((shadowRadius*shadowRadius)/2.0); //from pythagoras
-        int count;
-        double div = 0.0;
-        String out = "";
-
-        if((myAstrolabe.getBottomRight() == 1)||(myAstrolabe.getBottomRight() == 2)||(myAstrolabe.getBottomRight() == 3)){
-            //Draw bottom right	
-            out += "\n" + "% =============== Create Right Shadow Square =================";
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + shadowSide + " 0 lineto";
-            out += "\n" + shadowSide + " "+ (-shadowSide) + " lineto";
-            out += "\n" + "0 "+ (-shadowSide) + " lineto";
-            out += "\n" + "0 0 lineto stroke";
-            out += "\n" + "0 0 moveto";
-
-            //How many divisons? 7 10 12
-            if(myAstrolabe.getBottomRight() == 1){
-                div = 7.0;
-            }else if(myAstrolabe.getBottomRight() == 2){
-                div = 10.0;
-            }else if(myAstrolabe.getBottomRight() == 3){
-                div = 12.0;
-            }
-
-            for (count = 1; count < div; count++){
-                // print division lines
-                out += "\n" + "0 0 moveto";
-                out += "\n" + shadowSide + " "+ (-((shadowSide/div)*count)) + " lineto stroke";
-                out += "\n" + "0 0 moveto";
-                out += "\n" + ((shadowSide/div)*count) + " "+ (-shadowSide) + " lineto stroke";
-            }
-
-            out += "\n" + "newpath";
-            out += "\n" + "1 setgray";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + (shadowSide-6) + " 0 lineto";
-            out += "\n" + (shadowSide-6) + " "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 0 lineto fill";
-            out += "\n" + "newpath";
-            out += "\n" + "0 setgray";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + (shadowSide-6) + " 0 lineto";
-            out += "\n" + (shadowSide-6) + " "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 0 lineto stroke";
-
-            if(div == 10 || div == 12){
-                // if side is divided into ten or 12 sections
-                //draw 1/2 way mark
-                out += "\n" + "0 0 moveto";
-                out += "\n" + shadowSide + " "+ (-shadowSide/2.0) + " lineto stroke";
-                out += "\n" + "0 0 moveto";
-                out += "\n" + shadowSide/2.0 + " "+ (-shadowSide) + " lineto stroke";
-                out += "\n" + "newpath";
-                out += "\n" + "1 setgray";
-                out += "\n" + "0 0 moveto";
-                out += "\n" + (shadowSide-12) + " 0 lineto";
-                out += "\n" + (shadowSide-12) + " "+ (-(shadowSide-12)) + " lineto";
-                out += "\n" + "0 "+ (-(shadowSide-12)) + " lineto";
-                out += "\n" + "0 0 lineto fill";
-                out += "\n" + "0 setgray";
-                out += "\n" + ((shadowSide/2.0)-8) + " "+ (-(shadowSide-7)) + " moveto";
-                out += "\n" + "NormalFont5 setfont";
-                if(div == 10){
-                    // mark 5 line
-                    out += "\n" + "(5) show";
-                    out += "\n" + ((shadowSide-10)) + " "+ (-(shadowSide/2.0)) + " moveto";
-                    out += "\n" + "(5) show";
-                }if(div == 12){
-                    // mark 6 line
-                    out += "\n" + "(6) show";
-                    out += "\n" + ((shadowSide-10)) + " "+ (-(shadowSide/2.0)) + " moveto";
-                    out += "\n" + "(6) show";
-                }
-            }
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + (shadowSide-12) + " 0 lineto";
-            out += "\n" + (shadowSide-12) + " "+ (-(shadowSide-12)) + " lineto";
-            out += "\n" + "0 "+ (-(shadowSide-12)) + " lineto";
-            out += "\n" + "0 0 lineto stroke";
-            out += "\n" + "0 0 moveto";
-            // mark 45 line
-            out += "\n" + shadowSide + " "+ (-shadowSide) + " lineto stroke"; // 45 line                   
-            out += "\n" + (shadowSide-16) + " "+ (-(shadowSide-7)) + " moveto";
-            out += "\n" + "NormalFont5 setfont";
-            out += "\n" + "("+ Math.round(div) +") show"; // round to get rid of decimal
-
-            // Label
-            out += "\n" + shadowSide/2.0 + " "+ (-(shadowSide-15)) + " moveto";
-            out += "\n" + "NormalFont8 setfont";
-            out += EPSToolKit.centerText("Umbra Recta");
-
-            out += "\n" + 90 + " rotate";
-            out += "\n" + -(shadowSide/2.0) + " "+ (-(shadowSide-15)) + " moveto";
-            out += "\n" + "NormalFont8 setfont";
-            out += EPSToolKit.centerText("Umbra Versa");
-            out += "\n" + -90 + " rotate";
-            out += "\n" + "% =============== End Right Shadow Square =================";
-        }
-
-        if((myAstrolabe.getBottomLeft() == 1)||(myAstrolabe.getBottomLeft() == 2)||(myAstrolabe.getBottomLeft() == 3)){
-            //Draw bottomleft
-            out += "\n" + "% =============== Create Left Shadow Square =================";
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + (-shadowSide) + " 0 lineto";
-            out += "\n" + (-shadowSide) + " "+ (-shadowSide) + " lineto";
-            out += "\n" + "0 "+ (-shadowSide) + " lineto";
-            out += "\n" + "0 0 lineto stroke";
-
-            out += "\n" + "0 0 moveto";
-
-            //How many divisons? 7 10 12
-            if(myAstrolabe.getBottomLeft() == 1){
-                div = 7.0;
-            }else if(myAstrolabe.getBottomLeft() == 2){
-                div = 10.0;
-            }else if(myAstrolabe.getBottomLeft() == 3){
-                div = 12.0;
-            }
-
-            for (count = 1; count < div; count++){
-                // print divison lines
-                out += "\n" + "0 0 moveto";
-                out += "\n" + (-shadowSide) + " "+ (-((shadowSide/div)*count)) + " lineto stroke";
-                out += "\n" + "0 0 moveto";
-                out += "\n" + (-((shadowSide/div)*count)) + " "+ (-shadowSide) + " lineto stroke";
-            }
-
-            out += "\n" + "newpath";
-            out += "\n" + "1 setgray";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + -(shadowSide-6) + " 0 lineto";
-            out += "\n" + -(shadowSide-6) + " "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 0 lineto fill";
-            out += "\n" + "newpath";
-            out += "\n" + "0 setgray";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + -(shadowSide-6) + " 0 lineto";
-            out += "\n" + -(shadowSide-6) + " "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 "+ (-(shadowSide-6)) + " lineto";
-            out += "\n" + "0 0 lineto stroke";
-
-            if(div == 10 || div == 12){
-                // if side is divided into ten or 12 sections, add a mark at five
-                out += "\n" + "0 0 moveto";
-                out += "\n" + (-shadowSide) + " "+ (-shadowSide/2.0) + " lineto stroke";
-                out += "\n" + "0 0 moveto";
-                out += "\n" + (-shadowSide/2.0) + " "+ (-shadowSide) + " lineto stroke";
-                out += "\n" + "newpath";
-                out += "\n" + "1 setgray";
-                out += "\n" + "0 0 moveto";
-                out += "\n" + -(shadowSide-12) + " 0 lineto";
-                out += "\n" + -(shadowSide-12) + " "+ (-(shadowSide-12)) + " lineto";
-                out += "\n" + "0 "+ (-(shadowSide-12)) + " lineto";
-                out += "\n" + "0 0 lineto fill";
-                out += "\n" + "0 setgray";
-                // mark mid line 
-                out += "\n" + -((shadowSide/2.0)-6) + " "+ (-(shadowSide-7)) + " moveto";
-                out += "\n" + "NormalFont5 setfont";
-                if(div == 10){
-                    out += "\n" + "(5) show";
-                    out += "\n" + (-(shadowSide-8)) + " "+ (-(shadowSide/2.0)) + " moveto";
-                    out += "\n" + "(5) show";
-                }if(div == 12){
-                    out += "\n" + "(6) show";
-                    out += "\n" + (-(shadowSide-8)) + " "+ (-(shadowSide/2.0)) + " moveto";
-                    out += "\n" + "(6) show";
-                }
-            }
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + -(shadowSide-12) + " 0 lineto";
-            out += "\n" + -(shadowSide-12) + " "+ (-(shadowSide-12)) + " lineto";
-            out += "\n" + "0 "+ (-(shadowSide-12)) + " lineto";
-            out += "\n" + "0 0 lineto stroke";
-            out += "\n" + "0 0 moveto";
-            // 45 line        
-            out += "\n" + (-shadowSide) + " "+ (-shadowSide) + " lineto stroke";
-            // mark 45 line        
-            out += "\n" + -(shadowSide-9) + " "+ (-(shadowSide-7)) + " moveto";
-            out += "\n" + "NormalFont5 setfont";
-            out += "\n" + "("+ Math.round(div) +") show";
-
-            // Label
-            out += "\n" + -(shadowSide/2.0) + " "+ (-(shadowSide-15)) + " moveto";
-            out += "\n" + "NormalFont8 setfont";
-            out += EPSToolKit.centerText("Umbra Recta");
-
-            out += "\n" + -90 + " rotate";
-            out += "\n" + (shadowSide/2.0) + " "+ (-(shadowSide-15)) + " moveto";
-            out += "\n" + "NormalFont8 setfont";
-            out += EPSToolKit.centerText("Umbra Versa");
-            out += "\n" + 90 + " rotate";
-            out += "\n" + "% =============== End Left Shadow Square =================";
-        }
-
-        if(myAstrolabe.getBottomLeft() == 4){
-            //Draw bottomleft horz shadow scale
-            out += "\n" + "% =============== Create Left Horz Shadow scale =================";
-            // draw box
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + "-182 0 lineto";
-            out += "\n" + "-182 -28 lineto";
-            out += "\n" + "0 -28 lineto";
-            out += "\n" + "0 0 lineto stroke";
-
-            out += "\n" + "newpath";
-            out += "\n" + "0 -23 moveto";
-            out += "\n" + "-182 -23 lineto stroke";
-
-            for (count = 0; count < 7; count++){
-                out += "\n" + "newpath";
-                out += "\n" + (-count * 28) + " 0 moveto";
-                out += "\n" + (-count * 28) + " -28 lineto stroke";
-            }
-
-            for (count = 0; count < 26; count++){
-                out += "\n" + "newpath";
-                out += "\n" + (-count * 7) + " -23 moveto";
-                out += "\n" + (-count * 7) + " -28 lineto stroke";
-            }
-
-            for (count = 1; count < 7; count++){
-                // label
-                out += "\n" + (-((count * 28) + 4)) + " -19 moveto";
-                out += "\n" + "NormalFont5 setfont";
-                out += EPSToolKit.centerText(Integer.toString(count));
-            }
-
-            out += "\n" + "% =============== End Left Horz Shadow scale =================";
-        }
-
-        if(myAstrolabe.getBottomRight() == 4){
-            //Draw bottom right horz shadow scale
-            out += "\n" + "% =============== Create Right Horz Shadow scale =================";
-            // draw box
-            out += "\n" + "newpath";
-            out += "\n" + "0 0 moveto";
-            out += "\n" + "182 0 lineto";
-            out += "\n" + "182 -28 lineto";
-            out += "\n" + "0 -28 lineto";
-            out += "\n" + "0 0 lineto stroke";
-
-            out += "\n" + "newpath";
-            out += "\n" + "0 -23 moveto";
-            out += "\n" + "182 -23 lineto stroke";
-
-            for (count = 0; count < 7; count++)
-            {
-                out += "\n" + "newpath";
-                out += "\n" + (count * 28) + " 0 moveto";
-                out += "\n" + (count * 28) + " -28 lineto stroke";
-            }
-
-            for (count = 0; count < 26; count++)
-            {
-                out += "\n" + "newpath";
-                out += "\n" + (count * 7) + " -23 moveto";
-                out += "\n" + (count * 7) + " -28 lineto stroke";
-            }
-
-            for (count = 1; count < 7; count++)// label
-            {
-                out += "\n" + ((count * 28) + 4) + " -19 moveto";
-                out += "\n" + "NormalFont5 setfont";
-                out += EPSToolKit.centerText(Integer.toString(count));
-            }
-
-            out += "\n" + "% =============== End Right Horz Shadow scale =================";
-        }
-
-        if (myAstrolabe.getShowCotangentScale()){
-            out += "\n" + "gsave";
-            out += buildCotangentScale(myAstrolabe);
-            out += "\n" + "grestore";
-        }
-
-        return out;
-    }
-
-    /**
      * computes and draws the Lunar Mansions
      *
      * @return  returns the ps code for drawing the Lunar Mansions
@@ -1354,7 +1077,7 @@ public class BackPrintEngine {
             out.append("\n").append("newpath");
             out.append("\n").append("0 0 ").append(r).append(" 0 360 arc stroke");
 
-            if(label){ //todo, southern herishere?
+            if(label){ //todo, southern hemisphere?
                 out.append("\n").append("newpath");
                 out.append("\n").append("0 setgray");
                 out.append("\n").append("NormalFont6 setfont");
@@ -1490,8 +1213,10 @@ public class BackPrintEngine {
         if (!isLaser){
             out += "\n" + "1 setgray";
             out += "\n" + "0 0 5 0 360 arc fill";
+            out += "\n" + "0 setgray";
+        }else{
+            out += "\n" + "1 0 0 setrgbcolor";
         }
-        out += "\n" + "0 setgray";
         out += "\n" + "0 0 5 0 360 arc stroke";
         if (!isLaser){
             out += "\n" + "newpath";
