@@ -50,9 +50,10 @@ public class Star {
      */
     public static Star[] getStarsList(String hemiSphere){
 
-        Star[] starsList = new Star[17];
+        Star[] starsList;
 
         if (hemiSphere.equals("S")){
+            starsList = new Star[17];
             // show southern star set - Note Declination is reversed for the southern projection
             starsList[0] = new Star("Alpha Centaurus",14.75055556,-60.85277778,20,-10,10,-15,25,-7.5,0);
             starsList[1] = new Star("Canopus",6.542222222,-52.80555556,5,55,10,55,7.5,52.5,90);
@@ -62,7 +63,7 @@ public class Star {
             starsList[5] = new Star("Arcturus",14.261,19.1825,155,-95,160,-100,150,-90,-35);
             starsList[6] = new Star("Sirius",6.752472222,-16.71611111,5,100,5,90,7.5,90,90);
             starsList[7] = new Star("Procyon",7.655027778,5.225,62,125,57,125,50,127.5,-30);
-            starsList[8] = new Star("Regulus",10.1395,11.96722222,0,0,0,0,130,85,-85);
+            starsList[8] = new Star("Regulus",10.1395,11.9672,0,0,0,0,130,85,-85);
             starsList[9] = new Star("Betelgeuse",5.919527778,7.406944444,-5,140,0,140,0,135,-5);
             starsList[10] = new Star("Rigel",5.242277778,-8.201666667,5,120,5,110,-5,111.5,0);
             starsList[11] = new Star("Bellatrix",5.418833333,6.349722222,-17,135,-25,135,-40,130.5,10);
@@ -71,8 +72,8 @@ public class Star {
             starsList[14] = new Star("Spica",13.41986111,-11.16138889,0,0,0,0,80,-40,0);
             starsList[15] = new Star("Aliphard",9.459788889,-8.658602778,125,95,120,80,110,79,30);
             starsList[16] = new Star("Rosalhague",17.58225,12.56,5,-167,5,-160,2.5,-150,-90);
-
         }else{
+            starsList = new Star[18];
             //show northern star set
             starsList[0] = new Star("Altair",19.84636111,8.868333333,-70,115,-60,125,-67.5,120,-59);
             starsList[1] = new Star("Capella",5.278138889,45.99805556,5,-50,5,-60,7,-60,90);
@@ -91,6 +92,7 @@ public class Star {
             starsList[14] = new Star("Aliphard",9.459788889,-8.658602778,115,-80,110,-85,102.5,-95,52);
             starsList[15] = new Star("Alpheca",15.57813889,26.71472222,5,75,5,60,15,65,0);
             starsList[16] = new Star("Rosalhague",17.58225,12.56,0,0,0,0,7,95,90);
+            starsList[17] = new Star("Regulus", 10.1395, 11.9672, 0, 0, 0, 0, 78,-50,43);
         }
         return starsList;
     }
