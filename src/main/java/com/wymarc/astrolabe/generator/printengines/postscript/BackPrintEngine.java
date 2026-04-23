@@ -893,13 +893,15 @@ public class BackPrintEngine {
         out += "\n" + "0 0 " + (outerRadius - 5) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (outerRadius - 10) + " 0 360 arc stroke";
         out += "\n" + "0 0 " + (outerRadius - 15) + " 0 360 arc stroke";
-        out += "\n" + "0 0 " + (outerRadius - 30) + " 0 360 arc stroke";
 
-        // create 30 degree marks
-        for (count = 1; count <= 12; count++){
-            out += "\n" + (outerRadius - 30) + " 0 moveto";
-            out += "\n" + outerRadius + " 0 lineto stroke";
-            out += "\n" + "30 rotate";
+        if(myAstrolabe.getShowZodiacCalendar()) {
+            out += "\n" + "0 0 " + (outerRadius - 30) + " 0 360 arc stroke";
+            // create 30 degree marks
+            for (count = 1; count <= 12; count++) {
+                out += "\n" + (outerRadius - 30) + " 0 moveto";
+                out += "\n" + outerRadius + " 0 lineto stroke";
+                out += "\n" + "30 rotate";
+            }
         }
 
         // create 10 degree marks
@@ -925,29 +927,30 @@ public class BackPrintEngine {
             out += "\n" + "1 rotate";
         }
 
-        if (myAstrolabe.getShowZodiacSymbols()){
-            //Mark Zodiac symbols
-            out += "\n" + "gsave";
-            out += "\n" + "-75 rotate";
-            for (count = 0; count <= 11; count++)
-            {
-                out += ZodiacSigns.placeSignNumAt(count+1, new Point2D.Double(0,(outerRadius - 22)),.35, .35);
-                out += "\n" + "30 rotate";
+        if(myAstrolabe.getShowZodiacCalendar()) {
+            if (myAstrolabe.getShowZodiacSymbols()) {
+                //Mark Zodiac symbols
+                out += "\n" + "gsave";
+                out += "\n" + "-75 rotate";
+                for (count = 0; count <= 11; count++) {
+                    out += ZodiacSigns.placeSignNumAt(count + 1, new Point2D.Double(0, (outerRadius - 22)), .35, .35);
+                    out += "\n" + "30 rotate";
+                }
+                out += "\n" + "grestore";
+            } else {
+                //Mark Zodiac Labels
+                out += "\n" + "NormalFont10 setfont";
+                for (count = 0; count <= 11; count++) {
+                    out += EPSToolKit.drawOutsideCircularText(Astrolabe.ZODIAC[count], 10, ((count * 30) + 15), (outerRadius - 25));//
+                }
             }
-            out += "\n" + "grestore";
-        }else{
-            //Mark Zodiac Labels
-            out += "\n" + "NormalFont10 setfont";
-            for (count = 0; count <= 11; count++){
-                out += EPSToolKit.drawOutsideCircularText(Astrolabe.ZODIAC[count], 10, ((count*30)+15), (outerRadius - 25));//
-            }
-        }
 
-        //Mark Zodiac Degrees
-        out += "\n" + "NormalFont5 setfont";
-        for (count = 0; count <= 11; count++){
-            for (count1 = 1; count1 <= 3; count1++){
-                out += EPSToolKit.drawOutsideCircularText(Integer.toString(count1*10), 5, ((count*30)+(count1*10)-1), (outerRadius - 14));
+            //Mark Zodiac Degrees
+            out += "\n" + "NormalFont5 setfont";
+            for (count = 0; count <= 11; count++) {
+                for (count1 = 1; count1 <= 3; count1++) {
+                    out += EPSToolKit.drawOutsideCircularText(Integer.toString(count1 * 10), 5, ((count * 30) + (count1 * 10) - 1), (outerRadius - 14));
+                }
             }
         }
 
@@ -1151,10 +1154,12 @@ public class BackPrintEngine {
         out += "\n";
         out += "\n" + "gsave";
 
-        if(myAstrolabe.getShowConcentricCalendar()){
-            out += buildConcentricCalendarRing();
-        }else{
-            out += buildCalendarRing();
+        if(myAstrolabe.getShowZodiacCalendar()) { //Eastern Astrolabes do not use the Zodiac and calendar rings
+            if (myAstrolabe.getShowConcentricCalendar()) {
+                out += buildConcentricCalendarRing();
+            } else {
+                out += buildCalendarRing();
+            }
         }
 
         out += "\n" + "grestore";

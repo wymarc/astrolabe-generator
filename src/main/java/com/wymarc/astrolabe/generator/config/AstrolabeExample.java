@@ -50,6 +50,7 @@ public class AstrolabeExample {
     private int reteType;
     private boolean showCotangent;
     private boolean concentricCalendar;
+    private boolean showZodiacCalendar;
     private boolean showEot;
     private boolean laserSupport;
 
@@ -291,6 +292,14 @@ public class AstrolabeExample {
 
     public void setShowConcentricCalendar(boolean concentricCalendar) {
         this.concentricCalendar = concentricCalendar;
+    }
+
+    public boolean isShowZodiacCalendar() {
+        return showZodiacCalendar;
+    }
+
+    public void setShowZodiacCalendar(boolean showZodiacCalendar) {
+        this.showZodiacCalendar = showZodiacCalendar;
     }
 
     public boolean isShowEot() {

@@ -9,7 +9,7 @@
 	</defaultLocation>	
 	<astrolabes>
 		<astrolabe>
-			<name>Default Astrolabe</name>
+			<name>Default Western Astrolabe</name>
 			<showThrone>true</showThrone>
 			<shapeOption>0</shapeOption>					
 			<zodiacSymbols>false</zodiacSymbols>			
@@ -39,6 +39,41 @@
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
 			<concentricCalendar>false</concentricCalendar>
+			<showZodiacCalendar>true</showZodiacCalendar>
+			<showEot>false</showEot>
+		</astrolabe>
+		<astrolabe>
+			<name>Default Eastern Astrolabe</name>
+			<showThrone>true</showThrone>
+			<shapeOption>0</shapeOption>
+			<zodiacSymbols>false</zodiacSymbols>
+			<showRegistration>true</showRegistration>
+			<printOption>0</printOption>
+			<showHorizonPlate>false</showHorizonPlate>
+			<printTimeCorrection>true</printTimeCorrection>
+			<hourMarkings>0</hourMarkings>
+			<almucantarInterval>2</almucantarInterval>
+			<showAzimuth>true</showAzimuth>
+			<showTwilight>true</showTwilight>
+			<showAllTwilight>false</showAllTwilight>
+			<degreeScaleType>0</degreeScaleType>
+			<showUnequalHours>false</showUnequalHours>
+			<showHouses>false</showHouses>
+			<showMansions>false</showMansions>
+			<showCosine>false</showCosine>
+			<use100>false</use100>
+			<gridPerDegree>false</gridPerDegree>
+			<showRadials>false</showRadials>
+			<showArcs>false</showArcs>
+			<showObliqityArc>false</showObliqityArc>
+			<backTopLeft>1</backTopLeft>
+			<backTopRight>1</backTopRight>
+			<backBottomLeft>1</backBottomLeft>
+			<backBottomRight>3</backBottomRight>
+			<reteType>0</reteType>
+			<showCotangent>true</showCotangent>
+			<concentricCalendar>false</concentricCalendar>
+			<showZodiacCalendar>false</showZodiacCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -72,6 +107,7 @@
 			<reteType>1</reteType>
 			<showCotangent>false</showCotangent>
 			<concentricCalendar>false</concentricCalendar>
+			<showZodiacCalendar>true</showZodiacCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -105,6 +141,7 @@
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
 			<concentricCalendar>false</concentricCalendar>
+			<showZodiacCalendar>true</showZodiacCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -138,6 +175,7 @@
 			<reteType>0</reteType>
 			<showCotangent>true</showCotangent>
 			<concentricCalendar>false</concentricCalendar>
+			<showZodiacCalendar>true</showZodiacCalendar>
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
@@ -171,6 +209,7 @@
 			<reteType>2</reteType>
 			<showCotangent>false</showCotangent>
 			<concentricCalendar>true</concentricCalendar>
+			<showZodiacCalendar>true</showZodiacCalendar>
 			<showEot>true</showEot>
 		</astrolabe>
 	</astrolabes>

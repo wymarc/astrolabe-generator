@@ -94,6 +94,7 @@ public class Astrolabe {
     private boolean showTimeCorrection;		    // Print time correction on back
     private boolean showCotangentScale;		    // Print cotangent scale on back
     private boolean concentricCalendar;         // use the concentric calendar
+    private boolean showZodiacCalendar;         // Display the zodiac and calendar rings
     private int frontPrintOption;				// 0 print both, 1 print Mater only, 2 print Climate only
     private boolean showHorizonPlate;         	// show horizon plate
     private boolean laserSupport;         	    // output files for laser or AD
@@ -357,6 +358,14 @@ public class Astrolabe {
 
     public void setShowConcentricCalendar(boolean concentricCalendar) {
         this.concentricCalendar = concentricCalendar;
+    }
+
+    public boolean getShowZodiacCalendar() {
+        return showZodiacCalendar;
+    }
+
+    public void setShowZodiacCalendar(boolean showZodiacCalendar) {
+        this.showZodiacCalendar = showZodiacCalendar;
     }
 
     public int getFrontPrintOption() {
@@ -633,6 +642,7 @@ public class Astrolabe {
         this.showTimeCorrection = true;
         this.showCotangentScale = true;
         this.concentricCalendar = false;
+        this.showZodiacCalendar = true;
         this.showLunarMansions = false;
         this.showEquationOfTime = false;
         this.frontPrintOption = 0; // default to printing both

@@ -98,6 +98,7 @@ public class GeneratorGui extends JFrame implements ActionListener {
             MY_ASTROLABE.setReteType(defaultAstrolabe.getReteType());
             MY_ASTROLABE.setShowCotangentScale(defaultAstrolabe.isShowCotangent());
             MY_ASTROLABE.setShowConcentricCalendar(defaultAstrolabe.isShowConcentricCalendar());
+            MY_ASTROLABE.setShowZodiacCalendar(defaultAstrolabe.isShowZodiacCalendar());
             MY_ASTROLABE.setShowEquationOfTime(defaultAstrolabe.isShowEot());
         }
     }

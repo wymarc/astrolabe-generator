@@ -43,6 +43,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
     private JCheckBox lunarMansionCheck = null;
     private JCheckBox cotangentCheck = null;
     private JCheckBox concentricCheck = null;
+    private JCheckBox zodiacCalenderCheck = null;
     private JCheckBox timeCorrectionCheck = null;
     private JCheckBox equationOfTimeCheck = null;
     private ThumbNail thumbNail = null;
@@ -139,6 +140,8 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         optionsPanel.add(getCotangentCheck(),c);
         c.gridy++;
         optionsPanel.add(getConcentricCheck(),c);
+        c.gridy++;
+        optionsPanel.add(getZodiacCalenderCheck(),c);
         c.gridy++;
         optionsPanel.add(getTimeCorrectionCheck(),c);
         c.gridy++;
@@ -325,6 +328,18 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return concentricCheck;
     }
 
+    private JCheckBox getZodiacCalenderCheck(){
+        if (null == zodiacCalenderCheck){
+            zodiacCalenderCheck = new JCheckBox("Show calendar and zodiac ring");
+            zodiacCalenderCheck.setSelected(GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar());
+            zodiacCalenderCheck.setToolTipText("Show calendar and zodiac ring");
+            zodiacCalenderCheck.setActionCommand("showZodiacCalendar");
+            zodiacCalenderCheck.addActionListener(this);
+            zodiacCalenderCheck.addMouseListener(this);
+        }
+        return zodiacCalenderCheck;
+    }
+
     private JCheckBox getTimeCorrectionCheck(){
         if (null == timeCorrectionCheck){
             timeCorrectionCheck = new JCheckBox("Show time correction");
@@ -358,6 +373,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         getLunarMansionCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowLunarMansions());
         getCotangentCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowCotangentScale());
         getConcentricCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowConcentricCalendar());
+        getZodiacCalenderCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowZodiacCalendar());
         getTimeCorrectionCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowTimeCorrection());
         getEquationOfTimeCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowEquationOfTime());
         getCosineCheck().setSelected(GeneratorGui.MY_ASTROLABE.getShowCosine());
@@ -416,6 +432,11 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
 
         if (cmd.equals("Concentric")) {
             GeneratorGui.MY_ASTROLABE.setShowConcentricCalendar(getConcentricCheck().isSelected());
+            getThumbNail().updateUI();
+        }
+
+        if (cmd.equals("showZodiacCalendar")) {
+            GeneratorGui.MY_ASTROLABE.setShowZodiacCalendar(getZodiacCalenderCheck().isSelected());
             getThumbNail().updateUI();
         }
 
