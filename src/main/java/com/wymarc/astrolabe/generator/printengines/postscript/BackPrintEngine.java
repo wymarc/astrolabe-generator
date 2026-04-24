@@ -241,18 +241,24 @@ public class BackPrintEngine {
     /**
      * computes and draws the Unequal Hours scales
      *
-     * @return  returns the ps code for drawing the The Unequal Hours
+     * @return  returns the ps code for drawing the Unequal Hours
      *
      */
     private String buildUnequalHoursBack(){
         //compute size of arc that contains the scale and draw it
         // note eventually this will be done by looking at what rings are drawn and figuring
         // the remaining radius
-        double unequalRadius = myAstrolabe.getMaterRadius() - 67;
+        double unequalRadius;
         int i;
         double Ri;
         InterSect myInterSect;
         StringBuilder out = new StringBuilder();
+
+        if (myAstrolabe.getShowZodiacCalendar()){
+            unequalRadius = myAstrolabe.getMaterRadius() - 67;
+        } else {
+            unequalRadius = myAstrolabe.getMaterRadius() - 25;
+        }
 
         out.append("\n").append("%% ================ Draw Unequal Hours =================");
         if (myAstrolabe.getLaserSupport()){
@@ -361,7 +367,14 @@ public class BackPrintEngine {
      */
     private String buildCotangentScale(Astrolabe myAstrolabe){
         // compute the radius of the scale. Should intersect corners of shadow squares, if any
-        double cotangentRadius = myAstrolabe.getMaterRadius() - 80;
+        double cotangentRadius;
+
+        if (myAstrolabe.getShowZodiacCalendar()){
+            cotangentRadius = myAstrolabe.getMaterRadius() - 80;
+        } else {
+            cotangentRadius = myAstrolabe.getMaterRadius() - 38;
+        }
+
         String out = "";
 
         // rotate to place center of scale at 0 degrees and mark
@@ -441,7 +454,14 @@ public class BackPrintEngine {
         //compute size of box
         // note eventually this will be done by looking at what rings are drawn and figuring
         // the remaining radius
-        double shadowRadius = myAstrolabe.getMaterRadius() - 67;
+        double shadowRadius;
+
+        if (myAstrolabe.getShowZodiacCalendar()){
+            shadowRadius = myAstrolabe.getMaterRadius() - 67;
+        } else {
+            shadowRadius = myAstrolabe.getMaterRadius() - 25;
+        }
+
         if(myAstrolabe.getShowCotangentScale()){
             //if we want to show the cotangent scale make room
             shadowRadius = shadowRadius - 13;
@@ -1167,7 +1187,6 @@ public class BackPrintEngine {
 
         //print third and fourth quadrant
         out += "\n" + "gsave";
-        //out += buildShadowSquare();
         out += buildShadowSquare();
         out += "\n" + "grestore";
 

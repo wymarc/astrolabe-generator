@@ -31,11 +31,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class FrontPanel extends JPanel implements ActionListener,MouseListener {
-    private JComboBox showOptionsCombo = null;
-    private JComboBox shapeCombo = null;
-    private JComboBox hourCombo = null;
-    private JComboBox degreeScaleCombo = null;
-    private JComboBox altitudeIntervalCombo = null;
+    private JComboBox<String> showOptionsCombo = null;
+    private JComboBox<String> shapeCombo = null;
+    private JComboBox<String> hourCombo = null;
+    private JComboBox<String> degreeScaleCombo = null;
+    private JComboBox<String> altitudeIntervalCombo = null;
     private JCheckBox throneCheck = null;
     private JCheckBox registrationCheck = null;
     private JCheckBox azimuthLinesCheck = null;
@@ -137,7 +137,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         return thumbNail.updateFrontThumbNail();
     }
 
-    private JComboBox getShowOptionsCombo(){
+    private JComboBox<String> getShowOptionsCombo(){
         if (null == showOptionsCombo){
             showOptionsCombo = new JComboBox<>(Astrolabe.SHOWOPTIONS);
             showOptionsCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getFrontPrintOption());
@@ -149,7 +149,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         return showOptionsCombo;
     }
 
-    private JComboBox getShapeCombo(){
+    private JComboBox<String> getShapeCombo(){
         if (null == shapeCombo){
             shapeCombo = new JComboBox<>(Astrolabe.SHAPEOPTIONS);
             shapeCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getShapeOption());
@@ -161,7 +161,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         return shapeCombo;
     }
 
-    private JComboBox getHourCombo(){
+    private JComboBox<String> getHourCombo(){
         if (null == hourCombo){
             hourCombo = new JComboBox<>(Astrolabe.HOUROPTIONS);
             hourCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getHourMarkings());
@@ -173,7 +173,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         return hourCombo;
     }
 
-    private JComboBox getDegreeScaleCombo(){
+    private JComboBox<String> getDegreeScaleCombo(){
         if (null == degreeScaleCombo){
             degreeScaleCombo = new JComboBox<>(Astrolabe.DEGREESCALEOPTIONS);
             degreeScaleCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getDegreeScaleType());
@@ -185,7 +185,7 @@ public class FrontPanel extends JPanel implements ActionListener,MouseListener {
         return degreeScaleCombo;
     }
 
-    private JComboBox getAltitudeIntervalCombo(){
+    private JComboBox<String> getAltitudeIntervalCombo(){
         if (null == altitudeIntervalCombo){
             altitudeIntervalCombo = new JComboBox<>(Astrolabe.ALTITUDEINTERVALOPTIONS);
             altitudeIntervalCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getDegreeInterval());

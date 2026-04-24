@@ -29,10 +29,10 @@ import java.awt.event.MouseListener;
  * Copyright (c) 2017 Timothy J. Mitchell
  */
 public class BackPanel extends JPanel implements ActionListener,MouseListener {
-    private JComboBox topLeftCombo = null;
-    private JComboBox topRightCombo = null;
-    private JComboBox bottomLeftCombo = null;
-    private JComboBox bottomRightCombo = null;
+    private JComboBox<String> topLeftCombo = null;
+    private JComboBox<String> topRightCombo = null;
+    private JComboBox<String> bottomLeftCombo = null;
+    private JComboBox<String> bottomRightCombo = null;
     private JCheckBox cosineCheck = null;
     private JCheckBox use100Check = null;
     private JCheckBox gridPerDegreeCheck = null;
@@ -139,9 +139,9 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         c.gridy++;
         optionsPanel.add(getCotangentCheck(),c);
         c.gridy++;
-        optionsPanel.add(getConcentricCheck(),c);
-        c.gridy++;
         optionsPanel.add(getZodiacCalenderCheck(),c);
+        c.gridy++;
+        optionsPanel.add(getConcentricCheck(),c);
         c.gridy++;
         optionsPanel.add(getTimeCorrectionCheck(),c);
         c.gridy++;
@@ -160,7 +160,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return thumbNail.updateBackThumbNail();
     }
 
-    private JComboBox getTopLeftCombo(){
+    private JComboBox<String> getTopLeftCombo(){
         if (null == topLeftCombo){
             topLeftCombo = new JComboBox<>(Astrolabe.TOPLEFTOPTIONS);
             topLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopLeft());
@@ -172,7 +172,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return topLeftCombo;
     }
 
-    private JComboBox getTopRightCombo(){
+    private JComboBox<String> getTopRightCombo(){
         if (null == topRightCombo){
             topRightCombo = new JComboBox<>(Astrolabe.TOPRIGHTOPTIONS);
             topRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getTopRight());
@@ -184,7 +184,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return topRightCombo;
     }
 
-    private JComboBox getBottomLeftCombo(){
+    private JComboBox<String> getBottomLeftCombo(){
         if (null == bottomLeftCombo){
             bottomLeftCombo = new JComboBox<>(Astrolabe.BOTTOMLEFTOPTIONS);
             bottomLeftCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomLeft());
@@ -196,7 +196,7 @@ public class BackPanel extends JPanel implements ActionListener,MouseListener {
         return bottomLeftCombo;
     }
 
-    private JComboBox getBottomRightCombo(){
+    private JComboBox<String> getBottomRightCombo(){
         if (null == bottomRightCombo){
             bottomRightCombo = new JComboBox<>(Astrolabe.BOTTOMRIGHTOPTIONS);
             bottomRightCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getBottomRight());

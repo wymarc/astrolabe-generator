@@ -30,7 +30,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class RetePanel extends JPanel implements ActionListener,MouseListener {
-    private JComboBox reteOptionsCombo = null;
+    private JComboBox<String> reteOptionsCombo = null;
     private ThumbNail thumbNail = null;
 
     public RetePanel() {
@@ -67,7 +67,7 @@ public class RetePanel extends JPanel implements ActionListener,MouseListener {
         return thumbNail.updateReteThumbNail();
     }
 
-    private JComboBox getReteOptionsCombo(){
+    private JComboBox<String> getReteOptionsCombo(){
         if (null == reteOptionsCombo){
             reteOptionsCombo = new JComboBox<>(Astrolabe.RETEOPTIONS);
             reteOptionsCombo.setSelectedIndex(GeneratorGui.MY_ASTROLABE.getReteType());

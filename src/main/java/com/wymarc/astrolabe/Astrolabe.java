@@ -29,8 +29,8 @@ public class Astrolabe {
 
     public static final String[] SHOWOPTIONS = { "Climate and mater", "Climate only", "Mater only", "Mater and nauticum"};
     public static final String[] SHAPEOPTIONS = { "Classic", "Octagonal"};
-    public static final String[] HOUROPTIONS = { "Roman", "Arabic", "Alphabet"};
-    public static final String[] DEGREESCALEOPTIONS = { "None", "0-90", "0-360"};
+    public static final String[] HOUROPTIONS = { "Roman", "Arabic", "Alphabet", "None"};
+    public static final String[] DEGREESCALEOPTIONS = { "None", "Western 0-90", "Western 0-360", "Eastern 0-90", "Eastern 0-360"};
     public static final String[] ALTITUDEINTERVALOPTIONS = { "1", "2", "5", "10"};
     public static final String[] TOPLEFTOPTIONS = { "Blank", "Unequal hours", "Sine scale", "Both"};
     public static final String[] TOPRIGHTOPTIONS = { "Blank", "Unequal hours", "Arcs of the signs (equal)", "Arcs of the signs (projected)"};

@@ -15,13 +15,18 @@ public class SineGrid {
 
         double myX;
         double myY;		// X/Y Coordinates
+        double radius;  // radius of sine grid
         int i;
         String out = "";
 
         //compute size of arc that contains the scale and draw it
         // note eventually this will be done by looking at what rings are drawn and figuring
         // the remaining radius
-        double radius = myAstrolabe.getMaterRadius() - 67;
+        if (myAstrolabe.getShowZodiacCalendar()){
+            radius = myAstrolabe.getMaterRadius() - 67;
+        } else {
+            radius = myAstrolabe.getMaterRadius() - 25;
+        }
 
         //Print outline of scale
 

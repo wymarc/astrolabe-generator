@@ -88,8 +88,13 @@ public class ArcsOfTheSigns {
 	    // compute size of arc that contains the scale and draw it
 	    // note eventually this will be done by looking at what rings are drawn and figuring
 	    // the remaining radius
-	    double outerRadius = myAstrolabe.getMaterRadius() - 67;
-	    double innerRadius = outerRadius - 108;
+		double outerRadius = myAstrolabe.getMaterRadius() - 67;
+//		if (myAstrolabe.getShowZodiacCalendar()){
+//			outerRadius = myAstrolabe.getMaterRadius() - 67;
+//		} else {
+//			outerRadius = myAstrolabe.getMaterRadius() - 25;
+//		}
+	    double innerRadius = myAstrolabe.getMaterRadius() - 175;
 	    double arcInterval;
 	        
 	    //draw 30 degree arcs
