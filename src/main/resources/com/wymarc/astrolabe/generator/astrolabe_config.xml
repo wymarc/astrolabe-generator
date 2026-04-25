@@ -9,7 +9,7 @@
 	</defaultLocation>	
 	<astrolabes>
 		<astrolabe>
-			<name>Default Western Astrolabe</name>
+			<name>Default Western (European) Astrolabe</name>
 			<showThrone>true</showThrone>
 			<shapeOption>0</shapeOption>					
 			<zodiacSymbols>false</zodiacSymbols>			
@@ -43,7 +43,7 @@
 			<showEot>false</showEot>
 		</astrolabe>
 		<astrolabe>
-			<name>Default Eastern Astrolabe</name>
+			<name>Default Eastern (Islamic) Astrolabe</name>
 			<showThrone>true</showThrone>
 			<shapeOption>0</shapeOption>
 			<zodiacSymbols>false</zodiacSymbols>
@@ -51,12 +51,12 @@
 			<printOption>0</printOption>
 			<showHorizonPlate>false</showHorizonPlate>
 			<printTimeCorrection>true</printTimeCorrection>
-			<hourMarkings>0</hourMarkings>
+			<hourMarkings>3</hourMarkings>
 			<almucantarInterval>2</almucantarInterval>
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
 			<showAllTwilight>false</showAllTwilight>
-			<degreeScaleType>0</degreeScaleType>
+			<degreeScaleType>4</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
 			<showMansions>false</showMansions>
