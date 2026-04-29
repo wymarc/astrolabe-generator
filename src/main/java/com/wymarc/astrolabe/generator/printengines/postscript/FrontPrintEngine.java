@@ -739,9 +739,9 @@ public class FrontPrintEngine {
             fontSize = 8.0;
             out += "\n" + "NormalFont8 setfont";
         }else{
-            labelRadius = (myAstrolabe.getMaterRadius() - 18);
-            fontSize = 10.0;
-            out += "\n" + "NormalFont12 setfont";
+            labelRadius = (myAstrolabe.getMaterRadius() - 27);
+            fontSize = 8.0;
+            out += "\n" + "NormalFont8 setfont";
         }
 
         if(myAstrolabe.getDegreeScaleType() == 1 || myAstrolabe.getDegreeScaleType() == 3){//0-90
@@ -765,8 +765,16 @@ public class FrontPrintEngine {
             out += EPSToolKit.drawOutsideCircularText("00", fontSize, 180, labelRadius);
         }else if(myAstrolabe.getDegreeScaleType() == 2 || myAstrolabe.getDegreeScaleType() == 4){//0-360
             StringBuilder sb = new StringBuilder();
-            for (count = 0; count < 36; count++){
-                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (-(-90+(count*10))), labelRadius));
+            if(myAstrolabe.getHourMarkings() == 3) {//if there is no Hour Scale
+                // rotate the marking -2.5 degrees
+                sb.append("\n").append(-2.5).append(" rotate");
+                for (count = 0; count < 72; count++){
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*5)+"", fontSize, (-(-90+(count*5))), labelRadius));
+                }
+            }else {
+                for (count = 0; count < 36; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, (-(-90 + (count * 10))), labelRadius));
+                }
             }
             out += "\n" + sb.toString();
         }
