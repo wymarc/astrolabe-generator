@@ -56,7 +56,7 @@
 			<showAzimuth>true</showAzimuth>
 			<showTwilight>true</showTwilight>
 			<showAllTwilight>false</showAllTwilight>
-			<degreeScaleType>4</degreeScaleType>
+			<degreeScaleType>2</degreeScaleType>
 			<showUnequalHours>false</showUnequalHours>
 			<showHouses>false</showHouses>
 			<showMansions>false</showMansions>

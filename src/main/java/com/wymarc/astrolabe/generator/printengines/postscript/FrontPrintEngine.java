@@ -552,8 +552,8 @@ public class FrontPrintEngine {
         String out = "";
 
         if ((myAstrolabe.getDegreeScaleType() == 1)||(myAstrolabe.getDegreeScaleType() == 2)){
-            // If the scale is in degrees, not minutes, and a western (european) astrolabe
-            if ((myAstrolabe.getHourMarkings() == 2)||(myAstrolabe.getHourMarkings() == 3)){ // Symbol markings
+            // If the scale is in degrees, not minutes
+            if (myAstrolabe.getHourMarkings() == 2){ // Symbol markings
                 // show the front degree scale
                 out += "\n" + "0 0 " + (myAstrolabe.getMaterRadius() - 4) + " 0 360 arc stroke";
                 out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 10) + " 0 360 arc stroke";
@@ -570,6 +570,25 @@ public class FrontPrintEngine {
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
                     sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 10).append(" 0 lineto stroke");
                     sb.append("\n").append(5*rotationIncrement).append(" rotate");
+                }
+                out += "\n" + sb.toString();
+            }else if (myAstrolabe.getHourMarkings() == 3){ // no hour markings (islamic/eastern)
+                // If the scale is in degrees, not minutes, and an eastern (islamic) astrolabe
+                // show the front degree scale
+                StringBuilder sb = new StringBuilder();
+                out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 360 arc stroke";
+                rotationIncrement = 1.0;
+                // create degree marks
+                for (count = 0; count <= 359; count++){
+                    if (count % 5 == 0){  // Mark 5 degree
+                        sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
+                        sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 lineto stroke");
+                        sb.append("\n").append(rotationIncrement).append(" rotate");
+                    }else{ // mark 1 degree
+                        sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
+                        sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 5).append(" 0 lineto stroke");
+                        sb.append("\n").append(rotationIncrement).append(" rotate");
+                    }
                 }
                 out += "\n" + sb.toString();
             }else{ // anything else
@@ -605,25 +624,6 @@ public class FrontPrintEngine {
                 }
                 out += "\n" + sb.toString();
             }
-        } else if ((myAstrolabe.getDegreeScaleType() == 3)||(myAstrolabe.getDegreeScaleType() == 4)){
-            // If the scale is in degrees, not minutes, and an eastern (islamic) astrolabe
-            // show the front degree scale
-            StringBuilder sb = new StringBuilder();
-            out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 20) + " 0 360 arc stroke";
-            rotationIncrement = 1.0;
-            // create degree marks
-            for (count = 0; count <= 359; count++){
-                if (count % 5 == 0){  // Mark 5 degree
-                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
-                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 20).append(" 0 lineto stroke");
-                    sb.append("\n").append(rotationIncrement).append(" rotate");
-                }else{ // mark 1 degree
-                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius()).append(" 0 moveto");
-                    sb.append("\n").append(myAstrolabe.getInnerLimbRadius() + 5).append(" 0 lineto stroke");
-                    sb.append("\n").append(rotationIncrement).append(" rotate");
-                }
-            }
-            out += "\n" + sb.toString();
         } else{ // Scale is in minutes not degrees
             out += "\n" + "0 0 " + (myAstrolabe.getInnerLimbRadius() + 5) + " 0 360 arc stroke";
             // create 5 minute marks
@@ -744,26 +744,45 @@ public class FrontPrintEngine {
             out += "\n" + "NormalFont8 setfont";
         }
 
-        if(myAstrolabe.getDegreeScaleType() == 1 || myAstrolabe.getDegreeScaleType() == 3){//0-90
-            //Mark degrees
+        //Mark degrees
+        if(myAstrolabe.getDegreeScaleType() == 1){//0-90
             StringBuilder sb = new StringBuilder();
-            for (count = 1; count <= 9; count++){
-                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, ((count*10)), labelRadius));
+            if(myAstrolabe.getHourMarkings() == 3) {//if there is no Hour Scale
+                for (count = 1; count <= 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, ((count * 10)), labelRadius));
+                }
+                for (count = 1; count < 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, (180 - (count * 10)), labelRadius));
+                }
+                for (count = 1; count <= 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, (-(count * 10)), labelRadius));
+                }
+                for (count = 1; count < 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, -((180 - (count * 10))), labelRadius));
+                }
+                out += "\n" + sb.toString();
+                //Mark 00
+                out += EPSToolKit.drawOutsideCircularText("00", fontSize, 0, labelRadius);
+                out += EPSToolKit.drawOutsideCircularText("00", fontSize, 180, labelRadius);
+            }else {
+                for (count = 1; count <= 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, ((count * 10)), labelRadius));
+                }
+                for (count = 1; count < 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, (180 - (count * 10)), labelRadius));
+                }
+                for (count = 1; count <= 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, (-(count * 10)), labelRadius));
+                }
+                for (count = 1; count < 9; count++) {
+                    sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count * 10) + "", fontSize, -((180 - (count * 10))), labelRadius));
+                }
+                out += "\n" + sb.toString();
+                //Mark 00
+                out += EPSToolKit.drawOutsideCircularText("00", fontSize, 0, labelRadius);
+                out += EPSToolKit.drawOutsideCircularText("00", fontSize, 180, labelRadius);
             }
-            for (count = 1; count < 9; count++){
-                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (180-(count*10)), labelRadius));
-            }
-            for (count = 1; count <= 9; count++){
-                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, (-(count*10)), labelRadius));
-            }
-            for (count = 1; count < 9; count++){
-                sb.append("\n").append(EPSToolKit.drawOutsideCircularText((count*10)+"", fontSize, -((180-(count*10))), labelRadius));
-            }
-            out += "\n" + sb.toString();
-            //Mark 00
-            out += EPSToolKit.drawOutsideCircularText("00", fontSize, 0, labelRadius);
-            out += EPSToolKit.drawOutsideCircularText("00", fontSize, 180, labelRadius);
-        }else if(myAstrolabe.getDegreeScaleType() == 2 || myAstrolabe.getDegreeScaleType() == 4){//0-360
+        }else if(myAstrolabe.getDegreeScaleType() == 2){//0-360
             StringBuilder sb = new StringBuilder();
             if(myAstrolabe.getHourMarkings() == 3) {//if there is no Hour Scale
                 // rotate the marking -2.5 degrees
